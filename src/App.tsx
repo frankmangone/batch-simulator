@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createGlobalStyle } from "styled-components"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-function App() {
+/* Context */
+import { DataStore } from "./context/DataContext"
+
+/* Layouts */
+import MainLayout from "./layouts/MainLayout"
+
+/* Pages */
+import InputsPage from "./pages/InputsPage"
+import ModelPage from "./pages/ModelPage"
+import ResultsPage from "./pages/ResultsPage"
+
+const GlobalStyles = createGlobalStyle`
+  body {
+    margin: 0;
+    margin-top: 30px;
+    background-color: #26282B;
+  }
+`
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <DataStore>
+      <Router>
+        <GlobalStyles />
+        <MainLayout>
+          <Switch>
+            <Route path="/inputs" component={InputsPage} />
+            <Route path="/model" component={ModelPage} />
+            <Route path="/results" component={ResultsPage} />
+          </Switch>
+        </MainLayout>
+      </Router>
+    </DataStore>
+  )
 }
 
-export default App;
+export default App
