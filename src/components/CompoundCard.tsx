@@ -1,18 +1,35 @@
 import styled from "styled-components"
 
+/* Hooks */
+import { useEffect, useRef } from "react"
+
 /* Types */
 import { ICompound } from "../types/Compound"
-
 interface ICompoundCardProps {
   compound: ICompound
 }
 
 const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
   const { compound } = props
+  const liquidRef = useRef<HTMLElement>()
+
+  useEffect(() => {
+    // @ts-ignore
+    liquidRef.current = document.getElementById("liquid")
+  }, [])
 
   return (
     <CompoundCardWrapper>
-      <CompoundCardInner>
+      <CompoundCardInner
+        onMouseEnter={() => {
+          // @ts-ignore
+          liquidRef.current.style.backgroundColor = "hsl(90, 80%, 65%)"
+        }}
+        onMouseLeave={() => {
+          // @ts-ignore
+          liquidRef.current.style.backgroundColor = "hsl(213, 20%, 95%)"
+        }}
+      >
         <h1>{compound.symbol}</h1>
         <CompoundColorBullet className="bullet" />
       </CompoundCardInner>

@@ -4,8 +4,7 @@ const Reactor: React.FC = () => {
   return (
     <ReactorWrapper>
       <ReactorInterior>
-
-        <ReactorLiquid id='liquid'/>
+        <ReactorLiquid id="liquid" />
       </ReactorInterior>
     </ReactorWrapper>
   )
@@ -35,6 +34,7 @@ const ReactorLiquid = styled.div`
   position: absolute;
   left: 0;
   bottom: 0;
+  transition: background-color 0.2s ease-in-out;
 
   background-color: var(--color-grey-lightest);
   height: 70%;
