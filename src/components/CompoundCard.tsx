@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+/* Constants */
+import { COMPOUND_COLORS } from "../constants/compoundColors"
+
 /* Hooks */
 import { useEffect, useRef } from "react"
 
@@ -23,7 +26,7 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
       <CompoundCardInner
         onMouseEnter={() => {
           // @ts-ignore
-          liquidRef.current.style.backgroundColor = "hsl(90, 80%, 65%)"
+          liquidRef.current.style.backgroundColor = COMPOUND_COLORS[compound.color]
         }}
         onMouseLeave={() => {
           // @ts-ignore
@@ -31,7 +34,7 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
         }}
       >
         <h1>{compound.symbol}</h1>
-        <CompoundColorBullet className="bullet" />
+        <CompoundColorBullet className="bullet" color={compound.color as keyof typeof COMPOUND_COLORS} />
       </CompoundCardInner>
     </CompoundCardWrapper>
   )
@@ -68,7 +71,11 @@ const CompoundCardInner = styled.div`
   }
 `
 
-const CompoundColorBullet = styled.div`
+interface ICompoundColorBulletProps {
+  color: keyof typeof COMPOUND_COLORS
+}
+
+const CompoundColorBullet = styled.div<ICompoundColorBulletProps>`
   position: absolute;
   width: 20px;
   height: 20px;
@@ -77,7 +84,7 @@ const CompoundColorBullet = styled.div`
   border-radius: 50%;
   transition: all 0.2s ease-in-out;
   z-index: 1;
-
-  background-color: hsl(90, 80%, 65%);
+  
+  background-color: ${(props) => (COMPOUND_COLORS[props.color])};
   border: 1px solid var(--color-grey-light);
 `

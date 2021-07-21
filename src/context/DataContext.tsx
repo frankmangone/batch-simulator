@@ -1,5 +1,8 @@
 import { createContext, useContext, useState } from "react"
 
+/* Constants */
+import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
+
 /* Types */
 import { ICompound } from "../types/Compound"
 import { IFCWithChildren } from "../types/FCWithChildren"
@@ -29,15 +32,28 @@ export const useData = () => {
  */
 export const DataStore: React.FC<IFCWithChildren> = (props) => {
   const { children } = props
+  const [currentColor, setCurrentColor] = useState<number>(0)
   const [compounds, setCompounds] = useState<ICompound[]>([])
 
+  const nextColor = () => {
+    if (currentColor === COMPOUND_COLORS_CODES.length - 1) {
+      setCurrentColor(0)
+      return
+    }
+    setCurrentColor(currentColor + 1)
+  }
+  
   /**
    * TODO: This logic is fairly standard... Maybe create a reusable
    * hook to reuse it?
    */
   const addCompound = (compound: ICompound): void => {
     const oldCompounds = [...compounds]
-    oldCompounds.push(compound)
+    oldCompounds.push({
+      color: COMPOUND_COLORS_CODES[currentColor],
+      ...compound,
+    })
+    nextColor()
     setCompounds(oldCompounds)
   }
 
