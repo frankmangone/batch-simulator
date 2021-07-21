@@ -54,16 +54,18 @@ const SideContent = styled.div`
 
     a {
       align-items: center;
-      background: linear-gradient(145deg, #2e3135 24.15%, #26282b 73.55%);
-      border: 1px solid #292c30;
-      border-radius: 10px;
-      box-shadow: -6px -6px 8px #2e3135, 6px 6px 8px #151618;
-      color: #a8adb0;
+      background-color: var(--color-grey-light);
+      border-radius: 5px;
+      color: var(--color-grey-lightest);
       display: flex;
       justify-content: space-between;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       padding: 5px 10px;
       text-decoration: none;
+
+      &:hover {
+        background-color: var(--color-primary-dark);
+      }
 
       p {
         margin: 0;
@@ -73,10 +75,8 @@ const SideContent = styled.div`
 `
 
 const MainContent = styled.div`
-  background: linear-gradient(145deg, #34383e 24.15%, #26282b 73.55%);
-  border: 1px solid #292c30;
-  border-radius: 10px;
-  box-shadow: -6px -6px 8px #2e3135, 6px 6px 8px #151618;
+  background: var(--color-grey-light);
+  border-radius: 5px;
   flex-basis: 600px;
   padding: 20px;
 `

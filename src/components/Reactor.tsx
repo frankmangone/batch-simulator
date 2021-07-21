@@ -3,17 +3,18 @@ import styled from "styled-components"
 const Reactor: React.FC = () => {
   return (
     <ReactorWrapper>
-      <ReactorInterior></ReactorInterior>
+      <ReactorInterior>
+
+        <ReactorLiquid id='liquid'/>
+      </ReactorInterior>
     </ReactorWrapper>
   )
 }
 
 const ReactorWrapper = styled.div`
   position: relative;
-  background: linear-gradient(180deg, #586274 0%, #26282b 134.84%);
-  border: 1px solid #292c30;
-  border-radius: 10px;
-  box-shadow: -6px -6px 8px #2e3135, 6px 6px 8px #151618;
+  background-color: var(--color-grey-normal);
+  border-radius: 5px;
   height: 220px;
   margin-bottom: 40px;
 `
@@ -25,9 +26,19 @@ const ReactorInterior = styled.div`
   left: 10px;
   right: 10px;
 
-  background-color: #26282b;
-  box-shadow: inset -6px -6px 16px #2e3135, inset 6px 6px 16px #151618;
-  border-radius: 10px;
+  background-color: var(--color-grey-lighter);
+  border-radius: 2px;
+  overflow: hidden;
+`
+
+const ReactorLiquid = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  background-color: var(--color-grey-lightest);
+  height: 70%;
+  width: 100%;
 `
 
 export default Reactor

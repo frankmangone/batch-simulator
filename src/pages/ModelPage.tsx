@@ -3,7 +3,7 @@ import PageTitle from "../components/PageTitle"
 const ModelPage: React.FC = () => {
   return (
     <>
-      <PageTitle>MODEL</PageTitle>
+      <PageTitle>Model</PageTitle>
     </>
   )
 }
