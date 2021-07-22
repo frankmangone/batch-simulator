@@ -15,9 +15,7 @@ const InputsPage: React.FC = () => {
       <PageTitle>Inputs</PageTitle>
       <Button
         color='green'
-        onClick={() => {
-          addCompound({ symbol: "A", concentration: 0 })
-        }}
+        onClick={() => { addCompound() }}
       >
         Add <FiPlus />
       </Button>
