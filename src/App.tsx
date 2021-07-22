@@ -39,6 +39,35 @@ const GlobalStyles = createGlobalStyle`
     margin-top: 30px;
     background-color: var(--color-grey-lighter);
   }
+
+  a, button {
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes slide-out {
+    from {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    
+    to {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
 `
 
 const App = () => {

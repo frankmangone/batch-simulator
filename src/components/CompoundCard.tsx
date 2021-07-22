@@ -17,12 +17,13 @@ import { ICompound } from "../types/Compound"
 
 interface ICompoundCardProps {
   compound: ICompound
+  editCompound: () => void
   updateCompound: (compound: ICompound) => void
   validateUnicity: (field: string, value: any) => boolean
 }
 
 const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
-  const { compound, updateCompound, validateUnicity } = props
+  const { compound, editCompound, updateCompound, validateUnicity } = props
   const [symbolInput, setSymbolInput] = useState<string>(compound.symbol)
 
   /* Reference to Reactor liquid to change color on hover */
@@ -32,6 +33,9 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
     liquidRef.current = document.getElementById("liquid") || undefined
   }, [])
 
+  /**
+   * Form submission handling
+   */
   const handleSymbolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSymbolInput(event.target.value)
   }
@@ -50,6 +54,10 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
       setSymbolInput(compound.symbol)
     }
   }
+
+  /**
+   * Toggling
+   */
 
   return (
     <CompoundCardWrapper>
@@ -71,10 +79,13 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
             onChange={handleSymbolChange}
           />
         </CompoundSymbolInputWrapper>
-        <CompoundEditButton>
+
+        {/* Button to toggle modal edition */}
+        <CompoundEditButton onClick={editCompound}>
           <FiEdit />
         </CompoundEditButton>
 
+        {/* Bullet to display the color associated with the compound */}
         <CompoundColorBullet
           className="bullet"
           color={compound.color as keyof typeof COMPOUND_COLORS}
@@ -86,6 +97,10 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
 
 export default CompoundCard
 
+/**
+ * Styled components
+ */
+
 const CompoundCardWrapper = styled.li`
   flex-basis: 33%;
 `
@@ -96,6 +111,10 @@ const CompoundCardInner = styled.div`
   position: relative;
 
   align-items: center;
+  animation-name: slide-in;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.25s;
+  animation-iteration-count: 1;
   background-color: var(--color-grey-lighter);
   border-radius: 5px;
   display: flex;

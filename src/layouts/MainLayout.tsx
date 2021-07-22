@@ -58,13 +58,14 @@ const SideContent = styled.div`
       border-radius: 5px;
       color: var(--color-grey-lightest);
       display: flex;
+      font-size: 1.2rem;
       justify-content: space-between;
       margin-bottom: 10px;
       padding: 5px 10px;
       text-decoration: none;
 
       &:hover {
-        background-color: var(--color-primary-dark);
+        background-color: var(--color-grey-dark);
       }
 
       p {
@@ -79,4 +80,5 @@ const MainContent = styled.div`
   border-radius: 5px;
   flex-basis: 600px;
   padding: 20px;
+  position: relative;
 `

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react"
+import randomstring from "randomstring"
 
 /* Constants */
 import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
@@ -11,15 +12,19 @@ import { IFCWithChildren } from "../types/FCWithChildren"
 interface IDefaultValue {
   compounds: ICompound[]
   addCompound: () => void
+  editCompound: (index?: number) => void
   updateCompound: (index: number, updatedCompound: ICompound) => void
   removeCompound: (index: number) => void
+  editedCompoundId: string | undefined
 }
 
 const defaultValue: IDefaultValue = {
   compounds: [],
   addCompound: () => {},
+  editCompound: () => {},
   updateCompound: () => {},
   removeCompound: () => {},
+  editedCompoundId: undefined,
 }
 
 // Context Provider component
@@ -37,6 +42,9 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   const { children } = props
   const [currentColor, setCurrentColor] = useState<number>(0)
   const [compounds, setCompounds] = useState<ICompound[]>([])
+  const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
+    undefined
+  )
 
   /**
    * Helper functions
@@ -74,9 +82,19 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       color: COMPOUND_COLORS_CODES[currentColor],
       concentration: 0,
       symbol: availableSymbol(),
+      id: randomstring.generate(8),
     })
     nextColor()
     setCompounds(oldCompounds)
+  }
+
+  const editCompound = (index?: number) => {
+    if (typeof index === "undefined") {
+      setEditedCompoundId(undefined)
+      return
+    }
+    const id = compounds[index].id
+    setEditedCompoundId(id)
   }
 
   const updateCompound = (index: number, updatedCompound: ICompound) => {
@@ -94,7 +112,14 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
 
   return (
     <DataContext.Provider
-      value={{ compounds, addCompound, updateCompound, removeCompound }}
+      value={{
+        compounds,
+        addCompound,
+        editCompound,
+        updateCompound,
+        removeCompound,
+        editedCompoundId,
+      }}
     >
       {children}
     </DataContext.Provider>
