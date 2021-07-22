@@ -42,7 +42,18 @@ const GlobalStyles = createGlobalStyle`
 
   a, button {
     cursor: pointer;
+  }
+
+  a, button, input {
     transition: all 0.15s ease-in-out;
+  }
+
+  input {
+    background-color: unset;
+    border: none;
+    color: var(--color-grey-dark);
+    font-size: 1rem;
+    outline: none;
   }
 
   @keyframes slide-in {

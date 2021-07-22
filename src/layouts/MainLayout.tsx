@@ -81,4 +81,5 @@ const MainContent = styled.div`
   flex-basis: 600px;
   padding: 20px;
   position: relative;
+  overflow: hidden;
 `
