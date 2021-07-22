@@ -79,10 +79,11 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     const oldCompounds = [...compounds]
 
     oldCompounds.push({
+      id: randomstring.generate(8),
       color: COMPOUND_COLORS_CODES[currentColor],
       concentration: 0,
       symbol: availableSymbol(),
-      id: randomstring.generate(8),
+      name: "",
     })
     nextColor()
     setCompounds(oldCompounds)

@@ -1,3 +1,3 @@
 export interface IFCWithChildren {
-  children?: JSX.Element | JSX.Element[]
+  children?: string | JSX.Element | JSX.Element[]
 }
