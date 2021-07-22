@@ -8,8 +8,12 @@ import { FiX } from "react-icons/fi"
 /* Constants */
 import { COMPOUND_COLORS } from "../constants/compoundColors"
 
+/* Helpers */
+import { validateNotEmpty, validateGreaterThan } from '../helpers/validators'
+
 /* Hooks */
 import { useState } from "react"
+import { useData } from '../context/DataContext'
 
 /* Types */
 import { ICompound } from "../types/Compound"
@@ -21,17 +25,54 @@ interface ICompoundEditCardProps {
 
 const CompoundEditModal: React.FC<ICompoundEditCardProps> = (props) => {
   const { compound, closeModal } = props
+  const { compounds } = useData()
   const [closing, setClosing] = useState<boolean>(false)
+
+  /**
+   * Validate method for Formik
+   */
+  interface IErrors  {
+    symbol?: string
+    concentration?: string
+    name?: string
+  }
+
+  const validate = (values: ICompound) => {
+    const errors: IErrors = {}
+
+    /* Symbol validation */
+    if (!validateNotEmpty(values.symbol)) errors.symbol = 'Symbol cannot be empty'
+    else if (!validateUnicity('symbol', values.symbol)) errors.symbol = 'Symbol is already used'
+
+    /* Concentration validation */
+    if (!validateNotEmpty(values.concentration)) errors.concentration = 'Concentration cannot be empty'
+    if (!validateGreaterThan(values.concentration, 0, true)) errors.concentration = 'Concentration cannot lower than 0'
+  
+    return errors
+  }
+
+  const validateUnicity = (field: string, value: any): boolean => {
+    const index = compounds.findIndex((comp) => comp.id === compound.id)
+    for (var i = 0; i < compounds.length; i++) {
+      // @ts-ignore
+      if (i !== index && compounds[i][field] === value) {
+        return false
+      }
+    }
+    return true
+  }
 
   /**
    * Formik form initialization
    */
   const formik = useFormik({
+    // @ts-ignore
     initialValues: {
       symbol: compound.symbol,
       concentration: compound.concentration,
       name: compound.name,
     },
+    validate,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
     },
@@ -63,6 +104,7 @@ const CompoundEditModal: React.FC<ICompoundEditCardProps> = (props) => {
               onChange={formik.handleChange}
               value={formik.values.symbol}
             />
+            { formik.errors.symbol && <p>{formik.errors.symbol}</p> }
           </SymbolFieldInput>
 
           <FieldInput>
@@ -73,6 +115,7 @@ const CompoundEditModal: React.FC<ICompoundEditCardProps> = (props) => {
               onChange={formik.handleChange}
               value={formik.values.concentration}
             />
+            { formik.errors.concentration && <p>{formik.errors.concentration}</p> }
           </FieldInput>
 
           <FieldInput>
