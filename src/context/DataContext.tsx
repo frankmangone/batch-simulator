@@ -11,12 +11,14 @@ import { IFCWithChildren } from "../types/FCWithChildren"
 interface IDefaultValue {
   compounds: ICompound[]
   addCompound: () => void
+  updateCompound: (index: number, updatedCompound: ICompound) => void
   removeCompound: (index: number) => void
 }
 
 const defaultValue: IDefaultValue = {
   compounds: [],
   addCompound: () => {},
+  updateCompound: () => {},
   removeCompound: () => {},
 }
 
@@ -63,8 +65,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   }
 
   /**
-   * TODO: This logic is fairly standard... Maybe create a reusable
-   * hook to reuse it?
+   * Compounds state handling
    */
   const addCompound = (): void => {
     const oldCompounds = [...compounds]
@@ -78,6 +79,12 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setCompounds(oldCompounds)
   }
 
+  const updateCompound = (index: number, updatedCompound: ICompound) => {
+    const updatedCompounds = [...compounds]
+    updatedCompounds[index] = updatedCompound
+    setCompounds(updatedCompounds)
+  }
+
   const removeCompound = (index: number): void => {
     setCompounds([
       ...compounds.slice(0, index),
@@ -86,7 +93,9 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   }
 
   return (
-    <DataContext.Provider value={{ compounds, addCompound, removeCompound }}>
+    <DataContext.Provider
+      value={{ compounds, addCompound, updateCompound, removeCompound }}
+    >
       {children}
     </DataContext.Provider>
   )

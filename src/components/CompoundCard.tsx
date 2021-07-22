@@ -4,37 +4,75 @@ import styled from "styled-components"
 import { COMPOUND_COLORS } from "../constants/compoundColors"
 
 /* Hooks */
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+
+/* Helpers */
+import { validateNotEmpty } from "../helpers/validators"
 
 /* Types */
 import { ICompound } from "../types/Compound"
+
 interface ICompoundCardProps {
   compound: ICompound
+  updateCompound: (compound: ICompound) => void
+  validateUnicity: (field: string, value: any) => boolean
 }
 
 const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
-  const { compound } = props
+  const { compound, updateCompound, validateUnicity } = props
+  const [symbolInput, setSymbolInput] = useState<string>(compound.symbol)
+
+  /* Reference to Reactor liquid to change color on hover */
   const liquidRef = useRef<HTMLElement>()
 
   useEffect(() => {
-    // @ts-ignore
-    liquidRef.current = document.getElementById("liquid")
+    liquidRef.current = document.getElementById("liquid") || undefined
   }, [])
+
+  const handleSymbolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSymbolInput(event.target.value)
+  }
+
+  const validateAndUpdateSymbol = () => {
+    if (
+      validateNotEmpty(symbolInput) &&
+      validateUnicity("symbol", symbolInput)
+    ) {
+      /* Update symbol */
+      const updatedCompound = { ...compound }
+      updatedCompound.symbol = symbolInput
+      updateCompound(updatedCompound)
+    } else {
+      /* Reset input initial state */
+      setSymbolInput(compound.symbol)
+    }
+  }
 
   return (
     <CompoundCardWrapper>
       <CompoundCardInner
         onMouseEnter={() => {
           // @ts-ignore
-          liquidRef.current.style.backgroundColor = COMPOUND_COLORS[compound.color]
+          liquidRef.current.style.backgroundColor =
+            COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS]
         }}
         onMouseLeave={() => {
           // @ts-ignore
           liquidRef.current.style.backgroundColor = "hsl(213, 20%, 95%)"
         }}
       >
-        <h1>{compound.symbol}</h1>
-        <CompoundColorBullet className="bullet" color={compound.color as keyof typeof COMPOUND_COLORS} />
+        <CompoundSymbolInputWrapper className="symbol-input">
+          <input
+            value={symbolInput}
+            onBlur={validateAndUpdateSymbol}
+            onChange={handleSymbolChange}
+          />
+        </CompoundSymbolInputWrapper>
+
+        <CompoundColorBullet
+          className="bullet"
+          color={compound.color as keyof typeof COMPOUND_COLORS}
+        />
       </CompoundCardInner>
     </CompoundCardWrapper>
   )
@@ -59,15 +97,15 @@ const CompoundCardInner = styled.div`
   cursor: pointer;
   overflow: hidden;
 
-  h1 {
-    margin: 0;
-    color: var(--color-grey-dark);
-    z-index: 2;
-  }
-
-  &:hover > .bullet {
-    transform: scale(18);
-    border-color: var(--color-grey-lighter);
+  &:hover {
+    & > .bullet {
+      transform: scale(18);
+      border-color: var(--color-grey-lighter);
+    }
+    & > .symbol-input:after {
+      margin-left: 0%;
+      width: auto;
+    }
   }
 `
 
@@ -84,7 +122,31 @@ const CompoundColorBullet = styled.div<ICompoundColorBulletProps>`
   border-radius: 50%;
   transition: all 0.2s ease-in-out;
   z-index: 1;
-  
-  background-color: ${(props) => (COMPOUND_COLORS[props.color])};
+
+  background-color: ${(props) => COMPOUND_COLORS[props.color]};
   border: 1px solid var(--color-grey-light);
+`
+
+const CompoundSymbolInputWrapper = styled.div`
+  z-index: 2;
+
+  &:after {
+    content: "";
+    display: block;
+    height: 2px;
+    margin-left: 100%;
+    width: 0;
+    background-color: var(--color-grey-dark);
+    transition: margin-left 0.15s ease-in-out;
+  }
+
+  input {
+    background-color: unset;
+    border: none;
+    color: var(--color-grey-dark);
+    font-size: 2rem;
+    margin: 0;
+    outline: none;
+    width: 100%;
+  }
 `
