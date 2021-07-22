@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+/* Components */
+import { FiEdit } from "react-icons/fi"
+
 /* Constants */
 import { COMPOUND_COLORS } from "../constants/compoundColors"
 
@@ -68,6 +71,9 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
             onChange={handleSymbolChange}
           />
         </CompoundSymbolInputWrapper>
+        <CompoundEditButton>
+          <FiEdit />
+        </CompoundEditButton>
 
         <CompoundColorBullet
           className="bullet"
@@ -96,8 +102,18 @@ const CompoundCardInner = styled.div`
   color: #f7f3f2;
   cursor: pointer;
   overflow: hidden;
+  transition: all 0.15s ease-in-out;
 
   &:hover {
+    & {
+      box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+    }
+
+    & > button {
+      opacity: 1;
+    }
+
     & > .bullet {
       transform: scale(18);
       border-color: var(--color-grey-lighter);
@@ -148,5 +164,25 @@ const CompoundSymbolInputWrapper = styled.div`
     margin: 0;
     outline: none;
     width: 100%;
+  }
+`
+
+const CompoundEditButton = styled.button`
+  align-items: center;
+  align-self: stretch;
+  background-color: unset;
+  border: none;
+  border-radius: 5px;
+  color: var(--color-grey-dark);
+  cursor: pointer;
+  display: flex;
+  opacity: 0;
+  font-size: 1.6em;
+  margin-left: 1rem;
+  transition: all 0.15s ease-in-out;
+  z-index: 2;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 `
