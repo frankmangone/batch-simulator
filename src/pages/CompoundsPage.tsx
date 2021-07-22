@@ -5,10 +5,19 @@ import CompoundList from "../components/CompoundList"
 import { FiPlus } from "react-icons/fi"
 
 /* Hooks */
+import { useEffect } from "react"
 import { useData } from "../context/DataContext"
 
 const CompoundsPage: React.FC = () => {
-  const { compounds, addCompound } = useData()
+  const { compounds, addCompound, editCompound } = useData()
+
+  useEffect(() => {
+    return () => {
+      /* Sets edited compound to undefined */
+      editCompound()
+    }
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <>

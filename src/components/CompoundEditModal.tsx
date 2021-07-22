@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { useFormik } from "formik"
 
 /* Components */
+import Button from './Button'
 import { FiX } from "react-icons/fi"
 
 /* Constants */
@@ -57,6 +58,7 @@ const CompoundEditModal: React.FC<ICompoundEditCardProps> = (props) => {
             <label htmlFor="symbol">Symbol:</label>
             <input
               name="symbol"
+              autoComplete="off"
               color={compound.color}
               onChange={formik.handleChange}
               value={formik.values.symbol}
@@ -64,7 +66,7 @@ const CompoundEditModal: React.FC<ICompoundEditCardProps> = (props) => {
           </SymbolFieldInput>
 
           <FieldInput>
-            <label htmlFor="concentration">Concentration:</label>
+            <label htmlFor="concentration">Concentration [mol/L]:</label>
             <input
               name="concentration"
               type="number"
@@ -77,17 +79,13 @@ const CompoundEditModal: React.FC<ICompoundEditCardProps> = (props) => {
             <label htmlFor="name">Compound name (optional):</label>
             <input
               name="name"
+              autoComplete="off"
               onChange={formik.handleChange}
               value={formik.values.name}
             />
           </FieldInput>
+          <SubmitButton color='green'>Done</SubmitButton>
         </form>
-        {/* <h1>{compound.symbol}</h1>
-        <p>Concentration: {compound.concentration} mol/L</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p>
-        <p>a</p> */}
       </CompoundEditModalInner>
     </CompoundEditModalWrapper>
   )
@@ -185,12 +183,18 @@ const CompoundEditModalInner = styled.div<IClosing>`
   }
 
   input {
-    border-radius: 5px;
-    padding: 0.3rem 1rem;
-    min-width: 0;
     background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    flex-grow: 1;
+    min-width: 0;
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
 
     &:hover, &:focus {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &:autofill {
       background-color: rgba(255, 255, 255, 0.2);
     }
 
@@ -221,7 +225,7 @@ const CloseButton = styled.button<IClosing>`
 
 const FieldInput = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   align-self: stretch;
   flex-wrap: wrap;
   padding: 0.5rem;
@@ -239,12 +243,25 @@ const SymbolFieldInput = styled.div<ISymbolInputProps>`
   border-radius: 5px;
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
   display: flex;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   padding: 1rem;
   
+  label {
+    font-size: 1.5rem;
+  }
+
   input {
     font-size: 3rem;
     margin-left: 1rem;
   }
+`
+
+const SubmitButton = styled(Button)`
+  font-size: 1.2rem;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-left: 10%;
+  padding: 0.5rem;
+  width: 80%;
 `
