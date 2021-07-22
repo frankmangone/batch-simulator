@@ -8,7 +8,7 @@ import { DataStore } from "./context/DataContext"
 import MainLayout from "./layouts/MainLayout"
 
 /* Pages */
-import InputsPage from "./pages/InputsPage"
+import CompoundsPage from "./pages/CompoundsPage"
 import ModelPage from "./pages/ModelPage"
 import ResultsPage from "./pages/ResultsPage"
 
@@ -77,7 +77,7 @@ const App = () => {
         <GlobalStyles />
         <MainLayout>
           <Switch>
-            <Route path="/inputs" component={InputsPage} />
+            <Route path="/compounds" component={CompoundsPage} />
             <Route path="/model" component={ModelPage} />
             <Route path="/results" component={ResultsPage} />
           </Switch>

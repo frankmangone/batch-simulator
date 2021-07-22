@@ -16,8 +16,8 @@ const MainLayout: React.FC<IProps> = (props) => {
       <SideContent>
         <Reactor />
         <nav>
-          <Link to="/inputs">
-            <p>Inputs</p>
+          <Link to="/compounds">
+            <p>Compounds</p>
             <FiChevronRight />
           </Link>
           <Link to="/model">

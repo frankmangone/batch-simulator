@@ -1,5 +1,5 @@
 /* Components */
-import Button from '../components/Button'
+import Button from "../components/Button"
 import PageTitle from "../components/PageTitle"
 import CompoundList from "../components/CompoundList"
 import { FiPlus } from "react-icons/fi"
@@ -7,15 +7,17 @@ import { FiPlus } from "react-icons/fi"
 /* Hooks */
 import { useData } from "../context/DataContext"
 
-const InputsPage: React.FC = () => {
+const CompoundsPage: React.FC = () => {
   const { compounds, addCompound } = useData()
 
   return (
     <>
-      <PageTitle>Inputs</PageTitle>
+      <PageTitle>Compounds</PageTitle>
       <Button
-        color='green'
-        onClick={() => { addCompound() }}
+        color="green"
+        onClick={() => {
+          addCompound()
+        }}
       >
         Add <FiPlus />
       </Button>
@@ -24,4 +26,4 @@ const InputsPage: React.FC = () => {
   )
 }
 
-export default InputsPage
+export default CompoundsPage
