@@ -1,11 +1,8 @@
 export interface IReaction {
   id: string
 
-  /**
-   * Both reactants and products are arrays of compound ids
-   */
-  reactants: string[]
-  products: string[]
+  reactants: IReactionCompound[]
+  products: IReactionCompound[]
 
   /**
    * Kinetic model may have a function later, but for now,
@@ -16,4 +13,9 @@ export interface IReaction {
    */
   kineticModel: number
   kineticConstants: { [key: string]: number }
+}
+
+export interface IReactionCompound {
+  compoundId: string
+  stoichiometricCoefficient: number
 }

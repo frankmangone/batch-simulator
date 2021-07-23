@@ -130,6 +130,35 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setReactions(updatedReactions)
   }
 
+  /**
+   *
+   * @param index The reaction index
+   * @param compoundId The compound id
+   */
+  const addReactantToReaction = (index: number, compoundId: string): void => {
+    const updatedReactions = [...reactions]
+
+    updatedReactions[index].reactants = [...updatedReactions[index].reactants] // Necessary?
+    updatedReactions[index].reactants.push({
+      compoundId,
+      stoichiometricCoefficient: 1,
+    })
+
+    setReactions(updatedReactions)
+  }
+
+  const addProductToReaction = (index: number, compoundId: string): void => {
+    const updatedReactions = [...reactions]
+
+    updatedReactions[index].products = [...updatedReactions[index].products] // Necessary?
+    updatedReactions[index].products.push({
+      compoundId,
+      stoichiometricCoefficient: 1,
+    })
+
+    setReactions(updatedReactions)
+  }
+
   return (
     <DataContext.Provider
       value={{
