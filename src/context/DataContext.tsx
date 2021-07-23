@@ -11,21 +11,31 @@ import { IReaction } from "../types/Reaction"
 import { IFCWithChildren } from "../types/FCWithChildren"
 
 interface IDefaultValue {
+  /* Compounds */
   compounds: ICompound[]
   addCompound: () => void
   editCompound: (index?: number) => void
   updateCompound: (index: number, updatedCompound: ICompound) => void
   removeCompound: (index: number) => void
   editedCompoundId: string | undefined
+
+  /* Reactions */
+  reactions: IReaction[]
+  addReaction: () => void
 }
 
 const defaultValue: IDefaultValue = {
+  /* Compounds */
   compounds: [],
   addCompound: () => {},
   editCompound: () => {},
   updateCompound: () => {},
   removeCompound: () => {},
   editedCompoundId: undefined,
+
+  /* Reactions */
+  reactions: [],
+  addReaction: () => {}
 }
 
 // Context Provider component
@@ -162,12 +172,16 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   return (
     <DataContext.Provider
       value={{
+        /* Compounds */
         compounds,
         addCompound,
         editCompound,
         updateCompound,
         removeCompound,
         editedCompoundId,
+        /* Reactions */
+        reactions,
+        addReaction,
       }}
     >
       {children}

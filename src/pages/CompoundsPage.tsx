@@ -24,9 +24,7 @@ const CompoundsPage: React.FC = () => {
       <PageTitle>Compounds</PageTitle>
       <Button
         color="green"
-        onClick={() => {
-          addCompound()
-        }}
+        onClick={addCompound}
       >
         Add <FiPlus />
       </Button>
