@@ -82,7 +82,7 @@ const CompoundEditModal: React.FC<ICompoundEditCardProps> = (props) => {
     onSubmit: (values) => {
       const updatedCompound = { ...compound, ...values }
       updateCompound(compoundIndex, updatedCompound)
-      closeModal()
+      handleClose()
     },
   })
 

@@ -34,6 +34,13 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
   }, [])
 
   /**
+   * Update symbol input on compound update
+   */
+  useEffect(() => {
+    setSymbolInput(compound.symbol)
+  }, [compound])
+
+  /**
    * Form submission handling
    */
   const handleSymbolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
