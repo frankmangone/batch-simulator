@@ -7,6 +7,7 @@ import { COMPOUND_SYMBOLS } from "../constants/compoundSymbols"
 
 /* Types */
 import { ICompound } from "../types/Compound"
+import { IReaction } from "../types/Reaction"
 import { IFCWithChildren } from "../types/FCWithChildren"
 
 interface IDefaultValue {
@@ -42,6 +43,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   const { children } = props
   const [currentColor, setCurrentColor] = useState<number>(0)
   const [compounds, setCompounds] = useState<ICompound[]>([])
+  const [reactions, setReactions] = useState<IReaction[]>([])
   const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
     undefined
   )
@@ -76,9 +78,9 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
    * Compounds state handling
    */
   const addCompound = (): void => {
-    const oldCompounds = [...compounds]
+    const updatedCompounds = [...compounds]
 
-    oldCompounds.push({
+    updatedCompounds.push({
       id: randomstring.generate(8),
       color: COMPOUND_COLORS_CODES[currentColor],
       concentration: 0,
@@ -86,7 +88,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       name: "",
     })
     nextColor()
-    setCompounds(oldCompounds)
+    setCompounds(updatedCompounds)
   }
 
   const editCompound = (index?: number) => {
@@ -109,6 +111,23 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       ...compounds.slice(0, index),
       ...compounds.slice(index + 1, compounds.length),
     ])
+  }
+
+  /**
+   * Reactions state handling
+   */
+
+  const addReaction = (): void => {
+    const updatedReactions = [...reactions]
+
+    updatedReactions.push({
+      id: randomstring.generate(8),
+      reactants: [],
+      products: [],
+      kineticModel: 0,
+      kineticConstants: {},
+    })
+    setReactions(updatedReactions)
   }
 
   return (

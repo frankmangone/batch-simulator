@@ -13,7 +13,7 @@ const CompoundsPage: React.FC = () => {
 
   useEffect(() => {
     return () => {
-      /* Sets edited compound to undefined */
+      /* Sets edited compound to undefined on dismount */
       editCompound()
     }
     // eslint-disable-next-line
