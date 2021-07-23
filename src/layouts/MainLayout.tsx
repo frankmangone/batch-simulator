@@ -20,8 +20,8 @@ const MainLayout: React.FC<IProps> = (props) => {
             <p>Compounds</p>
             <FiChevronRight />
           </Link>
-          <Link to="/model">
-            <p>Model</p>
+          <Link to="/reactions">
+            <p>Reactions</p>
             <FiChevronRight />
           </Link>
           <Link to="/results">
