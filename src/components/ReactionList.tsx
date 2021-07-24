@@ -7,13 +7,22 @@ import { useData } from "../context/DataContext"
 
 /* Types */
 import { IReaction } from "../types/Reaction"
+import { CompoundType } from "../context/DataContext"
 
 const ReactionList: React.FC = () => {
-  const { reactions, editedReactionId, editReaction, removeReaction } =
-    useData()
+  const {
+    reactions,
+    addCompoundToReaction,
+    editedReactionId,
+    editReaction,
+    removeReaction,
+  } = useData()
 
-  const editedReaction = editedReactionId
-    ? reactions.find((reaction) => reaction.id === editedReactionId)
+  const editedReactionIndex = editedReactionId
+    ? reactions.findIndex((reaction) => reaction.id === editedReactionId)
+    : undefined
+  const editedReaction = editedReactionIndex
+    ? reactions[editedReactionIndex]
     : undefined
 
   return (
@@ -37,6 +46,16 @@ const ReactionList: React.FC = () => {
       {editedReactionId && (
         <ReactionEditModal
           reaction={editedReaction as IReaction}
+          addCompoundToReaction={(
+            compoundId: string,
+            compoundType: CompoundType
+          ) => {
+            addCompoundToReaction(
+              editedReactionIndex as number,
+              compoundId,
+              compoundType
+            )
+          }}
           closeModal={() => editReaction()}
         />
       )}

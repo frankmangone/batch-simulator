@@ -8,14 +8,19 @@ import { useState } from "react"
 
 /* Types */
 import { IReaction } from "../types/Reaction"
+import { CompoundType } from "../context/DataContext"
 
 interface IReactionEditModalProps {
   reaction: IReaction
   closeModal: () => void
+  addCompoundToReaction: (
+    compoundId: string,
+    compoundType: CompoundType
+  ) => void
 }
 
 const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
-  const { reaction, closeModal } = props
+  const { reaction, addCompoundToReaction, closeModal } = props
   const [closing, setClosing] = useState<boolean>(false)
 
   return (
