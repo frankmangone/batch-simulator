@@ -150,6 +150,28 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   }
 
   const removeCompound = (index: number): void => {
+    const compoundId = compounds[index].id
+
+    /**
+     * Remove from reactions that have this compound
+     */
+    const updatedReactions = JSON.parse(JSON.stringify(reactions))
+    updatedReactions.forEach((reaction: IReaction) => {
+      reaction.reactants = reaction.reactants.filter(
+        (reactionCompound: IReactionCompound) =>
+          reactionCompound.compoundId !== compoundId
+      )
+
+      reaction.products = reaction.products.filter(
+        (reactionCompound: IReactionCompound) =>
+          reactionCompound.compoundId !== compoundId
+      )
+    })
+    setReactions(updatedReactions)
+
+    /**
+     * Remove from compounds array
+     */
     setCompounds([
       ...compounds.slice(0, index),
       ...compounds.slice(index + 1, compounds.length),

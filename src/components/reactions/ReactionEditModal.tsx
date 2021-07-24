@@ -40,7 +40,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
     number | undefined
   >(undefined)
 
-  /* Derived state */
+  /* For formik state */
   const selectReactantInitialValue = selectReactantIndex
     ? {
         value: selectReactantIndex,
@@ -152,7 +152,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
 
 export default ReactionEditModal
 
-const CompoundsInputSection = styled.section`
+const CompoundsInputSection = styled.div`
   display: flex;
   flex-wrap: wrap;
 
