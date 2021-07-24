@@ -171,7 +171,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       setEditedReactionId(undefined)
       return
     }
-    const id = compounds[index].id
+    const id = reactions[index].id
     setEditedReactionId(id)
   }
 
