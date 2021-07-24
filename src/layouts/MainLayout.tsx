@@ -78,7 +78,7 @@ const SideContent = styled.div`
 const MainContent = styled.div`
   background: var(--color-grey-light);
   border-radius: 5px;
-  flex-basis: 600px;
+  flex-basis: 650px;
   padding: 20px;
   position: relative;
   overflow: hidden;

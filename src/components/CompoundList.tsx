@@ -16,7 +16,7 @@ interface ICompoundListProps {
 
 const CompoundList: React.FC<ICompoundListProps> = (props) => {
   const { compounds } = props
-  const { editedCompoundId, editCompound, updateCompound } = useData()
+  const { editedCompoundId, editCompound, updateCompound, removeCompound } = useData()
 
   const editedCompound = editedCompoundId
     ? compounds.find((compound) => compound.id === editedCompoundId)
@@ -33,6 +33,9 @@ const CompoundList: React.FC<ICompoundListProps> = (props) => {
           }}
           updateCompound={(compound: ICompound): void => {
             updateCompound(index, compound)
+          }}
+          removeCompound={(): void => {
+            removeCompound(index)
           }}
           validateUnicity={(field: string, value: any): boolean => {
             for (var i = 0; i < compounds.length; i++) {

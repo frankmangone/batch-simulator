@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 /* Components */
-import { FiEdit } from "react-icons/fi"
+import { FiEdit, FiTrash2 } from "react-icons/fi"
 
 /* Constants */
 import { COMPOUND_COLORS } from "../constants/compoundColors"
@@ -20,10 +20,11 @@ interface ICompoundCardProps {
   editCompound: () => void
   updateCompound: (compound: ICompound) => void
   validateUnicity: (field: string, value: any) => boolean
+  removeCompound: () => void
 }
 
 const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
-  const { compound, editCompound, updateCompound, validateUnicity } = props
+  const { compound, editCompound, updateCompound, removeCompound, validateUnicity } = props
   const [symbolInput, setSymbolInput] = useState<string>(compound.symbol)
 
   /* Reference to Reactor liquid to change color on hover */
@@ -88,9 +89,14 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
         </CompoundSymbolInputWrapper>
 
         {/* Button to toggle modal edition */}
-        <CompoundEditButton onClick={editCompound}>
+        <CompoundCardButton onClick={editCompound}>
           <FiEdit />
-        </CompoundEditButton>
+        </CompoundCardButton>
+
+        {/* Button to delete the compound */}
+        <CompoundCardButton onClick={removeCompound}>
+          <FiTrash2 />
+        </CompoundCardButton>
 
         {/* Bullet to display the color associated with the compound */}
         <CompoundColorBullet
@@ -125,7 +131,7 @@ const CompoundCardInner = styled.div`
   background-color: var(--color-grey-lighter);
   border-radius: 5px;
   display: flex;
-  color: #f7f3f2;
+  color: var(--color-grey-lightest);
   cursor: pointer;
   overflow: hidden;
   transition: all 0.15s ease-in-out;
@@ -141,7 +147,7 @@ const CompoundCardInner = styled.div`
     }
 
     & > .bullet {
-      transform: scale(18);
+      transform: scale(20);
       border-color: var(--color-grey-lighter);
     }
     & > .symbol-input:after {
@@ -170,6 +176,7 @@ const CompoundColorBullet = styled.div<ICompoundColorBulletProps>`
 `
 
 const CompoundSymbolInputWrapper = styled.div`
+  margin-right: 0.5rem;
   z-index: 2;
 
   &:after {
@@ -193,7 +200,7 @@ const CompoundSymbolInputWrapper = styled.div`
   }
 `
 
-const CompoundEditButton = styled.button`
+const CompoundCardButton = styled.button`
   align-items: center;
   align-self: stretch;
   background-color: unset;
@@ -203,8 +210,9 @@ const CompoundEditButton = styled.button`
   cursor: pointer;
   display: flex;
   opacity: 0;
-  font-size: 1.6em;
-  margin-left: 1rem;
+  font-size: 1.5em;
+  margin-left: 0.2rem;
+  padding: 0.5rem;
   transition: all 0.15s ease-in-out;
   z-index: 2;
 
