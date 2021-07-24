@@ -1,7 +1,7 @@
 /* Components */
 import Button from "../components/Button"
 import PageTitle from "../components/PageTitle"
-import ReactionList from "../components/ReactionList"
+import ReactionList from "../components/reactions/ReactionList"
 import { FiPlus } from "react-icons/fi"
 
 /* Hooks */

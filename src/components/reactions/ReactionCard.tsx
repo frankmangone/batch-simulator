@@ -1,11 +1,11 @@
 import styled from "styled-components"
 
 /* Components */
-import CardButton from "./CardButton"
+import CardButton from "../CardButton"
 import { FiEdit, FiTrash2 } from "react-icons/fi"
 
 /* Types */
-import { IReaction } from "../types/Reaction"
+import { IReaction } from "../../types/Reaction"
 
 interface IReactionCardProps {
   reaction: IReaction

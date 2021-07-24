@@ -1,19 +1,19 @@
 import styled from "styled-components"
 
 /* Components */
-import Button from "./Button"
-import EditModal from "./EditModal"
+import Button from "../Button"
+import EditModal from "../EditModal"
 import ReactionCompoundList from "./ReactionCompoundList"
-import Select from "./Select"
+import Select from "../Select"
 import { FiPlus } from "react-icons/fi"
 
 /* Hooks */
 import { useState } from "react"
 
 /* Types */
-import { ICompound } from "../types/Compound"
-import { IReaction } from "../types/Reaction"
-import { CompoundType } from "../context/DataContext"
+import { ICompound } from "../../types/Compound"
+import { IReaction } from "../../types/Reaction"
+import { CompoundType } from "../../context/DataContext"
 
 interface IReactionEditModalProps {
   compounds: ICompound[]

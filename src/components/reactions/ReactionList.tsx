@@ -3,11 +3,11 @@ import ReactionCard from "./ReactionCard"
 import ReactionEditModal from "./ReactionEditModal"
 
 /* Hooks */
-import { useData } from "../context/DataContext"
+import { useData } from "../../context/DataContext"
 
 /* Types */
-import { IReaction } from "../types/Reaction"
-import { CompoundType } from "../context/DataContext"
+import { IReaction } from "../../types/Reaction"
+import { CompoundType } from "../../context/DataContext"
 
 const ReactionList: React.FC = () => {
   const {

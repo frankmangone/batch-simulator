@@ -5,10 +5,10 @@ import CompoundCard from "./CompoundCard"
 import CompoundEditModal from "./CompoundEditModal"
 
 /* Hooks */
-import { useData } from "../context/DataContext"
+import { useData } from "../../context/DataContext"
 
 /* Types */
-import { ICompound } from "../types/Compound"
+import { ICompound } from "../../types/Compound"
 
 interface ICompoundListProps {
   compounds: ICompound[]

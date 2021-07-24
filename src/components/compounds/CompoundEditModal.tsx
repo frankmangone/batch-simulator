@@ -2,23 +2,23 @@ import styled from "styled-components"
 import { useFormik } from "formik"
 
 /* Components */
-import Button from "./Button"
-import Error from "./Error"
-import Input from "./Input"
-import EditModal from "./EditModal"
+import Button from "../Button"
+import Error from "../Error"
+import Input from "../Input"
+import EditModal from "../EditModal"
 
 /* Constants */
-import { COMPOUND_COLORS } from "../constants/compoundColors"
+import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 /* Helpers */
-import { validateNotEmpty, validateGreaterThan } from "../helpers/validators"
+import { validateNotEmpty, validateGreaterThan } from "../../helpers/validators"
 
 /* Hooks */
 import { useState } from "react"
-import { useData } from "../context/DataContext"
+import { useData } from "../../context/DataContext"
 
 /* Types */
-import { ICompound } from "../types/Compound"
+import { ICompound } from "../../types/Compound"
 
 interface ICompoundEditModalProps {
   compound: ICompound

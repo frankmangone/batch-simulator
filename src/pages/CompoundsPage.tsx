@@ -1,7 +1,7 @@
 /* Components */
 import Button from "../components/Button"
 import PageTitle from "../components/PageTitle"
-import CompoundList from "../components/CompoundList"
+import CompoundList from "../components/compounds/CompoundList"
 import { FiPlus } from "react-icons/fi"
 
 /* Hooks */
@@ -22,10 +22,7 @@ const CompoundsPage: React.FC = () => {
   return (
     <>
       <PageTitle>Compounds</PageTitle>
-      <Button
-        color="green"
-        onClick={addCompound}
-      >
+      <Button color="green" onClick={addCompound}>
         Add <FiPlus />
       </Button>
       <CompoundList compounds={compounds} />

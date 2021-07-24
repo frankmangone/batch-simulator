@@ -1,20 +1,20 @@
 import styled from "styled-components"
 
 /* Components */
-import CardButton from "./CardButton"
+import CardButton from "../CardButton"
 import { FiEdit, FiTrash2 } from "react-icons/fi"
 
 /* Constants */
-import { COMPOUND_COLORS } from "../constants/compoundColors"
+import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 /* Hooks */
 import { useEffect, useRef, useState } from "react"
 
 /* Helpers */
-import { validateNotEmpty } from "../helpers/validators"
+import { validateNotEmpty } from "../../helpers/validators"
 
 /* Types */
-import { ICompound } from "../types/Compound"
+import { ICompound } from "../../types/Compound"
 
 interface ICompoundCardProps {
   compound: ICompound
