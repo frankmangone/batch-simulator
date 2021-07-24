@@ -29,9 +29,26 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       setClosing={setClosing}
       handleClose={closeModal}
     >
-      <p>hola</p>
+      <CompoundsInputSection>
+        <div>
+          <h2>Reactants</h2>
+        </div>
+        <div>
+          <h2>Products</h2>
+        </div>
+      </CompoundsInputSection>
     </EditModal>
   )
 }
 
 export default ReactionEditModal
+
+const CompoundsInputSection = styled.section`
+  display: flex;
+
+  h2 {
+    color: var(--color-grey-dark);
+    font-size: 20px;
+    margin-top: 0;
+  }
+`

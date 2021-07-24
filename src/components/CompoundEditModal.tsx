@@ -165,7 +165,6 @@ const SymbolFieldInput = styled(FieldInput)<ISymbolInputProps>`
     COMPOUND_COLORS[props.color as keyof typeof COMPOUND_COLORS]};
   border-radius: 5px;
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
-  margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   padding: 1rem;
 

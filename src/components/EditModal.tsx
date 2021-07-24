@@ -116,6 +116,7 @@ const CompoundEditModalInner = styled.div<IClosing>`
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   padding: 2rem;
+  padding-top: 3.5rem;
   z-index: 3;
 
   /* Override animation upon modal close */
