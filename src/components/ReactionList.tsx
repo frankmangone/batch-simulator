@@ -9,7 +9,8 @@ import { useData } from "../context/DataContext"
 import { IReaction } from "../types/Reaction"
 
 const ReactionList: React.FC = () => {
-  const { reactions, editedReactionId, editReaction } = useData()
+  const { reactions, editedReactionId, editReaction, removeReaction } =
+    useData()
 
   const editedReaction = editedReactionId
     ? reactions.find((reaction) => reaction.id === editedReactionId)
@@ -22,6 +23,9 @@ const ReactionList: React.FC = () => {
           reaction={reaction}
           editReaction={(): void => {
             editReaction(index)
+          }}
+          removeReaction={(): void => {
+            removeReaction(index)
           }}
           key={index}
         >

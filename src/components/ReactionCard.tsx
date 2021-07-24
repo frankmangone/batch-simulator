@@ -10,19 +10,22 @@ import { IReaction } from "../types/Reaction"
 interface IReactionCardProps {
   reaction: IReaction
   editReaction: () => void
+  removeReaction: () => void
   // updateCompound: (compound: ICompound) => void
   // validateUnicity: (field: string, value: any) => boolean
-  // removeCompound: () => void
 }
 
 const ReactionCard: React.FC<IReactionCardProps> = (props) => {
-  const { reaction, editReaction } = props
+  const { reaction, editReaction, removeReaction } = props
 
   return (
     <ReactionCardWrapper>
       <p>Reaction</p>
       <CardButton onClick={editReaction}>
         <FiEdit />
+      </CardButton>
+      <CardButton onClick={removeReaction}>
+        <FiTrash2 />
       </CardButton>
     </ReactionCardWrapper>
   )

@@ -13,10 +13,10 @@ import { IFCWithChildren } from "../types/FCWithChildren"
 /**
  * To mark whether if a compound is a reactant or a product,
  * the following enum is used
- *  */ 
+ *  */
 export enum CompoundType {
   Reactant = 0,
-  Product
+  Product,
 }
 
 interface IDefaultValue {
@@ -31,7 +31,13 @@ interface IDefaultValue {
   /* Reactions */
   reactions: IReaction[]
   addReaction: () => void
+  addCompoundToReaction: (
+    index: number,
+    compoundId: string,
+    compoundType: CompoundType
+  ) => void
   editReaction: (index?: number) => void
+  removeReaction: (index: number) => void
   editedReactionId: string | undefined
 }
 
@@ -47,7 +53,9 @@ const defaultValue: IDefaultValue = {
   /* Reactions */
   reactions: [],
   addReaction: () => {},
+  addCompoundToReaction: () => {},
   editReaction: () => {},
+  removeReaction: () => {},
   editedReactionId: undefined,
 }
 
@@ -167,16 +175,27 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setEditedReactionId(id)
   }
 
+  const removeReaction = (index: number): void => {
+    setReactions([
+      ...reactions.slice(0, index),
+      ...reactions.slice(index + 1, reactions.length),
+    ])
+  }
+
   /**
    * Handle compound addition to reactions
    */
-  const addCompoundToReaction = (index: number, compoundId: string, compoundType: CompoundType): void => {
+  const addCompoundToReaction = (
+    index: number,
+    compoundId: string,
+    compoundType: CompoundType
+  ): void => {
     const updatedReactions = [...reactions]
 
     /* Determine which array to push to */
-    let key: keyof IReaction = 'products'
-    if (compoundType === CompoundType.Reactant) key = 'reactants'
-    
+    let key: keyof IReaction = "products"
+    if (compoundType === CompoundType.Reactant) key = "reactants"
+
     // updatedReactions[index][key] = [...updatedReactions[index][key]]
     updatedReactions[index][key].push({
       compoundId,
@@ -200,7 +219,9 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         /* Reactions */
         reactions,
         addReaction,
+        addCompoundToReaction,
         editReaction,
+        removeReaction,
         editedReactionId,
       }}
     >
