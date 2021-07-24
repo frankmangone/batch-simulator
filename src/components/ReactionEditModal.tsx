@@ -63,13 +63,6 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       <CompoundsInputSection>
         <CompoundInputWrapper>
           <h2>Reactants</h2>
-          <CompoundInputInner>
-            {reaction.reactants.length !== 0 ? (
-              <ReactionCompoundList />
-            ) : (
-              <NoCompounds>No compounds...</NoCompounds>
-            )}
-          </CompoundInputInner>
           <AddCompound>
             <Select
               defaultDisplayValue="Compound..."
@@ -86,7 +79,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             <Button
               color="green"
               onClick={() => {
-                if (selectReactantIndex)
+                if (selectReactantIndex !== undefined)
                   addCompoundToReaction(
                     compounds[selectReactantIndex].id,
                     CompoundType.Reactant
@@ -96,17 +89,17 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               Add <FiPlus />
             </Button>
           </AddCompound>
-        </CompoundInputWrapper>
-
-        <CompoundInputWrapper>
-          <h2>Products</h2>
           <CompoundInputInner>
-            {reaction.products.length !== 0 ? (
-              <ReactionCompoundList />
+            {reaction.reactants.length !== 0 ? (
+              <ReactionCompoundList reactionCompounds={reaction.reactants} />
             ) : (
               <NoCompounds>No compounds...</NoCompounds>
             )}
           </CompoundInputInner>
+        </CompoundInputWrapper>
+
+        <CompoundInputWrapper>
+          <h2>Products</h2>
           <AddCompound>
             <Select
               defaultDisplayValue="Compound..."
@@ -123,7 +116,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             <Button
               color="green"
               onClick={() => {
-                if (selectProductIndex)
+                if (selectProductIndex !== undefined)
                   addCompoundToReaction(
                     compounds[selectProductIndex].id,
                     CompoundType.Product
@@ -133,6 +126,13 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               Add <FiPlus />
             </Button>
           </AddCompound>
+          <CompoundInputInner>
+            {reaction.products.length !== 0 ? (
+              <ReactionCompoundList reactionCompounds={reaction.products} />
+            ) : (
+              <NoCompounds>No compounds...</NoCompounds>
+            )}
+          </CompoundInputInner>
         </CompoundInputWrapper>
       </CompoundsInputSection>
     </EditModal>
@@ -164,8 +164,7 @@ const CompoundInputWrapper = styled.div`
 const CompoundInputInner = styled.div`
   background-color: var(--color-grey-lightest);
   border-radius: 5px;
-  margin: 0.3rem;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0.3rem;
   padding: 0.5rem;
 `
 
