@@ -3,6 +3,7 @@ import styled from "styled-components"
 /* Components */
 import Button from "../Button"
 import EditModal from "../EditModal"
+import Notice from "../Notice"
 import ReactionCompoundList from "./ReactionCompoundList"
 import Select from "../Select"
 import { FiPlus } from "react-icons/fi"
@@ -100,7 +101,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
                 compoundType={CompoundType.Reactant}
               />
             ) : (
-              <NoCompounds>No compounds...</NoCompounds>
+              <Notice>No compounds...</Notice>
             )}
           </CompoundInputInner>
         </CompoundInputWrapper>
@@ -141,7 +142,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
                 compoundType={CompoundType.Product}
               />
             ) : (
-              <NoCompounds>No compounds...</NoCompounds>
+              <Notice>No compounds...</Notice>
             )}
           </CompoundInputInner>
         </CompoundInputWrapper>
@@ -186,10 +187,4 @@ const AddCompound = styled.div`
   & > button {
     margin-left: 0.5rem;
   }
-`
-
-const NoCompounds = styled.p`
-  color: var(--color-grey-normal);
-  font-style: italic;
-  margin: 0.5rem;
 `

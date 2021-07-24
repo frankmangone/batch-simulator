@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 /* Components */
 import CardButton from "../CardButton"
+import ReactionPreview from "./ReactionPreview"
 import { FiEdit, FiTrash2 } from "react-icons/fi"
 
 /* Types */
@@ -11,16 +12,14 @@ interface IReactionCardProps {
   reaction: IReaction
   editReaction: () => void
   removeReaction: () => void
-  // updateCompound: (compound: ICompound) => void
-  // validateUnicity: (field: string, value: any) => boolean
 }
 
 const ReactionCard: React.FC<IReactionCardProps> = (props) => {
-  const { editReaction, removeReaction } = props
+  const { reaction, editReaction, removeReaction } = props
 
   return (
     <ReactionCardWrapper>
-      <p>Reaction</p>
+      <ReactionPreview reaction={reaction} />
       <CardButton onClick={editReaction}>
         <FiEdit />
       </CardButton>
@@ -53,6 +52,8 @@ const ReactionCardWrapper = styled.div`
   transition: all 0.15s ease-in-out;
 
   &:hover {
+    background-color: var(--color-grey-lightest);
+
     & {
       box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
       transform: translateY(-2px);
