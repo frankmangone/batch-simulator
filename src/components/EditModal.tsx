@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+/* Components */
+import { FiX } from "react-icons/fi"
+
 /* Types */
 import { IFCWithChildren } from "../types/FCWithChildren"
 
@@ -7,14 +10,20 @@ export interface IClosing {
   closing?: boolean
 }
 
-type IEditModalProps = IClosing & IFCWithChildren
+type IEditModalProps = IClosing &
+  IFCWithChildren & {
+    handleClose: () => void
+  }
 
 const EditModal: React.FC<IEditModalProps> = (props) => {
-  const { children, closing } = props
+  const { children, closing, handleClose } = props
 
   return (
     <CompoundEditModalWrapper closing={closing}>
       <CompoundEditModalInner closing={closing}>
+        <CloseButton onClick={handleClose} closing={closing}>
+          <FiX />
+        </CloseButton>
         {children}
       </CompoundEditModalInner>
     </CompoundEditModalWrapper>
@@ -124,5 +133,24 @@ const CompoundEditModalInner = styled.div<IClosing>`
     &:focus {
       box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
     }
+  }
+`
+
+const CloseButton = styled.button<IClosing>`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  align-items: center;
+  background-color: unset;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  ${(props) => (props.closing ? "disabled: true;" : "")}
+  font-size: 1.3rem;
+  padding: 0.5rem;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 `

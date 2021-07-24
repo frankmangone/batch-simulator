@@ -21,12 +21,12 @@ import { useData } from "../context/DataContext"
 /* Types */
 import { ICompound } from "../types/Compound"
 
-interface ICompoundEditCardProps {
+interface ICompoundEditModalProps {
   compound: ICompound
   closeModal: () => void
 }
 
-const CompoundEditModal: React.FC<ICompoundEditCardProps> = (props) => {
+const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
   const { compound, closeModal } = props
   const { compounds, updateCompound } = useData()
   const [closing, setClosing] = useState<boolean>(false)
@@ -98,10 +98,7 @@ const CompoundEditModal: React.FC<ICompoundEditCardProps> = (props) => {
   }
 
   return (
-    <EditModal closing={closing}>
-      <CloseButton onClick={handleClose} closing={closing}>
-        <FiX />
-      </CloseButton>
+    <EditModal closing={closing} handleClose={handleClose}>
       <form onSubmit={formik.handleSubmit}>
         <SymbolFieldInput color={compound.color}>
           <label htmlFor="symbol">Symbol:</label>
@@ -152,25 +149,6 @@ export default CompoundEditModal
 /**
  * Styled components
  */
-
-const CloseButton = styled.button<IClosing>`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-
-  align-items: center;
-  background-color: unset;
-  border: none;
-  border-radius: 5px;
-  display: flex;
-  ${(props) => (props.closing ? "disabled: true;" : "")}
-  font-size: 1.3rem;
-  padding: 0.5rem;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-`
 
 const FieldInput = styled.div`
   display: flex;
