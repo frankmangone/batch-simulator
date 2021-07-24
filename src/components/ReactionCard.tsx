@@ -16,7 +16,7 @@ interface IReactionCardProps {
 }
 
 const ReactionCard: React.FC<IReactionCardProps> = (props) => {
-  const { reaction, editReaction, removeReaction } = props
+  const { editReaction, removeReaction } = props
 
   return (
     <ReactionCardWrapper>

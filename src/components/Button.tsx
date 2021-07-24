@@ -12,14 +12,13 @@ const Button = styled.button<IButton>`
   display: flex;
   font-size: 1.1rem;
   justify-content: space-between;
-  margin-bottom: 10px;
   padding: 5px 10px;
   text-decoration: none;
 
-  ${(props) => (colorsBase(props.color))}
+  ${(props) => colorsBase(props.color)}
 
   &:hover {
-    ${(props) => (colorsHover(props.color))}
+    ${(props) => colorsHover(props.color)}
   }
 `
 

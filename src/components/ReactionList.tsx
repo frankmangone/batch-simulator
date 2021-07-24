@@ -11,6 +11,7 @@ import { CompoundType } from "../context/DataContext"
 
 const ReactionList: React.FC = () => {
   const {
+    compounds,
     reactions,
     addCompoundToReaction,
     editedReactionId,
@@ -21,8 +22,9 @@ const ReactionList: React.FC = () => {
   const editedReactionIndex = editedReactionId
     ? reactions.findIndex((reaction) => reaction.id === editedReactionId)
     : undefined
-  const editedReaction = editedReactionIndex
-    ? reactions[editedReactionIndex]
+
+  const editedReaction = editedReactionId
+    ? reactions[editedReactionIndex as number]
     : undefined
 
   return (
@@ -45,6 +47,7 @@ const ReactionList: React.FC = () => {
       {/* Edit modal */}
       {editedReactionId && (
         <ReactionEditModal
+          compounds={compounds}
           reaction={editedReaction as IReaction}
           addCompoundToReaction={(
             compoundId: string,

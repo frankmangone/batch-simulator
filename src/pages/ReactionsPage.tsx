@@ -5,10 +5,19 @@ import ReactionList from "../components/ReactionList"
 import { FiPlus } from "react-icons/fi"
 
 /* Hooks */
+import { useEffect } from "react"
 import { useData } from "../context/DataContext"
 
 const ReactionsPage: React.FC = () => {
-  const { addReaction } = useData()
+  const { addReaction, editReaction } = useData()
+
+  useEffect(() => {
+    return () => {
+      /* Sets edited reaction to undefined on dismount */
+      editReaction()
+    }
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <>

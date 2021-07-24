@@ -46,6 +46,7 @@ const MainLayoutWrapper = styled.div`
 
 const SideContent = styled.div`
   flex-basis: 180px;
+  flex-shrink: 0;
   margin-right: 20px;
 
   nav {
@@ -81,5 +82,4 @@ const MainContent = styled.div`
   flex-basis: 650px;
   padding: 20px;
   position: relative;
-  overflow: hidden;
 `

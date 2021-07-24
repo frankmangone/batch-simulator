@@ -65,6 +65,7 @@ const CompoundEditModalWrapper = styled.div<IClosing>`
   animation-timing-function: ease-in-out;
   animation-duration: 0.25s;
   animation-iteration-count: 1;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
 
