@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
 /* Components */
+import CardButton from "./CardButton"
 import { FiEdit, FiTrash2 } from "react-icons/fi"
 
 /* Constants */
@@ -24,7 +25,13 @@ interface ICompoundCardProps {
 }
 
 const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
-  const { compound, editCompound, updateCompound, removeCompound, validateUnicity } = props
+  const {
+    compound,
+    editCompound,
+    updateCompound,
+    removeCompound,
+    validateUnicity,
+  } = props
   const [symbolInput, setSymbolInput] = useState<string>(compound.symbol)
 
   /* Reference to Reactor liquid to change color on hover */
@@ -89,14 +96,14 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
         </CompoundSymbolInputWrapper>
 
         {/* Button to toggle modal edition */}
-        <CompoundCardButton onClick={editCompound}>
+        <CardButton onClick={editCompound}>
           <FiEdit />
-        </CompoundCardButton>
+        </CardButton>
 
         {/* Button to delete the compound */}
-        <CompoundCardButton onClick={removeCompound}>
+        <CardButton onClick={removeCompound}>
           <FiTrash2 />
-        </CompoundCardButton>
+        </CardButton>
 
         {/* Bullet to display the color associated with the compound */}
         <CompoundColorBullet
@@ -197,26 +204,5 @@ const CompoundSymbolInputWrapper = styled.div`
     margin: 0;
     outline: none;
     width: 100%;
-  }
-`
-
-const CompoundCardButton = styled.button`
-  align-items: center;
-  align-self: stretch;
-  background-color: unset;
-  border: none;
-  border-radius: 5px;
-  color: var(--color-grey-dark);
-  cursor: pointer;
-  display: flex;
-  opacity: 0;
-  font-size: 1.5em;
-  margin-left: 0.2rem;
-  padding: 0.5rem;
-  transition: all 0.15s ease-in-out;
-  z-index: 2;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
   }
 `

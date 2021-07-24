@@ -1,8 +1,8 @@
 /* Components */
-import ReactionCard from './ReactionCard'
+import ReactionCard from "./ReactionCard"
 
 /* Hooks */
-import { useData } from '../context/DataContext'
+import { useData } from "../context/DataContext"
 
 const ReactionList: React.FC = () => {
   const { reactions } = useData()
@@ -10,7 +10,9 @@ const ReactionList: React.FC = () => {
   return (
     <>
       {reactions.map((reaction, index) => (
-        <ReactionCard reaction={reaction} key={index}>Reaction</ReactionCard>
+        <ReactionCard reaction={reaction} editReaction={() => {}} key={index}>
+          Reaction
+        </ReactionCard>
       ))}
     </>
   )

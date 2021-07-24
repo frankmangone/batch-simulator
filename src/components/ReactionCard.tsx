@@ -1,18 +1,31 @@
-import styled from 'styled-components'
+import styled from "styled-components"
+
+/* Components */
+import CardButton from "./CardButton"
+import { FiEdit, FiTrash2 } from "react-icons/fi"
 
 /* Types */
-import { IReaction } from '../types/Reaction'
+import { IReaction } from "../types/Reaction"
 
 interface IReactionCardProps {
   reaction: IReaction
-  // editCompound: () => void
+  editReaction: () => void
   // updateCompound: (compound: ICompound) => void
   // validateUnicity: (field: string, value: any) => boolean
   // removeCompound: () => void
 }
 
 const ReactionCard: React.FC<IReactionCardProps> = (props) => {
-  return <ReactionCardWrapper>Reaction</ReactionCardWrapper>
+  const { reaction, editReaction } = props
+
+  return (
+    <ReactionCardWrapper>
+      <p>Reaction</p>
+      <CardButton onClick={editReaction}>
+        <FiEdit />
+      </CardButton>
+    </ReactionCardWrapper>
+  )
 }
 
 export default ReactionCard
@@ -54,5 +67,10 @@ const ReactionCardWrapper = styled.div`
       margin-left: 0%;
       width: auto;
     }
+  }
+
+  p {
+    flex-grow: 1;
+    margin: 0;
   }
 `
