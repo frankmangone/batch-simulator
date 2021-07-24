@@ -5,6 +5,7 @@ import ReactionCompoundCard from "./ReactionCompoundCard"
 import { useData } from "../../context/DataContext"
 
 /* Types */
+import { ICompound } from "../../types/Compound"
 import { IReactionCompound } from "../../types/Reaction"
 import { CompoundType } from "../../context/DataContext"
 
@@ -21,10 +22,15 @@ const ReactionCompoundList: React.FC<IReactionCompoundListProps> = (props) => {
   return (
     <>
       {reactionCompounds.map((reactionCompound) => {
-        const compoundIndex = compounds.findIndex(
+        const compound = compounds.find(
           (c) => c.id === reactionCompound.compoundId
+        ) as ICompound
+        /**
+         * compoundIndex is the index in the reaction object (reactants or products)
+         *  */
+        const compoundIndex = reactionCompounds.findIndex(
+          (c) => c.compoundId === reactionCompound.compoundId
         ) as number
-        const compound = compounds[compoundIndex]
 
         return (
           <ReactionCompoundCard

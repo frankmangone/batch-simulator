@@ -228,8 +228,9 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     /* Determine which array to push to */
     const key = getCompoundKey(compoundType)
 
-    updatedReactions[reactionIndex][key][compoundIndex] =
-      updatedReactionCompound
+    const updatedCompounds = [...updatedReactions[reactionIndex][key]]
+    updatedCompounds[compoundIndex] = updatedReactionCompound
+    updatedReactions[reactionIndex][key] = updatedCompounds
 
     setReactions(updatedReactions)
   }
