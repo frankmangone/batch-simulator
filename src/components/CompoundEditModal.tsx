@@ -5,8 +5,7 @@ import { useFormik } from "formik"
 import Button from "./Button"
 import Error from "./Error"
 import Input from "./Input"
-import { default as EditModal, IClosing } from "./EditModal"
-import { FiX } from "react-icons/fi"
+import EditModal from "./EditModal"
 
 /* Constants */
 import { COMPOUND_COLORS } from "../constants/compoundColors"
@@ -83,22 +82,16 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
     onSubmit: (values) => {
       const updatedCompound = { ...compound, ...values }
       updateCompound(compoundIndex, updatedCompound)
-      handleClose()
+      setClosing(true)
     },
   })
 
-  const handleClose = () => {
-    /**
-     * Animate and close modal after slide animation
-     */
-    setClosing(true)
-    setTimeout(() => {
-      closeModal()
-    }, 250)
-  }
-
   return (
-    <EditModal closing={closing} handleClose={handleClose}>
+    <EditModal
+      closing={closing}
+      setClosing={setClosing}
+      handleClose={closeModal}
+    >
       <form onSubmit={formik.handleSubmit}>
         <SymbolFieldInput color={compound.color}>
           <label htmlFor="symbol">Symbol:</label>

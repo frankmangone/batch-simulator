@@ -3,6 +3,9 @@ import styled from "styled-components"
 /* Components */
 import { FiX } from "react-icons/fi"
 
+/* Hooks */
+import { useEffect } from "react"
+
 /* Types */
 import { IFCWithChildren } from "../types/FCWithChildren"
 
@@ -12,16 +15,34 @@ export interface IClosing {
 
 type IEditModalProps = IClosing &
   IFCWithChildren & {
+    setClosing: (closing: boolean) => void
     handleClose: () => void
   }
 
 const EditModal: React.FC<IEditModalProps> = (props) => {
-  const { children, closing, handleClose } = props
+  const { children, closing, setClosing, handleClose } = props
+
+  const closeModal = () => {
+    /**
+     * Animate and close modal after slide animation
+     */
+    setClosing(true)
+    setTimeout(() => {
+      handleClose()
+    }, 250)
+  }
+
+  useEffect(() => {
+    if (closing) {
+      closeModal()
+    }
+    // eslint-disable-next-line
+  }, [closing])
 
   return (
     <CompoundEditModalWrapper closing={closing}>
       <CompoundEditModalInner closing={closing}>
-        <CloseButton onClick={handleClose} closing={closing}>
+        <CloseButton onClick={closeModal} closing={closing}>
           <FiX />
         </CloseButton>
         {children}

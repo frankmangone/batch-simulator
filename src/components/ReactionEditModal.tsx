@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 /* Components */
-import { default as EditModal, IClosing } from "./EditModal"
+import EditModal from "./EditModal"
 
 /* Hooks */
 import { useState } from "react"
@@ -19,7 +19,11 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const [closing, setClosing] = useState<boolean>(false)
 
   return (
-    <EditModal closing={closing} handleClose={() => {}}>
+    <EditModal
+      closing={closing}
+      setClosing={setClosing}
+      handleClose={closeModal}
+    >
       <p>hola</p>
     </EditModal>
   )

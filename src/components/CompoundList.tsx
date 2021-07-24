@@ -16,7 +16,8 @@ interface ICompoundListProps {
 
 const CompoundList: React.FC<ICompoundListProps> = (props) => {
   const { compounds } = props
-  const { editedCompoundId, editCompound, updateCompound, removeCompound } = useData()
+  const { editedCompoundId, editCompound, updateCompound, removeCompound } =
+    useData()
 
   const editedCompound = editedCompoundId
     ? compounds.find((compound) => compound.id === editedCompoundId)
@@ -48,6 +49,8 @@ const CompoundList: React.FC<ICompoundListProps> = (props) => {
           }}
         />
       ))}
+
+      {/* Edit modal */}
       {editedCompoundId && (
         <CompoundEditModal
           compound={editedCompound as ICompound}
