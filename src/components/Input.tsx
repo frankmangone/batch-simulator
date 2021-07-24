@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 interface IInputProps extends React.HTMLProps<HTMLInputElement> {
-  errors: boolean
+  errors?: boolean
 }
 
 const Input = styled.input<IInputProps>`

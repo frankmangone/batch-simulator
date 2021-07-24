@@ -43,11 +43,28 @@ const GlobalStyles = createGlobalStyle`
   }
 
   input {
-    background-color: unset;
+    background-color: rgba(0, 0, 0, 0.1);
     border: none;
-    color: var(--color-grey-dark);
-    font-size: 1rem;
+    border-radius: 5px;
+    flex-grow: 1;
+    min-width: 0;
+    width: 0;
+    margin-left: 1rem;
     outline: none;
+    padding: 0.5rem 1rem;
+
+    &:hover,
+    &:focus {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &:autofill {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &:focus {
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+    }
   }
 
   /**

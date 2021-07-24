@@ -87,13 +87,11 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
           liquidRef.current.style.backgroundColor = "hsl(213, 20%, 95%)"
         }}
       >
-        <CompoundSymbolInputWrapper className="symbol-input">
-          <input
-            value={symbolInput}
-            onBlur={validateAndUpdateSymbol}
-            onChange={handleSymbolChange}
-          />
-        </CompoundSymbolInputWrapper>
+        <SymbolInput
+          value={symbolInput}
+          onBlur={validateAndUpdateSymbol}
+          onChange={handleSymbolChange}
+        />
 
         {/* Button to toggle modal edition */}
         <CardButton onClick={editCompound}>
@@ -154,13 +152,17 @@ const CompoundCardInner = styled.div`
     }
 
     & > .bullet {
-      transform: scale(20);
+      transform: scale(25);
       border-color: var(--color-grey-lighter);
     }
     & > .symbol-input:after {
       margin-left: 0%;
       width: auto;
     }
+  }
+
+  button {
+    padding: 0.8rem;
   }
 `
 
@@ -182,27 +184,9 @@ const CompoundColorBullet = styled.div<ICompoundColorBulletProps>`
   border: 1px solid var(--color-grey-light);
 `
 
-const CompoundSymbolInputWrapper = styled.div`
+const SymbolInput = styled.input`
+  font-size: 2rem;
+  margin-left: 0;
   margin-right: 0.5rem;
   z-index: 2;
-
-  &:after {
-    content: "";
-    display: block;
-    height: 2px;
-    margin-left: 100%;
-    width: 0;
-    background-color: var(--color-grey-dark);
-    transition: margin-left 0.15s ease-in-out;
-  }
-
-  input {
-    background-color: unset;
-    border: none;
-    color: var(--color-grey-dark);
-    font-size: 2rem;
-    margin: 0;
-    outline: none;
-    width: 100%;
-  }
 `

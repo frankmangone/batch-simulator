@@ -79,7 +79,7 @@ const SideContent = styled.div`
 const MainContent = styled.div`
   background: var(--color-grey-light);
   border-radius: 5px;
-  flex-basis: 650px;
+  flex-basis: 750px;
   min-height: 600px;
   padding: 20px;
   position: relative;
