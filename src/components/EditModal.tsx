@@ -56,10 +56,10 @@ export default EditModal
 const CompoundEditModalWrapper = styled.div<IClosing>`
   position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  min-height: 100%;
+  background-color: var(--color-grey-light);
 
   animation-name: dim-in;
   animation-timing-function: ease-in-out;
@@ -67,7 +67,6 @@ const CompoundEditModalWrapper = styled.div<IClosing>`
   animation-iteration-count: 1;
   border-radius: 5px;
   display: flex;
-  flex-direction: column;
 
   /* Override animation upon modal close */
   ${(props) =>
@@ -103,12 +102,7 @@ const CompoundEditModalWrapper = styled.div<IClosing>`
 `
 
 const CompoundEditModalInner = styled.div<IClosing>`
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
-
+  align-self: stretch;
   animation-name: slide-in;
   animation-timing-function: ease-in-out;
   animation-duration: 0.25s;
@@ -116,8 +110,11 @@ const CompoundEditModalInner = styled.div<IClosing>`
   background-color: var(--color-grey-lighter);
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
+  flex-grow: 1;
+  margin: 10px;
   padding: 2rem;
   padding-top: 3.5rem;
+  position: relative;
   z-index: 3;
 
   /* Override animation upon modal close */
