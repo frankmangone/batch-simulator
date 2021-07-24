@@ -10,6 +10,15 @@ import { ICompound } from "../types/Compound"
 import { IReaction } from "../types/Reaction"
 import { IFCWithChildren } from "../types/FCWithChildren"
 
+/**
+ * To mark whether if a compound is a reactant or a product,
+ * the following enum is used
+ *  */ 
+export enum CompoundType {
+  Reactant = 0,
+  Product
+}
+
 interface IDefaultValue {
   /* Compounds */
   compounds: ICompound[]
@@ -22,6 +31,8 @@ interface IDefaultValue {
   /* Reactions */
   reactions: IReaction[]
   addReaction: () => void
+  editReaction: (index?: number) => void
+  editedReactionId: string | undefined
 }
 
 const defaultValue: IDefaultValue = {
@@ -35,7 +46,9 @@ const defaultValue: IDefaultValue = {
 
   /* Reactions */
   reactions: [],
-  addReaction: () => {}
+  addReaction: () => {},
+  editReaction: () => {},
+  editedReactionId: undefined,
 }
 
 // Context Provider component
@@ -54,7 +67,12 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   const [currentColor, setCurrentColor] = useState<number>(0)
   const [compounds, setCompounds] = useState<ICompound[]>([])
   const [reactions, setReactions] = useState<IReaction[]>([])
+
+  // To keep track of edited elements:
   const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
+    undefined
+  )
+  const [editedReactionId, setEditedReactionId] = useState<string | undefined>(
     undefined
   )
 
@@ -140,28 +158,27 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setReactions(updatedReactions)
   }
 
-  /**
-   *
-   * @param index The reaction index
-   * @param compoundId The compound id
-   */
-  const addReactantToReaction = (index: number, compoundId: string): void => {
-    const updatedReactions = [...reactions]
-
-    updatedReactions[index].reactants = [...updatedReactions[index].reactants] // Necessary?
-    updatedReactions[index].reactants.push({
-      compoundId,
-      stoichiometricCoefficient: 1,
-    })
-
-    setReactions(updatedReactions)
+  const editReaction = (index?: number) => {
+    if (typeof index === "undefined") {
+      setEditedReactionId(undefined)
+      return
+    }
+    const id = compounds[index].id
+    setEditedReactionId(id)
   }
 
-  const addProductToReaction = (index: number, compoundId: string): void => {
+  /**
+   * Handle compound addition to reactions
+   */
+  const addCompoundToReaction = (index: number, compoundId: string, compoundType: CompoundType): void => {
     const updatedReactions = [...reactions]
 
-    updatedReactions[index].products = [...updatedReactions[index].products] // Necessary?
-    updatedReactions[index].products.push({
+    /* Determine which array to push to */
+    let key: keyof IReaction = 'products'
+    if (compoundType === CompoundType.Reactant) key = 'reactants'
+    
+    // updatedReactions[index][key] = [...updatedReactions[index][key]]
+    updatedReactions[index][key].push({
       compoundId,
       stoichiometricCoefficient: 1,
     })
@@ -179,9 +196,12 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         updateCompound,
         removeCompound,
         editedCompoundId,
+
         /* Reactions */
         reactions,
         addReaction,
+        editReaction,
+        editedReactionId,
       }}
     >
       {children}

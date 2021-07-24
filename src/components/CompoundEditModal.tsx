@@ -5,6 +5,7 @@ import { useFormik } from "formik"
 import Button from "./Button"
 import Error from "./Error"
 import Input from "./Input"
+import { default as EditModal, IClosing } from "./EditModal"
 import { FiX } from "react-icons/fi"
 
 /* Constants */
@@ -97,54 +98,52 @@ const CompoundEditModal: React.FC<ICompoundEditCardProps> = (props) => {
   }
 
   return (
-    <CompoundEditModalWrapper closing={closing}>
-      <CompoundEditModalInner closing={closing}>
-        <CloseButton onClick={handleClose} closing={closing}>
-          <FiX />
-        </CloseButton>
-        <form onSubmit={formik.handleSubmit}>
-          <SymbolFieldInput color={compound.color}>
-            <label htmlFor="symbol">Symbol:</label>
-            <Input
-              errors={!!formik.errors.symbol}
-              name="symbol"
-              autoComplete="off"
-              color={compound.color}
-              onChange={formik.handleChange}
-              value={formik.values.symbol}
-            />
-            {formik.errors.symbol && <Error>{formik.errors.symbol}</Error>}
-          </SymbolFieldInput>
+    <EditModal closing={closing}>
+      <CloseButton onClick={handleClose} closing={closing}>
+        <FiX />
+      </CloseButton>
+      <form onSubmit={formik.handleSubmit}>
+        <SymbolFieldInput color={compound.color}>
+          <label htmlFor="symbol">Symbol:</label>
+          <Input
+            errors={!!formik.errors.symbol}
+            name="symbol"
+            autoComplete="off"
+            color={compound.color}
+            onChange={formik.handleChange}
+            value={formik.values.symbol}
+          />
+          {formik.errors.symbol && <Error>{formik.errors.symbol}</Error>}
+        </SymbolFieldInput>
 
-          <FieldInput>
-            <label htmlFor="concentration">Concentration [mol/L]:</label>
-            <Input
-              errors={!!formik.errors.concentration}
-              name="concentration"
-              type="number"
-              onChange={formik.handleChange}
-              value={formik.values.concentration}
-            />
-            {formik.errors.concentration && (
-              <Error>{formik.errors.concentration}</Error>
-            )}
-          </FieldInput>
+        <FieldInput>
+          <label htmlFor="concentration">Concentration [mol/L]:</label>
+          <Input
+            errors={!!formik.errors.concentration}
+            name="concentration"
+            type="number"
+            onChange={formik.handleChange}
+            value={formik.values.concentration}
+          />
+          {formik.errors.concentration && (
+            <Error>{formik.errors.concentration}</Error>
+          )}
+        </FieldInput>
 
-          <FieldInput>
-            <label htmlFor="name">Compound name (optional):</label>
-            <input
-              name="name"
-              autoComplete="off"
-              onChange={formik.handleChange}
-              value={formik.values.name}
-            />
-          </FieldInput>
-          <SubmitButton color="green" type="submit">
-            Done
-          </SubmitButton>
-        </form>
-      </CompoundEditModalInner>
-    </CompoundEditModalWrapper>
+        <FieldInput>
+          <label htmlFor="name">Compound name (optional):</label>
+          <input
+            name="name"
+            autoComplete="off"
+            onChange={formik.handleChange}
+            value={formik.values.name}
+          />
+        </FieldInput>
+        <SubmitButton color="green" type="submit">
+          Done
+        </SubmitButton>
+      </form>
+    </EditModal>
   )
 }
 
@@ -153,114 +152,6 @@ export default CompoundEditModal
 /**
  * Styled components
  */
-
-interface IClosing {
-  closing: boolean
-}
-
-const CompoundEditModalWrapper = styled.div<IClosing>`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-
-  animation-name: dim-in;
-  animation-timing-function: ease-in-out;
-  animation-duration: 0.25s;
-  animation-iteration-count: 1;
-  display: flex;
-  flex-direction: column;
-
-  /* Override animation upon modal close */
-  ${(props) =>
-    props.closing
-      ? `
-    animation-name: dim-out;
-    animation-timing-function: ease-in-out;
-    animation-duration: 0.25s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-  `
-      : ""}
-
-  @keyframes dim-in {
-    from {
-      background-color: rgba(0, 0, 0, 0);
-    }
-
-    to {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-  }
-
-  @keyframes dim-out {
-    from {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-
-    to {
-      background-color: rgba(0, 0, 0, 0);
-    }
-  }
-`
-
-const CompoundEditModalInner = styled.div<IClosing>`
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
-
-  animation-name: slide-in;
-  animation-timing-function: ease-in-out;
-  animation-duration: 0.25s;
-  animation-iteration-count: 1;
-  background-color: var(--color-grey-lighter);
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
-  border-radius: 5px;
-  padding: 2rem;
-  z-index: 3;
-
-  /* Override animation upon modal close */
-  ${(props) =>
-    props.closing
-      ? `
-    animation-name: slide-out;
-    animation-timing-function: ease-in-out;
-    animation-duration: 0.25s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-  `
-      : ""}
-
-  label {
-    color: var(--color-grey-dark);
-  }
-
-  input {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    flex-grow: 1;
-    min-width: 0;
-    margin-left: 1rem;
-    padding: 0.5rem 1rem;
-
-    &:hover,
-    &:focus {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    &:autofill {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    &:focus {
-      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
-    }
-  }
-`
 
 const CloseButton = styled.button<IClosing>`
   position: absolute;
