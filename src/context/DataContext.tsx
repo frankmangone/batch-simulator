@@ -7,7 +7,7 @@ import { COMPOUND_SYMBOLS } from "../constants/compoundSymbols"
 
 /* Types */
 import { ICompound } from "../types/Compound"
-import { IReaction } from "../types/Reaction"
+import { IReaction, IReactionCompound } from "../types/Reaction"
 import { IFCWithChildren } from "../types/FCWithChildren"
 
 /**
@@ -31,14 +31,20 @@ interface IDefaultValue {
   /* Reactions */
   reactions: IReaction[]
   addReaction: () => void
-  addCompoundToReaction: (
-    index: number,
-    compoundId: string,
-    compoundType: CompoundType
-  ) => void
   editReaction: (index?: number) => void
   removeReaction: (index: number) => void
   editedReactionId: string | undefined
+  addCompoundToReaction: (
+    reactionIndex: number,
+    compoundId: string,
+    compoundType: CompoundType
+  ) => void
+  updateReactionCompound: (
+    reactionIndex: number,
+    compoundIndex: number,
+    compoundType: CompoundType,
+    updatedReactionCompound: IReactionCompound
+  ) => void
 }
 
 const defaultValue: IDefaultValue = {
@@ -53,10 +59,11 @@ const defaultValue: IDefaultValue = {
   /* Reactions */
   reactions: [],
   addReaction: () => {},
-  addCompoundToReaction: () => {},
   editReaction: () => {},
   removeReaction: () => {},
   editedReactionId: undefined,
+  addCompoundToReaction: () => {},
+  updateReactionCompound: () => {},
 }
 
 // Context Provider component
@@ -183,8 +190,15 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   }
 
   /**
-   * Handle compound addition to reactions
+   * Handle reaction compound state
    */
+  const getCompoundKey = (
+    compoundType: CompoundType
+  ): "products" | "reactants" => {
+    if (compoundType === CompoundType.Reactant) return "reactants"
+    return "products"
+  }
+
   const addCompoundToReaction = (
     index: number,
     compoundId: string,
@@ -193,14 +207,29 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     const updatedReactions = [...reactions]
 
     /* Determine which array to push to */
-    let key: keyof IReaction = "products"
-    if (compoundType === CompoundType.Reactant) key = "reactants"
+    const key = getCompoundKey(compoundType)
 
-    // updatedReactions[index][key] = [...updatedReactions[index][key]]
     updatedReactions[index][key].push({
       compoundId,
       stoichiometricCoefficient: 1,
     })
+
+    setReactions(updatedReactions)
+  }
+
+  const updateReactionCompound = (
+    reactionIndex: number,
+    compoundIndex: number,
+    compoundType: CompoundType,
+    updatedReactionCompound: IReactionCompound
+  ): void => {
+    const updatedReactions = [...reactions]
+
+    /* Determine which array to push to */
+    const key = getCompoundKey(compoundType)
+
+    updatedReactions[reactionIndex][key][compoundIndex] =
+      updatedReactionCompound
 
     setReactions(updatedReactions)
   }
@@ -219,10 +248,11 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         /* Reactions */
         reactions,
         addReaction,
-        addCompoundToReaction,
         editReaction,
         removeReaction,
         editedReactionId,
+        addCompoundToReaction,
+        updateReactionCompound,
       }}
     >
       {children}

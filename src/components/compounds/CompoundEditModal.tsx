@@ -175,6 +175,7 @@ const SymbolFieldInput = styled(FieldInput)<ISymbolInputProps>`
   input {
     font-size: 3rem;
     margin-left: 1rem;
+    width: 0;
   }
 `
 

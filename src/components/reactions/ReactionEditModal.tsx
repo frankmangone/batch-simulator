@@ -9,6 +9,7 @@ import { FiPlus } from "react-icons/fi"
 
 /* Hooks */
 import { useState } from "react"
+import { useData } from "../../context/DataContext"
 
 /* Types */
 import { ICompound } from "../../types/Compound"
@@ -27,7 +28,9 @@ interface IReactionEditModalProps {
 
 const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const { compounds, reaction, addCompoundToReaction, closeModal } = props
+  const { reactions } = useData()
   const [closing, setClosing] = useState<boolean>(false)
+  const reactionIndex = reactions.findIndex((rea) => rea.id === reaction.id)
 
   /* For the select input, both for reactants and products */
   const [selectReactantIndex, setSelectReactantIndex] = useState<
@@ -91,7 +94,11 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
           </AddCompound>
           <CompoundInputInner>
             {reaction.reactants.length !== 0 ? (
-              <ReactionCompoundList reactionCompounds={reaction.reactants} />
+              <ReactionCompoundList
+                reactionIndex={reactionIndex}
+                reactionCompounds={reaction.reactants}
+                compoundType={CompoundType.Reactant}
+              />
             ) : (
               <NoCompounds>No compounds...</NoCompounds>
             )}
@@ -128,7 +135,11 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
           </AddCompound>
           <CompoundInputInner>
             {reaction.products.length !== 0 ? (
-              <ReactionCompoundList reactionCompounds={reaction.products} />
+              <ReactionCompoundList
+                reactionIndex={reactionIndex}
+                reactionCompounds={reaction.products}
+                compoundType={CompoundType.Product}
+              />
             ) : (
               <NoCompounds>No compounds...</NoCompounds>
             )}
