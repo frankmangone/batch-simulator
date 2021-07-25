@@ -1,7 +1,10 @@
 import styled from "styled-components"
 
 /* Constants */
-import { KINETIC_MODELS } from "../../constants/kineticModels"
+import {
+  KINETIC_MODELS,
+  generateKineticConstants,
+} from "../../constants/kineticModels"
 
 /* Components */
 import Button from "../Button"
@@ -64,12 +67,18 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   ): void => {
     /* Determine which array to push to */
     const key = getCompoundKey(compoundType)
-    const updatedReaction = { ...modalReaction }
+    const updatedReaction = JSON.parse(JSON.stringify(modalReaction))
 
     updatedReaction[key].push({
       compoundId,
       stoichiometricCoefficient: 1,
     })
+
+    const kineticConstants = generateKineticConstants(
+      updatedReaction.kineticModel,
+      updatedReaction
+    )
+    updatedReaction.kineticConstants = kineticConstants
 
     setModalReaction(updatedReaction)
   }
@@ -103,6 +112,14 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
         updatedReaction[key].length
       ),
     ]
+
+    const kineticConstants = generateKineticConstants(
+      updatedReaction.kineticModel,
+      updatedReaction
+    )
+    updatedReaction.kineticConstants = kineticConstants
+
+    console.log(updatedReaction)
 
     setModalReaction(updatedReaction)
   }
@@ -236,6 +253,11 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             collapsedDisplayText: model,
           }))}
           onSelectionChange={(value) => {
+            const constants = generateKineticConstants(
+              value as number,
+              reaction
+            )
+            console.log(constants)
             setModalReaction({
               ...modalReaction,
               kineticModel: value as number,

@@ -179,7 +179,9 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       reactants: [],
       products: [],
       kineticModel: 0,
-      kineticConstants: {},
+      kineticConstants: {
+        reactionConstant: 1,
+      },
     })
     setReactions(updatedReactions)
   }
