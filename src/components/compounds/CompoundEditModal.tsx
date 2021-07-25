@@ -2,10 +2,10 @@ import styled from "styled-components"
 import { useFormik } from "formik"
 
 /* Components */
-import Button from "../Button"
 import Error from "../Error"
 import Input from "../Input"
 import EditModal from "../EditModal"
+import SubmitButton from "../SubmitButton"
 
 /* Constants */
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
@@ -177,13 +177,4 @@ const SymbolFieldInput = styled(FieldInput)<ISymbolInputProps>`
     margin-left: 1rem;
     width: 0;
   }
-`
-
-const SubmitButton = styled(Button)`
-  font-size: 1.2rem;
-  justify-content: center;
-  margin-top: 2rem;
-  margin-left: 10%;
-  padding: 0.5rem;
-  width: 80%;
 `

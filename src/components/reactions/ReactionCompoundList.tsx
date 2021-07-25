@@ -13,12 +13,18 @@ interface IReactionCompoundListProps {
   compoundType: CompoundType
   reactionCompounds: IReactionCompound[]
   reactionIndex: number
+  removeCompound: (compoundIndex: number, compoundType: CompoundType) => void
+  updateCompound: (
+    compoundIndex: number,
+    compoundType: CompoundType,
+    updatedCompound: IReactionCompound
+  ) => void
 }
 
 const ReactionCompoundList: React.FC<IReactionCompoundListProps> = (props) => {
-  const { reactionCompounds, reactionIndex, compoundType } = props
-  const { compounds, updateReactionCompound, removeReactionCompound } =
-    useData()
+  const { reactionCompounds, removeCompound, updateCompound, compoundType } =
+    props
+  const { compounds } = useData()
 
   return (
     <>
@@ -38,18 +44,15 @@ const ReactionCompoundList: React.FC<IReactionCompoundListProps> = (props) => {
             key={reactionCompound.compoundId}
             compound={compound}
             reactionCompound={reactionCompound}
-            updateReactionCompound={(
-              updatedReactionCompound: IReactionCompound
-            ) => {
-              updateReactionCompound(
-                reactionIndex,
+            updateCompound={(updatedReactionCompound: IReactionCompound) => {
+              updateCompound(
                 compoundIndex,
                 compoundType,
                 updatedReactionCompound
               )
             }}
-            removeReactionCompound={() => {
-              removeReactionCompound(reactionIndex, compoundIndex, compoundType)
+            removeCompound={() => {
+              removeCompound(compoundIndex, compoundType)
             }}
           />
         )

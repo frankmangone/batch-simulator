@@ -1,5 +1,1 @@
-export enum KineticModels {
-  simple = 0,
-  reversible,
-  monod,
-}
+export const KINETIC_MODELS = ["Simple", "Reversible", "Hiperbolic"]

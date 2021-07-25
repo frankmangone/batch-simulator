@@ -32,24 +32,9 @@ interface IDefaultValue {
   reactions: IReaction[]
   addReaction: () => void
   editReaction: (index?: number) => void
+  updateReaction: (index: number, updatedReaction: IReaction) => void
   removeReaction: (index: number) => void
   editedReactionId: string | undefined
-  addCompoundToReaction: (
-    reactionIndex: number,
-    compoundId: string,
-    compoundType: CompoundType
-  ) => void
-  updateReactionCompound: (
-    reactionIndex: number,
-    compoundIndex: number,
-    compoundType: CompoundType,
-    updatedReactionCompound: IReactionCompound
-  ) => void
-  removeReactionCompound: (
-    reactionIndex: number,
-    compoundIndex: number,
-    compoundType: CompoundType
-  ) => void
 }
 
 const defaultValue: IDefaultValue = {
@@ -65,11 +50,9 @@ const defaultValue: IDefaultValue = {
   reactions: [],
   addReaction: () => {},
   editReaction: () => {},
+  updateReaction: () => {},
   removeReaction: () => {},
   editedReactionId: undefined,
-  addCompoundToReaction: () => {},
-  updateReactionCompound: () => {},
-  removeReactionCompound: () => {},
 }
 
 // Context Provider component
@@ -210,76 +193,17 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setEditedReactionId(id)
   }
 
+  const updateReaction = (index: number, updatedReaction: IReaction) => {
+    const updatedReactions = JSON.parse(JSON.stringify(reactions))
+    updatedReactions[index] = updatedReaction
+    setReactions(updatedReactions)
+  }
+
   const removeReaction = (index: number): void => {
     setReactions([
       ...reactions.slice(0, index),
       ...reactions.slice(index + 1, reactions.length),
     ])
-  }
-
-  /**
-   * Handle reaction compound state
-   */
-  const getCompoundKey = (
-    compoundType: CompoundType
-  ): "products" | "reactants" => {
-    if (compoundType === CompoundType.Reactant) return "reactants"
-    return "products"
-  }
-
-  const addCompoundToReaction = (
-    index: number,
-    compoundId: string,
-    compoundType: CompoundType
-  ): void => {
-    const updatedReactions = [...reactions]
-
-    /* Determine which array to push to */
-    const key = getCompoundKey(compoundType)
-
-    updatedReactions[index][key].push({
-      compoundId,
-      stoichiometricCoefficient: 1,
-    })
-
-    setReactions(updatedReactions)
-  }
-
-  const updateReactionCompound = (
-    reactionIndex: number,
-    compoundIndex: number,
-    compoundType: CompoundType,
-    updatedReactionCompound: IReactionCompound
-  ): void => {
-    const updatedReactions = [...reactions]
-
-    /* Determine which array to push to */
-    const key = getCompoundKey(compoundType)
-
-    const updatedCompounds = [...updatedReactions[reactionIndex][key]]
-    updatedCompounds[compoundIndex] = updatedReactionCompound
-    updatedReactions[reactionIndex][key] = updatedCompounds
-
-    setReactions(updatedReactions)
-  }
-
-  const removeReactionCompound = (
-    reactionIndex: number,
-    compoundIndex: number,
-    compoundType: CompoundType
-  ) => {
-    const key = getCompoundKey(compoundType)
-
-    const updatedReactions = JSON.parse(JSON.stringify(reactions))
-
-    let reactionCompounds = reactions[reactionIndex][key]
-    reactionCompounds = [
-      ...reactionCompounds.slice(0, compoundIndex),
-      ...reactionCompounds.slice(compoundIndex + 1, reactionCompounds.length),
-    ]
-
-    updatedReactions[reactionIndex][key] = reactionCompounds
-    setReactions(updatedReactions)
   }
 
   return (
@@ -297,11 +221,9 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         reactions,
         addReaction,
         editReaction,
+        updateReaction,
         removeReaction,
         editedReactionId,
-        addCompoundToReaction,
-        updateReactionCompound,
-        removeReactionCompound,
       }}
     >
       {children}

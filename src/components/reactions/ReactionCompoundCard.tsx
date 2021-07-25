@@ -21,17 +21,12 @@ interface IReactionCompoundCardProps {
   key: string
   compound: ICompound
   reactionCompound: IReactionCompound
-  updateReactionCompound: (updatedReactionCompound: IReactionCompound) => void
-  removeReactionCompound: () => void
+  updateCompound: (updatedReactionCompound: IReactionCompound) => void
+  removeCompound: () => void
 }
 
 const ReactionCompoundCard: React.FC<IReactionCompoundCardProps> = (props) => {
-  const {
-    compound,
-    reactionCompound,
-    updateReactionCompound,
-    removeReactionCompound,
-  } = props
+  const { compound, reactionCompound, updateCompound, removeCompound } = props
 
   /* Coefficient is short for Stoichiometric Coefficient in this component */
   const [coefficientInput, setCoefficientInput] = useState<number | "">(
@@ -50,7 +45,7 @@ const ReactionCompoundCard: React.FC<IReactionCompoundCardProps> = (props) => {
 
   const validateAndUpdateCoefficient = () => {
     if (validateNotEmpty(coefficientInput)) {
-      updateReactionCompound({
+      updateCompound({
         ...reactionCompound,
         stoichiometricCoefficient: coefficientInput as number,
       })
@@ -70,7 +65,7 @@ const ReactionCompoundCard: React.FC<IReactionCompoundCardProps> = (props) => {
         onChange={handleCoefficientChange}
         onBlur={validateAndUpdateCoefficient}
       />
-      <CardButton onClick={removeReactionCompound}>
+      <CardButton onClick={removeCompound}>
         <FiTrash2 />
       </CardButton>
     </ReactionCompoundCardWrapper>

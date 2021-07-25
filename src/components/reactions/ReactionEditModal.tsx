@@ -7,6 +7,7 @@ import Notice from "../Notice"
 import ReactionCompoundList from "./ReactionCompoundList"
 import ReactionPreview from "./ReactionPreview"
 import Select from "../Select"
+import SubmitButton from "../SubmitButton"
 import { FiPlus } from "react-icons/fi"
 
 /* Hooks */
@@ -15,24 +16,27 @@ import { useData } from "../../context/DataContext"
 
 /* Types */
 import { ICompound } from "../../types/Compound"
-import { IReaction } from "../../types/Reaction"
+import { IReaction, IReactionCompound } from "../../types/Reaction"
 import { CompoundType } from "../../context/DataContext"
 
 interface IReactionEditModalProps {
   compounds: ICompound[]
   reaction: IReaction
   closeModal: () => void
-  addCompoundToReaction: (
-    compoundId: string,
-    compoundType: CompoundType
-  ) => void
 }
 
 const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
-  const { compounds, reaction, addCompoundToReaction, closeModal } = props
-  const { reactions } = useData()
+  const { compounds, reaction, closeModal } = props
+  const { reactions, updateReaction } = useData()
   const [closing, setClosing] = useState<boolean>(false)
   const reactionIndex = reactions.findIndex((rea) => rea.id === reaction.id)
+
+  /**
+   * Copied state for reaction editing
+   */
+  const [modalReaction, setModalReaction] = useState<IReaction>(
+    JSON.parse(JSON.stringify(reaction))
+  )
 
   /* For the select input, both for reactants and products */
   const [selectReactantIndex, setSelectReactantIndex] = useState<
@@ -42,7 +46,66 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
     number | undefined
   >(undefined)
 
-  /* For formik state */
+  /**
+   * Handle compound form updates
+   */
+  const getCompoundKey = (
+    compoundType: CompoundType
+  ): "products" | "reactants" => {
+    if (compoundType === CompoundType.Reactant) return "reactants"
+    return "products"
+  }
+
+  const addCompound = (
+    compoundId: string,
+    compoundType: CompoundType
+  ): void => {
+    /* Determine which array to push to */
+    const key = getCompoundKey(compoundType)
+    const updatedReaction = { ...modalReaction }
+
+    updatedReaction[key].push({
+      compoundId,
+      stoichiometricCoefficient: 1,
+    })
+
+    setModalReaction(updatedReaction)
+  }
+
+  const updateCompound = (
+    compoundIndex: number,
+    compoundType: CompoundType,
+    updatedCompound: IReactionCompound
+  ): void => {
+    /* Determine which array to push to */
+    const key = getCompoundKey(compoundType)
+    const updatedReaction = { ...modalReaction }
+
+    updatedReaction[key][compoundIndex] = updatedCompound
+
+    setModalReaction(updatedReaction)
+  }
+
+  const removeCompound = (
+    compoundIndex: number,
+    compoundType: CompoundType
+  ) => {
+    /* Determine which array to push to */
+    const key = getCompoundKey(compoundType)
+    const updatedReaction = { ...modalReaction }
+
+    updatedReaction[key] = [
+      ...updatedReaction[key].slice(0, compoundIndex),
+      ...updatedReaction[key].slice(
+        compoundIndex + 1,
+        updatedReaction[key].length
+      ),
+    ]
+
+    setModalReaction(updatedReaction)
+  }
+
+  /* For select state */
   const selectReactantInitialValue = selectReactantIndex
     ? {
         value: selectReactantIndex,
@@ -65,7 +128,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       setClosing={setClosing}
       handleClose={closeModal}
     >
-      <ReactionPreview reaction={reaction} />
+      <ReactionPreview reaction={modalReaction} />
       <CompoundsInputSection>
         <CompoundInputWrapper>
           <h2>Reactants</h2>
@@ -86,7 +149,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               color="green"
               onClick={() => {
                 if (selectReactantIndex !== undefined)
-                  addCompoundToReaction(
+                  addCompound(
                     compounds[selectReactantIndex].id,
                     CompoundType.Reactant
                   )
@@ -96,10 +159,12 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             </Button>
           </AddCompound>
           <CompoundInputInner>
-            {reaction.reactants.length !== 0 ? (
+            {modalReaction.reactants.length !== 0 ? (
               <ReactionCompoundList
                 reactionIndex={reactionIndex}
-                reactionCompounds={reaction.reactants}
+                reactionCompounds={modalReaction.reactants}
+                removeCompound={removeCompound}
+                updateCompound={updateCompound}
                 compoundType={CompoundType.Reactant}
               />
             ) : (
@@ -127,7 +192,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               color="green"
               onClick={() => {
                 if (selectProductIndex !== undefined)
-                  addCompoundToReaction(
+                  addCompound(
                     compounds[selectProductIndex].id,
                     CompoundType.Product
                   )
@@ -137,10 +202,12 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             </Button>
           </AddCompound>
           <CompoundInputInner>
-            {reaction.products.length !== 0 ? (
+            {modalReaction.products.length !== 0 ? (
               <ReactionCompoundList
                 reactionIndex={reactionIndex}
-                reactionCompounds={reaction.products}
+                reactionCompounds={modalReaction.products}
+                removeCompound={removeCompound}
+                updateCompound={updateCompound}
                 compoundType={CompoundType.Product}
               />
             ) : (
@@ -149,6 +216,15 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
           </CompoundInputInner>
         </CompoundInputWrapper>
       </CompoundsInputSection>
+      <SubmitButton
+        color="green"
+        onClick={() => {
+          updateReaction(reactionIndex, modalReaction)
+          setClosing(true)
+        }}
+      >
+        Done
+      </SubmitButton>
     </EditModal>
   )
 }
