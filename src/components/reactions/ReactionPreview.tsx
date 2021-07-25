@@ -91,7 +91,7 @@ const CompoundWrapper = styled.div`
 
   p {
     color: var(--color-grey-dark);
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     margin: 0 0 0.2rem 0;
   }
 `

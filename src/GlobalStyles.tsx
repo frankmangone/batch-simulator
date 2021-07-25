@@ -32,6 +32,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     margin-top: 30px;
     background-color: var(--color-grey-lighter);
+    font-family: 'Mulish', sans-serif;
   }
 
   a, button {
@@ -47,6 +48,7 @@ const GlobalStyles = createGlobalStyle`
     border: none;
     border-radius: 5px;
     flex-grow: 1;
+    font-family: 'Mulish', sans-serif;
     min-width: 0;
     width: 0;
     margin-left: 1rem;
