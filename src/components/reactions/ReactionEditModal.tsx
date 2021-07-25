@@ -5,6 +5,7 @@ import Button from "../Button"
 import EditModal from "../EditModal"
 import Notice from "../Notice"
 import ReactionCompoundList from "./ReactionCompoundList"
+import ReactionPreview from "./ReactionPreview"
 import Select from "../Select"
 import { FiPlus } from "react-icons/fi"
 
@@ -64,6 +65,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       setClosing={setClosing}
       handleClose={closeModal}
     >
+      <ReactionPreview reaction={reaction} />
       <CompoundsInputSection>
         <CompoundInputWrapper>
           <h2>Reactants</h2>
@@ -156,6 +158,7 @@ export default ReactionEditModal
 const CompoundsInputSection = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin-top: 3rem;
 
   h2 {
     color: var(--color-grey-dark);

@@ -36,7 +36,7 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
 
         return (
           <Fragment key={reactionCompound.compoundId}>
-            {index !== 0 && <FiPlus />}
+            {index !== 0 && <FiPlus size={25} />}
             <CompoundWrapper>
               <p>{reactionCompound.stoichiometricCoefficient}</p>
               <CompoundTile
@@ -60,7 +60,7 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
 
         return (
           <Fragment key={reactionCompound.compoundId}>
-            {index !== 0 && <FiPlus />}
+            {index !== 0 && <FiPlus size={25} />}
             <CompoundWrapper>
               <p>{reactionCompound.stoichiometricCoefficient}</p>
               <CompoundTile
