@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Route,
+} from "react-router-dom"
 import GlobalStyles from "./GlobalStyles"
 
 /* Context */
@@ -23,6 +28,14 @@ const App = () => {
             <Route path="/compounds" component={CompoundsPage} />
             <Route path="/reactions" component={ReactionsPage} />
             <Route path="/results" component={ResultsPage} />
+            {/* Redirect for deployed URL */}
+            <Route path="/batch-simulator">
+              <Redirect
+                to={{
+                  pathname: "/",
+                }}
+              />
+            </Route>
           </Switch>
         </MainLayout>
       </Router>
