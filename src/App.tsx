@@ -19,6 +19,7 @@ const App = () => {
         <GlobalStyles />
         <MainLayout>
           <Switch>
+            <Route path="/" exact component={CompoundsPage} />
             <Route path="/compounds" component={CompoundsPage} />
             <Route path="/reactions" component={ReactionsPage} />
             <Route path="/results" component={ResultsPage} />
