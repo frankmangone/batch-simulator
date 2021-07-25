@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+/* Constants */
+import { KINETIC_MODELS } from "../../constants/kineticModels"
+
 /* Components */
 import Button from "../Button"
 import EditModal from "../EditModal"
@@ -30,7 +33,6 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const { reactions, updateReaction } = useData()
   const [closing, setClosing] = useState<boolean>(false)
   const reactionIndex = reactions.findIndex((rea) => rea.id === reaction.id)
-
   /**
    * Copied state for reaction editing
    */
@@ -129,7 +131,9 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       handleClose={closeModal}
     >
       <ReactionPreview reaction={modalReaction} />
-      <CompoundsInputSection>
+
+      {/* Compounds input */}
+      <InputSection>
         <CompoundInputWrapper>
           <h2>Reactants</h2>
           <AddCompound>
@@ -215,7 +219,31 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             )}
           </CompoundInputInner>
         </CompoundInputWrapper>
-      </CompoundsInputSection>
+      </InputSection>
+
+      {/* Kinetics input */}
+      <ColumnInputSection>
+        <h2>Kinetics</h2>
+        <Select
+          initialValue={{
+            value: modalReaction.kineticModel,
+            displayText: KINETIC_MODELS[modalReaction.kineticModel],
+            collapsedDisplayText: KINETIC_MODELS[modalReaction.kineticModel],
+          }}
+          selectOptions={KINETIC_MODELS.map((model, index) => ({
+            value: index,
+            displayText: model,
+            collapsedDisplayText: model,
+          }))}
+          onSelectionChange={(value) => {
+            setModalReaction({
+              ...modalReaction,
+              kineticModel: value as number,
+            })
+          }}
+        />
+      </ColumnInputSection>
+
       <SubmitButton
         color="green"
         onClick={() => {
@@ -231,16 +259,21 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
 
 export default ReactionEditModal
 
-const CompoundsInputSection = styled.div`
+const InputSection = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-top: 3rem;
+  margin-top: 2rem;
 
   h2 {
     color: var(--color-grey-dark);
     font-size: 20px;
     margin-top: 0;
   }
+`
+
+const ColumnInputSection = styled(InputSection)`
+  flex-direction: column;
+  flex-wrap: nowrap;
 `
 
 const CompoundInputWrapper = styled.div`
