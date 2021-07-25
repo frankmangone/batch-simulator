@@ -1,6 +1,5 @@
 export const COMPOUND_COLORS_CODES = [
   "blue1",
-  "lime",
   "pink3",
   "yellow",
   "skyBlue2",
@@ -10,6 +9,7 @@ export const COMPOUND_COLORS_CODES = [
   "orange",
   "violet1",
   "pink1",
+  "lime",
   "waterGreen2",
   "red1",
   "blue2",

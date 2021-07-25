@@ -45,6 +45,11 @@ interface IDefaultValue {
     compoundType: CompoundType,
     updatedReactionCompound: IReactionCompound
   ) => void
+  removeReactionCompound: (
+    reactionIndex: number,
+    compoundIndex: number,
+    compoundType: CompoundType
+  ) => void
 }
 
 const defaultValue: IDefaultValue = {
@@ -64,6 +69,7 @@ const defaultValue: IDefaultValue = {
   editedReactionId: undefined,
   addCompoundToReaction: () => {},
   updateReactionCompound: () => {},
+  removeReactionCompound: () => {},
 }
 
 // Context Provider component
@@ -257,6 +263,25 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setReactions(updatedReactions)
   }
 
+  const removeReactionCompound = (
+    reactionIndex: number,
+    compoundIndex: number,
+    compoundType: CompoundType
+  ) => {
+    const key = getCompoundKey(compoundType)
+
+    const updatedReactions = JSON.parse(JSON.stringify(reactions))
+
+    let reactionCompounds = reactions[reactionIndex][key]
+    reactionCompounds = [
+      ...reactionCompounds.slice(0, compoundIndex),
+      ...reactionCompounds.slice(compoundIndex + 1, reactionCompounds.length),
+    ]
+
+    updatedReactions[reactionIndex][key] = reactionCompounds
+    setReactions(updatedReactions)
+  }
+
   return (
     <DataContext.Provider
       value={{
@@ -276,6 +301,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         editedReactionId,
         addCompoundToReaction,
         updateReactionCompound,
+        removeReactionCompound,
       }}
     >
       {children}

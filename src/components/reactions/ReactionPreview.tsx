@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
 /* Components */
+import { Fragment } from "react"
 import Notice from "../Notice"
 import { FiArrowRight, FiPlus } from "react-icons/fi"
 
@@ -34,7 +35,7 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
         ) as ICompound
 
         return (
-          <>
+          <Fragment key={reactionCompound.compoundId}>
             {index !== 0 && <FiPlus />}
             <CompoundWrapper>
               <p>{reactionCompound.stoichiometricCoefficient}</p>
@@ -44,12 +45,12 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
                 {compound.symbol}
               </CompoundTile>
             </CompoundWrapper>
-          </>
+          </Fragment>
         )
       })}
 
       {reaction.reactants.length > 0 && reaction.products.length > 0 && (
-        <FiArrowRight />
+        <FiArrowRight size={25} />
       )}
 
       {reaction.products.map((reactionCompound, index) => {
@@ -58,7 +59,7 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
         ) as ICompound
 
         return (
-          <>
+          <Fragment key={reactionCompound.compoundId}>
             {index !== 0 && <FiPlus />}
             <CompoundWrapper>
               <p>{reactionCompound.stoichiometricCoefficient}</p>
@@ -68,7 +69,7 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
                 {compound.symbol}
               </CompoundTile>
             </CompoundWrapper>
-          </>
+          </Fragment>
         )
       })}
     </ReactionPreviewWrapper>

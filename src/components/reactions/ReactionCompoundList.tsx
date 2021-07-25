@@ -17,7 +17,8 @@ interface IReactionCompoundListProps {
 
 const ReactionCompoundList: React.FC<IReactionCompoundListProps> = (props) => {
   const { reactionCompounds, reactionIndex, compoundType } = props
-  const { compounds, updateReactionCompound } = useData()
+  const { compounds, updateReactionCompound, removeReactionCompound } =
+    useData()
 
   return (
     <>
@@ -34,6 +35,7 @@ const ReactionCompoundList: React.FC<IReactionCompoundListProps> = (props) => {
 
         return (
           <ReactionCompoundCard
+            key={reactionCompound.compoundId}
             compound={compound}
             reactionCompound={reactionCompound}
             updateReactionCompound={(
@@ -46,7 +48,9 @@ const ReactionCompoundList: React.FC<IReactionCompoundListProps> = (props) => {
                 updatedReactionCompound
               )
             }}
-            key={reactionCompound.compoundId}
+            removeReactionCompound={() => {
+              removeReactionCompound(reactionIndex, compoundIndex, compoundType)
+            }}
           />
         )
       })}

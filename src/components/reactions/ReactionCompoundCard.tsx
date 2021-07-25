@@ -1,5 +1,9 @@
 import styled from "styled-components"
 
+/* Components */
+import CardButton from "../CardButton"
+import { FiTrash2 } from "react-icons/fi"
+
 /* Constants */
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
@@ -18,10 +22,16 @@ interface IReactionCompoundCardProps {
   compound: ICompound
   reactionCompound: IReactionCompound
   updateReactionCompound: (updatedReactionCompound: IReactionCompound) => void
+  removeReactionCompound: () => void
 }
 
 const ReactionCompoundCard: React.FC<IReactionCompoundCardProps> = (props) => {
-  const { compound, reactionCompound, updateReactionCompound } = props
+  const {
+    compound,
+    reactionCompound,
+    updateReactionCompound,
+    removeReactionCompound,
+  } = props
 
   /* Coefficient is short for Stoichiometric Coefficient in this component */
   const [coefficientInput, setCoefficientInput] = useState<number | "">(
@@ -60,6 +70,9 @@ const ReactionCompoundCard: React.FC<IReactionCompoundCardProps> = (props) => {
         onChange={handleCoefficientChange}
         onBlur={validateAndUpdateCoefficient}
       />
+      <CardButton onClick={removeReactionCompound}>
+        <FiTrash2 />
+      </CardButton>
     </ReactionCompoundCardWrapper>
   )
 }
@@ -103,5 +116,10 @@ const ReactionCompoundCardWrapper = styled.div<IReactionCompoundCardWrapperProps
   input {
     font-size: 1.3rem;
     width: 0px;
+  }
+
+  button {
+    opacity: 1;
+    margin-left: 0.5rem;
   }
 `
