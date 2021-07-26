@@ -75,7 +75,7 @@ const generateReversibleModelConstants = (reaction: IReaction) => {
     }
   })
 
-  return { reactionConstant, ...updatedExponents }
+  return { reactionConstant, inverseReactionConstant: 1, ...updatedExponents }
 }
 
 const generateHiperbolicModelConstants = generateSimpleModelConstants // It's exactly the same

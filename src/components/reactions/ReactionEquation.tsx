@@ -1,4 +1,15 @@
 import styled from "styled-components"
+import { Fragment } from "react"
+
+/* Components */
+import {
+  Division,
+  Power,
+  Subindex,
+  GreekAlpha,
+  GreekBeta,
+  GreekMu,
+} from "../MathExpressions"
 
 /* Types */
 import { ICompound } from "../../types/Compound"
@@ -42,19 +53,21 @@ const SimpleReactionEquation: React.FC<IReactionEquationProps> = (props) => {
 
   return (
     <EquationWrapper>
-      <p>k</p>
+      k
       {reaction.reactants.map((reactionCompound) => {
         const compound = compounds.find(
           (c) => c.id === reactionCompound.compoundId
         ) as ICompound
         return (
-          <p key={reactionCompound.compoundId}>
-            .[{compound.symbol}]
-            <sup>
-              <span>&alpha;</span>
-              <sub>{compound.symbol}</sub>
-            </sup>
-          </p>
+          <Fragment key={reactionCompound.compoundId}>
+            .
+            <Power
+              base={`[${compound.symbol}]`}
+              power={
+                <Subindex base={<GreekAlpha />} subindex={compound.symbol} />
+              }
+            />
+          </Fragment>
         )
       })}
     </EquationWrapper>
@@ -68,35 +81,39 @@ const ReversibleReactionEquation: React.FC<IReactionEquationProps> = (
 
   return (
     <EquationWrapper>
-      <p>k</p>
+      k
       {reaction.reactants.map((reactionCompound) => {
         const compound = compounds.find(
           (c) => c.id === reactionCompound.compoundId
         ) as ICompound
         return (
-          <p key={reactionCompound.compoundId}>
-            .[{compound.symbol}]
-            <sup>
-              <span>&alpha;</span>
-              <sub>{compound.symbol}</sub>
-            </sup>
-          </p>
+          <Fragment key={reactionCompound.compoundId}>
+            .
+            <Power
+              base={`[${compound.symbol}]`}
+              power={
+                <Subindex base={<GreekAlpha />} subindex={compound.symbol} />
+              }
+            />
+          </Fragment>
         )
       })}
-
-      <p>- k</p>
+      &nbsp;-&nbsp;
+      <Subindex base="k" subindex="-1" />
       {reaction.products.map((reactionCompound) => {
         const compound = compounds.find(
           (c) => c.id === reactionCompound.compoundId
         ) as ICompound
         return (
-          <p key={reactionCompound.compoundId}>
-            .[{compound.symbol}]
-            <sup>
-              <span>&beta;</span>
-              <sub>{compound.symbol}</sub>
-            </sup>
-          </p>
+          <Fragment key={reactionCompound.compoundId}>
+            .
+            <Power
+              base={`[${compound.symbol}]`}
+              power={
+                <Subindex base={<GreekBeta />} subindex={compound.symbol} />
+              }
+            />
+          </Fragment>
         )
       })}
     </EquationWrapper>
@@ -108,23 +125,47 @@ const HiperbolicReactionEquation: React.FC<IReactionEquationProps> = (
 ) => {
   const { reaction, compounds } = props
 
-  return <EquationWrapper>2</EquationWrapper>
+  return (
+    <EquationWrapper>
+      <GreekMu />
+      {reaction.reactants.map((reactionCompound) => {
+        const compound = compounds.find(
+          (c) => c.id === reactionCompound.compoundId
+        ) as ICompound
+        return (
+          <Fragment key={reactionCompound.compoundId}>
+            .
+            <Division
+              numerator={`[${compound.symbol}]`}
+              denominator={
+                <>
+                  <Subindex base={"K"} subindex={compound.symbol} />
+                  +[{`${compound.symbol}`}]
+                </>
+              }
+            />
+          </Fragment>
+        )
+      })}
+    </EquationWrapper>
+  )
 }
 
 //
 
 const EquationWrapper = styled.div`
-  align-items: flex-end;
+  align-items: center;
   align-self: stretch;
+  background-color: var(--color-grey-lightest);
+  border: 1px solid var(--color-grey-light);
+  border-radius: 5px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
+  color: var(--color-grey-dark);
   display: flex;
+  font-size: 1.8rem;
   justify-content: center;
-  margin: 1rem 0;
-
-  p {
-    color: var(--color-grey-dark);
-    font-size: 1.5rem;
-    margin: 0;
-  }
+  padding: 1.5rem;
+  margin: 1.5rem 0 1rem;
 
   span {
     font-family: "Comfortaa", symbol;

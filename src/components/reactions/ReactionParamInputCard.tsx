@@ -52,7 +52,7 @@ const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
 export default ReactionParamInputCard
 
 const ParamInputWrapper = styled.div`
-  flex-basis: 33%;
+  flex-basis: 50%;
 `
 
 const ParamInputInner = styled.div`
