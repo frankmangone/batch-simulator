@@ -12,10 +12,14 @@ export interface IReaction {
    * are not known in advance
    */
   kineticModel: number
-  kineticConstants: { [key: string]: number }
+  kineticConstants: IKineticConstants
 }
 
 export interface IReactionCompound {
   compoundId: string
   stoichiometricCoefficient: number
+}
+
+export interface IKineticConstants {
+  [key: string]: number
 }

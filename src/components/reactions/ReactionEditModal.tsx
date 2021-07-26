@@ -1,17 +1,22 @@
 import styled from "styled-components"
 
 /* Constants */
-import { KINETIC_MODELS } from "../../constants/kineticModels"
+import {
+  KINETIC_MODELS,
+  generateKineticConstants,
+} from "../../constants/kineticModels"
 
 /* Components */
 import Button from "../Button"
 import EditModal from "../EditModal"
 import Notice from "../Notice"
-import ReactionCompoundList from "./ReactionCompoundList"
-import ReactionPreview from "./ReactionPreview"
 import Select from "../Select"
 import SubmitButton from "../SubmitButton"
 import { FiPlus } from "react-icons/fi"
+import ReactionCompoundList from "./ReactionCompoundList"
+import ReactionEquation from "./ReactionEquation"
+import ReactionKineticParameters from "./ReactionKineticParameters"
+import ReactionPreview from "./ReactionPreview"
 
 /* Hooks */
 import { useState } from "react"
@@ -64,12 +69,18 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   ): void => {
     /* Determine which array to push to */
     const key = getCompoundKey(compoundType)
-    const updatedReaction = { ...modalReaction }
+    const updatedReaction = JSON.parse(JSON.stringify(modalReaction))
 
     updatedReaction[key].push({
       compoundId,
       stoichiometricCoefficient: 1,
     })
+
+    const kineticConstants = generateKineticConstants(
+      updatedReaction.kineticModel,
+      updatedReaction
+    )
+    updatedReaction.kineticConstants = kineticConstants
 
     setModalReaction(updatedReaction)
   }
@@ -104,6 +115,22 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       ),
     ]
 
+    const kineticConstants = generateKineticConstants(
+      updatedReaction.kineticModel,
+      updatedReaction
+    )
+    updatedReaction.kineticConstants = kineticConstants
+
+    setModalReaction(updatedReaction)
+  }
+
+  /**
+   * Handle kinetic constant change
+   */
+
+  const handleKineticConstantUpdate = (key: string, value: number) => {
+    const updatedReaction = JSON.parse(JSON.stringify(modalReaction))
+    updatedReaction.kineticConstants[key] = value
     setModalReaction(updatedReaction)
   }
 
@@ -236,11 +263,23 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             collapsedDisplayText: model,
           }))}
           onSelectionChange={(value) => {
+            const constants = generateKineticConstants(
+              value as number,
+              modalReaction
+            )
+
             setModalReaction({
               ...modalReaction,
               kineticModel: value as number,
+              kineticConstants: constants,
             })
           }}
+        />
+        <ReactionEquation reaction={modalReaction} compounds={compounds} />
+        <ReactionKineticParameters
+          reaction={modalReaction}
+          compounds={compounds}
+          updateKineticConstant={handleKineticConstantUpdate}
         />
       </ColumnInputSection>
 
@@ -260,9 +299,11 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
 export default ReactionEditModal
 
 const InputSection = styled.div`
+  border-top: 1px solid var(--color-grey-light);
   display: flex;
   flex-wrap: wrap;
   margin-top: 2rem;
+  padding: 2rem 1rem 0rem;
 
   h2 {
     color: var(--color-grey-dark);
@@ -278,7 +319,6 @@ const ColumnInputSection = styled(InputSection)`
 
 const CompoundInputWrapper = styled.div`
   flex-basis: 50%;
-  margin-bottom: 1.5rem;
 
   @media (max-width: 700px) {
     flex-basis: 100%;

@@ -169,6 +169,7 @@ const CloseButton = styled.button<IClosing>`
   ${(props) => (props.closing ? "disabled: true;" : "")}
   font-size: 1.3rem;
   padding: 0.5rem;
+  margin-bottom: 1rem;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
