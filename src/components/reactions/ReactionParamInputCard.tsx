@@ -1,14 +1,50 @@
 import styled from "styled-components"
 
-/* Types */
-import { IFCWithChildren } from "../../types/FCWithChildren"
+/* Helpers */
+import { validateNotEmpty } from "../../helpers/validators"
 
-const ReactionParamInputCard: React.FC<IFCWithChildren> = (props) => {
-  const { children } = props
+/* Hooks */
+import { useState } from "react"
+
+interface IReactionParamInputCardProps {
+  paramSymbol: string | JSX.Element | JSX.Element[]
+  value: number
+  updateValue: (value: number) => void
+}
+
+const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
+  props
+) => {
+  const { paramSymbol, value, updateValue } = props
+  const [valueInput, setValueInput] = useState<number | "">(value)
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === "") {
+      setValueInput("")
+      return
+    }
+    setValueInput(parseFloat(event.target.value))
+  }
+
+  const validateAndUpdateConstant = () => {
+    if (validateNotEmpty(valueInput)) {
+      updateValue(valueInput as number)
+      return
+    }
+    setValueInput(value)
+  }
 
   return (
     <ParamInputWrapper>
-      <ParamInputInner>{children}</ParamInputInner>
+      <ParamInputInner>
+        <h1>{paramSymbol}</h1>
+        <input
+          value={valueInput}
+          type="number"
+          onChange={handleChange}
+          onBlur={validateAndUpdateConstant}
+        />
+      </ParamInputInner>
     </ParamInputWrapper>
   )
 }

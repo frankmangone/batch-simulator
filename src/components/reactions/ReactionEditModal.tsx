@@ -123,6 +123,16 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
     setModalReaction(updatedReaction)
   }
 
+  /**
+   * Handle kinetic constant change
+   */
+
+  const handleKineticConstantUpdate = (key: string, value: number) => {
+    const updatedReaction = JSON.parse(JSON.stringify(modalReaction))
+    updatedReaction.kineticConstants[key] = value
+    setModalReaction(updatedReaction)
+  }
+
   /* For select state */
   const selectReactantInitialValue = selectReactantIndex
     ? {
@@ -256,16 +266,18 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               value as number,
               reaction
             )
-            console.log(constants)
+
             setModalReaction({
               ...modalReaction,
               kineticModel: value as number,
+              kineticConstants: constants,
             })
           }}
         />
         <ReactionKineticParameters
           reaction={modalReaction}
           compounds={compounds}
+          updateKineticConstant={handleKineticConstantUpdate}
         />
       </ColumnInputSection>
 

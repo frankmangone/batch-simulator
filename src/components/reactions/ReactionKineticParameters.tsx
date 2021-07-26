@@ -8,23 +8,26 @@ import { ICompound } from "../../types/Compound"
 import { IReaction } from "../../types/Reaction"
 
 interface IReactionKineticParametersProps {
-  reaction: IReaction
   compounds: ICompound[]
+  reaction: IReaction
+  updateKineticConstant: (key: string, value: number) => void
 }
 
 const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   props
 ) => {
-  const { compounds, reaction } = props
+  const { compounds, reaction, updateKineticConstant } = props
   const { reactionConstant, ...compoundParams } = reaction.kineticConstants
 
-  console.log()
   return (
     <KineticParamsWrapper>
-      <ReactionParamInputCard>
-        <h1>k</h1>
-        <input value={reactionConstant} />
-      </ReactionParamInputCard>
+      <ReactionParamInputCard
+        paramSymbol="k"
+        value={reactionConstant}
+        updateValue={(value: number) => {
+          updateKineticConstant("reactionConstant", value)
+        }}
+      />
 
       {reaction.reactants.map((reactionCompound) => {
         const compound = compounds.find(
@@ -32,13 +35,19 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
         ) as ICompound
 
         return (
-          <ReactionParamInputCard>
-            <h1>
-              <span>&alpha;</span>
-              <sub>{compound.symbol}</sub>
-            </h1>
-            <input value={compoundParams[compound.id]} />
-          </ReactionParamInputCard>
+          <ReactionParamInputCard
+            key={compound.id}
+            paramSymbol={
+              <>
+                <span>&alpha;</span>
+                <sub>{compound.symbol}</sub>
+              </>
+            }
+            value={compoundParams[compound.id]}
+            updateValue={(value: number) => {
+              updateKineticConstant(compound.id, value)
+            }}
+          />
         )
       })}
 
@@ -50,13 +59,19 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
           ) as ICompound
 
           return (
-            <ReactionParamInputCard>
-              <h1>
-                <span>&alpha;</span>
-                <sub>{compound.symbol}</sub>
-              </h1>
-              <input value={compoundParams[compound.id]} />
-            </ReactionParamInputCard>
+            <ReactionParamInputCard
+              key={compound.id}
+              paramSymbol={
+                <>
+                  <span>&beta;</span>
+                  <sub>{compound.symbol}</sub>
+                </>
+              }
+              value={compoundParams[compound.id]}
+              updateValue={(value: number) => {
+                updateKineticConstant(compound.id, value)
+              }}
+            />
           )
         })}
     </KineticParamsWrapper>
