@@ -264,7 +264,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
           onSelectionChange={(value) => {
             const constants = generateKineticConstants(
               value as number,
-              reaction
+              modalReaction
             )
 
             setModalReaction({

@@ -23,104 +23,59 @@ export const generateKineticConstants = (
   model: number,
   reaction: IReaction
 ): IKineticConstants => {
-  const isNewModel = checkNewModel(reaction, model)
   switch (model) {
     case 0:
-      return generateSimpleModelConstants(reaction, isNewModel)
+      return generateSimpleModelConstants(reaction)
     case 1:
-      return generateReversibleModelConstants(reaction, isNewModel)
+      return generateReversibleModelConstants(reaction)
     case 2:
-      return generateHiperbolicModelConstants(reaction, isNewModel)
+      return generateHiperbolicModelConstants(reaction)
     default:
-      return generateSimpleModelConstants(reaction, isNewModel)
+      return generateSimpleModelConstants(reaction)
   }
 }
 
-const generateSimpleModelConstants = (
-  reaction: IReaction,
-  newModel: boolean
-) => {
-  if (newModel) {
-    return reaction.kineticConstants
-  } else {
-    // eslint-disable-next-line
-    const { reactionConstant, ...other } = reaction.kineticConstants
+const generateSimpleModelConstants = (reaction: IReaction) => {
+  // eslint-disable-next-line
+  const { reactionConstant, ...other } = reaction.kineticConstants
 
-    const updatedExponents: IKineticConstants = {}
-    reaction.reactants.forEach((compound: IReactionCompound) => {
-      const oldConstant = reaction.kineticConstants[compound.compoundId]
-      if (oldConstant === undefined) {
-        updatedExponents[compound.compoundId] = 1
-      } else {
-        updatedExponents[compound.compoundId] = oldConstant
-      }
-    })
+  const updatedExponents: IKineticConstants = {}
+  reaction.reactants.forEach((compound: IReactionCompound) => {
+    const oldConstant = reaction.kineticConstants[compound.compoundId]
+    if (oldConstant === undefined) {
+      updatedExponents[compound.compoundId] = 1
+    } else {
+      updatedExponents[compound.compoundId] = oldConstant
+    }
+  })
 
-    return { reactionConstant, ...updatedExponents }
-  }
+  return { reactionConstant, ...updatedExponents }
 }
 
-const generateReversibleModelConstants = (
-  reaction: IReaction,
-  newModel: boolean
-) => {
-  if (newModel) {
-    return reaction.kineticConstants
-  } else {
-    // eslint-disable-next-line
-    const { reactionConstant, ...other } = reaction.kineticConstants
+const generateReversibleModelConstants = (reaction: IReaction) => {
+  // eslint-disable-next-line
+  const { reactionConstant, ...other } = reaction.kineticConstants
 
-    const updatedExponents: IKineticConstants = {}
-    reaction.reactants.forEach((compound: IReactionCompound) => {
-      const oldConstant = reaction.kineticConstants[compound.compoundId]
-      if (oldConstant === undefined) {
-        updatedExponents[compound.compoundId] = 1
-      } else {
-        updatedExponents[compound.compoundId] = oldConstant
-      }
-    })
-    reaction.products.forEach((compound: IReactionCompound) => {
-      const oldConstant = reaction.kineticConstants[compound.compoundId]
-      if (oldConstant === undefined) {
-        updatedExponents[compound.compoundId] = 1
-      } else {
-        updatedExponents[compound.compoundId] = oldConstant
-      }
-    })
+  const updatedExponents: IKineticConstants = {}
 
-    return { reactionConstant, ...updatedExponents }
-  }
+  reaction.reactants.forEach((compound: IReactionCompound) => {
+    const oldConstant = reaction.kineticConstants[compound.compoundId]
+    if (oldConstant === undefined) {
+      updatedExponents[compound.compoundId] = 1
+    } else {
+      updatedExponents[compound.compoundId] = oldConstant
+    }
+  })
+  reaction.products.forEach((compound: IReactionCompound) => {
+    const oldConstant = reaction.kineticConstants[compound.compoundId]
+    if (oldConstant === undefined) {
+      updatedExponents[compound.compoundId] = 1
+    } else {
+      updatedExponents[compound.compoundId] = oldConstant
+    }
+  })
+
+  return { reactionConstant, ...updatedExponents }
 }
 
-const generateHiperbolicModelConstants = (
-  reaction: IReaction,
-  newModel: boolean
-) => {
-  if (newModel) {
-    return reaction.kineticConstants
-  } else {
-    // eslint-disable-next-line
-    const { reactionConstant, ...other } = reaction.kineticConstants
-
-    const updatedConstants: IKineticConstants = {}
-    reaction.reactants.forEach((compound: IReactionCompound) => {
-      const oldConstant = reaction.kineticConstants[compound.compoundId]
-      if (oldConstant === undefined) {
-        updatedConstants[compound.compoundId] = 1
-      } else {
-        updatedConstants[compound.compoundId] = oldConstant
-      }
-    })
-
-    return { reactionConstant, ...updatedConstants }
-  }
-}
-
-/**
- *
- *
- */
-
-const checkNewModel = (reaction: IReaction, model: number): boolean => {
-  return reaction.kineticModel !== model
-}
+const generateHiperbolicModelConstants = generateSimpleModelConstants // It's exactly the same

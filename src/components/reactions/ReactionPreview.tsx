@@ -82,6 +82,7 @@ const ReactionPreviewWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-grow: 1;
+  min-height: 3rem;
 `
 
 const CompoundWrapper = styled.div`
