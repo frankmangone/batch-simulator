@@ -14,6 +14,7 @@ import Select from "../Select"
 import SubmitButton from "../SubmitButton"
 import { FiPlus } from "react-icons/fi"
 import ReactionCompoundList from "./ReactionCompoundList"
+import ReactionEquation from "./ReactionEquation"
 import ReactionKineticParameters from "./ReactionKineticParameters"
 import ReactionPreview from "./ReactionPreview"
 
@@ -274,6 +275,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             })
           }}
         />
+        <ReactionEquation reaction={modalReaction} compounds={compounds} />
         <ReactionKineticParameters
           reaction={modalReaction}
           compounds={compounds}
