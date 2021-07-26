@@ -10,11 +10,12 @@ import {
 import Button from "../Button"
 import EditModal from "../EditModal"
 import Notice from "../Notice"
-import ReactionCompoundList from "./ReactionCompoundList"
-import ReactionPreview from "./ReactionPreview"
 import Select from "../Select"
 import SubmitButton from "../SubmitButton"
 import { FiPlus } from "react-icons/fi"
+import ReactionCompoundList from "./ReactionCompoundList"
+import ReactionKineticParameters from "./ReactionKineticParameters"
+import ReactionPreview from "./ReactionPreview"
 
 /* Hooks */
 import { useState } from "react"
@@ -118,8 +119,6 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       updatedReaction
     )
     updatedReaction.kineticConstants = kineticConstants
-
-    console.log(updatedReaction)
 
     setModalReaction(updatedReaction)
   }
@@ -264,6 +263,10 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             })
           }}
         />
+        <ReactionKineticParameters
+          reaction={modalReaction}
+          compounds={compounds}
+        />
       </ColumnInputSection>
 
       <SubmitButton
@@ -300,7 +303,6 @@ const ColumnInputSection = styled(InputSection)`
 
 const CompoundInputWrapper = styled.div`
   flex-basis: 50%;
-  margin-bottom: 1.5rem;
 
   @media (max-width: 700px) {
     flex-basis: 100%;

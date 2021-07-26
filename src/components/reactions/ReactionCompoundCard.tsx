@@ -80,7 +80,7 @@ interface IReactionCompoundCardWrapperProps {
 
 const ReactionCompoundCardWrapper = styled.div<IReactionCompoundCardWrapperProps>`
   margin: 5px;
-  padding: 20px;
+  padding: 1.3rem;
   position: relative;
 
   align-items: center;
