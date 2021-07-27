@@ -13,6 +13,7 @@ export interface IReaction {
    */
   kineticModel: number
   kineticConstants: IKineticConstants
+  keyCompound?: string // It's a compound (reactant) id
 }
 
 export interface IReactionCompound {

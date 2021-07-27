@@ -18,26 +18,40 @@ import { IReaction } from "../../types/Reaction"
 interface IReactionEquationProps {
   reaction: IReaction
   compounds: ICompound[]
+  keyCompoundSymbol?: string
 }
 
 const ReactionEquation: React.FC<IReactionEquationProps> = (props) => {
   const { reaction, compounds } = props
+  const keyCompound = compounds.find((c) => reaction.keyCompound === c.id)
   let reactionEquation
 
   switch (reaction.kineticModel) {
     case 1:
       reactionEquation = (
-        <ReversibleReactionEquation reaction={reaction} compounds={compounds} />
+        <ReversibleReactionEquation
+          reaction={reaction}
+          compounds={compounds}
+          keyCompoundSymbol={keyCompound?.symbol || undefined}
+        />
       )
       break
     case 2:
       reactionEquation = (
-        <HiperbolicReactionEquation reaction={reaction} compounds={compounds} />
+        <HiperbolicReactionEquation
+          reaction={reaction}
+          compounds={compounds}
+          keyCompoundSymbol={keyCompound?.symbol || undefined}
+        />
       )
       break
     default:
       reactionEquation = (
-        <SimpleReactionEquation reaction={reaction} compounds={compounds} />
+        <SimpleReactionEquation
+          reaction={reaction}
+          compounds={compounds}
+          keyCompoundSymbol={keyCompound?.symbol || undefined}
+        />
       )
   }
 
@@ -49,10 +63,16 @@ export default ReactionEquation
 //
 
 const SimpleReactionEquation: React.FC<IReactionEquationProps> = (props) => {
-  const { reaction, compounds } = props
+  const { reaction, compounds, keyCompoundSymbol } = props
 
   return (
     <EquationWrapper>
+      {keyCompoundSymbol && (
+        <>
+          <Subindex base="r" subindex={keyCompoundSymbol} />
+          &nbsp;=&nbsp;
+        </>
+      )}
       k
       {reaction.reactants.map((reactionCompound) => {
         const compound = compounds.find(
@@ -77,10 +97,16 @@ const SimpleReactionEquation: React.FC<IReactionEquationProps> = (props) => {
 const ReversibleReactionEquation: React.FC<IReactionEquationProps> = (
   props
 ) => {
-  const { reaction, compounds } = props
+  const { reaction, compounds, keyCompoundSymbol } = props
 
   return (
     <EquationWrapper>
+      {keyCompoundSymbol && (
+        <>
+          <Subindex base="r" subindex={keyCompoundSymbol} />
+          &nbsp;=&nbsp;
+        </>
+      )}
       k
       {reaction.reactants.map((reactionCompound) => {
         const compound = compounds.find(
@@ -123,10 +149,16 @@ const ReversibleReactionEquation: React.FC<IReactionEquationProps> = (
 const HiperbolicReactionEquation: React.FC<IReactionEquationProps> = (
   props
 ) => {
-  const { reaction, compounds } = props
+  const { reaction, compounds, keyCompoundSymbol } = props
 
   return (
     <EquationWrapper>
+      {keyCompoundSymbol && (
+        <>
+          <Subindex base="r" subindex={keyCompoundSymbol} />
+          &nbsp;=&nbsp;
+        </>
+      )}
       <GreekMu />
       {reaction.reactants.map((reactionCompound) => {
         const compound = compounds.find(

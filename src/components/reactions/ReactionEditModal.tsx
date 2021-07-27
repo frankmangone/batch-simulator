@@ -151,6 +151,10 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       }
     : undefined
 
+  const findCompound = (id: string) => {
+    return compounds.find((c) => c.id === id)
+  }
+
   return (
     <EditModal
       closing={closing}
@@ -251,30 +255,66 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       {/* Kinetics input */}
       <ColumnInputSection>
         <h2>Kinetics</h2>
-        <Select
-          initialValue={{
-            value: modalReaction.kineticModel,
-            displayText: KINETIC_MODELS[modalReaction.kineticModel],
-            collapsedDisplayText: KINETIC_MODELS[modalReaction.kineticModel],
-          }}
-          selectOptions={KINETIC_MODELS.map((model, index) => ({
-            value: index,
-            displayText: model,
-            collapsedDisplayText: model,
-          }))}
-          onSelectionChange={(value) => {
-            const constants = generateKineticConstants(
-              value as number,
-              modalReaction
-            )
+        <SelectField>
+          <p>Kinetic model</p>
+          <Select
+            initialValue={{
+              value: modalReaction.kineticModel,
+              displayText: KINETIC_MODELS[modalReaction.kineticModel],
+              collapsedDisplayText: KINETIC_MODELS[modalReaction.kineticModel],
+            }}
+            selectOptions={KINETIC_MODELS.map((model, index) => ({
+              value: index,
+              displayText: model,
+              collapsedDisplayText: model,
+            }))}
+            onSelectionChange={(value) => {
+              const constants = generateKineticConstants(
+                value as number,
+                modalReaction
+              )
 
-            setModalReaction({
-              ...modalReaction,
-              kineticModel: value as number,
-              kineticConstants: constants,
-            })
-          }}
-        />
+              setModalReaction({
+                ...modalReaction,
+                kineticModel: value as number,
+                kineticConstants: constants,
+              })
+            }}
+          />
+        </SelectField>
+        <SelectField>
+          <p>Key compound</p>
+          <Select
+            defaultDisplayValue="Reactant..."
+            initialValue={
+              modalReaction.keyCompound !== undefined
+                ? {
+                    value: modalReaction.keyCompound,
+                    displayText: (
+                      findCompound(modalReaction.keyCompound) as ICompound
+                    ).symbol,
+                    collapsedDisplayText: (
+                      findCompound(modalReaction.keyCompound) as ICompound
+                    ).symbol,
+                  }
+                : undefined
+            }
+            selectOptions={modalReaction.reactants.map((reactionCompound) => ({
+              value: reactionCompound.compoundId,
+              displayText: (
+                findCompound(reactionCompound.compoundId) as ICompound
+              ).symbol,
+              collapsedDisplayText: (
+                findCompound(reactionCompound.compoundId) as ICompound
+              ).symbol,
+            }))}
+            onSelectionChange={(value: string | undefined) => {
+              const updatedReaction = JSON.parse(JSON.stringify(modalReaction))
+              updatedReaction.keyCompound = value
+              setModalReaction(updatedReaction)
+            }}
+          />
+        </SelectField>
         <ReactionEquation reaction={modalReaction} compounds={compounds} />
         <ReactionKineticParameters
           reaction={modalReaction}
@@ -309,6 +349,23 @@ const InputSection = styled.div`
     color: var(--color-grey-dark);
     font-size: 20px;
     margin-top: 0;
+  }
+`
+
+const SelectField = styled.div`
+  display: flex;
+  align-items: center;
+  width: 50%;
+
+  p {
+    color: var(--color-grey-dark);
+    flex-grow: 1;
+    font-size: 1rem;
+    margin-right: 1.4rem;
+  }
+
+  div {
+    flex-basis: 45%;
   }
 `
 
