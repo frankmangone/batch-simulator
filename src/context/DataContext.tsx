@@ -1,9 +1,18 @@
-import { createContext, useContext, useState } from "react"
+import {
+  createContext,
+  useContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react"
 import randomstring from "randomstring"
 
 /* Constants */
 import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
 import { COMPOUND_SYMBOLS } from "../constants/compoundSymbols"
+
+/* Hooks */
+import useLocalStorageState from "../hooks/useLocalStorageState"
 
 /* Types */
 import { ICompound } from "../types/Compound"
@@ -18,6 +27,12 @@ export enum CompoundType {
   Reactant = 0,
   Product,
 }
+
+/**
+ * ISetState type for setState functions
+ */
+
+type ISetState<T> = Dispatch<SetStateAction<T>>
 
 interface IDefaultValue {
   /* Compounds */
@@ -69,8 +84,14 @@ export const useData = () => {
 export const DataStore: React.FC<IFCWithChildren> = (props) => {
   const { children } = props
   const [currentColor, setCurrentColor] = useState<number>(0)
-  const [compounds, setCompounds] = useState<ICompound[]>([])
-  const [reactions, setReactions] = useState<IReaction[]>([])
+  const [compounds, setCompounds] = useLocalStorageState<ICompound[]>(
+    "compounds",
+    []
+  )
+  const [reactions, setReactions] = useLocalStorageState<IReaction[]>(
+    "reactions",
+    []
+  )
 
   // To keep track of edited elements:
   const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
@@ -94,7 +115,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   const availableSymbol = (): string => {
     const foundSymbols = new Array(COMPOUND_SYMBOLS.length).fill(false)
 
-    compounds.forEach((compound) => {
+    ;(compounds as ICompound[]).forEach((compound) => {
       const index = COMPOUND_SYMBOLS.indexOf(compound.symbol)
       if (index !== -1) foundSymbols[index] = true
     })
@@ -110,7 +131,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
    * Compounds state handling
    */
   const addCompound = (): void => {
-    const updatedCompounds = [...compounds]
+    const updatedCompounds = [...(compounds as ICompound[])]
 
     updatedCompounds.push({
       id: randomstring.generate(8),
@@ -120,7 +141,9 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       name: "",
     })
     nextColor()
-    setCompounds(updatedCompounds)
+
+    let setState = setCompounds as ISetState<ICompound[]>
+    setState(updatedCompounds)
   }
 
   const editCompound = (index?: number) => {
@@ -128,18 +151,20 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       setEditedCompoundId(undefined)
       return
     }
-    const id = compounds[index].id
+    const id = (compounds as ICompound[])[index].id
     setEditedCompoundId(id)
   }
 
   const updateCompound = (index: number, updatedCompound: ICompound) => {
-    const updatedCompounds = [...compounds]
+    const updatedCompounds = [...(compounds as ICompound[])]
     updatedCompounds[index] = updatedCompound
-    setCompounds(updatedCompounds)
+
+    let setState = setCompounds as ISetState<ICompound[]>
+    setState(updatedCompounds)
   }
 
   const removeCompound = (index: number): void => {
-    const compoundId = compounds[index].id
+    const compoundId = (compounds as ICompound[])[index].id
 
     /**
      * Remove from reactions that have this compound
@@ -156,14 +181,20 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
           reactionCompound.compoundId !== compoundId
       )
     })
-    setReactions(updatedReactions)
+    const setReactionState = setReactions as ISetState<IReaction[]>
+
+    setReactionState(updatedReactions)
 
     /**
      * Remove from compounds array
      */
-    setCompounds([
-      ...compounds.slice(0, index),
-      ...compounds.slice(index + 1, compounds.length),
+    const setCompoundState = setCompounds as ISetState<ICompound[]>
+    setCompoundState([
+      ...(compounds as ICompound[]).slice(0, index),
+      ...(compounds as ICompound[]).slice(
+        index + 1,
+        (compounds as ICompound[]).length
+      ),
     ])
   }
 
@@ -172,7 +203,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
    */
 
   const addReaction = (): void => {
-    const updatedReactions = [...reactions]
+    const updatedReactions = [...(reactions as IReaction[])]
 
     updatedReactions.push({
       id: randomstring.generate(8),
@@ -183,7 +214,9 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         reactionConstant: 1,
       },
     })
-    setReactions(updatedReactions)
+
+    let setState = setReactions as ISetState<IReaction[]>
+    setState(updatedReactions)
   }
 
   const editReaction = (index?: number) => {
@@ -191,20 +224,27 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       setEditedReactionId(undefined)
       return
     }
-    const id = reactions[index].id
+    const id = (reactions as IReaction[])[index].id
     setEditedReactionId(id)
   }
 
   const updateReaction = (index: number, updatedReaction: IReaction) => {
     const updatedReactions = JSON.parse(JSON.stringify(reactions))
     updatedReactions[index] = updatedReaction
-    setReactions(updatedReactions)
+
+    let setState = setReactions as ISetState<IReaction[]>
+    setState(updatedReactions)
   }
 
   const removeReaction = (index: number): void => {
-    setReactions([
-      ...reactions.slice(0, index),
-      ...reactions.slice(index + 1, reactions.length),
+    let setState = setReactions as ISetState<IReaction[]>
+
+    setState([
+      ...(reactions as IReaction[]).slice(0, index),
+      ...(reactions as IReaction[]).slice(
+        index + 1,
+        (reactions as IReaction[]).length
+      ),
     ])
   }
 
@@ -212,7 +252,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     <DataContext.Provider
       value={{
         /* Compounds */
-        compounds,
+        compounds: compounds as ICompound[],
         addCompound,
         editCompound,
         updateCompound,
@@ -220,7 +260,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         editedCompoundId,
 
         /* Reactions */
-        reactions,
+        reactions: reactions as IReaction[],
         addReaction,
         editReaction,
         updateReaction,
