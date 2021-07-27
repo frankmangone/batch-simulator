@@ -17,20 +17,19 @@ import {
  * the MVP1
  */
 
-export const KINETIC_MODELS = ["Simple", "Reversible", "Hiperbolic"]
+export const KINETIC_MODELS = ["Simple", "Hiperbolic", "Autocatalytic"]
 
 export const generateKineticConstants = (
   model: number,
   reaction: IReaction
 ): IKineticConstants => {
   switch (model) {
-    case 0:
-      return generateSimpleModelConstants(reaction)
     case 1:
-      return generateReversibleModelConstants(reaction)
-    case 2:
       return generateHiperbolicModelConstants(reaction)
+    case 2:
+      return generateAutocatalyticModelConstants(reaction)
     default:
+      // 0
       return generateSimpleModelConstants(reaction)
   }
 }
@@ -52,7 +51,9 @@ const generateSimpleModelConstants = (reaction: IReaction) => {
   return { reactionConstant, ...updatedExponents }
 }
 
-const generateReversibleModelConstants = (reaction: IReaction) => {
+const generateHiperbolicModelConstants = generateSimpleModelConstants // It's exactly the same
+
+const generateAutocatalyticModelConstants = (reaction: IReaction) => {
   // eslint-disable-next-line
   const { reactionConstant, ...other } = reaction.kineticConstants
 
@@ -75,7 +76,5 @@ const generateReversibleModelConstants = (reaction: IReaction) => {
     }
   })
 
-  return { reactionConstant, inverseReactionConstant: 1, ...updatedExponents }
+  return { reactionConstant, ...updatedExponents }
 }
-
-const generateHiperbolicModelConstants = generateSimpleModelConstants // It's exactly the same

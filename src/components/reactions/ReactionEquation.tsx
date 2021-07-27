@@ -29,7 +29,7 @@ const ReactionEquation: React.FC<IReactionEquationProps> = (props) => {
   switch (reaction.kineticModel) {
     case 1:
       reactionEquation = (
-        <ReversibleReactionEquation
+        <HiperbolicReactionEquation
           reaction={reaction}
           compounds={compounds}
           keyCompoundSymbol={keyCompound?.symbol || undefined}
@@ -38,7 +38,7 @@ const ReactionEquation: React.FC<IReactionEquationProps> = (props) => {
       break
     case 2:
       reactionEquation = (
-        <HiperbolicReactionEquation
+        <AutocatalyticReactionEquation
           reaction={reaction}
           compounds={compounds}
           keyCompoundSymbol={keyCompound?.symbol || undefined}
@@ -94,7 +94,44 @@ const SimpleReactionEquation: React.FC<IReactionEquationProps> = (props) => {
   )
 }
 
-const ReversibleReactionEquation: React.FC<IReactionEquationProps> = (
+const HiperbolicReactionEquation: React.FC<IReactionEquationProps> = (
+  props
+) => {
+  const { reaction, compounds, keyCompoundSymbol } = props
+
+  return (
+    <EquationWrapper>
+      {keyCompoundSymbol && (
+        <>
+          <Subindex base="r" subindex={keyCompoundSymbol} />
+          &nbsp;=&nbsp;
+        </>
+      )}
+      <GreekMu />
+      {reaction.reactants.map((reactionCompound) => {
+        const compound = compounds.find(
+          (c) => c.id === reactionCompound.compoundId
+        ) as ICompound
+        return (
+          <Fragment key={reactionCompound.compoundId}>
+            .
+            <Division
+              numerator={`[${compound.symbol}]`}
+              denominator={
+                <>
+                  <Subindex base={"K"} subindex={compound.symbol} />
+                  +[{`${compound.symbol}`}]
+                </>
+              }
+            />
+          </Fragment>
+        )
+      })}
+    </EquationWrapper>
+  )
+}
+
+const AutocatalyticReactionEquation: React.FC<IReactionEquationProps> = (
   props
 ) => {
   const { reaction, compounds, keyCompoundSymbol } = props
@@ -124,8 +161,6 @@ const ReversibleReactionEquation: React.FC<IReactionEquationProps> = (
           </Fragment>
         )
       })}
-      &nbsp;-&nbsp;
-      <Subindex base="k" subindex="-1" />
       {reaction.products.map((reactionCompound) => {
         const compound = compounds.find(
           (c) => c.id === reactionCompound.compoundId
@@ -137,43 +172,6 @@ const ReversibleReactionEquation: React.FC<IReactionEquationProps> = (
               base={`[${compound.symbol}]`}
               power={
                 <Subindex base={<GreekBeta />} subindex={compound.symbol} />
-              }
-            />
-          </Fragment>
-        )
-      })}
-    </EquationWrapper>
-  )
-}
-
-const HiperbolicReactionEquation: React.FC<IReactionEquationProps> = (
-  props
-) => {
-  const { reaction, compounds, keyCompoundSymbol } = props
-
-  return (
-    <EquationWrapper>
-      {keyCompoundSymbol && (
-        <>
-          <Subindex base="r" subindex={keyCompoundSymbol} />
-          &nbsp;=&nbsp;
-        </>
-      )}
-      <GreekMu />
-      {reaction.reactants.map((reactionCompound) => {
-        const compound = compounds.find(
-          (c) => c.id === reactionCompound.compoundId
-        ) as ICompound
-        return (
-          <Fragment key={reactionCompound.compoundId}>
-            .
-            <Division
-              numerator={`[${compound.symbol}]`}
-              denominator={
-                <>
-                  <Subindex base={"K"} subindex={compound.symbol} />
-                  +[{`${compound.symbol}`}]
-                </>
               }
             />
           </Fragment>
