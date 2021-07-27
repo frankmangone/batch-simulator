@@ -106,7 +106,9 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
     /* Determine which array to push to */
     const key = getCompoundKey(compoundType)
     const updatedReaction = { ...modalReaction }
+    const deletedCompound = updatedReaction[key][compoundIndex]
 
+    /* Update reaction compounds */
     updatedReaction[key] = [
       ...updatedReaction[key].slice(0, compoundIndex),
       ...updatedReaction[key].slice(
@@ -115,6 +117,12 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       ),
     ]
 
+    /* Set keyCompound to undefined if deleted compound is keyCompound */
+    if (deletedCompound.compoundId === modalReaction.keyCompound) {
+      updatedReaction.keyCompound = undefined
+    }
+
+    /* Recalculate kinetic constants */
     const kineticConstants = generateKineticConstants(
       updatedReaction.kineticModel,
       updatedReaction
