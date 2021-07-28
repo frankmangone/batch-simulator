@@ -51,6 +51,7 @@ interface IDefaultValue {
   updateReaction: (index: number, updatedReaction: IReaction) => void
   removeReaction: (index: number) => void
   editedReactionId: string | undefined
+  serializeKineticEquation: (reaction: IReaction, index: number) => string
 }
 
 const defaultValue: IDefaultValue = {
@@ -72,6 +73,9 @@ const defaultValue: IDefaultValue = {
   updateReaction: () => {},
   removeReaction: () => {},
   editedReactionId: undefined,
+  serializeKineticEquation: () => {
+    return ""
+  },
 }
 
 // Context Provider component
@@ -247,8 +251,6 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
 
     let setState = setReactions as ISetState<IReaction[]>
     setState(updatedReactions)
-
-    console.log(updatedReaction)
   }
 
   const removeReaction = (index: number): void => {
@@ -280,7 +282,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*[${symbol}]/({K_${symbol}} + [${symbol}])`
+          equation = `${equation}*\\frac([${symbol}])({K_${symbol}} + [${symbol}])`
         })
         return equation
       case 2:
@@ -329,6 +331,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         updateReaction,
         removeReaction,
         editedReactionId,
+        serializeKineticEquation,
       }}
     >
       {children}
