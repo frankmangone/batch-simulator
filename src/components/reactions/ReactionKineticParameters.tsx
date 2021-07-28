@@ -4,6 +4,9 @@ import styled from "styled-components"
 import ReactionParamInputCard from "./ReactionParamInputCard"
 import { GreekMu } from "../MathExpressions"
 
+/* Hooks */
+import { useData } from "../../context/DataContext"
+
 /* Types */
 import { ICompound } from "../../types/Compound"
 import { IReaction } from "../../types/Reaction"
@@ -17,7 +20,8 @@ interface IReactionKineticParametersProps {
 const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   props
 ) => {
-  const { compounds, reaction, updateKineticConstant } = props
+  const { reaction, updateKineticConstant } = props
+  const { findCompound } = useData()
   const { reactionConstant, ...compoundParams } = reaction.kineticConstants
 
   return (
@@ -31,9 +35,7 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
       />
 
       {reaction.reactants.map((reactionCompound) => {
-        const compound = compounds.find(
-          (c) => c.id === reactionCompound.compoundId
-        ) as ICompound
+        const compound = findCompound(reactionCompound.compoundId) as ICompound
 
         return (
           <ReactionParamInputCard
@@ -55,8 +57,8 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
       {/* For autocatalytic reactions, and for now... */}
       {reaction.kineticModel === 2 &&
         reaction.products.map((reactionCompound) => {
-          const compound = compounds.find(
-            (c) => c.id === reactionCompound.compoundId
+          const compound = findCompound(
+            reactionCompound.compoundId
           ) as ICompound
 
           return (

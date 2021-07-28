@@ -39,6 +39,7 @@ interface IDefaultValue {
   compounds: ICompound[]
   addCompound: () => void
   editCompound: (index?: number) => void
+  findCompound: (id?: string) => ICompound | undefined
   updateCompound: (index: number, updatedCompound: ICompound) => void
   removeCompound: (index: number) => void
   editedCompoundId: string | undefined
@@ -57,6 +58,9 @@ const defaultValue: IDefaultValue = {
   compounds: [],
   addCompound: () => {},
   editCompound: () => {},
+  findCompound: () => {
+    return undefined
+  },
   updateCompound: () => {},
   removeCompound: () => {},
   editedCompoundId: undefined,
@@ -144,6 +148,10 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
 
     let setState = setCompounds as ISetState<ICompound[]>
     setState(updatedCompounds)
+  }
+
+  const findCompound = (id?: string): ICompound | undefined => {
+    return (compounds as ICompound[]).find((compound) => compound.id === id)
   }
 
   const editCompound = (index?: number) => {
@@ -255,6 +263,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         compounds: compounds as ICompound[],
         addCompound,
         editCompound,
+        findCompound,
         updateCompound,
         removeCompound,
         editedCompoundId,

@@ -35,7 +35,7 @@ interface IReactionEditModalProps {
 
 const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const { compounds, reaction, closeModal } = props
-  const { reactions, updateReaction } = useData()
+  const { reactions, findCompound, updateReaction } = useData()
   const [closing, setClosing] = useState<boolean>(false)
   const reactionIndex = reactions.findIndex((rea) => rea.id === reaction.id)
   /**
@@ -158,10 +158,6 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
         collapsedDisplayText: compounds[selectProductIndex].symbol,
       }
     : undefined
-
-  const findCompound = (id: string) => {
-    return compounds.find((c) => c.id === id)
-  }
 
   return (
     <EditModal
@@ -323,7 +319,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             }}
           />
         </SelectField>
-        <ReactionEquation reaction={modalReaction} compounds={compounds} />
+        <ReactionEquation reaction={modalReaction} />
         <ReactionKineticParameters
           reaction={modalReaction}
           compounds={compounds}

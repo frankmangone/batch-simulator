@@ -24,14 +24,12 @@ interface IReactionCompoundListProps {
 const ReactionCompoundList: React.FC<IReactionCompoundListProps> = (props) => {
   const { reactionCompounds, removeCompound, updateCompound, compoundType } =
     props
-  const { compounds } = useData()
+  const { findCompound } = useData()
 
   return (
     <>
       {reactionCompounds.map((reactionCompound) => {
-        const compound = compounds.find(
-          (c) => c.id === reactionCompound.compoundId
-        ) as ICompound
+        const compound = findCompound(reactionCompound.compoundId) as ICompound
         /**
          * compoundIndex is the index in the reaction object (reactants or products)
          *  */

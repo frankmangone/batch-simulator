@@ -21,7 +21,7 @@ interface IReactionPreviewProps {
 
 const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
   const { reaction } = props
-  const { compounds } = useData()
+  const { findCompound } = useData()
 
   return (
     <ReactionPreviewWrapper>
@@ -30,9 +30,7 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
       )}
 
       {reaction.reactants.map((reactionCompound, index) => {
-        const compound = compounds.find(
-          (c) => c.id === reactionCompound.compoundId
-        ) as ICompound
+        const compound = findCompound(reactionCompound.compoundId) as ICompound
 
         return (
           <Fragment key={reactionCompound.compoundId}>
@@ -54,9 +52,7 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
       )}
 
       {reaction.products.map((reactionCompound, index) => {
-        const compound = compounds.find(
-          (c) => c.id === reactionCompound.compoundId
-        ) as ICompound
+        const compound = findCompound(reactionCompound.compoundId) as ICompound
 
         return (
           <Fragment key={reactionCompound.compoundId}>

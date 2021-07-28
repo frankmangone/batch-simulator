@@ -11,19 +11,23 @@ import {
   GreekMu,
 } from "../MathExpressions"
 
+/* Hooks */
+import { useData } from "../../context/DataContext"
+
 /* Types */
 import { ICompound } from "../../types/Compound"
 import { IReaction } from "../../types/Reaction"
 
 interface IReactionEquationProps {
   reaction: IReaction
-  compounds: ICompound[]
   keyCompoundSymbol?: string
 }
 
 const ReactionEquation: React.FC<IReactionEquationProps> = (props) => {
-  const { reaction, compounds } = props
-  const keyCompound = compounds.find((c) => reaction.keyCompound === c.id)
+  const { reaction } = props
+  const { findCompound } = useData()
+
+  const keyCompound = findCompound(reaction.keyCompound)
   let reactionEquation
 
   switch (reaction.kineticModel) {
@@ -31,7 +35,6 @@ const ReactionEquation: React.FC<IReactionEquationProps> = (props) => {
       reactionEquation = (
         <HiperbolicReactionEquation
           reaction={reaction}
-          compounds={compounds}
           keyCompoundSymbol={keyCompound?.symbol || undefined}
         />
       )
@@ -40,7 +43,6 @@ const ReactionEquation: React.FC<IReactionEquationProps> = (props) => {
       reactionEquation = (
         <AutocatalyticReactionEquation
           reaction={reaction}
-          compounds={compounds}
           keyCompoundSymbol={keyCompound?.symbol || undefined}
         />
       )
@@ -49,7 +51,6 @@ const ReactionEquation: React.FC<IReactionEquationProps> = (props) => {
       reactionEquation = (
         <SimpleReactionEquation
           reaction={reaction}
-          compounds={compounds}
           keyCompoundSymbol={keyCompound?.symbol || undefined}
         />
       )
@@ -63,7 +64,8 @@ export default ReactionEquation
 //
 
 const SimpleReactionEquation: React.FC<IReactionEquationProps> = (props) => {
-  const { reaction, compounds, keyCompoundSymbol } = props
+  const { reaction, keyCompoundSymbol } = props
+  const { findCompound } = useData()
 
   return (
     <EquationWrapper>
@@ -75,9 +77,7 @@ const SimpleReactionEquation: React.FC<IReactionEquationProps> = (props) => {
       )}
       k
       {reaction.reactants.map((reactionCompound) => {
-        const compound = compounds.find(
-          (c) => c.id === reactionCompound.compoundId
-        ) as ICompound
+        const compound = findCompound(reactionCompound.compoundId) as ICompound
         return (
           <Fragment key={reactionCompound.compoundId}>
             .
@@ -97,7 +97,8 @@ const SimpleReactionEquation: React.FC<IReactionEquationProps> = (props) => {
 const HiperbolicReactionEquation: React.FC<IReactionEquationProps> = (
   props
 ) => {
-  const { reaction, compounds, keyCompoundSymbol } = props
+  const { reaction, keyCompoundSymbol } = props
+  const { findCompound } = useData()
 
   return (
     <EquationWrapper>
@@ -109,9 +110,7 @@ const HiperbolicReactionEquation: React.FC<IReactionEquationProps> = (
       )}
       <GreekMu />
       {reaction.reactants.map((reactionCompound) => {
-        const compound = compounds.find(
-          (c) => c.id === reactionCompound.compoundId
-        ) as ICompound
+        const compound = findCompound(reactionCompound.compoundId) as ICompound
         return (
           <Fragment key={reactionCompound.compoundId}>
             .
@@ -134,7 +133,8 @@ const HiperbolicReactionEquation: React.FC<IReactionEquationProps> = (
 const AutocatalyticReactionEquation: React.FC<IReactionEquationProps> = (
   props
 ) => {
-  const { reaction, compounds, keyCompoundSymbol } = props
+  const { reaction, keyCompoundSymbol } = props
+  const { findCompound } = useData()
 
   return (
     <EquationWrapper>
@@ -146,9 +146,7 @@ const AutocatalyticReactionEquation: React.FC<IReactionEquationProps> = (
       )}
       k
       {reaction.reactants.map((reactionCompound) => {
-        const compound = compounds.find(
-          (c) => c.id === reactionCompound.compoundId
-        ) as ICompound
+        const compound = findCompound(reactionCompound.compoundId) as ICompound
         return (
           <Fragment key={reactionCompound.compoundId}>
             .
@@ -162,9 +160,7 @@ const AutocatalyticReactionEquation: React.FC<IReactionEquationProps> = (
         )
       })}
       {reaction.products.map((reactionCompound) => {
-        const compound = compounds.find(
-          (c) => c.id === reactionCompound.compoundId
-        ) as ICompound
+        const compound = findCompound(reactionCompound.compoundId) as ICompound
         return (
           <Fragment key={reactionCompound.compoundId}>
             .
