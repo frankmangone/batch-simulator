@@ -13,6 +13,7 @@ export interface IReaction {
    */
   kineticModel: number
   kineticConstants: IKineticConstants
+  kineticEquation: string // A serialized version of the kinetic model
   keyCompound?: string // It's a compound (reactant) id
 }
 

@@ -154,7 +154,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     return (compounds as ICompound[]).find((compound) => compound.id === id)
   }
 
-  const editCompound = (index?: number) => {
+  const editCompound = (index?: number): void => {
     if (typeof index === "undefined") {
       setEditedCompoundId(undefined)
       return
@@ -163,7 +163,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setEditedCompoundId(id)
   }
 
-  const updateCompound = (index: number, updatedCompound: ICompound) => {
+  const updateCompound = (index: number, updatedCompound: ICompound): void => {
     const updatedCompounds = [...(compounds as ICompound[])]
     updatedCompounds[index] = updatedCompound
 
@@ -221,13 +221,14 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       kineticConstants: {
         reactionConstant: 1,
       },
+      kineticEquation: `{k_${reactions.length}}`,
     })
 
     let setState = setReactions as ISetState<IReaction[]>
     setState(updatedReactions)
   }
 
-  const editReaction = (index?: number) => {
+  const editReaction = (index?: number): void => {
     if (typeof index === "undefined") {
       setEditedReactionId(undefined)
       return
@@ -236,12 +237,18 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setEditedReactionId(id)
   }
 
-  const updateReaction = (index: number, updatedReaction: IReaction) => {
+  const updateReaction = (index: number, updatedReaction: IReaction): void => {
+    updatedReaction.kineticEquation = serializeKineticEquation(
+      updatedReaction,
+      index
+    )
     const updatedReactions = JSON.parse(JSON.stringify(reactions))
     updatedReactions[index] = updatedReaction
 
     let setState = setReactions as ISetState<IReaction[]>
     setState(updatedReactions)
+
+    console.log(updatedReaction)
   }
 
   const removeReaction = (index: number): void => {
@@ -254,6 +261,53 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         (reactions as IReaction[]).length
       ),
     ])
+  }
+
+  const serializeKineticEquation = (
+    reaction: IReaction,
+    index: number
+  ): string => {
+    let equation: string
+
+    /**
+     * TODO: this is just a placeholder for a future serialization system, maybe
+     * with direct user input!
+     */
+    switch (reaction.kineticModel) {
+      case 1:
+        equation = `{\\mu_${index + 1}}`
+        reaction.reactants.forEach((reactionCompound) => {
+          const { symbol } = findCompound(
+            reactionCompound.compoundId
+          ) as ICompound
+          equation = `${equation}*[${symbol}]/({K_${symbol}} + [${symbol}])`
+        })
+        return equation
+      case 2:
+        equation = `{k_${index + 1}}`
+        reaction.reactants.forEach((reactionCompound) => {
+          const { symbol } = findCompound(
+            reactionCompound.compoundId
+          ) as ICompound
+          equation = `${equation}*[${symbol}]^{\\alpha_${symbol}}`
+        })
+        reaction.products.forEach((reactionCompound) => {
+          const { symbol } = findCompound(
+            reactionCompound.compoundId
+          ) as ICompound
+          equation = `${equation}*[${symbol}]^{\\beta_${symbol}}`
+        })
+        return equation
+      default:
+        equation = `{k_${index + 1}}`
+        reaction.reactants.forEach((reactionCompound) => {
+          const { symbol } = findCompound(
+            reactionCompound.compoundId
+          ) as ICompound
+          equation = `${equation}*[${symbol}]^{\\alpha_${symbol}}`
+        })
+        return equation
+    }
   }
 
   return (
