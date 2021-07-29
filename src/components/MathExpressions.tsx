@@ -1,5 +1,15 @@
 import styled from "styled-components"
 
+interface IEquation {
+  equation: string
+}
+
+export const Equation: React.FC<IEquation> = (props) => {
+  const { equation } = props
+
+  return <div></div>
+}
+
 /**
  * Division
  */

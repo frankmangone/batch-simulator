@@ -275,14 +275,15 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
      * TODO: this is just a placeholder for a future serialization system, maybe
      * with direct user input!
      */
+    /* Returns infix notation */
     switch (reaction.kineticModel) {
       case 1:
-        equation = `{\\mu_${index + 1}}`
+        equation = `<\\mu_${index + 1}>`
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*\\frac([${symbol}])({K_${symbol}} + [${symbol}])`
+          equation = `${equation}*[${symbol}]/(<K_${symbol}>+[${symbol}])`
         })
         return equation
       case 2:
@@ -291,13 +292,13 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*[${symbol}]^{\\alpha_${symbol}}`
+          equation = `${equation}*[${symbol}]^<\\alpha_${symbol}>`
         })
         reaction.products.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*[${symbol}]^{\\beta_${symbol}}`
+          equation = `${equation}*[${symbol}]^<\\beta_${symbol}>`
         })
         return equation
       default:
@@ -306,7 +307,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*[${symbol}]^{\\alpha_${symbol}}`
+          equation = `${equation}*[${symbol}]^<\\alpha_${symbol}>`
         })
         return equation
     }
