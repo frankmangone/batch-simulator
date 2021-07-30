@@ -30,6 +30,7 @@ const ReactionList: React.FC = () => {
       {reactions.map((reaction, index) => (
         <ReactionCard
           reaction={reaction}
+          reactionIndex={index}
           editReaction={(): void => {
             editReaction(index)
           }}
