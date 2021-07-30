@@ -270,7 +270,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     index: number
   ): string => {
     let equation: string
-
+    const subindex = index + 1
     /**
      * TODO: this is just a placeholder for a future serialization system, maybe
      * with direct user input!
@@ -278,27 +278,27 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     /* Returns infix notation */
     switch (reaction.kineticModel) {
       case 1:
-        equation = `<\\mu_${index + 1}>`
+        equation = `<\\mu_${subindex}>`
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*[${symbol}]/(<K_${symbol}>+[${symbol}])`
+          equation = `${equation}*{[${symbol}]}/(<K_${symbol}_${subindex}>+{[${symbol}]})`
         })
         return equation
       case 2:
-        equation = `{k_${index + 1}}`
+        equation = `{k_${subindex}}`
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*[${symbol}]^<\\alpha_${symbol}>`
+          equation = `${equation}*{[${symbol}]}^<\\alpha_${symbol}_${subindex}>`
         })
         reaction.products.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*[${symbol}]^<\\beta_${symbol}>`
+          equation = `${equation}*{[${symbol}]}^<\\beta_${symbol}_${subindex}>`
         })
         return equation
       default:
@@ -307,7 +307,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*[${symbol}]^<\\alpha_${symbol}>`
+          equation = `${equation}*[${symbol}]^<\\alpha_${symbol}_${subindex}>`
         })
         return equation
     }

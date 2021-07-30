@@ -6,6 +6,8 @@ import {
   generateKineticConstants,
 } from "../../constants/kineticModels"
 
+import { tokenizeEquation } from "../../helpers/tokenization"
+
 /* Components */
 import Button from "../Button"
 import EditModal from "../EditModal"
@@ -45,8 +47,6 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const [modalReaction, setModalReaction] = useState<IReaction>(
     JSON.parse(JSON.stringify(reaction))
   )
-
-  console.log(modalReaction)
 
   /* For the select input, both for reactants and products */
   const [selectReactantIndex, setSelectReactantIndex] = useState<
@@ -89,6 +89,9 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       updatedReaction,
       reactionIndex
     )
+
+    console.log(updatedReaction.kineticEquation)
+    console.log(tokenizeEquation(updatedReaction.kineticEquation))
     setModalReaction(updatedReaction)
   }
 
