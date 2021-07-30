@@ -4,6 +4,14 @@
  * https://blog.shalvah.me/posts/parsing-math-expressions-with-javascript
  */
 
+export enum TokenTypes {
+  Parameter = 0,
+  Variable,
+  Operator,
+  LeftParenthesis,
+  RightParenthesis,
+}
+
 export const tokenizeEquation = (equation: string): Token[] => {
   const tokensArray: Token[] = []
 
@@ -23,7 +31,7 @@ export const tokenizeEquation = (equation: string): Token[] => {
   const emptyParameterBuffer = () => {
     // Push new parameter to the tokens array
     const newParam = parameterBuffer.join("")
-    tokensArray.push(createToken("Parameter", newParam))
+    tokensArray.push(createToken(TokenTypes.Parameter, newParam))
 
     // Empty parameter buffer
     parameterBuffer = []
@@ -32,7 +40,7 @@ export const tokenizeEquation = (equation: string): Token[] => {
   const emptyVariableBuffer = () => {
     // Push new variable to the tokens array
     const newVar = variableBuffer.join("")
-    tokensArray.push(createToken("Variable", newVar))
+    tokensArray.push(createToken(TokenTypes.Variable, newVar))
 
     // Empty variable buffer
     variableBuffer = []
@@ -82,26 +90,30 @@ export const tokenizeEquation = (equation: string): Token[] => {
      * Only operators and parenthesis remain, so:
      */
     else if (isOperator(char)) {
-      tokensArray.push(createToken("Operator", char))
+      tokensArray.push(createToken(TokenTypes.Operator, char))
     } else if (isLeftParenthesis(char)) {
-      tokensArray.push(createToken("Left Parenthesis", char))
+      tokensArray.push(createToken(TokenTypes.LeftParenthesis, char))
     } else if (isRightParenthesis(char)) {
-      tokensArray.push(createToken("Right Parenthesis", char))
+      tokensArray.push(createToken(TokenTypes.RightParenthesis, char))
     }
   })
 
   return tokensArray
 }
 
+export const joinTokens = (tokens: Token[]) => {
+  return tokens.map(({ value }) => value).join("")
+}
+
 /**
  * Token factory
  */
 export interface Token {
-  type: string
+  type: number
   value: string
 }
 
-const createToken = (type: string, value: string): Token => {
+export const createToken = (type: number, value: string): Token => {
   return {
     type,
     value,

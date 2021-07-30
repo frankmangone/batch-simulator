@@ -89,9 +89,8 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       updatedReaction,
       reactionIndex
     )
-
     console.log(updatedReaction.kineticEquation)
-    console.log(tokenizeEquation(updatedReaction.kineticEquation))
+
     setModalReaction(updatedReaction)
   }
 

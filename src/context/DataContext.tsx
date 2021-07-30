@@ -11,6 +11,14 @@ import randomstring from "randomstring"
 import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
 import { COMPOUND_SYMBOLS } from "../constants/compoundSymbols"
 
+/* Helpers */
+import {
+  Token,
+  TokenTypes,
+  createToken,
+  joinTokens,
+} from "../helpers/tokenization"
+
 /* Hooks */
 import useLocalStorageState from "../hooks/useLocalStorageState"
 
@@ -269,7 +277,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     reaction: IReaction,
     index: number
   ): string => {
-    let equation: string
+    const equationTokens: Token[] = []
     const subindex = index + 1
     /**
      * TODO: this is just a placeholder for a future serialization system, maybe
@@ -278,38 +286,73 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     /* Returns infix notation */
     switch (reaction.kineticModel) {
       case 1:
-        equation = `<\\mu_${subindex}>`
+        equationTokens.push(
+          createToken(TokenTypes.Parameter, `<\\mu_${subindex}>`)
+        )
+
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*{[${symbol}]}/(<K_${symbol}_${subindex}>+{[${symbol}]})`
+          equationTokens.push(createToken(TokenTypes.Operator, "*"))
+          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(createToken(TokenTypes.Operator, "/"))
+          equationTokens.push(createToken(TokenTypes.LeftParenthesis, "("))
+          equationTokens.push(
+            createToken(TokenTypes.Parameter, `<K_${symbol}_${subindex}>`)
+          )
+          equationTokens.push(createToken(TokenTypes.Operator, "+"))
+          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(createToken(TokenTypes.RightParenthesis, ")"))
         })
-        return equation
+        return joinTokens(equationTokens)
+      //
       case 2:
-        equation = `{k_${subindex}}`
+        equationTokens.push(
+          createToken(TokenTypes.Parameter, `<k_${subindex}>`)
+        )
+
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*{[${symbol}]}^<\\alpha_${symbol}_${subindex}>`
+          equationTokens.push(createToken(TokenTypes.Operator, "*"))
+          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(createToken(TokenTypes.Operator, "^"))
+          equationTokens.push(
+            createToken(TokenTypes.Parameter, `<\\alpha_${symbol}_${subindex}>`)
+          )
         })
         reaction.products.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*{[${symbol}]}^<\\beta_${symbol}_${subindex}>`
+          equationTokens.push(createToken(TokenTypes.Operator, "*"))
+          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(createToken(TokenTypes.Operator, "^"))
+          equationTokens.push(
+            createToken(TokenTypes.Parameter, `<\\beta_${symbol}_${subindex}>`)
+          )
         })
-        return equation
+        return joinTokens(equationTokens)
+      //
       default:
-        equation = `{k_${index + 1}}`
+        equationTokens.push(
+          createToken(TokenTypes.Parameter, `<k_${subindex}>`)
+        )
+
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equation = `${equation}*[${symbol}]^<\\alpha_${symbol}_${subindex}>`
+          equationTokens.push(createToken(TokenTypes.Operator, "*"))
+          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(createToken(TokenTypes.Operator, "^"))
+          equationTokens.push(
+            createToken(TokenTypes.Parameter, `<\\alpha_${symbol}_${subindex}>`)
+          )
         })
-        return equation
+        return joinTokens(equationTokens)
     }
   }
 
