@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/batch-simulator/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/batch-simulator/static/js/main.204496b1.chunk.js",
-    "main.js.map": "/batch-simulator/static/js/main.204496b1.chunk.js.map",
+    "main.js": "/batch-simulator/static/js/main.041eef40.chunk.js",
+    "main.js.map": "/batch-simulator/static/js/main.041eef40.chunk.js.map",
     "runtime-main.js": "/batch-simulator/static/js/runtime-main.b41361ca.js",
     "runtime-main.js.map": "/batch-simulator/static/js/runtime-main.b41361ca.js.map",
-    "static/js/2.d578e7b2.chunk.js": "/batch-simulator/static/js/2.d578e7b2.chunk.js",
-    "static/js/2.d578e7b2.chunk.js.map": "/batch-simulator/static/js/2.d578e7b2.chunk.js.map",
+    "static/js/2.bac8926a.chunk.js": "/batch-simulator/static/js/2.bac8926a.chunk.js",
+    "static/js/2.bac8926a.chunk.js.map": "/batch-simulator/static/js/2.bac8926a.chunk.js.map",
     "static/js/3.67dfc1b0.chunk.js": "/batch-simulator/static/js/3.67dfc1b0.chunk.js",
     "static/js/3.67dfc1b0.chunk.js.map": "/batch-simulator/static/js/3.67dfc1b0.chunk.js.map",
     "index.html": "/batch-simulator/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/batch-simulator/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.d578e7b2.chunk.js.LICENSE.txt": "/batch-simulator/static/js/2.d578e7b2.chunk.js.LICENSE.txt"
+    "static/js/2.bac8926a.chunk.js.LICENSE.txt": "/batch-simulator/static/js/2.bac8926a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.b41361ca.js",
-    "static/js/2.d578e7b2.chunk.js",
+    "static/js/2.bac8926a.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.204496b1.chunk.js"
+    "static/js/main.041eef40.chunk.js"
   ]
 }
