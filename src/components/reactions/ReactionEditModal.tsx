@@ -6,8 +6,6 @@ import {
   generateKineticConstants,
 } from "../../constants/kineticModels"
 
-import { tokenizeEquation } from "../../helpers/tokenization"
-
 /* Components */
 import Button from "../Button"
 import EditModal from "../EditModal"
@@ -89,7 +87,6 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       updatedReaction,
       reactionIndex
     )
-    console.log(updatedReaction.kineticEquation)
 
     setModalReaction(updatedReaction)
   }

@@ -12,12 +12,7 @@ import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
 import { COMPOUND_SYMBOLS } from "../constants/compoundSymbols"
 
 /* Helpers */
-import {
-  Token,
-  TokenTypes,
-  createToken,
-  joinTokens,
-} from "../helpers/tokenization"
+import { Token, TokenTypes, createToken } from "../helpers/tokenization"
 
 /* Hooks */
 import useLocalStorageState from "../hooks/useLocalStorageState"
@@ -59,7 +54,7 @@ interface IDefaultValue {
   updateReaction: (index: number, updatedReaction: IReaction) => void
   removeReaction: (index: number) => void
   editedReactionId: string | undefined
-  serializeKineticEquation: (reaction: IReaction, index: number) => string
+  serializeKineticEquation: (reaction: IReaction, index: number) => Token[]
 }
 
 const defaultValue: IDefaultValue = {
@@ -82,7 +77,7 @@ const defaultValue: IDefaultValue = {
   removeReaction: () => {},
   editedReactionId: undefined,
   serializeKineticEquation: () => {
-    return ""
+    return []
   },
 }
 
@@ -233,7 +228,9 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       kineticConstants: {
         reactionConstant: 1,
       },
-      kineticEquation: `{k_${reactions.length}}`,
+      kineticEquation: [
+        { type: TokenTypes.Parameter, value: `{k_${reactions.length}}` },
+      ],
     })
 
     let setState = setReactions as ISetState<IReaction[]>
@@ -276,7 +273,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   const serializeKineticEquation = (
     reaction: IReaction,
     index: number
-  ): string => {
+  ): Token[] => {
     const equationTokens: Token[] = []
     const subindex = index + 1
     /**
@@ -305,7 +302,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
           equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
           equationTokens.push(createToken(TokenTypes.RightParenthesis, ")"))
         })
-        return joinTokens(equationTokens)
+        return equationTokens
       //
       case 2:
         equationTokens.push(
@@ -334,7 +331,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
             createToken(TokenTypes.Parameter, `<\\beta_${symbol}_${subindex}>`)
           )
         })
-        return joinTokens(equationTokens)
+        return equationTokens
       //
       default:
         equationTokens.push(
@@ -352,7 +349,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
             createToken(TokenTypes.Parameter, `<\\alpha_${symbol}_${subindex}>`)
           )
         })
-        return joinTokens(equationTokens)
+        return equationTokens
     }
   }
 
