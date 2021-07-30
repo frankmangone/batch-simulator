@@ -1,22 +1,12 @@
 import styled from "styled-components"
-import { Fragment } from "react"
 
 /* Components */
-import {
-  Equation,
-  Division,
-  Power,
-  Subindex,
-  GreekAlpha,
-  GreekBeta,
-  GreekMu,
-} from "../MathExpressions"
+import { Equation, Subindex } from "../MathExpressions"
 
 /* Hooks */
 import { useData } from "../../context/DataContext"
 
 /* Types */
-import { ICompound } from "../../types/Compound"
 import { IReaction } from "../../types/Reaction"
 
 interface IReactionEquationProps {
@@ -29,121 +19,22 @@ const ReactionEquation: React.FC<IReactionEquationProps> = (props) => {
   const { findCompound } = useData()
 
   const keyCompound = findCompound(reaction.keyCompound)
-  let reactionEquation
+  const keyCompoundSymbol: string | undefined = keyCompound?.symbol || undefined
 
-  switch (reaction.kineticModel) {
-    case 1:
-      reactionEquation = (
-        <HiperbolicReactionEquation
-          reaction={reaction}
-          keyCompoundSymbol={keyCompound?.symbol || undefined}
-        />
-      )
-      break
-    case 2:
-      reactionEquation = (
-        <AutocatalyticReactionEquation
-          reaction={reaction}
-          keyCompoundSymbol={keyCompound?.symbol || undefined}
-        />
-      )
-      break
-    default:
-      reactionEquation = (
-        <SimpleReactionEquation
-          reaction={reaction}
-          keyCompoundSymbol={keyCompound?.symbol || undefined}
-        />
-      )
-  }
-
-  return reactionEquation
+  return (
+    <EquationWrapper>
+      {keyCompoundSymbol && (
+        <>
+          <Subindex base="r" subindex={keyCompoundSymbol} />
+          &nbsp;=&nbsp;
+        </>
+      )}
+      <Equation tokenizedEquation={reaction.kineticEquation} />
+    </EquationWrapper>
+  )
 }
 
 export default ReactionEquation
-
-//
-
-const SimpleReactionEquation: React.FC<IReactionEquationProps> = (props) => {
-  const { reaction, keyCompoundSymbol } = props
-
-  return (
-    <EquationWrapper>
-      {keyCompoundSymbol && (
-        <>
-          <Subindex base="r" subindex={keyCompoundSymbol} />
-          &nbsp;=&nbsp;
-        </>
-      )}
-      <Equation tokenizedEquation={reaction.kineticEquation} />
-    </EquationWrapper>
-  )
-}
-
-const HiperbolicReactionEquation: React.FC<IReactionEquationProps> = (
-  props
-) => {
-  const { reaction, keyCompoundSymbol } = props
-
-  return (
-    <EquationWrapper>
-      {keyCompoundSymbol && (
-        <>
-          <Subindex base="r" subindex={keyCompoundSymbol} />
-          &nbsp;=&nbsp;
-        </>
-      )}
-      <Equation tokenizedEquation={reaction.kineticEquation} />
-    </EquationWrapper>
-  )
-}
-
-const AutocatalyticReactionEquation: React.FC<IReactionEquationProps> = (
-  props
-) => {
-  const { reaction, keyCompoundSymbol } = props
-  const { findCompound } = useData()
-
-  return (
-    <EquationWrapper>
-      {keyCompoundSymbol && (
-        <>
-          <Subindex base="r" subindex={keyCompoundSymbol} />
-          &nbsp;=&nbsp;
-        </>
-      )}
-      k
-      {reaction.reactants.map((reactionCompound) => {
-        const compound = findCompound(reactionCompound.compoundId) as ICompound
-        return (
-          <Fragment key={reactionCompound.compoundId}>
-            .
-            <Power
-              base={`[${compound.symbol}]`}
-              power={
-                <Subindex base={<GreekAlpha />} subindex={compound.symbol} />
-              }
-            />
-          </Fragment>
-        )
-      })}
-      {reaction.products.map((reactionCompound) => {
-        const compound = findCompound(reactionCompound.compoundId) as ICompound
-        return (
-          <Fragment key={reactionCompound.compoundId}>
-            .
-            <Power
-              base={`[${compound.symbol}]`}
-              power={
-                <Subindex base={<GreekBeta />} subindex={compound.symbol} />
-              }
-            />
-          </Fragment>
-        )
-      })}
-    </EquationWrapper>
-  )
-}
 
 //
 

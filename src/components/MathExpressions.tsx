@@ -175,7 +175,13 @@ interface IParenthesisProps {
 export const Parenthesis: React.FC<IParenthesisProps> = (props) => {
   const { elements } = props
 
-  return <>({elements})</>
+  return (
+    <>
+      {elements.map((elem, index) => (
+        <Fragment key={index}>{elem}</Fragment>
+      ))}
+    </>
+  )
 }
 
 /**
