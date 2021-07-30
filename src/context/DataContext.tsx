@@ -228,9 +228,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       kineticConstants: {
         reactionConstant: 1,
       },
-      kineticEquation: [
-        { type: TokenTypes.Parameter, value: `<k_${reactions.length + 1}>` },
-      ],
+      kineticEquation: [{ type: TokenTypes.Parameter, value: `<k>` }],
     })
 
     let setState = setReactions as ISetState<IReaction[]>
@@ -275,7 +273,6 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     index: number
   ): Token[] => {
     const equationTokens: Token[] = []
-    const subindex = index + 1
     /**
      * TODO: this is just a placeholder for a future serialization system, maybe
      * with direct user input!
@@ -283,9 +280,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     /* Returns infix notation */
     switch (reaction.kineticModel) {
       case 1:
-        equationTokens.push(
-          createToken(TokenTypes.Parameter, `<\\mu_${subindex}>`)
-        )
+        equationTokens.push(createToken(TokenTypes.Parameter, `<\\mu>`))
 
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
@@ -296,7 +291,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
           equationTokens.push(createToken(TokenTypes.Operator, "/"))
           equationTokens.push(createToken(TokenTypes.LeftParenthesis, "("))
           equationTokens.push(
-            createToken(TokenTypes.Parameter, `<K_${symbol}_${subindex}>`)
+            createToken(TokenTypes.Parameter, `<K_${symbol}>`)
           )
           equationTokens.push(createToken(TokenTypes.Operator, "+"))
           equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
@@ -305,9 +300,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         return equationTokens
       //
       case 2:
-        equationTokens.push(
-          createToken(TokenTypes.Parameter, `<k_${subindex}>`)
-        )
+        equationTokens.push(createToken(TokenTypes.Parameter, `<k>`))
 
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
@@ -317,7 +310,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
           equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
           equationTokens.push(createToken(TokenTypes.Operator, "^"))
           equationTokens.push(
-            createToken(TokenTypes.Parameter, `<\\alpha_${symbol}_${subindex}>`)
+            createToken(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
           )
         })
         reaction.products.forEach((reactionCompound) => {
@@ -328,15 +321,13 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
           equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
           equationTokens.push(createToken(TokenTypes.Operator, "^"))
           equationTokens.push(
-            createToken(TokenTypes.Parameter, `<\\beta_${symbol}_${subindex}>`)
+            createToken(TokenTypes.Parameter, `<\\beta_${symbol}>`)
           )
         })
         return equationTokens
       //
       default:
-        equationTokens.push(
-          createToken(TokenTypes.Parameter, `<k_${subindex}>`)
-        )
+        equationTokens.push(createToken(TokenTypes.Parameter, `<k>`))
 
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
@@ -346,7 +337,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
           equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
           equationTokens.push(createToken(TokenTypes.Operator, "^"))
           equationTokens.push(
-            createToken(TokenTypes.Parameter, `<\\alpha_${symbol}_${subindex}>`)
+            createToken(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
           )
         })
         return equationTokens
