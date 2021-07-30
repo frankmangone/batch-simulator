@@ -3,6 +3,7 @@ import { Fragment } from "react"
 
 /* Components */
 import {
+  Equation,
   Division,
   Power,
   Subindex,
@@ -65,7 +66,6 @@ export default ReactionEquation
 
 const SimpleReactionEquation: React.FC<IReactionEquationProps> = (props) => {
   const { reaction, keyCompoundSymbol } = props
-  const { findCompound } = useData()
 
   return (
     <EquationWrapper>
@@ -75,21 +75,7 @@ const SimpleReactionEquation: React.FC<IReactionEquationProps> = (props) => {
           &nbsp;=&nbsp;
         </>
       )}
-      k
-      {reaction.reactants.map((reactionCompound) => {
-        const compound = findCompound(reactionCompound.compoundId) as ICompound
-        return (
-          <Fragment key={reactionCompound.compoundId}>
-            .
-            <Power
-              base={`[${compound.symbol}]`}
-              power={
-                <Subindex base={<GreekAlpha />} subindex={compound.symbol} />
-              }
-            />
-          </Fragment>
-        )
-      })}
+      <Equation tokenizedEquation={reaction.kineticEquation} />
     </EquationWrapper>
   )
 }
@@ -98,7 +84,6 @@ const HiperbolicReactionEquation: React.FC<IReactionEquationProps> = (
   props
 ) => {
   const { reaction, keyCompoundSymbol } = props
-  const { findCompound } = useData()
 
   return (
     <EquationWrapper>
@@ -108,24 +93,7 @@ const HiperbolicReactionEquation: React.FC<IReactionEquationProps> = (
           &nbsp;=&nbsp;
         </>
       )}
-      <GreekMu />
-      {reaction.reactants.map((reactionCompound) => {
-        const compound = findCompound(reactionCompound.compoundId) as ICompound
-        return (
-          <Fragment key={reactionCompound.compoundId}>
-            .
-            <Division
-              numerator={`[${compound.symbol}]`}
-              denominator={
-                <>
-                  <Subindex base={"K"} subindex={compound.symbol} />
-                  +[{`${compound.symbol}`}]
-                </>
-              }
-            />
-          </Fragment>
-        )
-      })}
+      <Equation tokenizedEquation={reaction.kineticEquation} />
     </EquationWrapper>
   )
 }
