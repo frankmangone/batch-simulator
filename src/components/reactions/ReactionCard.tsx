@@ -10,15 +10,19 @@ import { IReaction } from "../../types/Reaction"
 
 interface IReactionCardProps {
   reaction: IReaction
+  reactionIndex: number
   editReaction: () => void
   removeReaction: () => void
 }
 
 const ReactionCard: React.FC<IReactionCardProps> = (props) => {
-  const { reaction, editReaction, removeReaction } = props
+  const { reaction, reactionIndex, editReaction, removeReaction } = props
 
   return (
     <ReactionCardWrapper>
+      <ReactionNumber>
+        {reactionIndex + 1} {")"}
+      </ReactionNumber>
       <ReactionPreview reaction={reaction} />
       <CardButton onClick={editReaction}>
         <FiEdit />
@@ -73,8 +77,17 @@ const ReactionCardWrapper = styled.div`
     }
   }
 
-  p {
+  p:not(:first-child) {
     flex-grow: 1;
     margin: 0;
   }
+`
+
+const ReactionNumber = styled.p`
+  color: var(--color-grey-normal);
+  flex-grow: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 1rem 0 0;
+  padding: 0.6rem 0.5rem;
 `

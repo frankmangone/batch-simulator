@@ -1,3 +1,5 @@
+import { Token } from "../helpers/tokenization"
+
 export interface IReaction {
   id: string
 
@@ -13,6 +15,7 @@ export interface IReaction {
    */
   kineticModel: number
   kineticConstants: IKineticConstants
+  kineticEquation: Token[] // A tokenized version of the kinetic model
   keyCompound?: string // It's a compound (reactant) id
 }
 

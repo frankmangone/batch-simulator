@@ -16,11 +16,11 @@ interface ICompoundListProps {
 
 const CompoundList: React.FC<ICompoundListProps> = (props) => {
   const { compounds } = props
-  const { editedCompoundId, editCompound, updateCompound, removeCompound } =
+  const { editedCompoundId, editCompound, findCompound, updateCompound, removeCompound } =
     useData()
 
   const editedCompound = editedCompoundId
-    ? compounds.find((compound) => compound.id === editedCompoundId)
+    ? findCompound(editedCompoundId)
     : undefined
 
   return (

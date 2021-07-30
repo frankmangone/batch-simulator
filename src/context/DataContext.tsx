@@ -11,6 +11,9 @@ import randomstring from "randomstring"
 import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
 import { COMPOUND_SYMBOLS } from "../constants/compoundSymbols"
 
+/* Helpers */
+import { Token, TokenTypes, createToken } from "../helpers/tokenization"
+
 /* Hooks */
 import useLocalStorageState from "../hooks/useLocalStorageState"
 
@@ -39,6 +42,7 @@ interface IDefaultValue {
   compounds: ICompound[]
   addCompound: () => void
   editCompound: (index?: number) => void
+  findCompound: (id?: string) => ICompound | undefined
   updateCompound: (index: number, updatedCompound: ICompound) => void
   removeCompound: (index: number) => void
   editedCompoundId: string | undefined
@@ -50,6 +54,7 @@ interface IDefaultValue {
   updateReaction: (index: number, updatedReaction: IReaction) => void
   removeReaction: (index: number) => void
   editedReactionId: string | undefined
+  serializeKineticEquation: (reaction: IReaction, index: number) => Token[]
 }
 
 const defaultValue: IDefaultValue = {
@@ -57,6 +62,9 @@ const defaultValue: IDefaultValue = {
   compounds: [],
   addCompound: () => {},
   editCompound: () => {},
+  findCompound: () => {
+    return undefined
+  },
   updateCompound: () => {},
   removeCompound: () => {},
   editedCompoundId: undefined,
@@ -68,6 +76,9 @@ const defaultValue: IDefaultValue = {
   updateReaction: () => {},
   removeReaction: () => {},
   editedReactionId: undefined,
+  serializeKineticEquation: () => {
+    return []
+  },
 }
 
 // Context Provider component
@@ -146,7 +157,11 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setState(updatedCompounds)
   }
 
-  const editCompound = (index?: number) => {
+  const findCompound = (id?: string): ICompound | undefined => {
+    return (compounds as ICompound[]).find((compound) => compound.id === id)
+  }
+
+  const editCompound = (index?: number): void => {
     if (typeof index === "undefined") {
       setEditedCompoundId(undefined)
       return
@@ -155,7 +170,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setEditedCompoundId(id)
   }
 
-  const updateCompound = (index: number, updatedCompound: ICompound) => {
+  const updateCompound = (index: number, updatedCompound: ICompound): void => {
     const updatedCompounds = [...(compounds as ICompound[])]
     updatedCompounds[index] = updatedCompound
 
@@ -213,13 +228,14 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       kineticConstants: {
         reactionConstant: 1,
       },
+      kineticEquation: [{ type: TokenTypes.Parameter, value: `<k>` }],
     })
 
     let setState = setReactions as ISetState<IReaction[]>
     setState(updatedReactions)
   }
 
-  const editReaction = (index?: number) => {
+  const editReaction = (index?: number): void => {
     if (typeof index === "undefined") {
       setEditedReactionId(undefined)
       return
@@ -228,7 +244,11 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setEditedReactionId(id)
   }
 
-  const updateReaction = (index: number, updatedReaction: IReaction) => {
+  const updateReaction = (index: number, updatedReaction: IReaction): void => {
+    updatedReaction.kineticEquation = serializeKineticEquation(
+      updatedReaction,
+      index
+    )
     const updatedReactions = JSON.parse(JSON.stringify(reactions))
     updatedReactions[index] = updatedReaction
 
@@ -248,6 +268,82 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     ])
   }
 
+  const serializeKineticEquation = (
+    reaction: IReaction,
+    index: number
+  ): Token[] => {
+    const equationTokens: Token[] = []
+    /**
+     * TODO: this is just a placeholder for a future serialization system, maybe
+     * with direct user input!
+     */
+    /* Returns infix notation */
+    switch (reaction.kineticModel) {
+      case 1:
+        equationTokens.push(createToken(TokenTypes.Parameter, `<\\mu>`))
+
+        reaction.reactants.forEach((reactionCompound) => {
+          const { symbol } = findCompound(
+            reactionCompound.compoundId
+          ) as ICompound
+          equationTokens.push(createToken(TokenTypes.Operator, "*"))
+          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(createToken(TokenTypes.Operator, "/"))
+          equationTokens.push(createToken(TokenTypes.LeftParenthesis, "("))
+          equationTokens.push(
+            createToken(TokenTypes.Parameter, `<K_${symbol}>`)
+          )
+          equationTokens.push(createToken(TokenTypes.Operator, "+"))
+          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(createToken(TokenTypes.RightParenthesis, ")"))
+        })
+        return equationTokens
+      //
+      case 2:
+        equationTokens.push(createToken(TokenTypes.Parameter, `<k>`))
+
+        reaction.reactants.forEach((reactionCompound) => {
+          const { symbol } = findCompound(
+            reactionCompound.compoundId
+          ) as ICompound
+          equationTokens.push(createToken(TokenTypes.Operator, "*"))
+          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(createToken(TokenTypes.Operator, "^"))
+          equationTokens.push(
+            createToken(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
+          )
+        })
+        reaction.products.forEach((reactionCompound) => {
+          const { symbol } = findCompound(
+            reactionCompound.compoundId
+          ) as ICompound
+          equationTokens.push(createToken(TokenTypes.Operator, "*"))
+          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(createToken(TokenTypes.Operator, "^"))
+          equationTokens.push(
+            createToken(TokenTypes.Parameter, `<\\beta_${symbol}>`)
+          )
+        })
+        return equationTokens
+      //
+      default:
+        equationTokens.push(createToken(TokenTypes.Parameter, `<k>`))
+
+        reaction.reactants.forEach((reactionCompound) => {
+          const { symbol } = findCompound(
+            reactionCompound.compoundId
+          ) as ICompound
+          equationTokens.push(createToken(TokenTypes.Operator, "*"))
+          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(createToken(TokenTypes.Operator, "^"))
+          equationTokens.push(
+            createToken(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
+          )
+        })
+        return equationTokens
+    }
+  }
+
   return (
     <DataContext.Provider
       value={{
@@ -255,6 +351,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         compounds: compounds as ICompound[],
         addCompound,
         editCompound,
+        findCompound,
         updateCompound,
         removeCompound,
         editedCompoundId,
@@ -266,6 +363,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         updateReaction,
         removeReaction,
         editedReactionId,
+        serializeKineticEquation,
       }}
     >
       {children}

@@ -4,6 +4,7 @@ import {
   IReaction,
   IReactionCompound,
 } from "../types/Reaction"
+import { ICompound } from "../types/Compound"
 
 /**
  * This is a placeholder for more complex kinetic models,
@@ -17,65 +18,123 @@ import {
  * the MVP1
  */
 
-export const KINETIC_MODELS = ["Simple", "Reversible", "Hiperbolic"]
+export const KINETIC_MODELS = ["Simple", "Hiperbolic", "Autocatalytic"]
 
 export const generateKineticConstants = (
   model: number,
-  reaction: IReaction
+  reaction: IReaction,
+  compounds: ICompound[]
 ): IKineticConstants => {
   switch (model) {
-    case 0:
-      return generateSimpleModelConstants(reaction)
     case 1:
-      return generateReversibleModelConstants(reaction)
+      return generateHiperbolicModelConstants(reaction, compounds)
     case 2:
-      return generateHiperbolicModelConstants(reaction)
+      return generateAutocatalyticModelConstants(reaction, compounds)
     default:
-      return generateSimpleModelConstants(reaction)
+      // 0
+      return generateSimpleModelConstants(reaction, compounds)
   }
 }
 
-const generateSimpleModelConstants = (reaction: IReaction) => {
+const generateSimpleModelConstants = (
+  reaction: IReaction,
+  compounds: ICompound[]
+) => {
   // eslint-disable-next-line
   const { reactionConstant, ...other } = reaction.kineticConstants
 
   const updatedExponents: IKineticConstants = {}
-  reaction.reactants.forEach((compound: IReactionCompound) => {
-    const oldConstant = reaction.kineticConstants[compound.compoundId]
+  reaction.reactants.forEach((reactionCompound: IReactionCompound) => {
+    const compound = compounds.find(
+      (c) => c.id === reactionCompound.compoundId
+    ) as ICompound
+    const paramKey = reactantExponent(compound)
+    const oldConstant = reaction.kineticConstants[paramKey]
+
     if (oldConstant === undefined) {
-      updatedExponents[compound.compoundId] = 1
+      updatedExponents[paramKey] = 1
     } else {
-      updatedExponents[compound.compoundId] = oldConstant
+      updatedExponents[paramKey] = oldConstant
     }
   })
 
   return { reactionConstant, ...updatedExponents }
 }
 
-const generateReversibleModelConstants = (reaction: IReaction) => {
+const generateHiperbolicModelConstants = (
+  reaction: IReaction,
+  compounds: ICompound[]
+) => {
+  // eslint-disable-next-line
+  const { reactionConstant, ...other } = reaction.kineticConstants
+
+  const updatedExponents: IKineticConstants = {}
+  reaction.reactants.forEach((reactionCompound: IReactionCompound) => {
+    const compound = compounds.find(
+      (c) => c.id === reactionCompound.compoundId
+    ) as ICompound
+    const paramKey = semiSaturationConstant(compound)
+    const oldConstant = reaction.kineticConstants[paramKey]
+
+    if (oldConstant === undefined) {
+      updatedExponents[paramKey] = 1
+    } else {
+      updatedExponents[paramKey] = oldConstant
+    }
+  })
+
+  return { reactionConstant, ...updatedExponents }
+}
+
+const generateAutocatalyticModelConstants = (
+  reaction: IReaction,
+  compounds: ICompound[]
+) => {
   // eslint-disable-next-line
   const { reactionConstant, ...other } = reaction.kineticConstants
 
   const updatedExponents: IKineticConstants = {}
 
-  reaction.reactants.forEach((compound: IReactionCompound) => {
-    const oldConstant = reaction.kineticConstants[compound.compoundId]
+  reaction.reactants.forEach((reactionCompound: IReactionCompound) => {
+    const compound = compounds.find(
+      (c) => c.id === reactionCompound.compoundId
+    ) as ICompound
+    const paramKey = reactantExponent(compound)
+    const oldConstant = reaction.kineticConstants[paramKey]
+
     if (oldConstant === undefined) {
-      updatedExponents[compound.compoundId] = 1
+      updatedExponents[paramKey] = 1
     } else {
-      updatedExponents[compound.compoundId] = oldConstant
+      updatedExponents[paramKey] = oldConstant
     }
   })
-  reaction.products.forEach((compound: IReactionCompound) => {
-    const oldConstant = reaction.kineticConstants[compound.compoundId]
+  reaction.products.forEach((reactionCompound: IReactionCompound) => {
+    const compound = compounds.find(
+      (c) => c.id === reactionCompound.compoundId
+    ) as ICompound
+    const paramKey = productExponent(compound)
+    const oldConstant = reaction.kineticConstants[paramKey]
+
     if (oldConstant === undefined) {
-      updatedExponents[compound.compoundId] = 1
+      updatedExponents[paramKey] = 1
     } else {
-      updatedExponents[compound.compoundId] = oldConstant
+      updatedExponents[paramKey] = oldConstant
     }
   })
 
-  return { reactionConstant, inverseReactionConstant: 1, ...updatedExponents }
+  return { reactionConstant, ...updatedExponents }
 }
 
-const generateHiperbolicModelConstants = generateSimpleModelConstants // It's exactly the same
+// Some placeholder parameters
+
+export const reactantExponent = (compound: ICompound) => {
+  return `\\alpha_${compound.symbol}`
+}
+
+export const productExponent = (compound: ICompound) => {
+  return `\\beta_${compound.symbol}`
+}
+
+export const semiSaturationConstant = (compound: ICompound) => {
+  return `K_${compound.symbol}`
+}

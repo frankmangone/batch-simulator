@@ -35,7 +35,8 @@ interface IReactionEditModalProps {
 
 const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const { compounds, reaction, closeModal } = props
-  const { reactions, updateReaction } = useData()
+  const { reactions, findCompound, serializeKineticEquation, updateReaction } =
+    useData()
   const [closing, setClosing] = useState<boolean>(false)
   const reactionIndex = reactions.findIndex((rea) => rea.id === reaction.id)
   /**
@@ -76,11 +77,17 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       stoichiometricCoefficient: 1,
     })
 
+    /* Recalculate kinetic constants */
     const kineticConstants = generateKineticConstants(
       updatedReaction.kineticModel,
-      updatedReaction
+      updatedReaction,
+      compounds
     )
     updatedReaction.kineticConstants = kineticConstants
+    updatedReaction.kineticEquation = serializeKineticEquation(
+      updatedReaction,
+      reactionIndex
+    )
 
     setModalReaction(updatedReaction)
   }
@@ -122,12 +129,17 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       updatedReaction.keyCompound = undefined
     }
 
-    /* Recalculate kinetic constants */
+    /* Recalculate kinetic constants and equation */
     const kineticConstants = generateKineticConstants(
       updatedReaction.kineticModel,
-      updatedReaction
+      updatedReaction,
+      compounds
     )
     updatedReaction.kineticConstants = kineticConstants
+    updatedReaction.kineticEquation = serializeKineticEquation(
+      updatedReaction,
+      reactionIndex
+    )
 
     setModalReaction(updatedReaction)
   }
@@ -158,10 +170,6 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
         collapsedDisplayText: compounds[selectProductIndex].symbol,
       }
     : undefined
-
-  const findCompound = (id: string) => {
-    return compounds.find((c) => c.id === id)
-  }
 
   return (
     <EditModal
@@ -277,16 +285,20 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               collapsedDisplayText: model,
             }))}
             onSelectionChange={(value) => {
-              const constants = generateKineticConstants(
+              const updatedReaction = JSON.parse(JSON.stringify(modalReaction))
+
+              updatedReaction.kineticConstants = generateKineticConstants(
                 value as number,
-                modalReaction
+                modalReaction,
+                compounds
+              )
+              updatedReaction.kineticModel = value
+              updatedReaction.kineticEquation = serializeKineticEquation(
+                updatedReaction,
+                reactionIndex
               )
 
-              setModalReaction({
-                ...modalReaction,
-                kineticModel: value as number,
-                kineticConstants: constants,
-              })
+              setModalReaction(updatedReaction)
             }}
           />
         </SelectField>
@@ -323,7 +335,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             }}
           />
         </SelectField>
-        <ReactionEquation reaction={modalReaction} compounds={compounds} />
+        <ReactionEquation reaction={modalReaction} />
         <ReactionKineticParameters
           reaction={modalReaction}
           compounds={compounds}
