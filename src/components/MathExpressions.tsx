@@ -64,21 +64,13 @@ export const Equation: React.FC<IEquation> = (props) => {
       token.type === TokenTypes.Parameter ||
       token.type === TokenTypes.Variable
     ) {
-      let Component: string | JSX.Element
-      if (token.type === TokenTypes.Parameter) {
-        Component = (
-          <ParameterComponent parameter={token.value.replace(/<|>/g, "")} />
-        )
-      } else {
-        Component = (
-          <VariableComponent variable={token.value.replace(/{|}/g, "")} />
-        )
-      }
       /**
        * Push to parenthesis stack if one is present
        */
       if (parenthesisStack.length > 0) {
-        parenthesisStack[parenthesisStack.length - 1].push(Component)
+        parenthesisStack[parenthesisStack.length - 1].push(
+          <SymbolComponent symbol={token.value.replace(/<|>|{|}/g, "")} />
+        )
       }
       //
       /**
@@ -93,11 +85,23 @@ export const Equation: React.FC<IEquation> = (props) => {
         if (operation === "/") {
           const numerator = components.pop() as string | JSX.Element
           components.push(
-            <Division numerator={numerator} denominator={Component} />
+            <Division
+              numerator={numerator}
+              denominator={
+                <SymbolComponent symbol={token.value.replace(/<|>|{|}/g, "")} />
+              }
+            />
           )
         } else if (operation === "^") {
           const base = components.pop() as string | JSX.Element
-          components.push(<Power base={base} power={Component} />)
+          components.push(
+            <Power
+              base={base}
+              power={
+                <SymbolComponent symbol={token.value.replace(/<|>|{|}/g, "")} />
+              }
+            />
+          )
         }
       }
       //
@@ -105,7 +109,9 @@ export const Equation: React.FC<IEquation> = (props) => {
        * Next steps are easier: close parenthesis or just push to components
        */
       else {
-        components.push(Component)
+        components.push(
+          <SymbolComponent symbol={token.value.replace(/<|>|{|}/g, "")} />
+        )
       }
     }
     //
@@ -145,25 +151,53 @@ export const Equation: React.FC<IEquation> = (props) => {
 }
 
 // ----------------------------------------------------------------
-
-interface IParameterComponent {
-  parameter: string
+/**
+ * Symbol Component
+ * For alphanumeric expressions such as variables or parameters
+ */
+interface ISymbolComponent {
+  symbol: string
 }
 
-const ParameterComponent: React.FC<IParameterComponent> = (props) => {
-  const { parameter } = props
-  return <>{parameter}</>
+const SymbolComponent: React.FC<ISymbolComponent> = (props) => {
+  const { symbol } = props
+
+  /**
+   * Expressions may have subindices
+   * For now, they may not have superindices (TODO: maybe?)
+   * TODO: Support commas for subindex separation?
+   */
+  const separatedTerms: (string | JSX.Element)[] = symbol.split("_")
+
+  // Replace symbols represented as strings for components
+  separatedTerms.forEach((term, index) => {
+    switch (term) {
+      case "\\alpha":
+        separatedTerms[index] = <GreekAlpha />
+        break
+      case "\\beta":
+        separatedTerms[index] = <GreekBeta />
+        break
+      case "\\mu":
+        separatedTerms[index] = <GreekMu />
+        break
+      default:
+    }
+  })
+
+  for (let i = separatedTerms.length - 1; i > 0; i--) {
+    // Last term will be the subindex
+    const subindex = separatedTerms.pop() as string | JSX.Element
+    separatedTerms[i - 1] = (
+      <Subindex base={separatedTerms[i - 1]} subindex={subindex} />
+    )
+  }
+
+  // Final result is at separatedTerms[0]
+  return separatedTerms[0] as JSX.Element
 }
 
-interface IVariableComponent {
-  variable: string
-}
-
-const VariableComponent: React.FC<IVariableComponent> = (props) => {
-  const { variable } = props
-  return <>{variable}</>
-}
-
+// ----------------------------------------------------------------
 /**
  * Parenthesis
  */
@@ -184,6 +218,7 @@ export const Parenthesis: React.FC<IParenthesisProps> = (props) => {
   )
 }
 
+// ----------------------------------------------------------------
 /**
  * Division
  */
@@ -223,6 +258,7 @@ const DivisionWrapper = styled.div`
   }
 `
 
+// ----------------------------------------------------------------
 /**
  * Power
  *  */
@@ -251,6 +287,7 @@ const PowerWrapper = styled.div`
   }
 `
 
+// ----------------------------------------------------------------
 /**
  * Subindex
  *  */
@@ -279,6 +316,7 @@ const SubindexWrapper = styled.div`
   }
 `
 
+// ----------------------------------------------------------------
 /**
  * Greek letters
  */
