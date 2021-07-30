@@ -283,7 +283,7 @@ const PowerWrapper = styled.div`
   display: flex;
 
   & > .exponent {
-    transform: translateY(-50%) scale(0.8);
+    transform: translateY(-40%) scale(0.8);
   }
 `
 
@@ -312,7 +312,7 @@ const SubindexWrapper = styled.div`
   display: flex;
 
   & > .subindex {
-    transform: translateY(50%) scale(0.8);
+    transform: translateY(30%) scale(0.75);
   }
 `
 
