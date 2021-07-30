@@ -80,7 +80,8 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
     /* Recalculate kinetic constants */
     const kineticConstants = generateKineticConstants(
       updatedReaction.kineticModel,
-      updatedReaction
+      updatedReaction,
+      compounds
     )
     updatedReaction.kineticConstants = kineticConstants
     updatedReaction.kineticEquation = serializeKineticEquation(
@@ -131,7 +132,8 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
     /* Recalculate kinetic constants and equation */
     const kineticConstants = generateKineticConstants(
       updatedReaction.kineticModel,
-      updatedReaction
+      updatedReaction,
+      compounds
     )
     updatedReaction.kineticConstants = kineticConstants
     updatedReaction.kineticEquation = serializeKineticEquation(
@@ -287,7 +289,8 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
 
               updatedReaction.kineticConstants = generateKineticConstants(
                 value as number,
-                modalReaction
+                modalReaction,
+                compounds
               )
               updatedReaction.kineticModel = value
               updatedReaction.kineticEquation = serializeKineticEquation(

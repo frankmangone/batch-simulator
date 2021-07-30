@@ -2,10 +2,7 @@ import styled from "styled-components"
 
 /* Components */
 import ReactionParamInputCard from "./ReactionParamInputCard"
-import { GreekMu } from "../MathExpressions"
-
-/* Hooks */
-import { useData } from "../../context/DataContext"
+import { GreekMu, SymbolComponent } from "../MathExpressions"
 
 /* Types */
 import { ICompound } from "../../types/Compound"
@@ -21,7 +18,6 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   props
 ) => {
   const { reaction, updateKineticConstant } = props
-  const { findCompound } = useData()
   const { reactionConstant, ...compoundParams } = reaction.kineticConstants
 
   return (
@@ -34,49 +30,16 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
         }}
       />
 
-      {reaction.reactants.map((reactionCompound) => {
-        const compound = findCompound(reactionCompound.compoundId) as ICompound
-
-        return (
-          <ReactionParamInputCard
-            key={compound.id}
-            paramSymbol={
-              <>
-                <span>&alpha;</span>
-                <sub>{compound.symbol}</sub>
-              </>
-            }
-            value={compoundParams[compound.id]}
-            updateValue={(value: number) => {
-              updateKineticConstant(compound.id, value)
-            }}
-          />
-        )
-      })}
-
-      {/* For autocatalytic reactions, and for now... */}
-      {reaction.kineticModel === 2 &&
-        reaction.products.map((reactionCompound) => {
-          const compound = findCompound(
-            reactionCompound.compoundId
-          ) as ICompound
-
-          return (
-            <ReactionParamInputCard
-              key={compound.id}
-              paramSymbol={
-                <>
-                  <span>&beta;</span>
-                  <sub>{compound.symbol}</sub>
-                </>
-              }
-              value={compoundParams[compound.id]}
-              updateValue={(value: number) => {
-                updateKineticConstant(compound.id, value)
-              }}
-            />
-          )
-        })}
+      {Object.entries(compoundParams).map(([param, value]) => (
+        <ReactionParamInputCard
+          key={param}
+          paramSymbol={<SymbolComponent symbol={param} />}
+          value={value}
+          updateValue={(value: number) => {
+            updateKineticConstant(param, value)
+          }}
+        />
+      ))}
     </KineticParamsWrapper>
   )
 }

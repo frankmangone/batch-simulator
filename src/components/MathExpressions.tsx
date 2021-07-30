@@ -159,7 +159,7 @@ interface ISymbolComponent {
   symbol: string
 }
 
-const SymbolComponent: React.FC<ISymbolComponent> = (props) => {
+export const SymbolComponent: React.FC<ISymbolComponent> = (props) => {
   const { symbol } = props
 
   /**
