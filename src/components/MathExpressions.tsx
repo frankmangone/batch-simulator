@@ -74,8 +74,17 @@ export const Equation: React.FC<IEquation> = (props) => {
           <VariableComponent variable={token.value.replace(/{|}/g, "")} />
         )
       }
-      // First check if division or power are present in the stack
-      if (operationStack.length > 0) {
+      /**
+       * Push to parenthesis stack if one is present
+       */
+      if (parenthesisStack.length > 0) {
+        parenthesisStack[parenthesisStack.length - 1].push(Component)
+      }
+      //
+      /**
+       * Then, check if division or power are present in the stack
+       *  */
+      else if (operationStack.length > 0) {
         /**
          * Pop most recent operation from stack
          */
@@ -95,9 +104,7 @@ export const Equation: React.FC<IEquation> = (props) => {
       /**
        * Next steps are easier: close parenthesis or just push to components
        */
-      else if (parenthesisStack.length > 0) {
-        parenthesisStack[parenthesisStack.length - 1].push(Component)
-      } else {
+      else {
         components.push(Component)
       }
     }
