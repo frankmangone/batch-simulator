@@ -5,6 +5,7 @@ import { useFormik } from "formik"
 import Error from "../Error"
 import Input from "../Input"
 import EditModal from "../EditModal"
+import FieldInput from "../FieldInput"
 import SubmitButton from "../SubmitButton"
 
 /* Constants */
@@ -143,18 +144,6 @@ export default CompoundEditModal
 /**
  * Styled components
  */
-
-const FieldInput = styled.div`
-  display: flex;
-  align-items: center;
-  align-self: stretch;
-  padding: 0.5rem;
-  position: relative;
-
-  &:hover > .error {
-    opacity: 1 !important;
-  }
-`
 
 interface ISymbolInputProps {
   color: string
