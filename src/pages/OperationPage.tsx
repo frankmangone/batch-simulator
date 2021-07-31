@@ -6,37 +6,51 @@ import FieldInput from "../components/FieldInput"
 
 /* Hooks */
 import { useData } from "../context/DataContext"
+import { useFormik } from "formik"
 
 const OperationPage: React.FC = () => {
-  const { operation, setOperationKey } = useData()
+  const { operation, updateOperation } = useData()
+
+  const formik = useFormik({
+    initialValues: { ...operation },
+    onSubmit: (values) => {
+      updateOperation(values)
+    },
+  })
+
+  const submit = () => {
+    formik.handleSubmit()
+  }
 
   return (
     <>
       <PageTitle>Operation</PageTitle>
 
-      <InputSection>
-        <h2>Operating times</h2>
-        <FieldInput>
-          <label htmlFor="reactionTime">Reaction time:</label>
-          <input
-            name="reactionTime"
-            autoComplete="off"
-            onChange={() => {}}
-            onBlur={() => {}}
-            value={operation.reactionTime}
-          />
-        </FieldInput>
-        <FieldInput>
-          <label htmlFor="deadTime">Dead time:</label>
-          <input
-            name="deadTime"
-            autoComplete="off"
-            onChange={() => {}}
-            onBlur={() => {}}
-            value={operation.deadTime}
-          />
-        </FieldInput>
-      </InputSection>
+      <form>
+        <InputSection>
+          <h2>Operating times</h2>
+          <FieldInput>
+            <label htmlFor="reactionTime">Reaction time:</label>
+            <input
+              name="reactionTime"
+              autoComplete="off"
+              onChange={formik.handleChange}
+              onBlur={submit}
+              value={formik.values.reactionTime}
+            />
+          </FieldInput>
+          <FieldInput>
+            <label htmlFor="deadTime">Dead time:</label>
+            <input
+              name="deadTime"
+              autoComplete="off"
+              onChange={formik.handleChange}
+              onBlur={submit}
+              value={formik.values.deadTime}
+            />
+          </FieldInput>
+        </InputSection>
+      </form>
     </>
   )
 }

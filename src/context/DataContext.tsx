@@ -19,7 +19,7 @@ import useLocalStorageState from "../hooks/useLocalStorageState"
 
 /* Types */
 import { ICompound } from "../types/Compound"
-import { IOperation, NUMERIC_KEYS } from "../types/Operation"
+import { IOperation } from "../types/Operation"
 import { IReaction, IReactionCompound } from "../types/Reaction"
 import { IFCWithChildren } from "../types/FCWithChildren"
 
@@ -53,7 +53,7 @@ interface IDefaultValue {
 
   /* Operation */
   operation: IOperation
-  setOperationKey: (key: string, value: unknown) => void
+  updateOperation: (updatedOperation: IOperation) => void
 }
 
 const defaultOperationValue: IOperation = { reactionTime: 30, deadTime: 30 }
@@ -82,7 +82,7 @@ const defaultValue: IDefaultValue = {
 
   /* Operation */
   operation: defaultOperationValue,
-  setOperationKey: () => {},
+  updateOperation: () => {},
 }
 
 // Context Provider component
@@ -341,24 +341,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   /**
    * Operation state handling
    */
-  const setOperationKey = (key: string, value: unknown): void => {
-    const updatedOperation = { ...operation }
-
-    /* Check type of specified key */
-    if (NUMERIC_KEYS.indexOf(key) !== -1) {
-      if (typeof value === "number")
-        updatedOperation[key as keyof IOperation] = value
-      else
-        throw new Error(
-          `Value of type ${typeof value} not assignable to specified key of type number`
-        )
-    }
-    //
-    /* Finally, if the specified key is not valid: */
-    else {
-      throw new Error(`Key '${key}' not present in type IOperation`)
-    }
-
+  const updateOperation = (updatedOperation: IOperation): void => {
     setOperation(updatedOperation)
   }
 
@@ -385,7 +368,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
 
         /* Operation */
         operation,
-        setOperationKey,
+        updateOperation,
       }}
     >
       {children}
