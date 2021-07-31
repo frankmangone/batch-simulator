@@ -82,6 +82,7 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
     onSubmit: (values) => {
       const updatedCompound = { ...compound, ...values }
       updateCompound(compoundIndex, updatedCompound)
+      window.scrollTo({ top: 0, behavior: "smooth" })
       setClosing(true)
     },
   })

@@ -347,6 +347,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
         color="green"
         onClick={() => {
           updateReaction(reactionIndex, modalReaction)
+          window.scrollTo({ top: 0, behavior: "smooth" })
           setClosing(true)
         }}
       >
