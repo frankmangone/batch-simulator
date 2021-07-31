@@ -19,6 +19,7 @@ import useLocalStorageState from "../hooks/useLocalStorageState"
 
 /* Types */
 import { ICompound } from "../types/Compound"
+import { IOperation } from "../types/Operation"
 import { IReaction, IReactionCompound } from "../types/Reaction"
 import { IFCWithChildren } from "../types/FCWithChildren"
 
@@ -55,8 +56,13 @@ interface IDefaultValue {
   removeReaction: (index: number) => void
   editedReactionId: string | undefined
   serializeKineticEquation: (reaction: IReaction, index: number) => Token[]
+
+  /* Operation */
+  operation: IOperation
+  setOperation: Dispatch<SetStateAction<IOperation>>
 }
 
+const defaultOperationValue: IOperation = { reactionTime: 30, deadTime: 30 }
 const defaultValue: IDefaultValue = {
   /* Compounds */
   compounds: [],
@@ -79,6 +85,10 @@ const defaultValue: IDefaultValue = {
   serializeKineticEquation: () => {
     return []
   },
+
+  /* Operation */
+  operation: defaultOperationValue,
+  setOperation: () => {},
 }
 
 // Context Provider component
@@ -102,6 +112,10 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   const [reactions, setReactions] = useLocalStorageState<IReaction[]>(
     "reactions",
     []
+  )
+  const [operation, setOperation] = useLocalStorageState<IOperation>(
+    "operation",
+    defaultOperationValue
   )
 
   // To keep track of edited elements:
@@ -216,7 +230,6 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   /**
    * Reactions state handling
    */
-
   const addReaction = (): void => {
     const updatedReactions = [...(reactions as IReaction[])]
 
@@ -364,6 +377,10 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         removeReaction,
         editedReactionId,
         serializeKineticEquation,
+
+        /* Operation */
+        operation: operation as IOperation,
+        setOperation: setOperation as Dispatch<SetStateAction<IOperation>>,
       }}
     >
       {children}

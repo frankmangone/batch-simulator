@@ -14,6 +14,7 @@ import MainLayout from "./layouts/MainLayout"
 
 /* Pages */
 import CompoundsPage from "./pages/CompoundsPage"
+import OperationPage from "./pages/OperationPage"
 import ReactionsPage from "./pages/ReactionsPage"
 import ResultsPage from "./pages/ResultsPage"
 
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/" exact component={CompoundsPage} />
             <Route path="/compounds" component={CompoundsPage} />
             <Route path="/reactions" component={ReactionsPage} />
+            <Route path="/operation" component={OperationPage} />
             <Route path="/results" component={ResultsPage} />
             {/* Redirect for deployed URL */}
             <Route path="/batch-simulator">

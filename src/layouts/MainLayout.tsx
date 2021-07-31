@@ -16,18 +16,10 @@ const MainLayout: React.FC<IProps> = (props) => {
       <SideContent>
         <Reactor />
         <nav>
-          <Link to="/compounds">
-            <p>Compounds</p>
-            <FiChevronRight />
-          </Link>
-          <Link to="/reactions">
-            <p>Reactions</p>
-            <FiChevronRight />
-          </Link>
-          <Link to="/results">
-            <p>Results</p>
-            <FiChevronRight />
-          </Link>
+          <SidebarLink route="/compounds" title="Compounds" />
+          <SidebarLink route="/reactions" title="Reactions" />
+          <SidebarLink route="/operation" title="Operation" />
+          <SidebarLink route="/results" title="Results" />
         </nav>
       </SideContent>
       <MainContent>{children}</MainContent>
@@ -36,6 +28,21 @@ const MainLayout: React.FC<IProps> = (props) => {
 }
 
 export default MainLayout
+
+interface ISidebarLinkProps {
+  route: string
+  title: string
+}
+
+const SidebarLink: React.FC<ISidebarLinkProps> = (props) => {
+  const { route, title } = props
+  return (
+    <Link to={route}>
+      <p>{title}</p>
+      <FiChevronRight />
+    </Link>
+  )
+}
 
 const MainLayoutWrapper = styled.div`
   display: flex;
