@@ -41,7 +41,7 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
     name?: string
   }
 
-  const validate = (values: ICompound) => {
+  const validate = (values: ICompound): IErrors => {
     const errors: IErrors = {}
 
     /* Symbol validation */
