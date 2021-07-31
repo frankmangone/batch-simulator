@@ -12,6 +12,10 @@ import EditModal from "../EditModal"
 import Notice from "../Notice"
 import Select from "../Select"
 import SubmitButton from "../SubmitButton"
+import {
+  ModalInputSection,
+  ModalColumnInputSection,
+} from "../ModalInputSection"
 import { FiPlus } from "react-icons/fi"
 import ReactionCompoundList from "./ReactionCompoundList"
 import ReactionEquation from "./ReactionEquation"
@@ -180,7 +184,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       <ReactionPreview reaction={modalReaction} />
 
       {/* Compounds input */}
-      <InputSection>
+      <ModalInputSection>
         <CompoundInputWrapper>
           <h2>Reactants</h2>
           <AddCompound>
@@ -266,10 +270,10 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             )}
           </CompoundInputInner>
         </CompoundInputWrapper>
-      </InputSection>
+      </ModalInputSection>
 
       {/* Kinetics input */}
-      <ColumnInputSection>
+      <ModalColumnInputSection>
         <h2>Kinetics</h2>
         <SelectField>
           <p>Kinetic model</p>
@@ -341,12 +345,13 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
           compounds={compounds}
           updateKineticConstant={handleKineticConstantUpdate}
         />
-      </ColumnInputSection>
+      </ModalColumnInputSection>
 
       <SubmitButton
         color="green"
         onClick={() => {
           updateReaction(reactionIndex, modalReaction)
+          window.scrollTo({ top: 0, behavior: "smooth" })
           setClosing(true)
         }}
       >
@@ -357,20 +362,6 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
 }
 
 export default ReactionEditModal
-
-const InputSection = styled.div`
-  border-top: 1px solid var(--color-grey-light);
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-  padding: 2rem 1rem 0rem;
-
-  h2 {
-    color: var(--color-grey-dark);
-    font-size: 20px;
-    margin-top: 0;
-  }
-`
 
 const SelectField = styled.div`
   display: flex;
@@ -387,11 +378,6 @@ const SelectField = styled.div`
   div {
     flex-basis: 45%;
   }
-`
-
-const ColumnInputSection = styled(InputSection)`
-  flex-direction: column;
-  flex-wrap: nowrap;
 `
 
 const CompoundInputWrapper = styled.div`

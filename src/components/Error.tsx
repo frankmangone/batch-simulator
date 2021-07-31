@@ -3,21 +3,39 @@ import styled from "styled-components"
 /* Types */
 import { IFCWithChildren } from "../types/FCWithChildren"
 
-const Error: React.FC<IFCWithChildren> = (props) => {
-  const { children } = props
-  return <ErrorWrapper className="error">{children}</ErrorWrapper>
+interface IError {
+  big?: boolean
 }
 
-const ErrorWrapper = styled.div`
-  position: absolute;
-  bottom: 0rem;
-  right: 0rem;
+type IErrorProps = IFCWithChildren & IError
 
-  background-color: var(--color-triadic-red-dark);
+const Error: React.FC<IErrorProps> = (props) => {
+  const { big, children } = props
+  return (
+    <ErrorWrapper big={big} className="error">
+      {children}
+    </ErrorWrapper>
+  )
+}
+
+const ErrorWrapper = styled.div<IError>`
+  position: absolute;
+  ${(props) =>
+    props.big
+      ? `
+    bottom: 0.9rem;
+    right: 1rem;
+  `
+      : `
+    bottom: 0.4rem;
+    right: 0.5rem;
+  `}
+
+  background-color: var(--color-triadic-red-darker);
   border-radius: 5px;
   box-shadow: 0px 0px 4px var(--color-triadic-red-darker);
   color: white;
-  padding: 0.5rem;
+  padding: 0.2rem 0.5rem;
   pointer-events: none;
   opacity: 0;
   transform: translateY(105%);
