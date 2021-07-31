@@ -19,7 +19,7 @@ import useLocalStorageState from "../hooks/useLocalStorageState"
 
 /* Types */
 import { ICompound } from "../types/Compound"
-import { IOperation } from "../types/Operation"
+import { IOperation, NUMERIC_KEYS } from "../types/Operation"
 import { IReaction, IReactionCompound } from "../types/Reaction"
 import { IFCWithChildren } from "../types/FCWithChildren"
 
@@ -31,12 +31,6 @@ export enum CompoundType {
   Reactant = 0,
   Product,
 }
-
-/**
- * ISetState type for setState functions
- */
-
-type ISetState<T> = Dispatch<SetStateAction<T>>
 
 interface IDefaultValue {
   /* Compounds */
@@ -59,7 +53,7 @@ interface IDefaultValue {
 
   /* Operation */
   operation: IOperation
-  setOperation: Dispatch<SetStateAction<IOperation>>
+  setOperationKey: (key: string, value: unknown) => void
 }
 
 const defaultOperationValue: IOperation = { reactionTime: 30, deadTime: 30 }
@@ -88,7 +82,7 @@ const defaultValue: IDefaultValue = {
 
   /* Operation */
   operation: defaultOperationValue,
-  setOperation: () => {},
+  setOperationKey: () => {},
 }
 
 // Context Provider component
@@ -105,18 +99,19 @@ export const useData = () => {
 export const DataStore: React.FC<IFCWithChildren> = (props) => {
   const { children } = props
   const [currentColor, setCurrentColor] = useState<number>(0)
+
   const [compounds, setCompounds] = useLocalStorageState<ICompound[]>(
     "compounds",
     []
-  )
+  ) as [ICompound[], Dispatch<SetStateAction<ICompound[]>>]
   const [reactions, setReactions] = useLocalStorageState<IReaction[]>(
     "reactions",
     []
-  )
+  ) as [IReaction[], Dispatch<SetStateAction<IReaction[]>>]
   const [operation, setOperation] = useLocalStorageState<IOperation>(
     "operation",
     defaultOperationValue
-  )
+  ) as [IOperation, Dispatch<SetStateAction<IOperation>>]
 
   // To keep track of edited elements:
   const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
@@ -140,7 +135,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   const availableSymbol = (): string => {
     const foundSymbols = new Array(COMPOUND_SYMBOLS.length).fill(false)
 
-    ;(compounds as ICompound[]).forEach((compound) => {
+    compounds.forEach((compound) => {
       const index = COMPOUND_SYMBOLS.indexOf(compound.symbol)
       if (index !== -1) foundSymbols[index] = true
     })
@@ -156,7 +151,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
    * Compounds state handling
    */
   const addCompound = (): void => {
-    const updatedCompounds = [...(compounds as ICompound[])]
+    const updatedCompounds = [...compounds]
 
     updatedCompounds.push({
       id: randomstring.generate(8),
@@ -167,12 +162,11 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     })
     nextColor()
 
-    let setState = setCompounds as ISetState<ICompound[]>
-    setState(updatedCompounds)
+    setCompounds(updatedCompounds)
   }
 
   const findCompound = (id?: string): ICompound | undefined => {
-    return (compounds as ICompound[]).find((compound) => compound.id === id)
+    return compounds.find((compound) => compound.id === id)
   }
 
   const editCompound = (index?: number): void => {
@@ -180,20 +174,19 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       setEditedCompoundId(undefined)
       return
     }
-    const id = (compounds as ICompound[])[index].id
+    const id = compounds[index].id
     setEditedCompoundId(id)
   }
 
   const updateCompound = (index: number, updatedCompound: ICompound): void => {
-    const updatedCompounds = [...(compounds as ICompound[])]
+    const updatedCompounds = [...compounds]
     updatedCompounds[index] = updatedCompound
 
-    let setState = setCompounds as ISetState<ICompound[]>
-    setState(updatedCompounds)
+    setCompounds(updatedCompounds)
   }
 
   const removeCompound = (index: number): void => {
-    const compoundId = (compounds as ICompound[])[index].id
+    const compoundId = compounds[index].id
 
     /**
      * Remove from reactions that have this compound
@@ -210,20 +203,15 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
           reactionCompound.compoundId !== compoundId
       )
     })
-    const setReactionState = setReactions as ISetState<IReaction[]>
 
-    setReactionState(updatedReactions)
+    setReactions(updatedReactions)
 
     /**
      * Remove from compounds array
      */
-    const setCompoundState = setCompounds as ISetState<ICompound[]>
-    setCompoundState([
-      ...(compounds as ICompound[]).slice(0, index),
-      ...(compounds as ICompound[]).slice(
-        index + 1,
-        (compounds as ICompound[]).length
-      ),
+    setCompounds([
+      ...compounds.slice(0, index),
+      ...compounds.slice(index + 1, compounds.length),
     ])
   }
 
@@ -231,7 +219,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
    * Reactions state handling
    */
   const addReaction = (): void => {
-    const updatedReactions = [...(reactions as IReaction[])]
+    const updatedReactions = [...reactions]
 
     updatedReactions.push({
       id: randomstring.generate(8),
@@ -244,8 +232,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       kineticEquation: [{ type: TokenTypes.Parameter, value: `<k>` }],
     })
 
-    let setState = setReactions as ISetState<IReaction[]>
-    setState(updatedReactions)
+    setReactions(updatedReactions)
   }
 
   const editReaction = (index?: number): void => {
@@ -253,7 +240,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       setEditedReactionId(undefined)
       return
     }
-    const id = (reactions as IReaction[])[index].id
+    const id = reactions[index].id
     setEditedReactionId(id)
   }
 
@@ -265,19 +252,13 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     const updatedReactions = JSON.parse(JSON.stringify(reactions))
     updatedReactions[index] = updatedReaction
 
-    let setState = setReactions as ISetState<IReaction[]>
-    setState(updatedReactions)
+    setReactions(updatedReactions)
   }
 
   const removeReaction = (index: number): void => {
-    let setState = setReactions as ISetState<IReaction[]>
-
-    setState([
-      ...(reactions as IReaction[]).slice(0, index),
-      ...(reactions as IReaction[]).slice(
-        index + 1,
-        (reactions as IReaction[]).length
-      ),
+    setReactions([
+      ...reactions.slice(0, index),
+      ...reactions.slice(index + 1, reactions.length),
     ])
   }
 
@@ -357,11 +338,35 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     }
   }
 
+  /**
+   * Operation state handling
+   */
+  const setOperationKey = (key: string, value: unknown): void => {
+    const updatedOperation = { ...operation }
+
+    /* Check type of specified key */
+    if (NUMERIC_KEYS.indexOf(key) !== -1) {
+      if (typeof value === "number")
+        updatedOperation[key as keyof IOperation] = value
+      else
+        throw new Error(
+          `Value of type ${typeof value} not assignable to specified key of type number`
+        )
+    }
+    //
+    /* Finally, if the specified key is not valid: */
+    else {
+      throw new Error(`Key '${key}' not present in type IOperation`)
+    }
+
+    setOperation(updatedOperation)
+  }
+
   return (
     <DataContext.Provider
       value={{
         /* Compounds */
-        compounds: compounds as ICompound[],
+        compounds,
         addCompound,
         editCompound,
         findCompound,
@@ -370,7 +375,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         editedCompoundId,
 
         /* Reactions */
-        reactions: reactions as IReaction[],
+        reactions,
         addReaction,
         editReaction,
         updateReaction,
@@ -379,8 +384,8 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         serializeKineticEquation,
 
         /* Operation */
-        operation: operation as IOperation,
-        setOperation: setOperation as Dispatch<SetStateAction<IOperation>>,
+        operation,
+        setOperationKey,
       }}
     >
       {children}
