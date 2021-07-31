@@ -1,15 +1,9 @@
-import styled from "styled-components"
 import { useFormik } from "formik"
 
 /* Components */
-import Error from "../Error"
-import Input from "../Input"
 import EditModal from "../EditModal"
 import FieldInput from "../FieldInput"
 import SubmitButton from "../SubmitButton"
-
-/* Constants */
-import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 /* Helpers */
 import { validateNotEmpty, validateGreaterThan } from "../../helpers/validators"
@@ -95,42 +89,39 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
       handleClose={closeModal}
     >
       <form onSubmit={formik.handleSubmit}>
-        <SymbolFieldInput color={compound.color}>
-          <label htmlFor="symbol">Symbol:</label>
-          <Input
-            errors={!!formik.errors.symbol}
-            name="symbol"
-            autoComplete="off"
-            color={compound.color}
-            onChange={formik.handleChange}
-            value={formik.values.symbol}
-          />
-          {formik.errors.symbol && <Error>{formik.errors.symbol}</Error>}
-        </SymbolFieldInput>
+        <FieldInput
+          fieldName="symbol"
+          label="Symbol:"
+          error={formik.errors.symbol}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            formik.handleChange(event)
+          }}
+          value={formik.values.symbol}
+          color={compound.color}
+          big
+        />
 
-        <FieldInput>
-          <label htmlFor="concentration">Concentration [mol/L]:</label>
-          <Input
-            errors={!!formik.errors.concentration}
-            name="concentration"
-            type="number"
-            onChange={formik.handleChange}
-            value={formik.values.concentration}
-          />
-          {formik.errors.concentration && (
-            <Error>{formik.errors.concentration}</Error>
-          )}
-        </FieldInput>
+        <FieldInput
+          fieldName="concentration"
+          label="Concentration [mol/L]:"
+          error={formik.errors.concentration}
+          type="number"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            formik.handleChange(event)
+          }}
+          value={formik.values.concentration}
+        />
 
-        <FieldInput>
-          <label htmlFor="name">Compound name (optional):</label>
-          <input
-            name="name"
-            autoComplete="off"
-            onChange={formik.handleChange}
-            value={formik.values.name}
-          />
-        </FieldInput>
+        <FieldInput
+          fieldName="name"
+          label="Compound name (optional):"
+          error={formik.errors.name}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            formik.handleChange(event)
+          }}
+          value={formik.values.name}
+        />
+
         <SubmitButton color="green" type="submit">
           Done
         </SubmitButton>
@@ -140,31 +131,3 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
 }
 
 export default CompoundEditModal
-
-/**
- * Styled components
- */
-
-interface ISymbolInputProps {
-  color: string
-}
-
-const SymbolFieldInput = styled(FieldInput)<ISymbolInputProps>`
-  align-items: flex-start;
-  background-color: ${(props) =>
-    COMPOUND_COLORS[props.color as keyof typeof COMPOUND_COLORS]};
-  border-radius: 5px;
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
-  margin-bottom: 0.5rem;
-  padding: 1rem;
-
-  label {
-    font-size: 1.5rem;
-  }
-
-  input {
-    font-size: 3rem;
-    margin-left: 1rem;
-    width: 0;
-  }
-`
