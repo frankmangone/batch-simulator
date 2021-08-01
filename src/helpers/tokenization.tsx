@@ -31,7 +31,7 @@ export const tokenizeEquation = (equation: string): Token[] => {
   const emptyParameterBuffer = () => {
     // Push new parameter to the tokens array
     const newParam = parameterBuffer.join("")
-    tokensArray.push(createToken(TokenTypes.Parameter, newParam))
+    tokensArray.push(new Token(TokenTypes.Parameter, newParam))
 
     // Empty parameter buffer
     parameterBuffer = []
@@ -40,7 +40,7 @@ export const tokenizeEquation = (equation: string): Token[] => {
   const emptyVariableBuffer = () => {
     // Push new variable to the tokens array
     const newVar = variableBuffer.join("")
-    tokensArray.push(createToken(TokenTypes.Variable, newVar))
+    tokensArray.push(new Token(TokenTypes.Variable, newVar))
 
     // Empty variable buffer
     variableBuffer = []
@@ -90,11 +90,11 @@ export const tokenizeEquation = (equation: string): Token[] => {
      * Only operators and parenthesis remain, so:
      */
     else if (isOperator(char)) {
-      tokensArray.push(createToken(TokenTypes.Operator, char))
+      tokensArray.push(new Token(TokenTypes.Operator, char))
     } else if (isLeftParenthesis(char)) {
-      tokensArray.push(createToken(TokenTypes.LeftParenthesis, char))
+      tokensArray.push(new Token(TokenTypes.LeftParenthesis, char))
     } else if (isRightParenthesis(char)) {
-      tokensArray.push(createToken(TokenTypes.RightParenthesis, char))
+      tokensArray.push(new Token(TokenTypes.RightParenthesis, char))
     }
   })
 
@@ -106,17 +106,39 @@ export const joinTokens = (tokens: Token[]) => {
 }
 
 /**
- * Token factory
+ * Token class
  */
-export interface Token {
-  type: number
-  value: string
+const assoc = {
+  "^": "right",
+  "*": "left",
+  "/": "left",
+  "+": "left",
+  "-": "left",
 }
 
-export const createToken = (type: number, value: string): Token => {
-  return {
-    type,
-    value,
+const prec = {
+  "^": 4,
+  "*": 3,
+  "/": 3,
+  "+": 2,
+  "-": 2,
+}
+
+export class Token {
+  type: number
+  value: string
+
+  constructor(type: number, value: string) {
+    this.type = type
+    this.value = value
+  }
+
+  precedence() {
+    return prec[this.value as keyof typeof prec] || 1
+  }
+
+  associativity() {
+    return assoc[this.value as keyof typeof assoc] || "left"
   }
 }
 

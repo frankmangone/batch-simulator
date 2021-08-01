@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://frankmangone.github.io/batch-simulator",
   "dependencies": {
+    "@assemblyscript/loader": "^0.19.9",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -16,6 +17,7 @@
     "@types/react-router": "^5.1.16",
     "@types/react-router-dom": "^5.1.8",
     "@types/styled-components": "^5.1.11",
+    "assemblyscript": "^0.19.9",
     "formik": "^2.2.9",
     "gh-pages": "^3.2.3",
     "randomstring": "^1.2.1",
@@ -30,11 +32,14 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "yarn asbuild && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "yarn build && gh-pages -b gh-pages -d build"
+    "deploy": "yarn build && gh-pages -b gh-pages -d build",
+    "asbuild:untouched": "asc assembly/ode/index.ts --config assembly/ode/asconfig.json --target debug",
+    "asbuild:optimized": "asc assembly/ode/index.ts --config assembly/ode/asconfig.json --target release",
+    "asbuild": "yarn asbuild:untouched && yarn asbuild:optimized"
   },
   "eslintConfig": {
     "extends": [
@@ -53,5 +58,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.19.9"
   }
 }
