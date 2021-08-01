@@ -12,7 +12,7 @@ import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
 import { COMPOUND_SYMBOLS } from "../constants/compoundSymbols"
 
 /* Helpers */
-import { Token, TokenTypes, createToken } from "../helpers/tokenization"
+import { Token, TokenTypes } from "../helpers/tokenization"
 
 /* Hooks */
 import useLocalStorageState from "../hooks/useLocalStorageState"
@@ -229,7 +229,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       kineticConstants: {
         reactionConstant: 1,
       },
-      kineticEquation: [{ type: TokenTypes.Parameter, value: `<k>` }],
+      kineticEquation: [new Token(TokenTypes.Parameter, "<k>")],
     })
 
     setReactions(updatedReactions)
@@ -274,64 +274,62 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     /* Returns infix notation */
     switch (reaction.kineticModel) {
       case 1:
-        equationTokens.push(createToken(TokenTypes.Parameter, `<\\mu>`))
+        equationTokens.push(new Token(TokenTypes.Parameter, `<\\mu>`))
 
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equationTokens.push(createToken(TokenTypes.Operator, "*"))
-          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
-          equationTokens.push(createToken(TokenTypes.Operator, "/"))
-          equationTokens.push(createToken(TokenTypes.LeftParenthesis, "("))
-          equationTokens.push(
-            createToken(TokenTypes.Parameter, `<K_${symbol}>`)
-          )
-          equationTokens.push(createToken(TokenTypes.Operator, "+"))
-          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
-          equationTokens.push(createToken(TokenTypes.RightParenthesis, ")"))
+          equationTokens.push(new Token(TokenTypes.Operator, "*"))
+          equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(new Token(TokenTypes.Operator, "/"))
+          equationTokens.push(new Token(TokenTypes.LeftParenthesis, "("))
+          equationTokens.push(new Token(TokenTypes.Parameter, `<K_${symbol}>`))
+          equationTokens.push(new Token(TokenTypes.Operator, "+"))
+          equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(new Token(TokenTypes.RightParenthesis, ")"))
         })
         return equationTokens
       //
       case 2:
-        equationTokens.push(createToken(TokenTypes.Parameter, `<k>`))
+        equationTokens.push(new Token(TokenTypes.Parameter, `<k>`))
 
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equationTokens.push(createToken(TokenTypes.Operator, "*"))
-          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
-          equationTokens.push(createToken(TokenTypes.Operator, "^"))
+          equationTokens.push(new Token(TokenTypes.Operator, "*"))
+          equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(new Token(TokenTypes.Operator, "^"))
           equationTokens.push(
-            createToken(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
+            new Token(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
           )
         })
         reaction.products.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equationTokens.push(createToken(TokenTypes.Operator, "*"))
-          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
-          equationTokens.push(createToken(TokenTypes.Operator, "^"))
+          equationTokens.push(new Token(TokenTypes.Operator, "*"))
+          equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(new Token(TokenTypes.Operator, "^"))
           equationTokens.push(
-            createToken(TokenTypes.Parameter, `<\\beta_${symbol}>`)
+            new Token(TokenTypes.Parameter, `<\\beta_${symbol}>`)
           )
         })
         return equationTokens
       //
       default:
-        equationTokens.push(createToken(TokenTypes.Parameter, `<k>`))
+        equationTokens.push(new Token(TokenTypes.Parameter, `<k>`))
 
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as ICompound
-          equationTokens.push(createToken(TokenTypes.Operator, "*"))
-          equationTokens.push(createToken(TokenTypes.Variable, `{[${symbol}]}`))
-          equationTokens.push(createToken(TokenTypes.Operator, "^"))
+          equationTokens.push(new Token(TokenTypes.Operator, "*"))
+          equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
+          equationTokens.push(new Token(TokenTypes.Operator, "^"))
           equationTokens.push(
-            createToken(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
+            new Token(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
           )
         })
         return equationTokens
