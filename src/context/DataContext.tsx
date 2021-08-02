@@ -227,7 +227,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       products: [],
       kineticModel: 0,
       kineticConstants: {
-        reactionConstant: 1,
+        k: 1,
       },
       kineticEquation: [new Token(TokenTypes.Parameter, "<k>")],
     })

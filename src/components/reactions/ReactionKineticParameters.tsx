@@ -22,14 +22,6 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
 
   return (
     <KineticParamsWrapper>
-      <ReactionParamInputCard
-        paramSymbol={reaction.kineticModel === 1 ? <GreekMu /> : "k"}
-        value={reactionConstant}
-        updateValue={(value: number) => {
-          updateKineticConstant("reactionConstant", value)
-        }}
-      />
-
       {Object.entries(compoundParams).map(([param, value]) => (
         <ReactionParamInputCard
           key={param}

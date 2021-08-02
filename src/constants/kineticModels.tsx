@@ -40,9 +40,6 @@ const generateSimpleModelConstants = (
   reaction: IReaction,
   compounds: ICompound[]
 ) => {
-  // eslint-disable-next-line
-  const { reactionConstant, ...other } = reaction.kineticConstants
-
   const updatedExponents: IKineticConstants = {}
   reaction.reactants.forEach((reactionCompound: IReactionCompound) => {
     const compound = compounds.find(
@@ -58,16 +55,13 @@ const generateSimpleModelConstants = (
     }
   })
 
-  return { reactionConstant, ...updatedExponents }
+  return { k: 1, ...updatedExponents }
 }
 
 const generateHiperbolicModelConstants = (
   reaction: IReaction,
   compounds: ICompound[]
 ) => {
-  // eslint-disable-next-line
-  const { reactionConstant, ...other } = reaction.kineticConstants
-
   const updatedExponents: IKineticConstants = {}
   reaction.reactants.forEach((reactionCompound: IReactionCompound) => {
     const compound = compounds.find(
@@ -83,16 +77,13 @@ const generateHiperbolicModelConstants = (
     }
   })
 
-  return { reactionConstant, ...updatedExponents }
+  return { "\\mu": 1, ...updatedExponents }
 }
 
 const generateAutocatalyticModelConstants = (
   reaction: IReaction,
   compounds: ICompound[]
 ) => {
-  // eslint-disable-next-line
-  const { reactionConstant, ...other } = reaction.kineticConstants
-
   const updatedExponents: IKineticConstants = {}
 
   reaction.reactants.forEach((reactionCompound: IReactionCompound) => {
@@ -122,7 +113,7 @@ const generateAutocatalyticModelConstants = (
     }
   })
 
-  return { reactionConstant, ...updatedExponents }
+  return { k: 1, ...updatedExponents }
 }
 
 // Some placeholder parameters
