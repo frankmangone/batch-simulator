@@ -126,7 +126,7 @@ const prec = {
 
 export class Token {
   type: number
-  value: string
+  value: string | number
 
   constructor(type: number, value: string) {
     this.type = type
