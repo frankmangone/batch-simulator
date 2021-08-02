@@ -133,11 +133,11 @@ export class Token {
     this.value = value
   }
 
-  precedence() {
+  get precedence() {
     return prec[this.value as keyof typeof prec] || 1
   }
 
-  associativity() {
+  get associativity() {
     return assoc[this.value as keyof typeof assoc] || "left"
   }
 }

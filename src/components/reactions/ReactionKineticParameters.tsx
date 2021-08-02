@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 /* Components */
 import ReactionParamInputCard from "./ReactionParamInputCard"
-import { GreekMu, SymbolComponent } from "../MathExpressions"
+import { SymbolComponent } from "../MathExpressions"
 
 /* Types */
 import { ICompound } from "../../types/Compound"
