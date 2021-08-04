@@ -6,7 +6,7 @@ import { getCoefficientForComponent } from '../helpers/reactions'
 
 /* Types */
 import { ICompoundEquation } from '../types/CompoundEquation'
-import { IReaction } from "../types/Reaction"
+import { Reaction } from "../types/Reaction"
 import { ISimulationResults } from "../types/SimulationResults"
 import { TokenTypes } from "../helpers/tokenization"
 
@@ -50,8 +50,8 @@ export default useSimulate
  * Helper functions
  */
 
-const parseReactionEquations = (reactions: IReaction[]): IReaction[] => {
-  const reactionsCopy: IReaction[] = JSON.parse(JSON.stringify(reactions))
+const parseReactionEquations = (reactions: Reaction[]): Reaction[] => {
+  const reactionsCopy: Reaction[] = JSON.parse(JSON.stringify(reactions))
 
   reactionsCopy.forEach((reaction, index) => {
     reaction = replaceParametersForValues(reaction)
@@ -63,7 +63,7 @@ const parseReactionEquations = (reactions: IReaction[]): IReaction[] => {
   return reactionsCopy
 }
 
-const replaceParametersForValues = (reaction: IReaction): IReaction => {
+const replaceParametersForValues = (reaction: Reaction): Reaction => {
   reaction.kineticEquation.forEach((token, index) => {
     if (token.type === TokenTypes.Parameter) {
       // Replace parameter by numeric value

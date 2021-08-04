@@ -6,7 +6,7 @@ import ReactionEditModal from "./ReactionEditModal"
 import { useData } from "../../context/DataContext"
 
 /* Types */
-import { IReaction } from "../../types/Reaction"
+import { Reaction } from "../../types/Reaction"
 
 const ReactionList: React.FC = () => {
   const {
@@ -47,7 +47,7 @@ const ReactionList: React.FC = () => {
       {editedReactionId && (
         <ReactionEditModal
           compounds={compounds}
-          reaction={editedReaction as IReaction}
+          reaction={editedReaction as Reaction}
           closeModal={() => editReaction()}
         />
       )}

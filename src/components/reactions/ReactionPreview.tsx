@@ -13,10 +13,10 @@ import { useData } from "../../context/DataContext"
 
 /* Types */
 import { Compound } from "../../types/Compound"
-import { IReaction } from "../../types/Reaction"
+import { Reaction } from "../../types/Reaction"
 
 interface IReactionPreviewProps {
-  reaction: IReaction
+  reaction: Reaction
 }
 
 const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {

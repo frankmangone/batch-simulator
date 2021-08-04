@@ -1,7 +1,7 @@
 /* Types */
 import {
   IKineticConstants,
-  IReaction,
+  Reaction,
   IReactionCompound,
 } from "../types/Reaction"
 import { Compound } from "../types/Compound"
@@ -22,7 +22,7 @@ export const KINETIC_MODELS = ["Simple", "Hiperbolic", "Autocatalytic"]
 
 export const generateKineticConstants = (
   model: number,
-  reaction: IReaction,
+  reaction: Reaction,
   compounds: Compound[]
 ): IKineticConstants => {
   switch (model) {
@@ -37,7 +37,7 @@ export const generateKineticConstants = (
 }
 
 const generateSimpleModelConstants = (
-  reaction: IReaction,
+  reaction: Reaction,
   compounds: Compound[]
 ) => {
   const updatedExponents: IKineticConstants = {}
@@ -59,7 +59,7 @@ const generateSimpleModelConstants = (
 }
 
 const generateHiperbolicModelConstants = (
-  reaction: IReaction,
+  reaction: Reaction,
   compounds: Compound[]
 ) => {
   const updatedExponents: IKineticConstants = {}
@@ -81,7 +81,7 @@ const generateHiperbolicModelConstants = (
 }
 
 const generateAutocatalyticModelConstants = (
-  reaction: IReaction,
+  reaction: Reaction,
   compounds: Compound[]
 ) => {
   const updatedExponents: IKineticConstants = {}

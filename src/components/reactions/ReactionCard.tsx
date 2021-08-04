@@ -6,10 +6,10 @@ import ReactionPreview from "./ReactionPreview"
 import { FiEdit, FiTrash2 } from "react-icons/fi"
 
 /* Types */
-import { IReaction } from "../../types/Reaction"
+import { Reaction } from "../../types/Reaction"
 
 interface IReactionCardProps {
-  reaction: IReaction
+  reaction: Reaction
   reactionIndex: number
   editReaction: () => void
   removeReaction: () => void

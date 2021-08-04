@@ -28,12 +28,12 @@ import { useData } from "../../context/DataContext"
 
 /* Types */
 import { Compound } from "../../types/Compound"
-import { IReaction, IReactionCompound } from "../../types/Reaction"
+import { Reaction, IReactionCompound } from "../../types/Reaction"
 import { CompoundType } from "../../context/DataContext"
 
 interface IReactionEditModalProps {
   compounds: Compound[]
-  reaction: IReaction
+  reaction: Reaction
   closeModal: () => void
 }
 
@@ -46,7 +46,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   /**
    * Copied state for reaction editing
    */
-  const [modalReaction, setModalReaction] = useState<IReaction>(
+  const [modalReaction, setModalReaction] = useState<Reaction>(
     JSON.parse(JSON.stringify(reaction))
   )
 

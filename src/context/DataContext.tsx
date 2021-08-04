@@ -20,7 +20,7 @@ import useLocalStorageState from "../hooks/useLocalStorageState"
 /* Types */
 import { Compound } from "../types/Compound"
 import { IOperation } from "../types/Operation"
-import { IReaction, IReactionCompound } from "../types/Reaction"
+import { Reaction, IReactionCompound } from "../types/Reaction"
 import { IFCWithChildren } from "../types/FCWithChildren"
 
 /**
@@ -43,13 +43,13 @@ interface IDefaultValue {
   editedCompoundId: string | undefined
 
   /* Reactions */
-  reactions: IReaction[]
+  reactions: Reaction[]
   addReaction: () => void
   editReaction: (index?: number) => void
-  updateReaction: (index: number, updatedReaction: IReaction) => void
+  updateReaction: (index: number, updatedReaction: Reaction) => void
   removeReaction: (index: number) => void
   editedReactionId: string | undefined
-  serializeKineticEquation: (reaction: IReaction, index: number) => Token[]
+  serializeKineticEquation: (reaction: Reaction, index: number) => Token[]
 
   /* Operation */
   operation: IOperation
@@ -104,10 +104,10 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     "compounds",
     []
   ) as [Compound[], Dispatch<SetStateAction<Compound[]>>]
-  const [reactions, setReactions] = useLocalStorageState<IReaction[]>(
+  const [reactions, setReactions] = useLocalStorageState<Reaction[]>(
     "reactions",
     []
-  ) as [IReaction[], Dispatch<SetStateAction<IReaction[]>>]
+  ) as [Reaction[], Dispatch<SetStateAction<Reaction[]>>]
   const [operation, setOperation] = useLocalStorageState<IOperation>(
     "operation",
     defaultOperationValue
@@ -192,7 +192,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
      * Remove from reactions that have this compound
      */
     const updatedReactions = JSON.parse(JSON.stringify(reactions))
-    updatedReactions.forEach((reaction: IReaction) => {
+    updatedReactions.forEach((reaction: Reaction) => {
       reaction.reactants = reaction.reactants.filter(
         (reactionCompound: IReactionCompound) =>
           reactionCompound.compoundId !== compoundId
@@ -244,7 +244,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setEditedReactionId(id)
   }
 
-  const updateReaction = (index: number, updatedReaction: IReaction): void => {
+  const updateReaction = (index: number, updatedReaction: Reaction): void => {
     updatedReaction.kineticEquation = serializeKineticEquation(
       updatedReaction,
       index
@@ -263,7 +263,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   }
 
   const serializeKineticEquation = (
-    reaction: IReaction,
+    reaction: Reaction,
     index: number
   ): Token[] => {
     const equationTokens: Token[] = []
@@ -321,7 +321,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
       default:
         equationTokens.push(new Token(TokenTypes.Parameter, `<k>`))
 
-        reaction.reactants.forEach((reactionCompound) => {
+        reaction.reactants.forEach((reactionCompound: IReactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as Compound

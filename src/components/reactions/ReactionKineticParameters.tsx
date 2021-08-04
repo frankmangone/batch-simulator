@@ -6,11 +6,11 @@ import { SymbolComponent } from "../MathExpressions"
 
 /* Types */
 import { Compound } from "../../types/Compound"
-import { IReaction } from "../../types/Reaction"
+import { Reaction } from "../../types/Reaction"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]
-  reaction: IReaction
+  reaction: Reaction
   updateKineticConstant: (key: string, value: number) => void
 }
 

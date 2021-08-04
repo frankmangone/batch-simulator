@@ -1,6 +1,6 @@
 import { Token } from "../helpers/tokenization"
 
-export interface IReaction {
+export interface Reaction {
   id: string
 
   reactants: IReactionCompound[]
