@@ -8,10 +8,10 @@ import CompoundEditModal from "./CompoundEditModal"
 import { useData } from "../../context/DataContext"
 
 /* Types */
-import { ICompound } from "../../types/Compound"
+import { Compound } from "../../types/Compound"
 
 interface ICompoundListProps {
-  compounds: ICompound[]
+  compounds: Compound[]
 }
 
 const CompoundList: React.FC<ICompoundListProps> = (props) => {
@@ -32,7 +32,7 @@ const CompoundList: React.FC<ICompoundListProps> = (props) => {
           editCompound={(): void => {
             editCompound(index)
           }}
-          updateCompound={(compound: ICompound): void => {
+          updateCompound={(compound: Compound): void => {
             updateCompound(index, compound)
           }}
           removeCompound={(): void => {
@@ -53,7 +53,7 @@ const CompoundList: React.FC<ICompoundListProps> = (props) => {
       {/* Edit modal */}
       {editedCompoundId && (
         <CompoundEditModal
-          compound={editedCompound as ICompound}
+          compound={editedCompound as Compound}
           closeModal={() => editCompound()}
         />
       )}

@@ -2,8 +2,10 @@ import { useData } from "../context/DataContext"
 
 /* Helpers */
 import { parseEquation } from "../helpers/tokenParser"
+import { getCoefficientForComponent } from '../helpers/reactions'
 
 /* Types */
+import { ICompoundEquation } from '../types/CompoundEquation'
 import { IReaction } from "../types/Reaction"
 import { ISimulationResults } from "../types/SimulationResults"
 import { TokenTypes } from "../helpers/tokenization"
@@ -14,15 +16,29 @@ const useSimulate = () => {
 
   //: ISimulationResults => {
   const simulate = () => {
+    // Reaction equations (as tokens) are reordered to RPN notation
     const parsedReactions = parseReactionEquations(reactions)
 
     // Initialize simulation results
     const results: ISimulationResults = { t: [0] }
     compounds.forEach((c) => (results[`[${c.symbol}]`] = [c.concentration]))
 
-    // Implement euler forward (explicit) integration
-    console.log(parsedReactions)
-    console.log(results)
+    // Create equation for each compound
+    const compoundEquations: ICompoundEquation[] = []
+    compounds.forEach((compound) => {
+      /**
+       * A compound equation is a linear combination of 
+       * single reaction equations
+       */ 
+      const equation: ICompoundEquation = []
+
+      parsedReactions.forEach((reaction) => {
+        const coefficient = getCoefficientForComponent(reaction, compound.id)
+        equation.push({ coefficient, equationTokens: reaction.kineticEquation })
+      })
+
+      compoundEquations.push(equation)
+    })
   }
 
   return { simulate }

@@ -18,7 +18,7 @@ import { Token, TokenTypes } from "../helpers/tokenization"
 import useLocalStorageState from "../hooks/useLocalStorageState"
 
 /* Types */
-import { ICompound } from "../types/Compound"
+import { Compound } from "../types/Compound"
 import { IOperation } from "../types/Operation"
 import { IReaction, IReactionCompound } from "../types/Reaction"
 import { IFCWithChildren } from "../types/FCWithChildren"
@@ -34,11 +34,11 @@ export enum CompoundType {
 
 interface IDefaultValue {
   /* Compounds */
-  compounds: ICompound[]
+  compounds: Compound[]
   addCompound: () => void
   editCompound: (index?: number) => void
-  findCompound: (id?: string) => ICompound | undefined
-  updateCompound: (index: number, updatedCompound: ICompound) => void
+  findCompound: (id?: string) => Compound | undefined
+  updateCompound: (index: number, updatedCompound: Compound) => void
   removeCompound: (index: number) => void
   editedCompoundId: string | undefined
 
@@ -100,10 +100,10 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
   const { children } = props
   const [currentColor, setCurrentColor] = useState<number>(0)
 
-  const [compounds, setCompounds] = useLocalStorageState<ICompound[]>(
+  const [compounds, setCompounds] = useLocalStorageState<Compound[]>(
     "compounds",
     []
-  ) as [ICompound[], Dispatch<SetStateAction<ICompound[]>>]
+  ) as [Compound[], Dispatch<SetStateAction<Compound[]>>]
   const [reactions, setReactions] = useLocalStorageState<IReaction[]>(
     "reactions",
     []
@@ -165,7 +165,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setCompounds(updatedCompounds)
   }
 
-  const findCompound = (id?: string): ICompound | undefined => {
+  const findCompound = (id?: string): Compound | undefined => {
     return compounds.find((compound) => compound.id === id)
   }
 
@@ -178,7 +178,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
     setEditedCompoundId(id)
   }
 
-  const updateCompound = (index: number, updatedCompound: ICompound): void => {
+  const updateCompound = (index: number, updatedCompound: Compound): void => {
     const updatedCompounds = [...compounds]
     updatedCompounds[index] = updatedCompound
 
@@ -279,7 +279,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
-          ) as ICompound
+          ) as Compound
           equationTokens.push(new Token(TokenTypes.Operator, "*"))
           equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
           equationTokens.push(new Token(TokenTypes.Operator, "/"))
@@ -297,7 +297,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
-          ) as ICompound
+          ) as Compound
           equationTokens.push(new Token(TokenTypes.Operator, "*"))
           equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
           equationTokens.push(new Token(TokenTypes.Operator, "^"))
@@ -308,7 +308,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         reaction.products.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
-          ) as ICompound
+          ) as Compound
           equationTokens.push(new Token(TokenTypes.Operator, "*"))
           equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
           equationTokens.push(new Token(TokenTypes.Operator, "^"))
@@ -324,7 +324,7 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         reaction.reactants.forEach((reactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
-          ) as ICompound
+          ) as Compound
           equationTokens.push(new Token(TokenTypes.Operator, "*"))
           equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
           equationTokens.push(new Token(TokenTypes.Operator, "^"))

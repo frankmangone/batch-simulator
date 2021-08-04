@@ -13,10 +13,10 @@ import { useState } from "react"
 import { useData } from "../../context/DataContext"
 
 /* Types */
-import { ICompound } from "../../types/Compound"
+import { Compound } from "../../types/Compound"
 
 interface ICompoundEditModalProps {
-  compound: ICompound
+  compound: Compound
   closeModal: () => void
 }
 
@@ -35,7 +35,7 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
     name?: string
   }
 
-  const validate = (values: ICompound): IErrors => {
+  const validate = (values: Compound): IErrors => {
     const errors: IErrors = {}
 
     /* Symbol validation */

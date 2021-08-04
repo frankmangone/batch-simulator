@@ -27,12 +27,12 @@ import { useState } from "react"
 import { useData } from "../../context/DataContext"
 
 /* Types */
-import { ICompound } from "../../types/Compound"
+import { Compound } from "../../types/Compound"
 import { IReaction, IReactionCompound } from "../../types/Reaction"
 import { CompoundType } from "../../context/DataContext"
 
 interface IReactionEditModalProps {
-  compounds: ICompound[]
+  compounds: Compound[]
   reaction: IReaction
   closeModal: () => void
 }
@@ -315,10 +315,10 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
                 ? {
                     value: modalReaction.keyCompound,
                     displayText: (
-                      findCompound(modalReaction.keyCompound) as ICompound
+                      findCompound(modalReaction.keyCompound) as Compound
                     ).symbol,
                     collapsedDisplayText: (
-                      findCompound(modalReaction.keyCompound) as ICompound
+                      findCompound(modalReaction.keyCompound) as Compound
                     ).symbol,
                   }
                 : undefined
@@ -326,10 +326,10 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             selectOptions={modalReaction.reactants.map((reactionCompound) => ({
               value: reactionCompound.compoundId,
               displayText: (
-                findCompound(reactionCompound.compoundId) as ICompound
+                findCompound(reactionCompound.compoundId) as Compound
               ).symbol,
               collapsedDisplayText: (
-                findCompound(reactionCompound.compoundId) as ICompound
+                findCompound(reactionCompound.compoundId) as Compound
               ).symbol,
             }))}
             onSelectionChange={(value: string | undefined) => {

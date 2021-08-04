@@ -5,11 +5,11 @@ import ReactionParamInputCard from "./ReactionParamInputCard"
 import { SymbolComponent } from "../MathExpressions"
 
 /* Types */
-import { ICompound } from "../../types/Compound"
+import { Compound } from "../../types/Compound"
 import { IReaction } from "../../types/Reaction"
 
 interface IReactionKineticParametersProps {
-  compounds: ICompound[]
+  compounds: Compound[]
   reaction: IReaction
   updateKineticConstant: (key: string, value: number) => void
 }

@@ -12,7 +12,7 @@ import { COMPOUND_COLORS } from "../../constants/compoundColors"
 import { useData } from "../../context/DataContext"
 
 /* Types */
-import { ICompound } from "../../types/Compound"
+import { Compound } from "../../types/Compound"
 import { IReaction } from "../../types/Reaction"
 
 interface IReactionPreviewProps {
@@ -30,7 +30,7 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
       )}
 
       {reaction.reactants.map((reactionCompound, index) => {
-        const compound = findCompound(reactionCompound.compoundId) as ICompound
+        const compound = findCompound(reactionCompound.compoundId) as Compound
 
         return (
           <Fragment key={reactionCompound.compoundId}>
@@ -52,7 +52,7 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
       )}
 
       {reaction.products.map((reactionCompound, index) => {
-        const compound = findCompound(reactionCompound.compoundId) as ICompound
+        const compound = findCompound(reactionCompound.compoundId) as Compound
 
         return (
           <Fragment key={reactionCompound.compoundId}>
