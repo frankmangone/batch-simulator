@@ -202,6 +202,10 @@ export const DataStore: React.FC<IFCWithChildren> = (props) => {
         (reactionCompound: IReactionCompound) =>
           reactionCompound.compoundId !== compoundId
       )
+
+      if (reaction.keyCompound === compoundId) {
+        reaction.keyCompound = undefined
+      }
     })
 
     setReactions(updatedReactions)
