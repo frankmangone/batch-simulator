@@ -21,7 +21,7 @@ import useLocalStorageState from "../hooks/useLocalStorageState"
 import { Compound } from "../types/Compound"
 import { IOperation } from "../types/Operation"
 import { Reaction, IReactionCompound } from "../types/Reaction"
-import { IFCWithChildren } from "../types/FCWithChildren"
+import { FCWithChildren } from "../types/FCWithChildren"
 
 /**
  * To mark whether if a compound is a reactant or a product,
@@ -96,7 +96,7 @@ export const useData = () => {
 /**
  * Store component to abstract logic from root component
  */
-export const DataStore: React.FC<IFCWithChildren> = (props) => {
+export const DataStore: React.FC<FCWithChildren> = (props) => {
   const { children } = props
   const [currentColor, setCurrentColor] = useState<number>(0)
 
