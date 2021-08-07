@@ -12,7 +12,7 @@ import { useData } from "../context/DataContext"
 import { useFormik } from "formik"
 
 /* Types */
-import { IOperation, IOperationErrors } from "../types/Operation"
+import { Operation, OperationErrors } from "../types/Operation"
 
 const OperationPage: React.FC = () => {
   const { operation, updateOperation } = useData()
@@ -20,8 +20,8 @@ const OperationPage: React.FC = () => {
   /**
    * Form validation function
    */
-  const validate = (values: IOperation): IOperationErrors => {
-    const errors: IOperationErrors = {}
+  const validate = (values: Operation): OperationErrors => {
+    const errors: OperationErrors = {}
 
     /* Reaction time validation */
     if (!validateNotEmpty(values.reactionTime))

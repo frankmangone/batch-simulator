@@ -26,7 +26,7 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
         <ReactionParamInputCard
           key={param}
           paramSymbol={<SymbolComponent symbol={param} />}
-          value={value}
+          value={value as number}
           updateValue={(value: number) => {
             updateKineticConstant(param, value)
           }}

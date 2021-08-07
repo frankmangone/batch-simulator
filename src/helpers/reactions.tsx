@@ -1,4 +1,4 @@
-import { Reaction, IReactionCompound } from '../types/Reaction'
+import { Reaction, ReactionCompound } from '../types/Reaction'
 
 export const reactionHasCompound = (reaction: Reaction, compoundId: string) => {
   if (reaction.reactants.findIndex((c) => c.compoundId === compoundId)) return true
@@ -26,6 +26,6 @@ export const getCoefficientForComponent = (reaction: Reaction, compoundId: strin
 }
 
 const getStoichiomericCoefficientForKeyCompound = (reaction: Reaction) => {
-  const keyCompound = reaction.reactants.find((c) => c.compoundId === reaction.keyCompound as string) as IReactionCompound
+  const keyCompound = reaction.reactants.find((c) => c.compoundId === reaction.keyCompound as string) as ReactionCompound
   return keyCompound.stoichiometricCoefficient
 }

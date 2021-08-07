@@ -19,8 +19,8 @@ import useLocalStorageState from "../hooks/useLocalStorageState"
 
 /* Types */
 import { Compound } from "../types/Compound"
-import { IOperation } from "../types/Operation"
-import { Reaction, IReactionCompound } from "../types/Reaction"
+import { Operation } from "../types/Operation"
+import { Reaction, ReactionCompound } from "../types/Reaction"
 import { FCWithChildren } from "../types/FCWithChildren"
 
 /**
@@ -52,11 +52,11 @@ interface IDefaultValue {
   serializeKineticEquation: (reaction: Reaction, index: number) => Token[]
 
   /* Operation */
-  operation: IOperation
-  updateOperation: (updatedOperation: IOperation) => void
+  operation: Operation
+  updateOperation: (updatedOperation: Operation) => void
 }
 
-const defaultOperationValue: IOperation = { reactionTime: 30, deadTime: 30 }
+const defaultOperationValue: Operation = { reactionTime: 30, deadTime: 30 }
 const defaultValue: IDefaultValue = {
   /* Compounds */
   compounds: [],
@@ -108,10 +108,10 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
     "reactions",
     []
   ) as [Reaction[], Dispatch<SetStateAction<Reaction[]>>]
-  const [operation, setOperation] = useLocalStorageState<IOperation>(
+  const [operation, setOperation] = useLocalStorageState<Operation>(
     "operation",
     defaultOperationValue
-  ) as [IOperation, Dispatch<SetStateAction<IOperation>>]
+  ) as [Operation, Dispatch<SetStateAction<Operation>>]
 
   // To keep track of edited elements:
   const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
@@ -194,12 +194,12 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
     const updatedReactions = JSON.parse(JSON.stringify(reactions))
     updatedReactions.forEach((reaction: Reaction) => {
       reaction.reactants = reaction.reactants.filter(
-        (reactionCompound: IReactionCompound) =>
+        (reactionCompound: ReactionCompound) =>
           reactionCompound.compoundId !== compoundId
       )
 
       reaction.products = reaction.products.filter(
-        (reactionCompound: IReactionCompound) =>
+        (reactionCompound: ReactionCompound) =>
           reactionCompound.compoundId !== compoundId
       )
 
@@ -325,7 +325,7 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
       default:
         equationTokens.push(new Token(TokenTypes.Parameter, `<k>`))
 
-        reaction.reactants.forEach((reactionCompound: IReactionCompound) => {
+        reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
           const { symbol } = findCompound(
             reactionCompound.compoundId
           ) as Compound
@@ -343,7 +343,7 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
   /**
    * Operation state handling
    */
-  const updateOperation = (updatedOperation: IOperation): void => {
+  const updateOperation = (updatedOperation: Operation): void => {
     setOperation(updatedOperation)
   }
 

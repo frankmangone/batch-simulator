@@ -15,13 +15,13 @@ import { useState } from "react"
 
 /* Types */
 import { Compound } from "../../types/Compound"
-import { IReactionCompound } from "../../types/Reaction"
+import { ReactionCompound } from "../../types/Reaction"
 
 interface IReactionCompoundCardProps {
   key: string
   compound: Compound
-  reactionCompound: IReactionCompound
-  updateCompound: (updatedReactionCompound: IReactionCompound) => void
+  reactionCompound: ReactionCompound
+  updateCompound: (updatedReactionCompound: ReactionCompound) => void
   removeCompound: () => void
 }
 

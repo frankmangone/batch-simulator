@@ -28,7 +28,7 @@ import { useData } from "../../context/DataContext"
 
 /* Types */
 import { Compound } from "../../types/Compound"
-import { Reaction, IReactionCompound } from "../../types/Reaction"
+import { Reaction, ReactionCompound } from "../../types/Reaction"
 import { CompoundType } from "../../context/DataContext"
 
 interface IReactionEditModalProps {
@@ -99,7 +99,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const updateCompound = (
     compoundIndex: number,
     compoundType: CompoundType,
-    updatedCompound: IReactionCompound
+    updatedCompound: ReactionCompound
   ): void => {
     /* Determine which array to push to */
     const key = getCompoundKey(compoundType)

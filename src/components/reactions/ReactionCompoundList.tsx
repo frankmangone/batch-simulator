@@ -6,18 +6,18 @@ import { useData } from "../../context/DataContext"
 
 /* Types */
 import { Compound } from "../../types/Compound"
-import { IReactionCompound } from "../../types/Reaction"
+import { ReactionCompound } from "../../types/Reaction"
 import { CompoundType } from "../../context/DataContext"
 
 interface IReactionCompoundListProps {
   compoundType: CompoundType
-  reactionCompounds: IReactionCompound[]
+  reactionCompounds: ReactionCompound[]
   reactionIndex: number
   removeCompound: (compoundIndex: number, compoundType: CompoundType) => void
   updateCompound: (
     compoundIndex: number,
     compoundType: CompoundType,
-    updatedCompound: IReactionCompound
+    updatedCompound: ReactionCompound
   ) => void
 }
 
@@ -42,7 +42,7 @@ const ReactionCompoundList: React.FC<IReactionCompoundListProps> = (props) => {
             key={reactionCompound.compoundId}
             compound={compound}
             reactionCompound={reactionCompound}
-            updateCompound={(updatedReactionCompound: IReactionCompound) => {
+            updateCompound={(updatedReactionCompound: ReactionCompound) => {
               updateCompound(
                 compoundIndex,
                 compoundType,

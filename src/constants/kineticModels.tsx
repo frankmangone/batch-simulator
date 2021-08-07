@@ -1,8 +1,8 @@
 /* Types */
 import {
-  IKineticConstants,
+  KineticConstants,
   Reaction,
-  IReactionCompound,
+  ReactionCompound,
 } from "../types/Reaction"
 import { Compound } from "../types/Compound"
 
@@ -24,7 +24,7 @@ export const generateKineticConstants = (
   model: number,
   reaction: Reaction,
   compounds: Compound[]
-): IKineticConstants => {
+): KineticConstants => {
   switch (model) {
     case 1:
       return generateHiperbolicModelConstants(reaction, compounds)
@@ -40,8 +40,8 @@ const generateSimpleModelConstants = (
   reaction: Reaction,
   compounds: Compound[]
 ) => {
-  const updatedExponents: IKineticConstants = {}
-  reaction.reactants.forEach((reactionCompound: IReactionCompound) => {
+  const updatedExponents: KineticConstants = {}
+  reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
     const compound = compounds.find(
       (c) => c.id === reactionCompound.compoundId
     ) as Compound
@@ -62,8 +62,8 @@ const generateHiperbolicModelConstants = (
   reaction: Reaction,
   compounds: Compound[]
 ) => {
-  const updatedExponents: IKineticConstants = {}
-  reaction.reactants.forEach((reactionCompound: IReactionCompound) => {
+  const updatedExponents: KineticConstants = {}
+  reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
     const compound = compounds.find(
       (c) => c.id === reactionCompound.compoundId
     ) as Compound
@@ -84,9 +84,9 @@ const generateAutocatalyticModelConstants = (
   reaction: Reaction,
   compounds: Compound[]
 ) => {
-  const updatedExponents: IKineticConstants = {}
+  const updatedExponents: KineticConstants = {}
 
-  reaction.reactants.forEach((reactionCompound: IReactionCompound) => {
+  reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
     const compound = compounds.find(
       (c) => c.id === reactionCompound.compoundId
     ) as Compound
@@ -99,7 +99,7 @@ const generateAutocatalyticModelConstants = (
       updatedExponents[paramKey] = oldConstant
     }
   })
-  reaction.products.forEach((reactionCompound: IReactionCompound) => {
+  reaction.products.forEach((reactionCompound: ReactionCompound) => {
     const compound = compounds.find(
       (c) => c.id === reactionCompound.compoundId
     ) as Compound

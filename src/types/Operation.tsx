@@ -1,9 +1,9 @@
-export interface IOperation {
+export interface Operation {
   reactionTime: number
   deadTime: number
 }
 
-export interface IOperationErrors {
+export interface OperationErrors {
   reactionTime?: string
   deadTime?: string
 }
