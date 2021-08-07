@@ -15,7 +15,7 @@ export interface Reaction {
    */
   kineticModel: number
   kineticConstants: KineticConstants
-  kineticEquation: Token[] // A tokenized version of the kinetic model
+  kineticEquation: KineticEquation // A tokenized version of the kinetic model
   keyCompound?: string // It's a compound (reactant) id
 }
 
@@ -27,3 +27,5 @@ export interface ReactionCompound {
 export interface KineticConstants {
   [key: string]: number
 }
+
+export type KineticEquation = Token[]

@@ -6,39 +6,30 @@ import { getCoefficientForComponent } from '../helpers/reactions'
 
 /* Types */
 import { ICompoundEquation } from '../types/CompoundEquation'
-import { Reaction } from "../types/Reaction"
+import { Operation } from '../types/Operation'
+import { Reaction, ReactionCompound, KineticEquation } from "../types/Reaction"
+import { ParsedReaction, CompoundWithCoefficient } from '../types/ParsedReaction'
 import { ISimulationResults } from "../types/SimulationResults"
-import { TokenTypes } from "../helpers/tokenization"
+import { Token, TokenTypes } from "../helpers/tokenization"
 
 const useSimulate = () => {
   // Get data from context
-  const { compounds, reactions } = useData()
+  const { compounds, reactions, operation } = useData()
 
   //: ISimulationResults => {
   const simulate = () => {
-    // Reaction equations (as tokens) are reordered to RPN notation
-    const parsedReactions = parseReactionEquations(reactions)
+    /**
+     * Reaction equations (as tokens) are reordered to RPN notation
+     * and some more magic happens. Check the method
+     *  */ 
+    const parsedReactions: ParsedReaction[] = parseReactionEquations(reactions)
 
     // Initialize simulation results
-    const results: ISimulationResults = { t: [0] }
-    compounds.forEach((c) => (results[`[${c.symbol}]`] = [c.concentration]))
+    const initialValues: ISimulationResults = { t: [0] }
+    compounds.forEach((c) => (initialValues[`[${c.symbol}]`] = [c.concentration]))
 
-    // Create equation for each compound
-    const compoundEquations: ICompoundEquation[] = []
-    compounds.forEach((compound) => {
-      /**
-       * A compound equation is a linear combination of 
-       * single reaction equations
-       */ 
-      const equation: ICompoundEquation = []
-
-      parsedReactions.forEach((reaction) => {
-        const coefficient = getCoefficientForComponent(reaction, compound.id)
-        equation.push({ coefficient, equationTokens: reaction.kineticEquation })
-      })
-
-      compoundEquations.push(equation)
-    })
+    // Start simulation execution
+    executeSimulation(initialValues, parsedReactions, operation)
   }
 
   return { simulate }
@@ -50,21 +41,42 @@ export default useSimulate
  * Helper functions
  */
 
-const parseReactionEquations = (reactions: Reaction[]): Reaction[] => {
-  const reactionsCopy: Reaction[] = JSON.parse(JSON.stringify(reactions))
+const parseReactionEquations = (reactions: Reaction[]): ParsedReaction[] => {
+  /**
+   * Parsing a reaction entails:
+   *  1) Replacing parameters for their entered values
+   *  2) Modifying the token order to RPN
+   *  3) Merging reactants and products to compounds, which have a symbol
+   *    and a coefficient
+   * 
+   *  The reactions are stored in a new object of type ParsedReaction
+   */
+  const parsedReactions: ParsedReaction[] = []
 
-  reactionsCopy.forEach((reaction, index) => {
-    reaction = replaceParametersForValues(reaction)
-    reactionsCopy[index].kineticEquation = parseEquation(
-      reaction.kineticEquation
+  reactions.forEach((reaction, index) => {
+    const parsedReaction: ParsedReaction = {}
+
+    // 1) Replace parameters for values
+    parsedReaction.kineticEquation = replaceParametersForValues(reaction)
+
+    // 2) Modify token order to RPN
+    parsedReaction.kineticEquation = parseEquation(
+      parsedReaction.kineticEquation
     )
+
+    // 3) Merge reactants and products
+    parsedReaction.compounds = mergeCompounds(reaction)
+
+    parsedReactions.push(parsedReaction)
   })
 
-  return reactionsCopy
+  return parsedReactions
 }
 
-const replaceParametersForValues = (reaction: Reaction): Reaction => {
-  reaction.kineticEquation.forEach((token, index) => {
+const replaceParametersForValues = (reaction: Reaction): KineticEquation => {
+  const kineticEquationCopy = JSON.parse(JSON.stringify(reaction.kineticEquation))
+
+  kineticEquationCopy.forEach((token: Token) => {
     if (token.type === TokenTypes.Parameter) {
       // Replace parameter by numeric value
       const key = (token.value as string).replace(/<|>/g, "")
@@ -73,5 +85,40 @@ const replaceParametersForValues = (reaction: Reaction): Reaction => {
     }
   })
 
-  return reaction
+  return kineticEquationCopy
+}
+
+const mergeCompounds = (reaction: Reaction): CompoundWithCoefficient[] => {
+  const compounds: CompoundWithCoefficient[] = []
+
+  reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
+    const compound: CompoundWithCoefficient = Object.assign({}, {
+      compoundId: reactionCompound.compoundId,
+      coefficient: getCoefficientForComponent(reaction, reactionCompound.compoundId)
+    })
+    compounds.push(compound)
+  })
+
+  reaction.products.forEach((reactionCompound: ReactionCompound) => {
+    const compound: CompoundWithCoefficient = Object.assign({}, {
+      compoundId: reactionCompound.compoundId,
+      coefficient: getCoefficientForComponent(reaction, reactionCompound.compoundId)
+    })
+    compounds.push(compound)
+  })
+  
+  return compounds
+}
+
+/****************************************************************
+ *    SIMULATE METHOD                                           *
+ *    ---                                                       *
+ ****************************************************************/
+
+const executeSimulation = (
+  resultsInitialValues: ISimulationResults,
+  parsedReactions: ParsedReaction[],
+  operation: Operation
+) => {
+  console.log(parsedReactions)
 }
