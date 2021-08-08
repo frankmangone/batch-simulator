@@ -7,6 +7,7 @@ import Reactor from "../components/Reactor"
 
 /* Hooks */
 import useSimulate from "../hooks/useSimulate"
+import { useData } from "../context/DataContext"
 
 interface IProps {
   children: JSX.Element | JSX.Element[]
@@ -15,6 +16,7 @@ interface IProps {
 const MainLayout: React.FC<IProps> = (props) => {
   const { children } = props
   const { simulate } = useSimulate()
+  const { simulationResults } = useData()
 
   return (
     <MainLayoutWrapper>
@@ -24,7 +26,7 @@ const MainLayout: React.FC<IProps> = (props) => {
           <SidebarLink route="/compounds" title="Compounds" />
           <SidebarLink route="/reactions" title="Reactions" />
           <SidebarLink route="/operation" title="Operation" />
-          {/* <SidebarLink route="/results" title="Results" /> */}
+          { simulationResults && <SidebarLink route="/results" title="Results" /> }
           <button onClick={simulate}>Simulate</button>
         </nav>
       </SideContent>
