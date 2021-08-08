@@ -1,25 +1,44 @@
 import { useData } from "../context/DataContext"
 
 /* Types */
-import { SimulationResults, TimePoint } from "../types/SimulationResults"
+import { TimePoint } from "../types/SimulationResults"
+
+interface Point {
+  x: number
+  y: number
+}
 
 const useGetData = () => {
   const { simulationResults } = useData()
 
   /**
    * Maps requested variable data to Victory-readable data
-   * TODO: Do for multiple variables at a time
    */
-  const variableData = (variable: string): SimulationResults | undefined => {
+  const variableData = (variable: string): Point[] => {
     return simulationResults?.map((data: TimePoint) => {
       return {
-        t: data.t,
-        [variable]: data[variable],
+        x: data.t,
+        y: data[variable],
       }
-    })
+    }) as Point[]
   }
 
-  return { variableData }
+  /**
+   * Gets max functional value to set axis values correctly
+   */
+  const maxFunctionalValue = (data: Point[][]) => {
+    const maxValuesForEachVariable: number[] = []
+
+    data.forEach((points: Point[]) => {
+      maxValuesForEachVariable.push(
+        Math.max(...points.map((point: Point) => point.y))
+      )
+    })
+
+    return Math.max(...maxValuesForEachVariable)
+  }
+
+  return { variableData, maxFunctionalValue }
 }
 
 export default useGetData

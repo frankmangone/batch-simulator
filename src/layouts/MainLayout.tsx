@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 
 /* Components */
 import { FiChevronRight } from "react-icons/fi"
@@ -17,6 +17,12 @@ const MainLayout: React.FC<IProps> = (props) => {
   const { children } = props
   const { simulate } = useSimulate()
   const { simulationResults } = useData()
+  const history = useHistory()
+
+  const onSimulate = () => {
+    simulate()
+    history.push("/results")
+  }
 
   return (
     <MainLayoutWrapper>
@@ -26,8 +32,10 @@ const MainLayout: React.FC<IProps> = (props) => {
           <SidebarLink route="/compounds" title="Compounds" />
           <SidebarLink route="/reactions" title="Reactions" />
           <SidebarLink route="/operation" title="Operation" />
-          { simulationResults && <SidebarLink route="/results" title="Results" /> }
-          <button onClick={simulate}>Simulate</button>
+          {simulationResults && (
+            <SidebarLink route="/results" title="Results" />
+          )}
+          <button onClick={onSimulate}>Simulate</button>
         </nav>
       </SideContent>
       <MainContent>{children}</MainContent>
