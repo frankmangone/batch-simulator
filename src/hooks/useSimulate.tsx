@@ -14,7 +14,7 @@ import { Token, TokenTypes } from "../helpers/tokenization"
 
 const useSimulate = () => {
   // Get data from context
-  const { compounds, reactions, operation } = useData()
+  const { compounds, reactions, operation, setSimulationResults } = useData()
 
   //: SimulationResults => {
   const simulate = () => {
@@ -29,7 +29,8 @@ const useSimulate = () => {
     compounds.forEach((c) => (initialValues[`[${c.symbol}]`] = c.concentration))
 
     // Start simulation execution
-    executeSimulation(initialValues, parsedReactions, operation)
+    const results = executeSimulation(initialValues, parsedReactions, operation)
+    setSimulationResults(results)
   }
 
   return { simulate }
@@ -126,7 +127,7 @@ const executeSimulation = (
   operation: Operation
 ) => {
   const results: SimulationResults = [resultsInitialValues]
-  
+
   // Define an iterator for time evolution
   const createSimulationIterator = (endTime = 10, timeStep = 0.1) => {
     const rangeIterator = {
@@ -152,7 +153,8 @@ const executeSimulation = (
   while (!result.done) {
     result = iterator.next()
   }
-  console.log(results)
+
+  return results
 }
 
 /**
