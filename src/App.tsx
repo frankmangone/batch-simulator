@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
-  Route,
-} from "react-router-dom"
+import { BrowserRouter as Router } from "react-router-dom"
 import GlobalStyles from "./GlobalStyles"
 
 /* Context */
@@ -12,11 +7,8 @@ import { DataStore } from "./context/DataContext"
 /* Layouts */
 import MainLayout from "./layouts/MainLayout"
 
-/* Pages */
-import CompoundsPage from "./pages/CompoundsPage"
-import OperationPage from "./pages/OperationPage"
-import ReactionsPage from "./pages/ReactionsPage"
-import ResultsPage from "./pages/ResultsPage"
+/* Components */
+import Routes from "./Routes"
 
 const App = () => {
   return (
@@ -24,21 +16,7 @@ const App = () => {
       <Router>
         <GlobalStyles />
         <MainLayout>
-          <Switch>
-            <Route path="/" exact component={CompoundsPage} />
-            <Route path="/compounds" component={CompoundsPage} />
-            <Route path="/reactions" component={ReactionsPage} />
-            <Route path="/operation" component={OperationPage} />
-            <Route path="/results" component={ResultsPage} />
-            {/* Redirect for deployed URL */}
-            <Route path="/batch-simulator">
-              <Redirect
-                to={{
-                  pathname: "/",
-                }}
-              />
-            </Route>
-          </Switch>
+          <Routes />
         </MainLayout>
       </Router>
     </DataStore>
