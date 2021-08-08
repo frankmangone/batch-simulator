@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import loader from "@assemblyscript/loader"
 
-export const useWasmModule = (moduleName: string) => {
+const useWasmModule = (moduleName: string) => {
   const [module, setModule] = useState<any>(undefined)
   const [memory, setMemory] = useState<any>(undefined)
   /*
@@ -27,3 +27,5 @@ export const useWasmModule = (moduleName: string) => {
 
   return { module, memory }
 }
+
+export default useWasmModule

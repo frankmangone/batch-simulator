@@ -69,7 +69,9 @@ export const Equation: React.FC<IEquation> = (props) => {
        */
       if (parenthesisStack.length > 0) {
         parenthesisStack[parenthesisStack.length - 1].push(
-          <SymbolComponent symbol={token.value.replace(/<|>|{|}/g, "")} />
+          <SymbolComponent
+            symbol={(token.value as string).replace(/<|>|{|}/g, "")}
+          />
         )
       }
       //
@@ -88,7 +90,9 @@ export const Equation: React.FC<IEquation> = (props) => {
             <Division
               numerator={numerator}
               denominator={
-                <SymbolComponent symbol={token.value.replace(/<|>|{|}/g, "")} />
+                <SymbolComponent
+                  symbol={(token.value as string).replace(/<|>|{|}/g, "")}
+                />
               }
             />
           )
@@ -98,7 +102,9 @@ export const Equation: React.FC<IEquation> = (props) => {
             <Power
               base={base}
               power={
-                <SymbolComponent symbol={token.value.replace(/<|>|{|}/g, "")} />
+                <SymbolComponent
+                  symbol={(token.value as string).replace(/<|>|{|}/g, "")}
+                />
               }
             />
           )
@@ -110,7 +116,9 @@ export const Equation: React.FC<IEquation> = (props) => {
        */
       else {
         components.push(
-          <SymbolComponent symbol={token.value.replace(/<|>|{|}/g, "")} />
+          <SymbolComponent
+            symbol={(token.value as string).replace(/<|>|{|}/g, "")}
+          />
         )
       }
     }

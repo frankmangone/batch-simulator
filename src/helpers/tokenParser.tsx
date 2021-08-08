@@ -1,6 +1,6 @@
 import { Token, TokenTypes } from "./tokenization"
 
-export const tokenParser = (tokenizedEquation: Token[]): Token[] => {
+export const parseEquation = (tokenizedEquation: Token[]): Token[] => {
   /**
    * Note: this assumes that the tokenized expression is valid!!
    * Returns an RPN-ordered version of the tokenized expression
@@ -32,10 +32,10 @@ export const tokenParser = (tokenizedEquation: Token[]): Token[] => {
       while (
         peek(operationStack) &&
         peek(operationStack).type === TokenTypes.Operator &&
-        ((token.associativity() === "left" &&
-          token.precedence() <= peek(operationStack).precedence()) ||
-          (token.associativity() === "right" &&
-            token.precedence() < peek(operationStack).precedence()))
+        ((token.associativity === "left" &&
+          token.precedence <= peek(operationStack).precedence) ||
+          (token.associativity === "right" &&
+            token.precedence < peek(operationStack).precedence))
       ) {
         outputQueue.push(operationStack.pop() as Token)
       }

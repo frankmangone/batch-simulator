@@ -1,13 +1,13 @@
 import styled from "styled-components"
 
 /* Types */
-import { IFCWithChildren } from "../types/FCWithChildren"
+import { FCWithChildren } from "../types/FCWithChildren"
 
 interface IError {
   big?: boolean
 }
 
-type IErrorProps = IFCWithChildren & IError
+type IErrorProps = FCWithChildren & IError
 
 const Error: React.FC<IErrorProps> = (props) => {
   const { big, children } = props

@@ -14,12 +14,12 @@ import { useEffect, useRef, useState } from "react"
 import { validateNotEmpty } from "../../helpers/validators"
 
 /* Types */
-import { ICompound } from "../../types/Compound"
+import { Compound } from "../../types/Compound"
 
 interface ICompoundCardProps {
-  compound: ICompound
+  compound: Compound
   editCompound: () => void
-  updateCompound: (compound: ICompound) => void
+  updateCompound: (compound: Compound) => void
   validateUnicity: (field: string, value: any) => boolean
   removeCompound: () => void
 }

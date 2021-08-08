@@ -5,12 +5,17 @@ import { Link } from "react-router-dom"
 import { FiChevronRight } from "react-icons/fi"
 import Reactor from "../components/Reactor"
 
+/* Hooks */
+import useSimulate from "../hooks/useSimulate"
+
 interface IProps {
   children: JSX.Element | JSX.Element[]
 }
 
 const MainLayout: React.FC<IProps> = (props) => {
   const { children } = props
+  const { simulate } = useSimulate()
+
   return (
     <MainLayoutWrapper>
       <SideContent>
@@ -19,7 +24,8 @@ const MainLayout: React.FC<IProps> = (props) => {
           <SidebarLink route="/compounds" title="Compounds" />
           <SidebarLink route="/reactions" title="Reactions" />
           <SidebarLink route="/operation" title="Operation" />
-          <SidebarLink route="/results" title="Results" />
+          {/* <SidebarLink route="/results" title="Results" /> */}
+          <button onClick={simulate}>Simulate</button>
         </nav>
       </SideContent>
       <MainContent>{children}</MainContent>
@@ -60,9 +66,11 @@ const SideContent = styled.div`
     display: flex;
     flex-direction: column;
 
-    a {
+    a,
+    button {
       align-items: center;
       background-color: var(--color-grey-light);
+      border: none;
       border-radius: 5px;
       color: var(--color-grey-lightest);
       display: flex;

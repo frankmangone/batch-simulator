@@ -126,18 +126,18 @@ const prec = {
 
 export class Token {
   type: number
-  value: string
+  value: string | number
 
   constructor(type: number, value: string) {
     this.type = type
     this.value = value
   }
 
-  precedence() {
+  get precedence() {
     return prec[this.value as keyof typeof prec] || 1
   }
 
-  associativity() {
+  get associativity() {
     return assoc[this.value as keyof typeof assoc] || "left"
   }
 }

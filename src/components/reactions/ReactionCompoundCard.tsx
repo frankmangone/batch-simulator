@@ -14,14 +14,14 @@ import { validateNotEmpty } from "../../helpers/validators"
 import { useState } from "react"
 
 /* Types */
-import { ICompound } from "../../types/Compound"
-import { IReactionCompound } from "../../types/Reaction"
+import { Compound } from "../../types/Compound"
+import { ReactionCompound } from "../../types/Reaction"
 
 interface IReactionCompoundCardProps {
   key: string
-  compound: ICompound
-  reactionCompound: IReactionCompound
-  updateCompound: (updatedReactionCompound: IReactionCompound) => void
+  compound: Compound
+  reactionCompound: ReactionCompound
+  updateCompound: (updatedReactionCompound: ReactionCompound) => void
   removeCompound: () => void
 }
 

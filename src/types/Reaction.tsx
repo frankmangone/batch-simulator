@@ -1,10 +1,10 @@
 import { Token } from "../helpers/tokenization"
 
-export interface IReaction {
+export interface Reaction {
   id: string
 
-  reactants: IReactionCompound[]
-  products: IReactionCompound[]
+  reactants: ReactionCompound[]
+  products: ReactionCompound[]
 
   /**
    * Kinetic model may have a function later, but for now,
@@ -14,16 +14,18 @@ export interface IReaction {
    * are not known in advance
    */
   kineticModel: number
-  kineticConstants: IKineticConstants
-  kineticEquation: Token[] // A tokenized version of the kinetic model
+  kineticConstants: KineticConstants
+  kineticEquation: KineticEquation // A tokenized version of the kinetic model
   keyCompound?: string // It's a compound (reactant) id
 }
 
-export interface IReactionCompound {
+export interface ReactionCompound {
   compoundId: string
   stoichiometricCoefficient: number
 }
 
-export interface IKineticConstants {
+export interface KineticConstants {
   [key: string]: number
 }
+
+export type KineticEquation = Token[]

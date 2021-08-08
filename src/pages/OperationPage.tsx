@@ -12,7 +12,7 @@ import { useData } from "../context/DataContext"
 import { useFormik } from "formik"
 
 /* Types */
-import { IOperation, IOperationErrors } from "../types/Operation"
+import { Operation, OperationErrors } from "../types/Operation"
 
 const OperationPage: React.FC = () => {
   const { operation, updateOperation } = useData()
@@ -20,8 +20,8 @@ const OperationPage: React.FC = () => {
   /**
    * Form validation function
    */
-  const validate = (values: IOperation): IOperationErrors => {
-    const errors: IOperationErrors = {}
+  const validate = (values: Operation): OperationErrors => {
+    const errors: OperationErrors = {}
 
     /* Reaction time validation */
     if (!validateNotEmpty(values.reactionTime))
@@ -34,6 +34,13 @@ const OperationPage: React.FC = () => {
       errors.deadTime = "Dead time cannot be empty"
     else if (!validateGreaterThan(values.deadTime, 0, true))
       errors.deadTime = "Dead time cannot be lower than 0"
+
+    /* Time step validation */
+    if (!validateNotEmpty(values.timeStep))
+      errors.timeStep = "Time step cannot be empty"
+    else if (!validateGreaterThan(values.timeStep, 0, false))
+      errors.timeStep = "Time step has to be greater than 0"
+    // TODO: Time step has to be lower than reaction time
 
     return errors
   }
@@ -62,7 +69,7 @@ const OperationPage: React.FC = () => {
             label="Reaction time:"
             error={formik.errors.reactionTime}
             type="number"
-            onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
+            onBlur={() => {
               submit()
             }}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,13 +83,27 @@ const OperationPage: React.FC = () => {
             label="Dead time:"
             error={formik.errors.deadTime}
             type="number"
-            onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
+            onBlur={() => {
               submit()
             }}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               formik.handleChange(event)
             }}
             value={formik.values.deadTime}
+          />
+
+          <FieldInput
+            fieldName="timeStep"
+            label="Time step:"
+            error={formik.errors.timeStep}
+            type="number"
+            onBlur={() => {
+              submit()
+            }}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              formik.handleChange(event)
+            }}
+            value={formik.values.timeStep}
           />
         </InputSection>
       </form>

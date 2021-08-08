@@ -7,10 +7,10 @@ import { Equation, Subindex } from "../MathExpressions"
 import { useData } from "../../context/DataContext"
 
 /* Types */
-import { IReaction } from "../../types/Reaction"
+import { Reaction } from "../../types/Reaction"
 
 interface IReactionEquationProps {
-  reaction: IReaction
+  reaction: Reaction
   keyCompoundSymbol?: string
 }
 

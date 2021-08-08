@@ -5,19 +5,19 @@ import ReactionCompoundCard from "./ReactionCompoundCard"
 import { useData } from "../../context/DataContext"
 
 /* Types */
-import { ICompound } from "../../types/Compound"
-import { IReactionCompound } from "../../types/Reaction"
+import { Compound } from "../../types/Compound"
+import { ReactionCompound } from "../../types/Reaction"
 import { CompoundType } from "../../context/DataContext"
 
 interface IReactionCompoundListProps {
   compoundType: CompoundType
-  reactionCompounds: IReactionCompound[]
+  reactionCompounds: ReactionCompound[]
   reactionIndex: number
   removeCompound: (compoundIndex: number, compoundType: CompoundType) => void
   updateCompound: (
     compoundIndex: number,
     compoundType: CompoundType,
-    updatedCompound: IReactionCompound
+    updatedCompound: ReactionCompound
   ) => void
 }
 
@@ -29,7 +29,7 @@ const ReactionCompoundList: React.FC<IReactionCompoundListProps> = (props) => {
   return (
     <>
       {reactionCompounds.map((reactionCompound) => {
-        const compound = findCompound(reactionCompound.compoundId) as ICompound
+        const compound = findCompound(reactionCompound.compoundId) as Compound
         /**
          * compoundIndex is the index in the reaction object (reactants or products)
          *  */
@@ -42,7 +42,7 @@ const ReactionCompoundList: React.FC<IReactionCompoundListProps> = (props) => {
             key={reactionCompound.compoundId}
             compound={compound}
             reactionCompound={reactionCompound}
-            updateCompound={(updatedReactionCompound: IReactionCompound) => {
+            updateCompound={(updatedReactionCompound: ReactionCompound) => {
               updateCompound(
                 compoundIndex,
                 compoundType,
