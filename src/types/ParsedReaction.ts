@@ -20,5 +20,6 @@ export interface ParsedReaction {
 
 export interface CompoundWithCoefficient {
   compoundId: string
+  symbol: string
   coefficient: number
 }

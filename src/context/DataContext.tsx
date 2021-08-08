@@ -56,7 +56,7 @@ interface IDefaultValue {
   updateOperation: (updatedOperation: Operation) => void
 }
 
-const defaultOperationValue: Operation = { reactionTime: 30, deadTime: 30 }
+const defaultOperationValue: Operation = { reactionTime: 30, deadTime: 30, timeStep: 0.1 }
 const defaultValue: IDefaultValue = {
   /* Compounds */
   compounds: [],

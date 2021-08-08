@@ -12,14 +12,14 @@ export const getCoefficientForComponent = (reaction: Reaction, compoundId: strin
 
   reaction.reactants.forEach((c) => {
     if (c.compoundId === compoundId) {
-      coefficient = baseStoichiometricCoefficient / c.stoichiometricCoefficient
+      coefficient = - baseStoichiometricCoefficient / c.stoichiometricCoefficient
     }
   })
   if (coefficient !== 0) return coefficient
 
   reaction.products.forEach((c) => {
     if (c.compoundId === compoundId) {
-      coefficient = -(baseStoichiometricCoefficient / c.stoichiometricCoefficient)
+      coefficient = baseStoichiometricCoefficient / c.stoichiometricCoefficient
     }
   })
   return coefficient
