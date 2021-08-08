@@ -57,7 +57,7 @@ const ResultsPage: React.FC = () => {
         <VictoryAxis
           dependentAxis
           crossAxis
-          domain={[0, maxFunctionalValue([data])]}
+          domain={[0, maxFunctionalValue([data]) * 1.02]}
           style={styles.axis}
           standalone={false}
         />
