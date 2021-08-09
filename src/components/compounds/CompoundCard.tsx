@@ -121,6 +121,14 @@ export default CompoundCard
 
 const CompoundCardWrapper = styled.li`
   flex-basis: 33%;
+
+  @media (max-width: 1000px) {
+    flex-basis: 50%;
+  }
+
+  @media (max-width: 550px) {
+    flex-basis: 100%;
+  }
 `
 
 const CompoundCardInner = styled.div`
@@ -154,6 +162,12 @@ const CompoundCardInner = styled.div`
     & > .bullet {
       transform: scale(25);
       border-color: var(--color-grey-lighter);
+      @media (max-width: 1000px) {
+        transform: scale(40);
+      }
+      @media (max-width: 550px) {
+        transform: scale(50);
+      }
     }
     & > .symbol-input:after {
       margin-left: 0%;

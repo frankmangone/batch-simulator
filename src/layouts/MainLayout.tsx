@@ -65,6 +65,11 @@ const MainLayoutWrapper = styled.div`
   justify-content: center;
   margin-left: 20px;
   margin-right: 20px;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    margin: 0;
+  }
 `
 
 const SideContent = styled.div`
@@ -99,6 +104,36 @@ const SideContent = styled.div`
       }
     }
   }
+
+  @media (max-width: 800px) {
+    background-color: var(--color-grey-normal);
+    flex-basis: unset;
+    margin-bottom: 20px;
+    margin-right: 0;
+
+    nav {
+      flex-direction: row;
+      height: 3rem;
+
+      a,
+      button {
+        align-items: center;
+        align-self: stretch;
+        background-color: unset;
+        border-radius: unset;
+        display: flex;
+        margin-bottom: 0;
+
+        p {
+          line-height: normal;
+        }
+
+        svg {
+          display: none;
+        }
+      }
+    }
+  }
 `
 
 const MainContent = styled.div`
@@ -108,4 +143,9 @@ const MainContent = styled.div`
   min-height: 600px;
   padding: 20px;
   position: relative;
+
+  @media (max-width: 800px) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
 `
