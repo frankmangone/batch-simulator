@@ -21,6 +21,7 @@ import useLocalStorageState from "../hooks/useLocalStorageState"
 import { Compound } from "../types/Compound"
 import { Operation } from "../types/Operation"
 import { Reaction, ReactionCompound } from "../types/Reaction"
+import { SimulationResults } from '../types/SimulationResults'
 import { FCWithChildren } from "../types/FCWithChildren"
 
 /**
@@ -54,6 +55,10 @@ interface IDefaultValue {
   /* Operation */
   operation: Operation
   updateOperation: (updatedOperation: Operation) => void
+
+  /* Simulation results */
+  simulationResults: SimulationResults | undefined
+  setSimulationResults: (simulationResults: SimulationResults) => void
 }
 
 const defaultOperationValue: Operation = { reactionTime: 30, deadTime: 30, timeStep: 0.1 }
@@ -83,6 +88,10 @@ const defaultValue: IDefaultValue = {
   /* Operation */
   operation: defaultOperationValue,
   updateOperation: () => {},
+
+  /* Simulation results */
+  simulationResults: undefined,
+  setSimulationResults: () => {}
 }
 
 // Context Provider component
@@ -113,6 +122,9 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
     defaultOperationValue
   ) as [Operation, Dispatch<SetStateAction<Operation>>]
 
+  const [simulationResults, setSimulationResults] = useState<SimulationResults | undefined>(undefined)
+
+  
   // To keep track of edited elements:
   const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
     undefined
@@ -124,6 +136,7 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
   /**
    * Helper functions
    */
+
   const nextColor = () => {
     if (currentColor === COMPOUND_COLORS_CODES.length - 1) {
       setCurrentColor(0)
@@ -371,6 +384,10 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
         /* Operation */
         operation,
         updateOperation,
+
+        /* Simulation results */
+        simulationResults,
+        setSimulationResults,
       }}
     >
       {children}
