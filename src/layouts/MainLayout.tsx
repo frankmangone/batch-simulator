@@ -8,6 +8,7 @@ import Reactor from "../components/Reactor"
 /* Hooks */
 import useSimulate from "../hooks/useSimulate"
 import { useData } from "../context/DataContext"
+import React from "react"
 
 interface IProps {
   children: JSX.Element | JSX.Element[]
@@ -19,7 +20,8 @@ const MainLayout: React.FC<IProps> = (props) => {
   const { simulationResults } = useData()
   const history = useHistory()
 
-  const onSimulate = () => {
+  const onSimulate = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
     simulate()
     history.push("/results")
   }
@@ -35,7 +37,9 @@ const MainLayout: React.FC<IProps> = (props) => {
           {simulationResults && (
             <SidebarLink route="/results" title="Results" />
           )}
-          <button onClick={onSimulate}>Simulate</button>
+          <a href="/" onClick={onSimulate}>
+            Simulate
+          </a>
         </nav>
       </SideContent>
       <MainContent>{children}</MainContent>
