@@ -84,7 +84,7 @@ const SideContent = styled.div`
     a,
     button {
       align-items: center;
-      background-color: var(--color-grey-light);
+      background-color: var(--color-grey-normal);
       border: none;
       border-radius: 5px;
       color: var(--color-grey-lightest);
@@ -96,7 +96,7 @@ const SideContent = styled.div`
       text-decoration: none;
 
       &:hover {
-        background-color: var(--color-grey-dark);
+        background-color: var(--color-grey-light);
       }
 
       p {
@@ -139,7 +139,7 @@ const SideContent = styled.div`
 const MainContent = styled.div`
   background: var(--color-grey-light);
   border-radius: 5px;
-  flex-basis: 750px;
+  flex-grow: 1;
   min-height: 600px;
   padding: 20px;
   position: relative;

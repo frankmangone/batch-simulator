@@ -120,13 +120,19 @@ export default CompoundCard
  */
 
 const CompoundCardWrapper = styled.li`
-  flex-basis: 33%;
+  flex-basis: 300px;
+  flex-grow: 1;
 
-  @media (max-width: 1000px) {
-    flex-basis: 50%;
+  @media only screen and (max-width: 1100px) {
+    flex-basis: 32%;
   }
 
-  @media (max-width: 550px) {
+  @media only screen and (max-width: 800px) {
+    flex-basis: 50%;
+    flex-grow: unset;
+  }
+
+  @media only screen and (max-width: 520px) {
     flex-basis: 100%;
   }
 `
@@ -160,14 +166,8 @@ const CompoundCardInner = styled.div`
     }
 
     & > .bullet {
-      transform: scale(25);
+      transform: scale(60);
       border-color: var(--color-grey-lighter);
-      @media (max-width: 1000px) {
-        transform: scale(40);
-      }
-      @media (max-width: 550px) {
-        transform: scale(50);
-      }
     }
     & > .symbol-input:after {
       margin-left: 0%;
