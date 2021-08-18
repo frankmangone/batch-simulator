@@ -246,7 +246,7 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
 
     updatedReactions.push({
       id: randomstring.generate(8),
-      reactionName: "",
+      name: "",
       reactants: [],
       products: [],
       kineticModel: 0,
