@@ -120,16 +120,14 @@ export default CompoundCard
  */
 
 const CompoundCardWrapper = styled.li`
-  flex-basis: 300px;
-  flex-grow: 1;
+  flex-basis: 25%;
 
-  @media only screen and (max-width: 1100px) {
-    flex-basis: 32%;
+  @media only screen and (max-width: 1200px) {
+    flex-basis: 33.3%;
   }
 
-  @media only screen and (max-width: 800px) {
+  @media only screen and (max-width: 960px) {
     flex-basis: 50%;
-    flex-grow: unset;
   }
 
   @media only screen and (max-width: 520px) {
