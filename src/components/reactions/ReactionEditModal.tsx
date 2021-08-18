@@ -187,8 +187,13 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       <FieldInput
         fieldName="name"
         label="Reaction name:"
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {}}
-        value={reaction.name}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setModalReaction({
+            ...modalReaction,
+            name: event.target.value,
+          })
+        }}
+        value={modalReaction.name}
       />
 
       {/* Compounds input */}
