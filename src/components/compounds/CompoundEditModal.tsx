@@ -33,6 +33,7 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
     symbol?: string
     concentration?: string
     name?: string
+    molecularWeight?: string
   }
 
   const validate = (values: Compound): IErrors => {
@@ -49,6 +50,12 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
       errors.concentration = "Concentration cannot be empty"
     else if (!validateGreaterThan(values.concentration, 0, true))
       errors.concentration = "Concentration cannot be lower than 0"
+
+    /* Molecular weight validation */
+    if (!validateNotEmpty(values.molecularWeight))
+      errors.molecularWeight = "Molecular weight cannot be empty"
+    else if (!validateGreaterThan(values.molecularWeight, 0, true))
+      errors.molecularWeight = "Molecular weight cannot be lower than 0"
 
     return errors
   }
@@ -72,6 +79,7 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
       symbol: compound.symbol,
       concentration: compound.concentration,
       name: compound.name,
+      molecularWeight: compound.molecularWeight,
     },
     validate,
     onSubmit: (values) => {
@@ -110,6 +118,17 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
             formik.handleChange(event)
           }}
           value={formik.values.concentration}
+        />
+
+        <FieldInput
+          fieldName="molecularWeight"
+          label="Molecular Weight [g/mol]:"
+          error={formik.errors.molecularWeight}
+          type="number"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            formik.handleChange(event)
+          }}
+          value={formik.values.molecularWeight}
         />
 
         <FieldInput

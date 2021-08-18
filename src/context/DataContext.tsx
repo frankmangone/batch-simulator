@@ -21,7 +21,7 @@ import useLocalStorageState from "../hooks/useLocalStorageState"
 import { Compound } from "../types/Compound"
 import { Operation } from "../types/Operation"
 import { Reaction, ReactionCompound } from "../types/Reaction"
-import { SimulationResults } from '../types/SimulationResults'
+import { SimulationResults } from "../types/SimulationResults"
 import { FCWithChildren } from "../types/FCWithChildren"
 
 /**
@@ -61,7 +61,11 @@ interface IDefaultValue {
   setSimulationResults: (simulationResults: SimulationResults) => void
 }
 
-const defaultOperationValue: Operation = { reactionTime: 30, deadTime: 30, timeStep: 0.1 }
+const defaultOperationValue: Operation = {
+  reactionTime: 30,
+  deadTime: 30,
+  timeStep: 0.1,
+}
 const defaultValue: IDefaultValue = {
   /* Compounds */
   compounds: [],
@@ -91,7 +95,7 @@ const defaultValue: IDefaultValue = {
 
   /* Simulation results */
   simulationResults: undefined,
-  setSimulationResults: () => {}
+  setSimulationResults: () => {},
 }
 
 // Context Provider component
@@ -122,9 +126,10 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
     defaultOperationValue
   ) as [Operation, Dispatch<SetStateAction<Operation>>]
 
-  const [simulationResults, setSimulationResults] = useState<SimulationResults | undefined>(undefined)
+  const [simulationResults, setSimulationResults] = useState<
+    SimulationResults | undefined
+  >(undefined)
 
-  
   // To keep track of edited elements:
   const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
     undefined
@@ -170,6 +175,7 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
       id: randomstring.generate(8),
       color: COMPOUND_COLORS_CODES[currentColor],
       concentration: 0,
+      molecularWeight: 0,
       symbol: availableSymbol(),
       name: "",
     })
