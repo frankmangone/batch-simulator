@@ -3,6 +3,8 @@ import { Token } from "../helpers/tokenization"
 export interface Reaction {
   id: string
 
+  name?: string
+
   reactants: ReactionCompound[]
   products: ReactionCompound[]
 

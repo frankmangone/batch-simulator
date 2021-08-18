@@ -9,6 +9,7 @@ import {
 /* Components */
 import Button from "../Button"
 import EditModal from "../EditModal"
+import FieldInput from "../FieldInput"
 import Notice from "../Notice"
 import Select from "../Select"
 import SubmitButton from "../SubmitButton"
@@ -182,6 +183,18 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       handleClose={closeModal}
     >
       <ReactionPreview reaction={modalReaction} />
+      <br />
+      <FieldInput
+        fieldName="name"
+        label="Reaction name:"
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setModalReaction({
+            ...modalReaction,
+            name: event.target.value,
+          })
+        }}
+        value={modalReaction.name}
+      />
 
       {/* Compounds input */}
       <ModalInputSection>
