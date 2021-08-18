@@ -8,6 +8,7 @@ import Reactor from "../components/Reactor"
 /* Hooks */
 import useSimulate from "../hooks/useSimulate"
 import { useData } from "../context/DataContext"
+import React from "react"
 
 interface IProps {
   children: JSX.Element | JSX.Element[]
@@ -19,7 +20,8 @@ const MainLayout: React.FC<IProps> = (props) => {
   const { simulationResults } = useData()
   const history = useHistory()
 
-  const onSimulate = () => {
+  const onSimulate = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
     simulate()
     history.push("/results")
   }
@@ -35,7 +37,9 @@ const MainLayout: React.FC<IProps> = (props) => {
           {simulationResults && (
             <SidebarLink route="/results" title="Results" />
           )}
-          <button onClick={onSimulate}>Simulate</button>
+          <a href="/" onClick={onSimulate}>
+            Simulate
+          </a>
         </nav>
       </SideContent>
       <MainContent>{children}</MainContent>
@@ -65,6 +69,11 @@ const MainLayoutWrapper = styled.div`
   justify-content: center;
   margin-left: 20px;
   margin-right: 20px;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    margin: 0;
+  }
 `
 
 const SideContent = styled.div`
@@ -79,7 +88,7 @@ const SideContent = styled.div`
     a,
     button {
       align-items: center;
-      background-color: var(--color-grey-light);
+      background-color: var(--color-grey-normal);
       border: none;
       border-radius: 5px;
       color: var(--color-grey-lightest);
@@ -91,11 +100,41 @@ const SideContent = styled.div`
       text-decoration: none;
 
       &:hover {
-        background-color: var(--color-grey-dark);
+        background-color: var(--color-grey-light);
       }
 
       p {
         margin: 0;
+      }
+    }
+  }
+
+  @media (max-width: 800px) {
+    background-color: var(--color-grey-normal);
+    flex-basis: unset;
+    margin-bottom: 20px;
+    margin-right: 0;
+
+    nav {
+      flex-direction: row;
+      height: 3rem;
+
+      a,
+      button {
+        align-items: center;
+        align-self: stretch;
+        background-color: unset;
+        border-radius: unset;
+        display: flex;
+        margin-bottom: 0;
+
+        p {
+          line-height: normal;
+        }
+
+        svg {
+          display: none;
+        }
       }
     }
   }
@@ -104,8 +143,13 @@ const SideContent = styled.div`
 const MainContent = styled.div`
   background: var(--color-grey-light);
   border-radius: 5px;
-  flex-basis: 750px;
+  flex-grow: 1;
   min-height: 600px;
   padding: 20px;
   position: relative;
+
+  @media (max-width: 800px) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
 `

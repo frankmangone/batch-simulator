@@ -33,6 +33,10 @@ const GlobalStyles = createGlobalStyle`
     margin-top: 30px;
     background-color: var(--color-grey-lighter);
     font-family: 'Mulish', sans-serif;
+
+    @media (max-width: 800px) {
+      margin-top: 0;
+    }
   }
 
   a, button {

@@ -16,6 +16,10 @@ const ReactorWrapper = styled.div`
   border-radius: 5px;
   height: 220px;
   margin-bottom: 40px;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `
 
 const ReactorInterior = styled.div`

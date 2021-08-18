@@ -120,7 +120,19 @@ export default CompoundCard
  */
 
 const CompoundCardWrapper = styled.li`
-  flex-basis: 33%;
+  flex-basis: 25%;
+
+  @media only screen and (max-width: 1200px) {
+    flex-basis: 33.3%;
+  }
+
+  @media only screen and (max-width: 960px) {
+    flex-basis: 50%;
+  }
+
+  @media only screen and (max-width: 520px) {
+    flex-basis: 100%;
+  }
 `
 
 const CompoundCardInner = styled.div`
@@ -152,7 +164,7 @@ const CompoundCardInner = styled.div`
     }
 
     & > .bullet {
-      transform: scale(25);
+      transform: scale(60);
       border-color: var(--color-grey-lighter);
     }
     & > .symbol-input:after {
