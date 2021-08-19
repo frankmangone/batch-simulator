@@ -8,7 +8,6 @@ import {
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 /* Components */
-import Button from "../Button"
 import EditModal from "../EditModal"
 import FieldInput from "../FieldInput"
 import Notice from "../Notice"
@@ -217,22 +216,13 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
                     ],
                 }
               })}
-              onSelectionChange={(index: number | undefined) =>
-                setSelectReactantIndex(index)
-              }
-            />
-            <Button
-              color="green"
-              onClick={() => {
-                if (selectReactantIndex !== undefined)
-                  addCompound(
-                    compounds[selectReactantIndex].id,
-                    CompoundType.Reactant
-                  )
+              onSelectionChange={(index: number | undefined) => {
+                if (index !== undefined) {
+                  addCompound(compounds[index].id, CompoundType.Reactant)
+                }
+                setSelectReactantIndex(undefined)
               }}
-            >
-              Add <FiPlus />
-            </Button>
+            />
           </AddCompound>
           <CompoundInputInner>
             {modalReaction.reactants.length !== 0 ? (
@@ -254,28 +244,26 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
           <AddCompound>
             <Select
               defaultDisplayValue="Compound..."
+              hoverIcon={<FiPlus />}
               initialValue={selectProductInitialValue}
-              selectOptions={compounds.map((compound, index) => ({
-                value: index,
-                displayText: compound.symbol,
-                collapsedDisplayText: compound.symbol,
-              }))}
-              onSelectionChange={(index: number | undefined) =>
-                setSelectProductIndex(index)
-              }
-            />
-            <Button
-              color="green"
-              onClick={() => {
-                if (selectProductIndex !== undefined)
-                  addCompound(
-                    compounds[selectProductIndex].id,
-                    CompoundType.Product
-                  )
+              selectOptions={compounds.map((compound, index) => {
+                return {
+                  value: index,
+                  displayText: compound.symbol,
+                  collapsedDisplayText: compound.symbol,
+                  hoverBackgroundColor:
+                    COMPOUND_COLORS[
+                      compound.color as keyof typeof COMPOUND_COLORS
+                    ],
+                }
+              })}
+              onSelectionChange={(index: number | undefined) => {
+                if (index !== undefined) {
+                  addCompound(compounds[index].id, CompoundType.Product)
+                }
+                setSelectProductIndex(undefined)
               }}
-            >
-              Add <FiPlus />
-            </Button>
+            />
           </AddCompound>
           <CompoundInputInner>
             {modalReaction.products.length !== 0 ? (
