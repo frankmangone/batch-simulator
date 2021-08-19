@@ -204,6 +204,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
           <AddCompound>
             <Select
               defaultDisplayValue="Compound..."
+              hoverIcon={<FiPlus />}
               initialValue={selectReactantInitialValue}
               selectOptions={compounds.map((compound, index) => {
                 return {

@@ -8,11 +8,12 @@ import { FiChevronDown } from "react-icons/fi"
 import { useEffect, useState, useRef, useCallback } from "react"
 
 interface ISelectProps<T> {
+  alignment?: string
   defaultDisplayValue?: string
+  hoverIcon?: JSX.Element
   initialValue?: ISelectOption<T>
   selectOptions: ISelectOption<T>[]
   onSelectionChange: (value?: T) => void
-  alignment?: string
 }
 
 interface ISelectOption<T> {
@@ -27,6 +28,7 @@ const Select = <T extends string | number>(props: ISelectProps<T>) => {
   const {
     alignment,
     defaultDisplayValue,
+    hoverIcon,
     initialValue,
     onSelectionChange,
     selectOptions,
@@ -140,6 +142,7 @@ const Select = <T extends string | number>(props: ISelectProps<T>) => {
               hoverBackgroundColor={hoverBackgroundColor}
             >
               <p>{displayText}</p>
+              <span>{hoverIcon}</span>
             </SelectOption>
           ))}
         </SelectOptions>
@@ -222,6 +225,7 @@ const SelectOption = styled.button<ISelectOptionProps>`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  display: flex;
   font-size: 1rem;
   text-align: left;
   padding-top: 0.5rem;
@@ -230,6 +234,10 @@ const SelectOption = styled.button<ISelectOptionProps>`
   &:hover {
     background-color: ${(props) =>
       props.hoverBackgroundColor || "var(--color-grey-lighter)"};
+
+    & > span {
+      opacity: 1;
+    }
   }
 
   & > p {
@@ -237,5 +245,13 @@ const SelectOption = styled.button<ISelectOptionProps>`
     overflow-x: hidden;
     text-overflow: ellipsis;
     margin: 0;
+    flex-grow: 1;
+  }
+
+  & > span {
+    display: inline-flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.15s linear;
   }
 `
