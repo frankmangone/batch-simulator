@@ -24,7 +24,7 @@ import ReactionKineticParameters from "./ReactionKineticParameters"
 import ReactionPreview from "./ReactionPreview"
 
 /* Hooks */
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useData } from "../../context/DataContext"
 
 /* Types */
@@ -58,6 +58,53 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const [selectProductIndex, setSelectProductIndex] = useState<
     number | undefined
   >(undefined)
+
+  /**
+   * Select options
+   */
+  const reactantOptions = useMemo(() => {
+    return compounds
+      .filter((compound) => {
+        for (const reactant of modalReaction.reactants) {
+          if (reactant.compoundId === compound.id) {
+            return false
+          }
+        }
+        return true
+      })
+      .map((compound) => {
+        const index = compounds.findIndex((c) => c.id === compound.id)
+        return {
+          value: index,
+          displayText: compound.symbol,
+          collapsedDisplayText: compound.symbol,
+          hoverBackgroundColor:
+            COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS],
+        }
+      })
+  }, [compounds, modalReaction.reactants])
+
+  const productOptions = useMemo(() => {
+    return compounds
+      .filter((compound) => {
+        for (const product of modalReaction.products) {
+          if (product.compoundId === compound.id) {
+            return false
+          }
+        }
+        return true
+      })
+      .map((compound) => {
+        const index = compounds.findIndex((c) => c.id === compound.id)
+        return {
+          value: index,
+          displayText: compound.symbol,
+          collapsedDisplayText: compound.symbol,
+          hoverBackgroundColor:
+            COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS],
+        }
+      })
+  }, [compounds, modalReaction.products])
 
   /**
    * Handle compound form updates
@@ -205,17 +252,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               defaultDisplayValue="Compound..."
               hoverIcon={<FiPlus />}
               initialValue={selectReactantInitialValue}
-              selectOptions={compounds.map((compound, index) => {
-                return {
-                  value: index,
-                  displayText: compound.symbol,
-                  collapsedDisplayText: compound.symbol,
-                  hoverBackgroundColor:
-                    COMPOUND_COLORS[
-                      compound.color as keyof typeof COMPOUND_COLORS
-                    ],
-                }
-              })}
+              selectOptions={reactantOptions}
               onSelectionChange={(index: number | undefined) => {
                 if (index !== undefined) {
                   addCompound(compounds[index].id, CompoundType.Reactant)
@@ -246,17 +283,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               defaultDisplayValue="Compound..."
               hoverIcon={<FiPlus />}
               initialValue={selectProductInitialValue}
-              selectOptions={compounds.map((compound, index) => {
-                return {
-                  value: index,
-                  displayText: compound.symbol,
-                  collapsedDisplayText: compound.symbol,
-                  hoverBackgroundColor:
-                    COMPOUND_COLORS[
-                      compound.color as keyof typeof COMPOUND_COLORS
-                    ],
-                }
-              })}
+              selectOptions={productOptions}
               onSelectionChange={(index: number | undefined) => {
                 if (index !== undefined) {
                   addCompound(compounds[index].id, CompoundType.Product)
