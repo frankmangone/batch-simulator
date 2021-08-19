@@ -82,7 +82,8 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS],
         }
       })
-  }, [compounds, modalReaction.reactants])
+    // eslint-disable-next-line
+  }, [modalReaction.reactants])
 
   const productOptions = useMemo(() => {
     return compounds
@@ -104,7 +105,8 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS],
         }
       })
-  }, [compounds, modalReaction.products])
+    // eslint-disable-next-line
+  }, [modalReaction.products])
 
   /**
    * Handle compound form updates
