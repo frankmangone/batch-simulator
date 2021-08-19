@@ -19,11 +19,11 @@ interface ISelectOption<T> {
   value?: T
   displayText?: string
   collapsedDisplayText?: string
+  hoverBackgroundColor?: string
 }
 
 /* Reusable custom select component */
 const Select = <T extends string | number>(props: ISelectProps<T>) => {
-  // Destructure props
   const {
     alignment,
     defaultDisplayValue,
@@ -131,12 +131,13 @@ const Select = <T extends string | number>(props: ISelectProps<T>) => {
               <p>{defaultDisplayValue}</p>
             </SelectOption>
           )}
-          {selectOptions.map(({ value, displayText }) => (
+          {selectOptions.map(({ value, displayText, hoverBackgroundColor }) => (
             <SelectOption
               key={value}
               onClick={() => {
                 selectValue(value)
               }}
+              hoverBackgroundColor={hoverBackgroundColor}
             >
               <p>{displayText}</p>
             </SelectOption>
@@ -213,7 +214,11 @@ const SelectOptions = styled.div<ISelectOptions>`
   z-index: 20;
 `
 
-const SelectOption = styled.button`
+interface ISelectOptionProps {
+  hoverBackgroundColor?: string
+}
+
+const SelectOption = styled.button<ISelectOptionProps>`
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -223,7 +228,8 @@ const SelectOption = styled.button`
   padding-bottom: 0.5rem;
 
   &:hover {
-    background-color: var(--color-grey-lighter);
+    background-color: ${(props) =>
+      props.hoverBackgroundColor || "var(--color-grey-lighter)"};
   }
 
   & > p {

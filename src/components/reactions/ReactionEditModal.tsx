@@ -5,6 +5,7 @@ import {
   KINETIC_MODELS,
   generateKineticConstants,
 } from "../../constants/kineticModels"
+import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 /* Components */
 import Button from "../Button"
@@ -204,11 +205,17 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
             <Select
               defaultDisplayValue="Compound..."
               initialValue={selectReactantInitialValue}
-              selectOptions={compounds.map((compound, index) => ({
-                value: index,
-                displayText: compound.symbol,
-                collapsedDisplayText: compound.symbol,
-              }))}
+              selectOptions={compounds.map((compound, index) => {
+                return {
+                  value: index,
+                  displayText: compound.symbol,
+                  collapsedDisplayText: compound.symbol,
+                  hoverBackgroundColor:
+                    COMPOUND_COLORS[
+                      compound.color as keyof typeof COMPOUND_COLORS
+                    ],
+                }
+              })}
               onSelectionChange={(index: number | undefined) =>
                 setSelectReactantIndex(index)
               }
