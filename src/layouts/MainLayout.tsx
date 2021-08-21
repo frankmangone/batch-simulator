@@ -13,7 +13,9 @@ const MainLayout: React.FC<IProps> = (props) => {
   return (
     <MainLayoutWrapper>
       <Sidebar />
-      <MainContent>{children}</MainContent>
+      <MainContentWrapper>
+        <MainContent>{children}</MainContent>
+      </MainContentWrapper>
     </MainLayoutWrapper>
   )
 }
@@ -22,13 +24,16 @@ export default MainLayout
 
 const MainLayoutWrapper = styled.div`
   height: 100vh;
-  background: var(--color-grey-light);
 `
 
-const MainContent = styled.div`
+const MainContentWrapper = styled.div`
+  background: var(--color-grey-light);
   flex-grow: 1;
   height: 100vh;
   margin-left: 90px;
-  padding: 20px;
   position: relative;
+  overflow: auto;
+`
+const MainContent = styled.div`
+  margin: 20px;
 `
