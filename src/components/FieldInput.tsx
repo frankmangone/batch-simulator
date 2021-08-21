@@ -3,6 +3,7 @@ import styled from "styled-components"
 /* Components */
 import Error from "./Error"
 import Input from "./Input"
+import InfoTooltip from "./InfoTooltip"
 
 /* Constants */
 import { COMPOUND_COLORS } from "../constants/compoundColors"
@@ -13,6 +14,7 @@ interface IFieldInputProps {
   fieldName: string
   label: string
   type?: string
+  tooltip?: string
   row?: boolean
   value: any
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
@@ -28,6 +30,7 @@ const FieldInput: React.FC<IFieldInputProps> = (props) => {
     label,
     row,
     type,
+    tooltip,
     value,
     onBlur,
     onChange,
@@ -37,7 +40,10 @@ const FieldInput: React.FC<IFieldInputProps> = (props) => {
 
   return (
     <FieldInputWrapper color={color} big={big} row={row}>
-      <label htmlFor={fieldName}>{label}</label>
+      <LabelWrapper>
+        <label htmlFor={fieldName}>{label}</label>
+        {tooltip && <InfoTooltip text={tooltip} />}
+      </LabelWrapper>
       <Input
         errors={!!error}
         name={fieldName}
@@ -87,8 +93,8 @@ const FieldInputWrapper = styled.div<IFieldInputWrapperProps>`
 
   label {
     ${(props) => (props.big ? "font-size: 1.5rem;" : "")}
-    margin-bottom: 0.5rem;
     font-weight: 600;
+    color: var(--color-grey-dark);
   }
 
   input {
@@ -108,4 +114,12 @@ const FieldInputWrapper = styled.div<IFieldInputWrapperProps>`
     opacity: 1 !important;
   }
 `
+
+const LabelWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0.5rem;
+`
+
 export default FieldInput
