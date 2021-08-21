@@ -30,7 +30,6 @@ const GlobalStyles = createGlobalStyle`
   
   body {
     margin: 0;
-    margin-top: 30px;
     background-color: var(--color-grey-lighter);
     font-family: 'Mulish', sans-serif;
 
