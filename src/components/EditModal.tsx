@@ -138,7 +138,6 @@ const CompoundEditModalInner = styled.div<IClosing>`
     border-radius: 5px;
     flex-grow: 1;
     min-width: 0;
-    margin-left: 1rem;
     padding: 0.5rem 1rem;
 
     &:hover,

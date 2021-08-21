@@ -13,19 +13,30 @@ interface IFieldInputProps {
   fieldName: string
   label: string
   type?: string
+  row?: boolean
   value: any
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const FieldInput: React.FC<IFieldInputProps> = (props) => {
-  const { big, color, error, fieldName, label, type, value, onBlur, onChange } =
-    props
+  const {
+    big,
+    color,
+    error,
+    fieldName,
+    label,
+    row,
+    type,
+    value,
+    onBlur,
+    onChange,
+  } = props
 
   const voidFunction = () => {}
 
   return (
-    <FieldInputWrapper color={color} big={big}>
+    <FieldInputWrapper color={color} big={big} row={row}>
       <label htmlFor={fieldName}>{label}</label>
       <Input
         errors={!!error}
@@ -44,12 +55,14 @@ const FieldInput: React.FC<IFieldInputProps> = (props) => {
 interface IFieldInputWrapperProps {
   color?: string
   big?: boolean
+  row?: boolean
 }
 
 const FieldInputWrapper = styled.div<IFieldInputWrapperProps>`
   display: flex;
-  align-items: center;
-  align-self: stretch;
+  flex-direction: ${(props) => (props.row ? "row" : "column")};
+  align-items: flex-start;
+  align-self: ${(props) => (props.row ? "unset" : "flex-start")};
   padding: 0.5rem;
   position: relative;
 
@@ -67,13 +80,15 @@ const FieldInputWrapper = styled.div<IFieldInputWrapperProps>`
     props.big
       ? `
     align-items: flex-start;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
     padding: 1rem;
   `
       : ""}
 
   label {
     ${(props) => (props.big ? "font-size: 1.5rem;" : "")}
+    margin-bottom: 0.5rem;
+    font-weight: 600;
   }
 
   input {
@@ -85,6 +100,8 @@ const FieldInputWrapper = styled.div<IFieldInputWrapperProps>`
     width: 0;
     `
         : "font-size: 1rem;"}
+    width: 300px;
+    align-self: stretch;
   }
 
   &:hover > .error {
