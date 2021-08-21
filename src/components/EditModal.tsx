@@ -40,20 +40,20 @@ const EditModal: React.FC<IEditModalProps> = (props) => {
   }, [closing])
 
   return (
-    <CompoundEditModalWrapper closing={closing}>
-      <CompoundEditModalInner closing={closing}>
+    <EditModalWrapper closing={closing}>
+      <EditModalInner closing={closing}>
         <CloseButton onClick={closeModal} closing={closing}>
           <FiX />
         </CloseButton>
         {children}
-      </CompoundEditModalInner>
-    </CompoundEditModalWrapper>
+      </EditModalInner>
+    </EditModalWrapper>
   )
 }
 
 export default EditModal
 
-const CompoundEditModalWrapper = styled.div<IClosing>`
+const EditModalWrapper = styled.div<IClosing>`
   position: absolute;
   top: 0;
   left: 0;
@@ -101,7 +101,7 @@ const CompoundEditModalWrapper = styled.div<IClosing>`
   }
 `
 
-const CompoundEditModalInner = styled.div<IClosing>`
+const EditModalInner = styled.div<IClosing>`
   align-self: stretch;
   animation-name: slide-in;
   animation-timing-function: ease-in-out;

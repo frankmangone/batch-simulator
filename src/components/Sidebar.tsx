@@ -1,11 +1,11 @@
 import styled from "styled-components"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 /* Components */
+import Button from "./Button"
 import { FiMenu, FiSliders, FiPlay } from "react-icons/fi"
 import { BiAtom, BiLineChart } from "react-icons/bi"
 import { AiOutlineExperiment } from "react-icons/ai"
-import Reactor from "../components/Reactor"
 
 /* Hooks */
 import useSimulate from "../hooks/useSimulate"
@@ -13,7 +13,7 @@ import { useData } from "../context/DataContext"
 import { useState } from "react"
 
 interface ISidebarLinkProps {
-  route: string
+  onClick: () => void
   title: string
   icon: JSX.Element
 }
@@ -35,13 +35,17 @@ const Sidebar: React.FC = () => {
     setExpanded(!expanded)
   }
 
+  const navigateTo = (route: string) => {
+    history.push(route)
+    setExpanded(false)
+  }
+
   const iconProps = {
     size: 25,
   }
 
   return (
     <SidebarWrapper expanded={expanded}>
-      {/* <Reactor /> */}
       <nav>
         <a href="/" onClick={expandMenu}>
           <SidebarLinkWrapper>
@@ -51,23 +55,23 @@ const Sidebar: React.FC = () => {
           </SidebarLinkWrapper>
         </a>
         <SidebarLink
-          route="/compounds"
+          onClick={() => navigateTo("/compounds")}
           title="Compounds"
           icon={<BiAtom {...iconProps} />}
         />
         <SidebarLink
-          route="/reactions"
+          onClick={() => navigateTo("/reactions")}
           title="Reactions"
           icon={<AiOutlineExperiment {...iconProps} />}
         />
         <SidebarLink
-          route="/operation"
+          onClick={() => navigateTo("/operation")}
           title="Operation"
           icon={<FiSliders {...iconProps} />}
         />
         {simulationResults && (
           <SidebarLink
-            route="/results"
+            onClick={() => navigateTo("/results")}
             title="Results"
             icon={<BiLineChart {...iconProps} />}
           />
@@ -87,15 +91,15 @@ const Sidebar: React.FC = () => {
 export default Sidebar
 
 const SidebarLink: React.FC<ISidebarLinkProps> = (props) => {
-  const { icon, route, title } = props
+  const { icon, onClick, title } = props
   return (
-    <Link to={route}>
+    <Button onClick={onClick}>
       <SidebarLinkWrapper>
         <IconWrapper>{icon}</IconWrapper>
         <p>{title}</p>
         {/* <FiChevronRight /> */}
       </SidebarLinkWrapper>
-    </Link>
+    </Button>
   )
 }
 
@@ -117,8 +121,12 @@ interface SidebarWrapperProps {
 }
 
 const SidebarWrapper = styled.div<SidebarWrapperProps>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
   height: 100%;
-  max-width: ${(props) => (props.expanded ? "250px" : "90px")};
+  max-width: ${(props) => (props.expanded ? "270px" : "90px")};
   flex-grow: 0;
   flex-shrink: 0;
   margin-right: 20px;
@@ -151,36 +159,6 @@ const SidebarWrapper = styled.div<SidebarWrapperProps>`
 
       p {
         margin: 0;
-      }
-    }
-  }
-
-  @media (max-width: 800px) {
-    background-color: var(--color-grey-normal);
-    flex-basis: unset;
-    margin-bottom: 20px;
-    margin-right: 0;
-
-    nav {
-      flex-direction: row;
-      height: 3rem;
-
-      a,
-      button {
-        align-items: center;
-        align-self: stretch;
-        background-color: unset;
-        border-radius: unset;
-        display: flex;
-        margin-bottom: 0;
-
-        p {
-          line-height: normal;
-        }
-
-        svg {
-          display: none;
-        }
       }
     }
   }

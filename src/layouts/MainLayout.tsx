@@ -21,25 +21,14 @@ const MainLayout: React.FC<IProps> = (props) => {
 export default MainLayout
 
 const MainLayoutWrapper = styled.div`
-  display: flex;
   height: 100vh;
-
-  @media (max-width: 800px) {
-    flex-direction: column;
-    margin: 0;
-  }
+  background: var(--color-grey-light);
 `
 
 const MainContent = styled.div`
-  background: var(--color-grey-light);
-  border-radius: 5px;
   flex-grow: 1;
-  min-height: 600px;
+  height: 100vh;
+  margin-left: 90px;
   padding: 20px;
   position: relative;
-
-  @media (max-width: 800px) {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
 `
