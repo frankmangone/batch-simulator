@@ -81,6 +81,7 @@ const Sidebar: React.FC = () => {
             <IconWrapper>
               <FiPlay {...iconProps} />
             </IconWrapper>
+            <p>Simulate</p>
           </SidebarLinkWrapper>
         </a>
       </nav>
