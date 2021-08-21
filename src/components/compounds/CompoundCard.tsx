@@ -8,7 +8,7 @@ import { FiEdit, FiTrash2 } from "react-icons/fi"
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 /* Hooks */
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 /* Helpers */
 import { validateNotEmpty } from "../../helpers/validators"
@@ -35,11 +35,11 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
   const [symbolInput, setSymbolInput] = useState<string>(compound.symbol)
 
   /* Reference to Reactor liquid to change color on hover */
-  const liquidRef = useRef<HTMLElement>()
+  // const liquidRef = useRef<HTMLElement>()
 
-  useEffect(() => {
-    liquidRef.current = document.getElementById("liquid") || undefined
-  }, [])
+  // useEffect(() => {
+  //   liquidRef.current = document.getElementById("liquid") || undefined
+  // }, [])
 
   /**
    * Update symbol input on compound update
@@ -77,15 +77,15 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
   return (
     <CompoundCardWrapper>
       <CompoundCardInner
-        onMouseEnter={() => {
-          // @ts-ignore
-          liquidRef.current.style.backgroundColor =
-            COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS]
-        }}
-        onMouseLeave={() => {
-          // @ts-ignore
-          liquidRef.current.style.backgroundColor = "hsl(213, 20%, 95%)"
-        }}
+      // onMouseEnter={() => {
+      //   // @ts-ignore
+      //   liquidRef.current.style.backgroundColor =
+      //     COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS]
+      // }}
+      // onMouseLeave={() => {
+      //   // @ts-ignore
+      //   liquidRef.current.style.backgroundColor = "hsl(213, 20%, 95%)"
+      // }}
       >
         <SymbolInput
           value={symbolInput}
