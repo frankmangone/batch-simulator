@@ -11,8 +11,10 @@ const InfoTooltip = (props: InfoTooltipProps) => {
     <>
       <Icon>
         <FiInfo color="hsl(213, 20%, 95%)" />
+        <InfoWrapper>
+          <Info>{text}</Info>
+        </InfoWrapper>
       </Icon>
-      <Info>{text}</Info>
     </>
   )
 }
@@ -30,22 +32,23 @@ const Icon = styled.div`
   margin-left: 1rem;
   color: var(--color-white);
   cursor: pointer;
-
-  &:hover + div {
+  position: relative;
+  &:hover > div > div {
     opacity: 1;
   }
 `
 
 const Info = styled.div`
+  position: relative;
   opacity: 0;
   transition: opacity 0.15s linear;
   padding: 0.5rem;
   background-color: var(--color-grey-normal);
   border-radius: 5px;
-  margin-left: 0.8rem;
+  margin-left: 1rem;
+  width: 180px;
   color: var(--color-grey-lightest);
   overflow: visible;
-  position: relative;
   filter: drop-shadow(0 1px 2px var(--color-grey-normal));
 
   &:before {
@@ -60,4 +63,11 @@ const Info = styled.div`
     border-bottom: 8px solid transparent;
     border-right: 8px solid var(--color-grey-normal);
   }
+`
+
+const InfoWrapper = styled.div`
+  position: absolute;
+  right: 0;
+  transform: translateX(102%);
+  pointer-events: none;
 `

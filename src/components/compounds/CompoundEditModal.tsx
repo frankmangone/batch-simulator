@@ -113,9 +113,9 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
 
         <FieldInput
           fieldName="concentration"
-          label="Concentration [mol/L]:"
+          label="Initial concentration [mol/L]:"
           error={formik.errors.concentration}
-          tooltip="This is a test tooltip"
+          tooltip="Concentration in the loaded mixture"
           type="number"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             formik.handleChange(event)
