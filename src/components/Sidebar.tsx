@@ -81,6 +81,7 @@ const Sidebar: React.FC = () => {
             <IconWrapper>
               <FiPlay {...iconProps} />
             </IconWrapper>
+            <p>Simulate</p>
           </SidebarLinkWrapper>
         </a>
       </nav>
@@ -125,19 +126,17 @@ const SidebarWrapper = styled.div<SidebarWrapperProps>`
   top: 0;
   left: 0;
   z-index: 20;
-  height: 100%;
+  height: 100vh;
   max-width: ${(props) => (props.expanded ? "270px" : "90px")};
   flex-grow: 0;
   flex-shrink: 0;
-  margin-right: 20px;
   transition: all 0.15s linear;
+  background-color: var(--color-grey-normal);
 
   nav {
-    padding: 1rem;
-    height: 100%;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
-    background-color: var(--color-grey-normal);
 
     a,
     button {
