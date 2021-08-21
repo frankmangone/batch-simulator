@@ -24,7 +24,7 @@ import ReactionKineticParameters from "./ReactionKineticParameters"
 import ReactionPreview from "./ReactionPreview"
 
 /* Hooks */
-import { useMemo, useState } from "react"
+import { useMemo, useState, useRef } from "react"
 import { useData } from "../../context/DataContext"
 
 /* Types */
@@ -50,6 +50,9 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const [modalReaction, setModalReaction] = useState<Reaction>(
     JSON.parse(JSON.stringify(reaction))
   )
+
+  /* Keep a reference to scrolled element */
+  const scrollRef = useRef(document.getElementById("scroll-target"))
 
   /* For the select input, both for reactants and products */
   const [selectReactantIndex, setSelectReactantIndex] = useState<
@@ -389,7 +392,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
         color="green"
         onClick={() => {
           updateReaction(reactionIndex, modalReaction)
-          window.scrollTo({ top: 0, behavior: "smooth" })
+          scrollRef?.current?.scrollTo({ top: 0, behavior: "smooth" })
           setClosing(true)
         }}
       >

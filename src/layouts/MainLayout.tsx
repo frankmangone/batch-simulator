@@ -13,7 +13,7 @@ const MainLayout: React.FC<IProps> = (props) => {
   return (
     <MainLayoutWrapper>
       <Sidebar />
-      <MainContentWrapper>
+      <MainContentWrapper id="scroll-target">
         <MainContent>{children}</MainContent>
       </MainContentWrapper>
     </MainLayoutWrapper>
@@ -32,7 +32,7 @@ const MainContentWrapper = styled.div`
   height: 100vh;
   margin-left: 90px;
   position: relative;
-  overflow: auto;
+  overflow-y: scroll;
 `
 const MainContent = styled.div`
   margin: 20px;
