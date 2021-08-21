@@ -2,7 +2,9 @@ import styled from "styled-components"
 import { Link, useHistory } from "react-router-dom"
 
 /* Components */
-import { FiChevronRight } from "react-icons/fi"
+import { FiChevronRight, FiSliders, FiPlay } from "react-icons/fi"
+import { BiAtom, BiLineChart } from "react-icons/bi"
+import { AiOutlineExperiment } from "react-icons/ai"
 import Reactor from "../components/Reactor"
 
 /* Hooks */
@@ -31,14 +33,26 @@ const MainLayout: React.FC<IProps> = (props) => {
       <SideContent>
         <Reactor />
         <nav>
-          <SidebarLink route="/compounds" title="Compounds" />
-          <SidebarLink route="/reactions" title="Reactions" />
-          <SidebarLink route="/operation" title="Operation" />
+          <SidebarLink route="/compounds" title="Compounds" icon={<BiAtom />} />
+          <SidebarLink
+            route="/reactions"
+            title="Reactions"
+            icon={<AiOutlineExperiment />}
+          />
+          <SidebarLink
+            route="/operation"
+            title="Operation"
+            icon={<FiSliders />}
+          />
           {simulationResults && (
-            <SidebarLink route="/results" title="Results" />
+            <SidebarLink
+              route="/results"
+              title="Results"
+              icon={<BiLineChart />}
+            />
           )}
           <a href="/" onClick={onSimulate}>
-            Simulate
+            <FiPlay /> Simulate
           </a>
         </nav>
       </SideContent>
@@ -52,12 +66,14 @@ export default MainLayout
 interface ISidebarLinkProps {
   route: string
   title: string
+  icon: JSX.Element
 }
 
 const SidebarLink: React.FC<ISidebarLinkProps> = (props) => {
-  const { route, title } = props
+  const { icon, route, title } = props
   return (
     <Link to={route}>
+      {icon}
       <p>{title}</p>
       <FiChevronRight />
     </Link>
