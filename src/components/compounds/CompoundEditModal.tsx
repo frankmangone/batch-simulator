@@ -1,3 +1,4 @@
+import styled from "styled-components"
 import { useFormik } from "formik"
 
 /* Components */
@@ -96,7 +97,7 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
       setClosing={setClosing}
       handleClose={closeModal}
     >
-      <form onSubmit={formik.handleSubmit}>
+      <Form onSubmit={formik.handleSubmit}>
         <FieldInput
           fieldName="symbol"
           label="Symbol:"
@@ -106,13 +107,15 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
           }}
           value={formik.values.symbol}
           color={compound.color}
+          row
           big
         />
 
         <FieldInput
           fieldName="concentration"
-          label="Concentration [mol/L]:"
+          label="Initial concentration [mol/L]:"
           error={formik.errors.concentration}
+          tooltip="Concentration in the loaded mixture"
           type="number"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             formik.handleChange(event)
@@ -144,9 +147,14 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
         <SubmitButton color="green" type="submit">
           Done
         </SubmitButton>
-      </form>
+      </Form>
     </EditModal>
   )
 }
 
 export default CompoundEditModal
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`

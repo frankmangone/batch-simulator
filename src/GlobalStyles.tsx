@@ -55,7 +55,6 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Mulish', sans-serif;
     min-width: 0;
     width: 0;
-    margin-left: 1rem;
     outline: none;
     padding: 0.5rem 1rem;
 

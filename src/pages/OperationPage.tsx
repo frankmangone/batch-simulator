@@ -82,6 +82,7 @@ const OperationPage: React.FC = () => {
             fieldName="deadTime"
             label="Dead time:"
             error={formik.errors.deadTime}
+            tooltip="Time needed for discharge, cleaning, etc."
             type="number"
             onBlur={() => {
               submit()
@@ -96,6 +97,7 @@ const OperationPage: React.FC = () => {
             fieldName="timeStep"
             label="Time step:"
             error={formik.errors.timeStep}
+            tooltip="Small time interval for numerical calculation purposes"
             type="number"
             onBlur={() => {
               submit()
