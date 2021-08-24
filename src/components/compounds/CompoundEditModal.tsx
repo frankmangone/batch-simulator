@@ -23,7 +23,7 @@ interface ICompoundEditModalProps {
 
 const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
   const { compound, closeModal } = props
-  const { compounds, updateCompound } = useData()
+  const { compounds, updateCompound, settings } = useData()
   const [closing, setClosing] = useState<boolean>(false)
   const compoundIndex = compounds.findIndex((comp) => comp.id === compound.id)
 
@@ -113,7 +113,7 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
 
         <FieldInput
           fieldName="concentration"
-          label="Initial concentration [mol/L]:"
+          label={`Initial concentration [${settings.molarUnits}/${settings.volumeUnits}]:`}
           error={formik.errors.concentration}
           tooltip="Concentration in the loaded mixture"
           type="number"
@@ -125,7 +125,7 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
 
         <FieldInput
           fieldName="molecularWeight"
-          label="Molecular Weight [g/mol]:"
+          label={`Molecular weight [${settings.massUnits}/${settings.molarUnits}]:`}
           error={formik.errors.molecularWeight}
           type="number"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
