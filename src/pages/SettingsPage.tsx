@@ -12,16 +12,16 @@ import { useData } from "../context/DataContext"
 import { useFormik } from "formik"
 
 /* Types */
-import { Operation, OperationErrors } from "../types/Operation"
+import { Settings, SettingsErrors } from "../types/Settings"
 
-const OperationPage: React.FC = () => {
-  const { operation, updateOperation } = useData()
+const SettingsPage: React.FC = () => {
+  const { settings, updateSettings } = useData()
 
   /**
    * Form validation function
    */
-  const validate = (values: Operation): OperationErrors => {
-    const errors: OperationErrors = {}
+  const validate = (values: Settings): SettingsErrors => {
+    const errors: SettingsErrors = {}
 
     /* Reaction time validation */
     if (!validateNotEmpty(values.reactionTime))
@@ -46,10 +46,10 @@ const OperationPage: React.FC = () => {
   }
 
   const formik = useFormik({
-    initialValues: { ...operation },
+    initialValues: { ...settings },
     validate,
     onSubmit: (values) => {
-      updateOperation(values)
+      updateSettings(values)
     },
   })
 
@@ -113,7 +113,7 @@ const OperationPage: React.FC = () => {
   )
 }
 
-export default OperationPage
+export default SettingsPage
 
 const InputSection = styled.div`
   display: flex;

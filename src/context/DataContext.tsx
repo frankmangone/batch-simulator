@@ -19,7 +19,7 @@ import useLocalStorageState from "../hooks/useLocalStorageState"
 
 /* Types */
 import { Compound } from "../types/Compound"
-import { Operation } from "../types/Operation"
+import { Settings } from "../types/Settings"
 import { Reaction, ReactionCompound } from "../types/Reaction"
 import { SimulationResults } from "../types/SimulationResults"
 import { FCWithChildren } from "../types/FCWithChildren"
@@ -52,16 +52,16 @@ interface IDefaultValue {
   editedReactionId: string | undefined
   serializeKineticEquation: (reaction: Reaction, index: number) => Token[]
 
-  /* Operation */
-  operation: Operation
-  updateOperation: (updatedOperation: Operation) => void
+  /* Settings */
+  settings: Settings
+  updateSettings: (updatedSettings: Settings) => void
 
   /* Simulation results */
   simulationResults: SimulationResults | undefined
   setSimulationResults: (simulationResults: SimulationResults) => void
 }
 
-const defaultOperationValue: Operation = {
+const defaultSettingsValue: Settings = {
   reactionTime: 30,
   deadTime: 30,
   timeStep: 0.1,
@@ -89,9 +89,9 @@ const defaultValue: IDefaultValue = {
     return []
   },
 
-  /* Operation */
-  operation: defaultOperationValue,
-  updateOperation: () => {},
+  /* Settings */
+  settings: defaultSettingsValue,
+  updateSettings: () => {},
 
   /* Simulation results */
   simulationResults: undefined,
@@ -121,10 +121,10 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
     "reactions",
     []
   ) as [Reaction[], Dispatch<SetStateAction<Reaction[]>>]
-  const [operation, setOperation] = useLocalStorageState<Operation>(
-    "operation",
-    defaultOperationValue
-  ) as [Operation, Dispatch<SetStateAction<Operation>>]
+  const [settings, setSettings] = useLocalStorageState<Settings>(
+    "settings",
+    defaultSettingsValue
+  ) as [Settings, Dispatch<SetStateAction<Settings>>]
 
   const [simulationResults, setSimulationResults] = useState<
     SimulationResults | undefined
@@ -361,10 +361,10 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
   }
 
   /**
-   * Operation state handling
+   * Settings state handling
    */
-  const updateOperation = (updatedOperation: Operation): void => {
-    setOperation(updatedOperation)
+  const updateSettings = (updatedSettings: Settings): void => {
+    setSettings(updatedSettings)
   }
 
   return (
@@ -388,9 +388,9 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
         editedReactionId,
         serializeKineticEquation,
 
-        /* Operation */
-        operation,
-        updateOperation,
+        /* Settings */
+        settings,
+        updateSettings,
 
         /* Simulation results */
         simulationResults,
