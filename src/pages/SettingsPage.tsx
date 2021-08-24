@@ -57,75 +57,130 @@ const SettingsPage: React.FC = () => {
     formik.handleSubmit()
   }
 
+  const onBlur = submit
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    formik.handleChange(event)
+
   return (
     <>
       <PageTitle>Operation</PageTitle>
 
-      <form>
+      <Form>
         <InputSection>
           <h2>Operating times</h2>
           <FieldInput
             fieldName="reactionTime"
             label="Reaction time:"
-            error={formik.errors.reactionTime}
             type="number"
-            onBlur={() => {
-              submit()
-            }}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              formik.handleChange(event)
-            }}
             value={formik.values.reactionTime}
+            error={formik.errors.reactionTime}
+            {...{ onBlur, onChange }}
           />
-
           <FieldInput
             fieldName="deadTime"
             label="Dead time:"
-            error={formik.errors.deadTime}
-            tooltip="Time needed for discharge, cleaning, etc."
             type="number"
-            onBlur={() => {
-              submit()
-            }}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              formik.handleChange(event)
-            }}
+            tooltip="Time needed for discharge, cleaning, etc."
             value={formik.values.deadTime}
+            error={formik.errors.deadTime}
+            {...{ onBlur, onChange }}
           />
-
           <FieldInput
             fieldName="timeStep"
             label="Time step:"
-            error={formik.errors.timeStep}
-            tooltip="Small time interval for numerical calculation purposes"
             type="number"
-            onBlur={() => {
-              submit()
-            }}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              formik.handleChange(event)
-            }}
+            tooltip="Small time interval for numerical calculation purposes"
             value={formik.values.timeStep}
+            error={formik.errors.timeStep}
+            {...{ onBlur, onChange }}
           />
         </InputSection>
-      </form>
+
+        <InputSection>
+          <h2>Units</h2>
+          <FieldInput
+            fieldName="timeUnits"
+            label="Time units:"
+            type="text"
+            value={formik.values.timeUnits}
+            error={formik.errors.timeUnits}
+            {...{ onBlur, onChange }}
+          />
+          <FieldInput
+            fieldName="volumeUnits"
+            label="Volume units:"
+            type="text"
+            value={formik.values.volumeUnits}
+            error={formik.errors.volumeUnits}
+            {...{ onBlur, onChange }}
+          />
+          <FieldInput
+            fieldName="molarUnits"
+            label="Molar units:"
+            type="text"
+            value={formik.values.molarUnits}
+            error={formik.errors.molarUnits}
+            {...{ onBlur, onChange }}
+          />
+          <FieldInput
+            fieldName="massUnits"
+            label="Mass units:"
+            type="text"
+            value={formik.values.massUnits}
+            error={formik.errors.massUnits}
+            {...{ onBlur, onChange }}
+          />
+        </InputSection>
+      </Form>
     </>
   )
 }
 
 export default SettingsPage
 
-const InputSection = styled.div`
+const Form = styled.form`
   display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+`
+
+const InputSection = ({
+  children,
+}: {
+  children: JSX.Element | JSX.Element[]
+}) => {
+  return (
+    <InputSectionWrapper>
+      <InputSectionInner>{children}</InputSectionInner>
+    </InputSectionWrapper>
+  )
+}
+
+const InputSectionWrapper = styled.div`
+  display: flex;
+  flex-basis: 50%;
+
+  @media only screen and (max-width: 940px) {
+    flex-basis: 100%;
+  }
+`
+
+const InputSectionInner = styled.div`
+  flex-grow: 1;
   background-color: var(--color-grey-lighter);
   border-radius: 5px;
   flex-direction: column;
-  margin-top: 2rem;
   padding: 1rem;
+  margin: 1rem;
+  margin-bottom: 0;
 
   h2 {
     color: var(--color-grey-normal);
     font-size: 1.2rem;
     margin-top: 0;
+  }
+
+  input {
+    width: auto;
   }
 `

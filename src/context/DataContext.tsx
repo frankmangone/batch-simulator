@@ -65,7 +65,13 @@ const defaultSettingsValue: Settings = {
   reactionTime: 30,
   deadTime: 30,
   timeStep: 0.1,
+  //
+  timeUnits: "s",
+  volumeUnits: "L",
+  molarUnits: "mol",
+  massUnits: "kg",
 }
+
 const defaultValue: IDefaultValue = {
   /* Compounds */
   compounds: [],
