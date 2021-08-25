@@ -2,11 +2,14 @@ import styled from "styled-components"
 
 /* Components */
 import ReactionParamInputCard from "./ReactionParamInputCard"
-import { SymbolComponent } from "../MathExpressions"
+import { Equation, SymbolComponent } from "../MathExpressions"
 
 /* Types */
 import { Compound } from "../../types/Compound"
 import { Reaction } from "../../types/Reaction"
+
+import { Token, TokenTypes } from "../../helpers/tokenization"
+import { useData } from "../../context/DataContext"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]
@@ -14,24 +17,70 @@ interface IReactionKineticParametersProps {
   updateKineticConstant: (key: string, value: number) => void
 }
 
+// const mu_units = <Equation></Equation>
+
 const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   props
 ) => {
   const { reaction, updateKineticConstant } = props
-  const { reactionConstant, ...compoundParams } = reaction.kineticConstants
+  const { settings } = useData()
+
+  const tokenizedMuUnits = [
+    new Token(TokenTypes.Parameter, `${settings.timeUnits}`),
+    new Token(TokenTypes.Operator, "^"),
+    new Token(TokenTypes.Parameter, `-1`),
+  ]
+
+  const globalOrder = Object.entries(reaction?.kineticConstants)
+    .map(([key, value]) => value)
+    .reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      -reaction?.kineticConstants.k || 0
+    )
+  const tokenizedKUnits = [
+    new Token(TokenTypes.Parameter, `${settings.timeUnits}`),
+    new Token(TokenTypes.Operator, "^"),
+    new Token(TokenTypes.Parameter, `-1`),
+  ]
+
+  if (globalOrder !== 1) {
+    tokenizedKUnits.push(new Token(TokenTypes.Operator, "*"))
+    tokenizedKUnits.push(
+      new Token(TokenTypes.Parameter, `${settings.volumeUnits}`)
+    )
+    tokenizedKUnits.push(new Token(TokenTypes.Operator, "^"))
+    tokenizedKUnits.push(new Token(TokenTypes.Parameter, `${globalOrder - 1}`))
+    tokenizedKUnits.push(new Token(TokenTypes.Operator, "*"))
+    tokenizedKUnits.push(
+      new Token(TokenTypes.Parameter, `${settings.molarUnits}`)
+    )
+    tokenizedKUnits.push(new Token(TokenTypes.Operator, "^"))
+    tokenizedKUnits.push(
+      new Token(TokenTypes.Parameter, `${-(globalOrder - 1)}`)
+    )
+  }
 
   return (
     <KineticParamsWrapper>
-      {Object.entries(compoundParams).map(([param, value]) => (
-        <ReactionParamInputCard
-          key={param}
-          paramSymbol={<SymbolComponent symbol={param} />}
-          value={value as number}
-          updateValue={(value: number) => {
-            updateKineticConstant(param, value)
-          }}
-        />
-      ))}
+      {Object.entries(reaction.kineticConstants).map(([param, value]) => {
+        let units = undefined
+        if (param === "k")
+          units = <Equation tokenizedEquation={tokenizedKUnits} />
+        if (param === "\\mu")
+          units = <Equation tokenizedEquation={tokenizedMuUnits} />
+
+        return (
+          <ReactionParamInputCard
+            key={param}
+            paramSymbol={<SymbolComponent symbol={param} />}
+            value={value as number}
+            units={units}
+            updateValue={(value: number) => {
+              updateKineticConstant(param, value)
+            }}
+          />
+        )
+      })}
     </KineticParamsWrapper>
   )
 }
