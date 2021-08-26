@@ -1,21 +1,19 @@
 import styled from "styled-components"
 import { FiInfo } from "react-icons/fi"
 interface InfoTooltipProps {
-  text: string
+  text: string | JSX.Element
 }
 
 const InfoTooltip = (props: InfoTooltipProps) => {
   const { text } = props
 
   return (
-    <>
-      <Icon>
-        <FiInfo color="hsl(213, 20%, 95%)" />
-        <InfoWrapper>
-          <Info>{text}</Info>
-        </InfoWrapper>
-      </Icon>
-    </>
+    <Icon>
+      <FiInfo color="hsl(213, 20%, 95%)" size={20} />
+      <InfoWrapper>
+        <Info>{text}</Info>
+      </InfoWrapper>
+    </Icon>
   )
 }
 
@@ -25,8 +23,8 @@ const Icon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background-color: var(--color-grey-normal);
   margin-left: 1rem;
@@ -46,10 +44,13 @@ const Info = styled.div`
   background-color: var(--color-grey-normal);
   border-radius: 5px;
   margin-left: 1rem;
-  width: 180px;
+  width: max-content;
+  max-width: 180px;
+  font-size: 1rem;
   color: var(--color-grey-lightest);
   overflow: visible;
   filter: drop-shadow(0 1px 2px var(--color-grey-normal));
+  display: flex;
 
   &:before {
     position: absolute;
@@ -67,6 +68,7 @@ const Info = styled.div`
 
 const InfoWrapper = styled.div`
   position: absolute;
+  display: flex;
   right: 0;
   transform: translateX(102%);
   pointer-events: none;

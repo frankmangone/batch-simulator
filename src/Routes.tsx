@@ -5,7 +5,7 @@ import { useData } from "./context/DataContext"
 
 /* Pages */
 import CompoundsPage from "./pages/CompoundsPage"
-import OperationPage from "./pages/OperationPage"
+import SettingsPage from "./pages/SettingsPage"
 import ReactionsPage from "./pages/ReactionsPage"
 import ResultsPage from "./pages/ResultsPage"
 
@@ -17,7 +17,7 @@ const Routes = () => {
       <Route path="/" exact component={CompoundsPage} />
       <Route path="/compounds" component={CompoundsPage} />
       <Route path="/reactions" component={ReactionsPage} />
-      <Route path="/operation" component={OperationPage} />
+      <Route path="/settings" component={SettingsPage} />
 
       {/* Redirect for deployed URL */}
       <Route path="/batch-simulator">

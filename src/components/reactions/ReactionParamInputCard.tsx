@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+/* Components */
+import InfoTooltip from "../InfoTooltip"
+
 /* Helpers */
 import { validateNotEmpty } from "../../helpers/validators"
 
@@ -8,6 +11,7 @@ import { useState } from "react"
 
 interface IReactionParamInputCardProps {
   paramSymbol: string | JSX.Element | JSX.Element[]
+  units?: JSX.Element
   value: number
   updateValue: (value: number) => void
 }
@@ -15,7 +19,7 @@ interface IReactionParamInputCardProps {
 const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
   props
 ) => {
-  const { paramSymbol, value, updateValue } = props
+  const { paramSymbol, value, units, updateValue } = props
   const [valueInput, setValueInput] = useState<number | "">(value)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +48,7 @@ const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
           onChange={handleChange}
           onBlur={validateAndUpdateConstant}
         />
+        {units && <InfoTooltip text={units} />}
       </ParamInputInner>
     </ParamInputWrapper>
   )
@@ -52,10 +57,17 @@ const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
 export default ReactionParamInputCard
 
 const ParamInputWrapper = styled.div`
-  flex-basis: 50%;
+  flex-basis: 25%;
+  position: relative;
+  z-index: 2;
+
+  &:hover {
+    z-index: 3;
+  }
 `
 
 const ParamInputInner = styled.div`
+  position: relative;
   align-items: center;
   background-color: var(--color-grey-light);
   border-radius: 5px;

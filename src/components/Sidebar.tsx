@@ -65,8 +65,8 @@ const Sidebar: React.FC = () => {
           icon={<AiOutlineExperiment {...iconProps} />}
         />
         <SidebarLink
-          onClick={() => navigateTo("/operation")}
-          title="Operation"
+          onClick={() => navigateTo("/settings")}
+          title="Settings"
           icon={<FiSliders {...iconProps} />}
         />
         {simulationResults && (
