@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+/* Components */
+import InfoTooltip from "../InfoTooltip"
+
 /* Helpers */
 import { validateNotEmpty } from "../../helpers/validators"
 
@@ -45,7 +48,7 @@ const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
           onChange={handleChange}
           onBlur={validateAndUpdateConstant}
         />
-        {units}
+        {units && <InfoTooltip text={units} />}
       </ParamInputInner>
     </ParamInputWrapper>
   )
@@ -55,9 +58,16 @@ export default ReactionParamInputCard
 
 const ParamInputWrapper = styled.div`
   flex-basis: 25%;
+  position: relative;
+  z-index: 2;
+
+  &:hover {
+    z-index: 3;
+  }
 `
 
 const ParamInputInner = styled.div`
+  position: relative;
   align-items: center;
   background-color: var(--color-grey-light);
   border-radius: 5px;
