@@ -20,10 +20,12 @@ const ReactionCard: React.FC<IReactionCardProps> = (props) => {
 
   return (
     <ReactionCardWrapper>
-      <ReactionNumber>
-        {reactionIndex + 1} {")"}
-      </ReactionNumber>
-      <ReactionPreview reaction={reaction} />
+      <ReactionInfo>
+        <ReactionName>
+          {`#${reactionIndex + 1}`} {reaction.name ? ` - ${reaction.name}` : ""}
+        </ReactionName>
+        <ReactionPreview reaction={reaction} />
+      </ReactionInfo>
       <CardButton onClick={editReaction}>
         <FiEdit />
       </CardButton>
@@ -83,11 +85,18 @@ const ReactionCardWrapper = styled.div`
   }
 `
 
-const ReactionNumber = styled.p`
+const ReactionName = styled.p`
   color: var(--color-grey-normal);
   flex-grow: 0;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  margin: 0 1rem 0 0;
-  padding: 0.6rem 0.5rem;
+  margin: 0;
+  padding-left: 0.6rem;
+  padding-bottom: 0.5rem;
+`
+
+const ReactionInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 `
