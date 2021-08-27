@@ -231,7 +231,11 @@ const explicitEulerStep = (
 
     // In explicit euler, this reaction rate is used with the time step to calculate the next
     // functional value. This should be generalized (TODO:)
-    newTimePoint[variable] = oldTimePoint[variable] + rateOfChange * timeStep
+    //
+    // Also, values should be zero or higher!
+    newTimePoint[variable] = nonNegative(
+      oldTimePoint[variable] + rateOfChange * timeStep
+    )
   })
 
   // Finally, push new TimePoint
@@ -308,4 +312,9 @@ const calculateReactionRate = (
   // After execution, we should be left with only one element in the stack, which
   // is the computation result
   return resultStack[0]
+}
+
+const nonNegative = (value: number) => {
+  if (value < 0) return 0
+  return value
 }
