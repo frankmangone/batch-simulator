@@ -3,7 +3,7 @@ import { useData } from "../context/DataContext"
 /* Types */
 import { TimePoint } from "../types/SimulationResults"
 
-interface Point {
+export interface Point {
   x: number
   y: number
 }

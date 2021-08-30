@@ -47,7 +47,7 @@ const ResultsPage: React.FC = () => {
           }
         />
       </SelectWrapper>
-      <Plot />
+      <Plot data={data} />
       <VictoryChart style={styles.container}>
         {/* Axis components */}
         <VictoryAxis
