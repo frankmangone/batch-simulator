@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { VictoryAxis, VictoryChart, VictoryLine } from "victory"
 import PageTitle from "../components/PageTitle"
 import Select from "../components/Select"
+import Plot from "../components/Plot"
 
 /* Constants */
 import { COMPOUND_COLORS } from "../constants/compoundColors"
@@ -46,6 +47,7 @@ const ResultsPage: React.FC = () => {
           }
         />
       </SelectWrapper>
+      <Plot />
       <VictoryChart style={styles.container}>
         {/* Axis components */}
         <VictoryAxis
