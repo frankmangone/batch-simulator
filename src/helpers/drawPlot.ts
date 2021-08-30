@@ -1,25 +1,50 @@
 import type { Point } from "../hooks/useGetData"
 
+interface Ticks {
+  tickDistance: number
+  totalTicks: number
+}
+
 const DISTANCE_FROM_CORNER = 30
 const AVERAGE_TICK_DISTANCE = 50
+
+interface DrawPlotParams {
+  canvas: HTMLCanvasElement
+  data: Point[]
+  color: string
+}
 
 /**
  * Main function to be exported an used in /components/Plot.tsx
  * @param canvas
  */
 
-export const drawPlot = (canvas: HTMLCanvasElement, data: Point[]) => {
+export const drawPlot = ({ canvas, data, color }: DrawPlotParams) => {
   const context = canvas.getContext("2d")
   if (!context) return
 
-  drawVerticalAxis(context, data)
+  context.clearRect(0, 0, context.canvas.width, context.canvas.height)
+
+  const yAxisTicks = getTicksYAxis({ height: context.canvas.height, data })
+
+  drawVerticalAxis(context, data, yAxisTicks)
   drawHorizontalAxis(context, data)
+  drawPlotCurve({
+    context,
+    data,
+    color,
+    yAxisTicks,
+  })
 }
 
 /**
  * Auxiliary draw functions
  */
-const drawVerticalAxis = (context: CanvasRenderingContext2D, data: Point[]) => {
+const drawVerticalAxis = (
+  context: CanvasRenderingContext2D,
+  data: Point[],
+  ticks: Ticks
+) => {
   const width = context.canvas.width
   const height = context.canvas.height
   const effectiveHeight = height - DISTANCE_FROM_CORNER * 2
@@ -29,14 +54,7 @@ const drawVerticalAxis = (context: CanvasRenderingContext2D, data: Point[]) => {
   context.lineTo(DISTANCE_FROM_CORNER, height - DISTANCE_FROM_CORNER)
   context.stroke()
 
-  // Ticks
-  // One tick *approximately* every AVERAGE_TICK_DISTANCE
-  const targetTicks = Math.floor(
-    (height - DISTANCE_FROM_CORNER) / AVERAGE_TICK_DISTANCE
-  )
-  const maxValue = maxFunctionalValue([data]) || 10
-  const tickDistance = getTickDistance(maxValue, targetTicks)
-  const totalTicks = Math.ceil(maxValue / tickDistance)
+  const { totalTicks, tickDistance } = ticks
 
   // Once we get the total ticks, it's time to draw them.
   // We use the entire canvas height for the ticks, so that the
@@ -82,9 +100,59 @@ const drawHorizontalAxis = (
   context.stroke()
 }
 
+interface DrawPlotCurveParams {
+  context: CanvasRenderingContext2D
+  data: Point[]
+  color: string
+  yAxisTicks: Ticks
+}
+
+const drawPlotCurve = (params: DrawPlotCurveParams) => {
+  const { color, context, data, yAxisTicks } = params
+  const maxTimeValue = data[data.length - 1].x
+  const maxYAxisValue = yAxisTicks.tickDistance * yAxisTicks.totalTicks
+
+  const plotAreaWidth = context.canvas.width - DISTANCE_FROM_CORNER * 2
+  const plotAreaHeight = context.canvas.height - DISTANCE_FROM_CORNER * 2
+
+  context.strokeStyle = color
+  context.beginPath()
+  for (let i = 1; i < data.length; i++) {
+    context.moveTo(
+      DISTANCE_FROM_CORNER + (plotAreaWidth * data[i - 1].x) / maxTimeValue,
+      DISTANCE_FROM_CORNER +
+        plotAreaHeight * (1 - data[i - 1].y / maxYAxisValue)
+    )
+    context.lineTo(
+      DISTANCE_FROM_CORNER + (plotAreaWidth * data[i].x) / maxTimeValue,
+      DISTANCE_FROM_CORNER + plotAreaHeight * (1 - data[i].y / maxYAxisValue)
+    )
+    context.stroke()
+  }
+}
+
 /**
  * Other auxiliary functions
  */
+
+interface GetTicksYAxisParams {
+  height: number
+  data: Point[]
+}
+
+// Gets total ticks and tick distance for y axis
+const getTicksYAxis = (params: GetTicksYAxisParams): Ticks => {
+  const { data, height } = params
+
+  const targetTicks = Math.floor(
+    (height - DISTANCE_FROM_CORNER) / AVERAGE_TICK_DISTANCE
+  )
+  const maxValue = maxFunctionalValue([data]) || 10
+  const tickDistance = getTickDistance(maxValue, targetTicks)
+  const totalTicks = Math.ceil(maxValue / tickDistance)
+
+  return { tickDistance, totalTicks }
+}
 
 // Gets max functional value to set axis values correctly
 const maxFunctionalValue = (data: Point[][]) => {

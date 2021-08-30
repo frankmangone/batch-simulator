@@ -5,10 +5,11 @@ import { drawPlot } from "../helpers/drawPlot"
 
 interface PlotProps {
   data: Point[]
+  color: string
 }
 
 const Plot = (props: PlotProps) => {
-  const { data } = props
+  const { color, data } = props
 
   // See this article for more reference:
   // https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258
@@ -22,16 +23,27 @@ const Plot = (props: PlotProps) => {
     setCanvasHeight(window.innerHeight - 80)
 
     // Re-draw plot
-    drawPlot(canvasRef.current as HTMLCanvasElement, data)
+    drawPlot({
+      canvas: canvasRef.current as HTMLCanvasElement,
+      data,
+      color,
+    })
+    // eslint-disable-next-line
   }, [data])
 
   useEffect(() => {
     // Event listener to set width and height of canvas programatically
     window.addEventListener("resize", resizeHandler)
-    drawPlot(canvasRef.current as HTMLCanvasElement, data)
+    drawPlot({
+      canvas: canvasRef.current as HTMLCanvasElement,
+      data,
+      color,
+    })
 
     // Cleanup for resize handler
     return () => window.removeEventListener("resize", resizeHandler)
+
+    // eslint-disable-next-line
   }, [resizeHandler, data])
 
   return <Canvas ref={canvasRef} height={canvasHeight} width={canvasWidth} />

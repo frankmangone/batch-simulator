@@ -47,7 +47,14 @@ const ResultsPage: React.FC = () => {
           }
         />
       </SelectWrapper>
-      <Plot data={data} />
+      <Plot
+        data={data}
+        color={
+          COMPOUND_COLORS[
+            selectedCompound.color as keyof typeof COMPOUND_COLORS
+          ]
+        }
+      />
       <VictoryChart style={styles.container}>
         {/* Axis components */}
         <VictoryAxis
