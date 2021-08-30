@@ -8,27 +8,28 @@ interface Ticks {
 const DISTANCE_FROM_CORNER = 30
 const AVERAGE_TICK_DISTANCE = 50
 
+/**
+ * Main function to be exported an used in /components/Plot.tsx
+ * @param canvas
+ */
+
 interface DrawPlotParams {
   canvas: HTMLCanvasElement
   data: Point[]
   color: string
 }
 
-/**
- * Main function to be exported an used in /components/Plot.tsx
- * @param canvas
- */
-
 export const drawPlot = ({ canvas, data, color }: DrawPlotParams) => {
   const context = canvas.getContext("2d")
   if (!context) return
 
   context.clearRect(0, 0, context.canvas.width, context.canvas.height)
+  context.lineWidth = 1
 
   const yAxisTicks = getTicksYAxis({ height: context.canvas.height, data })
 
-  drawVerticalAxis(context, data, yAxisTicks)
-  drawHorizontalAxis(context, data)
+  drawVerticalAxis({ context, ticks: yAxisTicks })
+  drawHorizontalAxis({ context, ticks: yAxisTicks }) // TODO: Change for x axis ticks
   drawPlotCurve({
     context,
     data,
@@ -40,19 +41,15 @@ export const drawPlot = ({ canvas, data, color }: DrawPlotParams) => {
 /**
  * Auxiliary draw functions
  */
-const drawVerticalAxis = (
-  context: CanvasRenderingContext2D,
-  data: Point[],
+interface DrawAxisParams {
+  context: CanvasRenderingContext2D
   ticks: Ticks
-) => {
+}
+
+const drawVerticalAxis = ({ context, ticks }: DrawAxisParams) => {
   const width = context.canvas.width
   const height = context.canvas.height
   const effectiveHeight = height - DISTANCE_FROM_CORNER * 2
-  context.strokeStyle = "hsl(213, 20%, 30%)"
-  context.beginPath()
-  context.moveTo(DISTANCE_FROM_CORNER, DISTANCE_FROM_CORNER)
-  context.lineTo(DISTANCE_FROM_CORNER, height - DISTANCE_FROM_CORNER)
-  context.stroke()
 
   const { totalTicks, tickDistance } = ticks
 
@@ -70,26 +67,30 @@ const drawVerticalAxis = (
     context.stroke()
 
     context.beginPath()
-    context.strokeStyle = "hsl(213, 20%, 75%)"
+    context.strokeStyle = "hsl(213, 20%, 85%)"
     context.moveTo(DISTANCE_FROM_CORNER, yPosition)
     context.lineTo(width - DISTANCE_FROM_CORNER, yPosition)
     context.stroke()
 
-    context.font = "20px Mulish"
-    context.fillStyle = "hsl(213, 20%, 75%)"
+    context.font = "16px Mulish"
+    context.fillStyle = "hsl(213, 20%, 80%)"
     context.textAlign = "right"
     context.fillText(
       formatTickValue(i * tickDistance),
       width - DISTANCE_FROM_CORNER,
-      yPosition + 20
+      yPosition + 18
     )
   }
+
+  // Draw actual axis line
+  context.strokeStyle = "hsl(213, 20%, 20%)"
+  context.beginPath()
+  context.moveTo(DISTANCE_FROM_CORNER, DISTANCE_FROM_CORNER)
+  context.lineTo(DISTANCE_FROM_CORNER, height - DISTANCE_FROM_CORNER)
+  context.stroke()
 }
 
-const drawHorizontalAxis = (
-  context: CanvasRenderingContext2D,
-  data: Point[]
-) => {
+const drawHorizontalAxis = ({ context, ticks }: DrawAxisParams) => {
   const height = context.canvas.height
   const width = context.canvas.width
 
@@ -115,20 +116,22 @@ const drawPlotCurve = (params: DrawPlotCurveParams) => {
   const plotAreaWidth = context.canvas.width - DISTANCE_FROM_CORNER * 2
   const plotAreaHeight = context.canvas.height - DISTANCE_FROM_CORNER * 2
 
-  context.strokeStyle = color
   context.beginPath()
+  const plotPath = new Path2D()
   for (let i = 1; i < data.length; i++) {
-    context.moveTo(
+    plotPath.moveTo(
       DISTANCE_FROM_CORNER + (plotAreaWidth * data[i - 1].x) / maxTimeValue,
       DISTANCE_FROM_CORNER +
         plotAreaHeight * (1 - data[i - 1].y / maxYAxisValue)
     )
-    context.lineTo(
+    plotPath.lineTo(
       DISTANCE_FROM_CORNER + (plotAreaWidth * data[i].x) / maxTimeValue,
       DISTANCE_FROM_CORNER + plotAreaHeight * (1 - data[i].y / maxYAxisValue)
     )
-    context.stroke()
   }
+  context.lineWidth = 4
+  context.strokeStyle = color
+  context.stroke(plotPath)
 }
 
 /**
