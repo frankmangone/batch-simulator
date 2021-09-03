@@ -4,12 +4,12 @@ import type { Point } from "../hooks/useGetData"
 import { drawPlot } from "../helpers/drawPlot"
 
 interface PlotProps {
-  data: Point[]
-  color: string
+  data: Point[][]
+  colors: string[]
 }
 
 const Plot = (props: PlotProps) => {
-  const { color, data } = props
+  const { colors, data } = props
 
   // See this article for more reference:
   // https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258
@@ -26,7 +26,7 @@ const Plot = (props: PlotProps) => {
     drawPlot({
       canvas: canvasRef.current as HTMLCanvasElement,
       data,
-      color,
+      colors,
     })
     // eslint-disable-next-line
   }, [data])
@@ -37,7 +37,7 @@ const Plot = (props: PlotProps) => {
     drawPlot({
       canvas: canvasRef.current as HTMLCanvasElement,
       data,
-      color,
+      colors,
     })
 
     // Cleanup for resize handler

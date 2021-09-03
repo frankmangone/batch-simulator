@@ -15,11 +15,11 @@ const AVERAGE_TICK_DISTANCE = 50
 
 interface DrawPlotParams {
   canvas: HTMLCanvasElement
-  data: Point[]
-  color: string
+  data: Point[][]
+  colors: string[]
 }
 
-export const drawPlot = ({ canvas, data, color }: DrawPlotParams) => {
+export const drawPlot = ({ canvas, data, colors }: DrawPlotParams) => {
   const context = canvas.getContext("2d")
   if (!context) return
 
@@ -33,7 +33,7 @@ export const drawPlot = ({ canvas, data, color }: DrawPlotParams) => {
   drawPlotCurve({
     context,
     data,
-    color,
+    colors,
     yAxisTicks,
   })
 }
@@ -103,35 +103,41 @@ const drawHorizontalAxis = ({ context, ticks }: DrawAxisParams) => {
 
 interface DrawPlotCurveParams {
   context: CanvasRenderingContext2D
-  data: Point[]
-  color: string
+  data: Point[][]
+  colors: string[]
   yAxisTicks: Ticks
 }
 
 const drawPlotCurve = (params: DrawPlotCurveParams) => {
-  const { color, context, data, yAxisTicks } = params
-  const maxTimeValue = data[data.length - 1].x
+  const { colors, context, data, yAxisTicks } = params
+  const maxTimeValue = data[0][data[0].length - 1].x
   const maxYAxisValue = yAxisTicks.tickDistance * yAxisTicks.totalTicks
 
   const plotAreaWidth = context.canvas.width - DISTANCE_FROM_CORNER * 2
   const plotAreaHeight = context.canvas.height - DISTANCE_FROM_CORNER * 2
 
-  context.beginPath()
-  const plotPath = new Path2D()
-  for (let i = 1; i < data.length; i++) {
-    plotPath.moveTo(
-      DISTANCE_FROM_CORNER + (plotAreaWidth * data[i - 1].x) / maxTimeValue,
-      DISTANCE_FROM_CORNER +
-        plotAreaHeight * (1 - data[i - 1].y / maxYAxisValue)
-    )
-    plotPath.lineTo(
-      DISTANCE_FROM_CORNER + (plotAreaWidth * data[i].x) / maxTimeValue,
-      DISTANCE_FROM_CORNER + plotAreaHeight * (1 - data[i].y / maxYAxisValue)
-    )
+  for (let j = 0; j < data.length; j++) {
+    context.beginPath()
+    const plotPath = new Path2D()
+    const points = data[j]
+    const color = colors[j]
+    console.log(points)
+    for (let i = 1; i < points.length; i++) {
+      plotPath.moveTo(
+        DISTANCE_FROM_CORNER + (plotAreaWidth * points[i - 1].x) / maxTimeValue,
+        DISTANCE_FROM_CORNER +
+          plotAreaHeight * (1 - points[i - 1].y / maxYAxisValue)
+      )
+      plotPath.lineTo(
+        DISTANCE_FROM_CORNER + (plotAreaWidth * points[i].x) / maxTimeValue,
+        DISTANCE_FROM_CORNER +
+          plotAreaHeight * (1 - points[i].y / maxYAxisValue)
+      )
+    }
+    context.lineWidth = 4
+    context.strokeStyle = color
+    context.stroke(plotPath)
   }
-  context.lineWidth = 4
-  context.strokeStyle = color
-  context.stroke(plotPath)
 }
 
 /**
@@ -140,7 +146,7 @@ const drawPlotCurve = (params: DrawPlotCurveParams) => {
 
 interface GetTicksYAxisParams {
   height: number
-  data: Point[]
+  data: Point[][]
 }
 
 // Gets total ticks and tick distance for y axis
@@ -150,7 +156,7 @@ const getTicksYAxis = (params: GetTicksYAxisParams): Ticks => {
   const targetTicks = Math.floor(
     (height - DISTANCE_FROM_CORNER) / AVERAGE_TICK_DISTANCE
   )
-  const maxValue = maxFunctionalValue([data]) || 10
+  const maxValue = maxFunctionalValue(data) || 10
   const tickDistance = getTickDistance(maxValue, targetTicks)
   const totalTicks = Math.ceil(maxValue / tickDistance)
 
