@@ -178,21 +178,33 @@ const maxFunctionalValue = (data: Point[][]) => {
 
 // Gets tick distance given a max value and a target tick amount
 const getTickDistance = (maxValue: number, targetTickAmount: number) => {
-  const rawDistance = maxValue / (targetTickAmount + 1)
+  const powerOfTen = getPowerOfTen(maxValue)
 
-  if (rawDistance > 1) {
-    let multiplier = 1
-    while (rawDistance / (multiplier * 10) > 1) {
-      multiplier = multiplier * 10
-    }
-    return Math.floor(rawDistance / multiplier) * multiplier
+  if (maxValue / 10 ** powerOfTen < 3) {
+    return 10 ** (powerOfTen - 1)
   }
+  return 10 ** powerOfTen
 
-  let multiplier = 0.1
-  while (rawDistance / (multiplier * 0.1) < 1) {
-    multiplier = multiplier * 0.1
-  }
-  return Math.floor(rawDistance / multiplier) * multiplier
+  // if (Math.ceil(maxValue / baseTickDistance) < targetTickAmount) {
+
+  // }
+
+  // while ()
+  // const rawDistance = maxValue / (targetTickAmount + 1)
+
+  // let multiplier = 1
+  // if (rawDistance > 1) {
+  //   while (rawDistance / (multiplier * 10) > 1) {
+  //     multiplier = multiplier * 10
+  //   }
+  // } else {
+  //   multiplier = 0.1
+  //   while (rawDistance / (multiplier * 0.1) < 1) {
+  //     multiplier = multiplier * 0.1
+  //   }
+  // }
+
+  // return Math.floor(rawDistance / multiplier) * multiplier
 }
 
 // Format tick value to 1 decimals and scientific notation if needed
@@ -211,15 +223,16 @@ const formatTickValue = (value: number) => {
 const getPowerOfTen = (value: number) => {
   let power = 0
 
-  if (value > 0) {
+  if (value > 1) {
     while (value / 10 ** power >= 10) {
       power++
     }
     return power
   }
 
-  while (value * 10 ** power <= 1) {
+  while (value * 10 ** power <= 0.1) {
     power++
   }
-  return -power
+  if (power === 0) return power
+  return power * -1
 }

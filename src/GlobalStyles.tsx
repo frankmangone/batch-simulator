@@ -21,6 +21,7 @@ const GlobalStyles = createGlobalStyle`
     --color-triadic-red-light: hsl(333,48%,85%);
     --color-triadic-red-lighter: hsl(333,48%,95%);
 
+    --color-grey-darker: hsl(213, 20%, 15%);
     --color-grey-dark: hsl(213, 20%, 30%);
     --color-grey-normal: hsl(213, 20%, 45%);
     --color-grey-light: hsl(213, 20%, 70%);

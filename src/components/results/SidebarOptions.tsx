@@ -45,7 +45,7 @@ const SidebarOptionsWrapper = styled.div<SidebarWrapperProps>`
   padding-top: 2rem;
   transform: ${(props) =>
     props.visible ? "translateX(0px)" : "translateX(300px)"};
-  background-color: var(--color-grey-lighter);
+  background-color: var(--color-grey-light);
   transition: all 0.15s ease-in-out;
   box-shadow: ${(props) =>
     props.visible ? "0 0 20px -5px var(--color-grey-normal)" : "unset"};

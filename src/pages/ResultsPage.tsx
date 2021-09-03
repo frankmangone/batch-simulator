@@ -2,8 +2,6 @@ import styled from "styled-components"
 
 /* Components */
 import PageTitle from "../components/PageTitle"
-import Select from "../components/Select"
-import Button from "../components/Button"
 import Plot from "../components/Plot"
 import SidebarOptions from "../components/results/SidebarOptions"
 
@@ -20,10 +18,7 @@ import type { Point } from "../hooks/useGetData"
 const ResultsPage: React.FC = () => {
   const { variableData } = useGetData()
   const { compounds } = useData()
-  const [selectedVariableIndex, setSelectedVariableIndex] = useState<number>(0)
-  const [selectedVariables, setSelectedVariables] = useState<number[]>([
-    0, 1, 2,
-  ])
+  const [selectedVariables, setSelectedVariables] = useState<number[]>([0])
   const [optionsVisible, setOptionsVisible] = useState<boolean>(false)
 
   const toggleOptionsVisible = () => setOptionsVisible(!optionsVisible)
@@ -46,31 +41,11 @@ const ResultsPage: React.FC = () => {
     return [data, colors]
     // eslint-disable-next-line
   }, [selectedVariables])
-  // const selectedCompound = compounds[selectedVariableIndex]
-  // const data = variableData(`[${selectedCompound.symbol}]`)
 
   return (
     <>
       <PageTitle>Results</PageTitle>
       <OptionsButton onClick={toggleOptionsVisible}>Options</OptionsButton>
-      {/* <SelectWrapper>
-        <p>Variable:</p>
-        <Select
-          initialValue={{
-            value: 0,
-            displayText: selectedCompound.symbol,
-            collapsedDisplayText: selectedCompound.symbol,
-          }}
-          selectOptions={compounds.map((compound, index) => ({
-            value: index,
-            displayText: compound.symbol,
-            collapsedDisplayText: compound.symbol,
-          }))}
-          onSelectionChange={(index) =>
-            setSelectedVariableIndex(index as number)
-          }
-        />
-      </SelectWrapper> */}
       <SidebarOptions
         {...{
           optionsVisible,
@@ -85,21 +60,6 @@ const ResultsPage: React.FC = () => {
 }
 
 export default ResultsPage
-
-const SelectWrapper = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 200px;
-  display: flex;
-  align-items: center;
-
-  p {
-    margin: 0;
-    margin-right: 1rem;
-    font-size: 1rem;
-  }
-`
 
 const OptionsButton = styled.button`
   float: right;
