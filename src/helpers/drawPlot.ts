@@ -110,7 +110,7 @@ interface DrawPlotCurveParams {
 
 const drawPlotCurve = (params: DrawPlotCurveParams) => {
   const { colors, context, data, yAxisTicks } = params
-  const maxTimeValue = data[0][data[0].length - 1].x
+  const maxTimeValue = data.length !== 0 ? data[0][data[0].length - 1]?.x : 10
   const maxYAxisValue = yAxisTicks.tickDistance * yAxisTicks.totalTicks
 
   const plotAreaWidth = context.canvas.width - DISTANCE_FROM_CORNER * 2
@@ -121,7 +121,6 @@ const drawPlotCurve = (params: DrawPlotCurveParams) => {
     const plotPath = new Path2D()
     const points = data[j]
     const color = colors[j]
-    console.log(points)
     for (let i = 1; i < points.length; i++) {
       plotPath.moveTo(
         DISTANCE_FROM_CORNER + (plotAreaWidth * points[i - 1].x) / maxTimeValue,
@@ -153,9 +152,8 @@ interface GetTicksYAxisParams {
 const getTicksYAxis = (params: GetTicksYAxisParams): Ticks => {
   const { data, height } = params
 
-  const targetTicks = Math.floor(
-    (height - DISTANCE_FROM_CORNER) / AVERAGE_TICK_DISTANCE
-  )
+  const targetTicks =
+    Math.floor((height - DISTANCE_FROM_CORNER) / AVERAGE_TICK_DISTANCE) || 10
   const maxValue = maxFunctionalValue(data) || 10
   const tickDistance = getTickDistance(maxValue, targetTicks)
   const totalTicks = Math.ceil(maxValue / tickDistance)
@@ -166,6 +164,8 @@ const getTicksYAxis = (params: GetTicksYAxisParams): Ticks => {
 // Gets max functional value to set axis values correctly
 const maxFunctionalValue = (data: Point[][]) => {
   const maxValuesForEachVariable: number[] = []
+
+  if (data.length === 0) return 10
 
   data.forEach((points: Point[]) => {
     maxValuesForEachVariable.push(

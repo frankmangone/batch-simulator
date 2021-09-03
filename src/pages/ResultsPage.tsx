@@ -75,6 +75,8 @@ const ResultsPage: React.FC = () => {
         {...{
           optionsVisible,
           toggleOptionsVisible,
+          selectedVariables,
+          setSelectedVariables,
         }}
       />
       <Plot data={data} colors={colors} />
