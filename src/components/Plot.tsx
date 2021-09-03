@@ -20,7 +20,7 @@ const Plot = (props: PlotProps) => {
 
   const resizeHandler = useCallback(() => {
     setCanvasWidth(window.innerWidth - 130)
-    setCanvasHeight(window.innerHeight - 80)
+    setCanvasHeight(window.innerHeight - 120)
 
     // Re-draw plot
     drawPlot({

@@ -31,6 +31,11 @@ const colorsBase = (color?: string) => {
         background-color: var(--color-triadic-green-normal);
         color: var(--color-grey-lightest);
       `
+    case "grey":
+      return `
+        background-color: var(--color-grey-normal);
+        color: var(--color-grey-lightest);
+      `
     default:
       return `
         background-color: var(--color-primary-dark);
@@ -44,6 +49,10 @@ const colorsHover = (color?: string) => {
     case "green":
       return `
         background-color: var(--color-triadic-green-dark);
+      `
+    case "grey":
+      return `
+        background-color: var(--color-grey-dark);
       `
     default:
       return `

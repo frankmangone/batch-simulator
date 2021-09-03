@@ -3,7 +3,9 @@ import styled from "styled-components"
 /* Components */
 import PageTitle from "../components/PageTitle"
 import Select from "../components/Select"
+import Button from "../components/Button"
 import Plot from "../components/Plot"
+import SidebarOptions from "../components/results/SidebarOptions"
 
 /* Constants */
 import { COMPOUND_COLORS } from "../constants/compoundColors"
@@ -17,6 +19,9 @@ const ResultsPage: React.FC = () => {
   const { variableData } = useGetData()
   const { compounds } = useData()
   const [selectedVariableIndex, setSelectedVariableIndex] = useState<number>(0)
+  const [optionsVisible, setOptionsVisible] = useState<boolean>(false)
+
+  const toggleOptionsVisible = () => setOptionsVisible(!optionsVisible)
 
   /* Derived state from selectedVariable */
   const selectedCompound = compounds[selectedVariableIndex]
@@ -25,7 +30,8 @@ const ResultsPage: React.FC = () => {
   return (
     <>
       <PageTitle>Results</PageTitle>
-      <SelectWrapper>
+      <OptionsButton>Options</OptionsButton>
+      {/* <SelectWrapper>
         <p>Variable:</p>
         <Select
           initialValue={{
@@ -42,7 +48,13 @@ const ResultsPage: React.FC = () => {
             setSelectedVariableIndex(index as number)
           }
         />
-      </SelectWrapper>
+      </SelectWrapper> */}
+      <SidebarOptions
+        {...{
+          optionsVisible,
+          toggleOptionsVisible,
+        }}
+      />
       <Plot
         data={data}
         color={
@@ -69,5 +81,19 @@ const SelectWrapper = styled.div`
     margin: 0;
     margin-right: 1rem;
     font-size: 1rem;
+  }
+`
+
+const OptionsButton = styled.button`
+  float: right;
+  margin-bottom: 0.5rem;
+  padding: 0.8rem;
+  background-color: var(--color-grey-lighter);
+  border: none;
+  font-size: 1rem;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: var(--color-grey-lightest);
   }
 `
