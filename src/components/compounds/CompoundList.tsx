@@ -3,6 +3,7 @@ import styled from "styled-components"
 /* Components */
 import CompoundCard from "./CompoundCard"
 import CompoundEditModal from "./CompoundEditModal"
+import NoResource from "../NoResource"
 
 /* Hooks */
 import { useData } from "../../context/DataContext"
@@ -16,8 +17,13 @@ interface ICompoundListProps {
 
 const CompoundList: React.FC<ICompoundListProps> = (props) => {
   const { compounds } = props
-  const { editedCompoundId, editCompound, findCompound, updateCompound, removeCompound } =
-    useData()
+  const {
+    editedCompoundId,
+    editCompound,
+    findCompound,
+    updateCompound,
+    removeCompound,
+  } = useData()
 
   const editedCompound = editedCompoundId
     ? findCompound(editedCompoundId)
@@ -25,6 +31,10 @@ const CompoundList: React.FC<ICompoundListProps> = (props) => {
 
   return (
     <CompoundListWrapper>
+      {compounds.length === 0 && (
+        <NoResource>No compounds added yet</NoResource>
+      )}
+
       {compounds.map((compound, index) => (
         <CompoundCard
           key={index}
