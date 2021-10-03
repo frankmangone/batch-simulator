@@ -41,6 +41,7 @@ interface IDefaultValue {
   findCompound: (id?: string) => Compound | undefined
   updateCompound: (index: number, updatedCompound: Compound) => void
   removeCompound: (index: number) => void
+  removeAllCompounds: () => void
   editedCompoundId: string | undefined
 
   /* Reactions */
@@ -49,6 +50,7 @@ interface IDefaultValue {
   editReaction: (index?: number) => void
   updateReaction: (index: number, updatedReaction: Reaction) => void
   removeReaction: (index: number) => void
+  removeAllReactions: () => void
   editedReactionId: string | undefined
   serializeKineticEquation: (reaction: Reaction, index: number) => Token[]
 
@@ -82,6 +84,7 @@ const defaultValue: IDefaultValue = {
   },
   updateCompound: () => {},
   removeCompound: () => {},
+  removeAllCompounds: () => {},
   editedCompoundId: undefined,
 
   /* Reactions */
@@ -90,6 +93,7 @@ const defaultValue: IDefaultValue = {
   editReaction: () => {},
   updateReaction: () => {},
   removeReaction: () => {},
+  removeAllReactions: () => {},
   editedReactionId: undefined,
   serializeKineticEquation: () => {
     return []
@@ -244,6 +248,11 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
     ])
   }
 
+  const removeAllCompounds = () => {
+    setReactions([])
+    setCompounds([])
+  }
+
   /**
    * Reactions state handling
    */
@@ -290,6 +299,10 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
       ...reactions.slice(0, index),
       ...reactions.slice(index + 1, reactions.length),
     ])
+  }
+
+  const removeAllReactions = () => {
+    setReactions([])
   }
 
   const serializeKineticEquation = (
@@ -383,6 +396,7 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
         findCompound,
         updateCompound,
         removeCompound,
+        removeAllCompounds,
         editedCompoundId,
 
         /* Reactions */
@@ -391,6 +405,7 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
         editReaction,
         updateReaction,
         removeReaction,
+        removeAllReactions,
         editedReactionId,
         serializeKineticEquation,
 

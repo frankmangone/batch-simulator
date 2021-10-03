@@ -16,7 +16,7 @@ const deleteButtonStyle = `
 `
 
 const ReactionsPage: React.FC = () => {
-  const { addReaction, editReaction } = useData()
+  const { addReaction, editReaction, removeAllReactions } = useData()
 
   useEffect(() => {
     return () => {
@@ -26,13 +26,24 @@ const ReactionsPage: React.FC = () => {
     // eslint-disable-next-line
   }, [])
 
+  const onRemoveAllReactions = () => {
+    const confirmation = window.confirm(
+      "Are you sure you want to delete all reactions?"
+    )
+    if (confirmation) removeAllReactions()
+  }
+
   return (
     <>
       <PageTitle>Reactions</PageTitle>
       <Button color="green" onClick={addReaction}>
         Add <FiPlus />
       </Button>
-      <Button color="red" buttonStyle={deleteButtonStyle}>
+      <Button
+        color="red"
+        buttonStyle={deleteButtonStyle}
+        onClick={onRemoveAllReactions}
+      >
         <FiTrash2 size={20} />
       </Button>
       <ReactionList />
