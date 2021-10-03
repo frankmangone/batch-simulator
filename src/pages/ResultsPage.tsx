@@ -1,114 +1,76 @@
 import styled from "styled-components"
 
 /* Components */
-import { VictoryAxis, VictoryChart, VictoryLine } from "victory"
 import PageTitle from "../components/PageTitle"
-import Select from "../components/Select"
+import Plot from "../components/Plot"
+import SidebarOptions from "../components/results/SidebarOptions"
 
 /* Constants */
 import { COMPOUND_COLORS } from "../constants/compoundColors"
 
-/* Helpers */
-import { lastElement } from "../helpers/array"
-
 /* Hooks */
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useData } from "../context/DataContext"
 import useGetData from "../hooks/useGetData"
 
+import type { Point } from "../hooks/useGetData"
+
 const ResultsPage: React.FC = () => {
-  const { variableData, maxFunctionalValue } = useGetData()
+  const { variableData } = useGetData()
   const { compounds } = useData()
-  const [selectedVariableIndex, setSelectedVariableIndex] = useState<number>(0)
+  const [selectedVariables, setSelectedVariables] = useState<number[]>([0])
+  const [optionsVisible, setOptionsVisible] = useState<boolean>(false)
+
+  const toggleOptionsVisible = () => setOptionsVisible(!optionsVisible)
 
   /* Derived state from selectedVariable */
-  const selectedCompound = compounds[selectedVariableIndex]
-  const data = variableData(`[${selectedCompound.symbol}]`)
+
+  const [data, colors] = useMemo(() => {
+    const data: Point[][] = []
+    const colors: string[] = []
+
+    selectedVariables.forEach((compoundIndex: number) => {
+      const selectedCompound = compounds[compoundIndex]
+      const compoundData: Point[] = variableData(`[${selectedCompound.symbol}]`)
+      data.push(compoundData)
+      colors.push(
+        COMPOUND_COLORS[selectedCompound.color as keyof typeof COMPOUND_COLORS]
+      )
+    })
+
+    return [data, colors]
+    // eslint-disable-next-line
+  }, [selectedVariables])
 
   return (
     <>
       <PageTitle>Results</PageTitle>
-      <SelectWrapper>
-        <p>Variable:</p>
-        <Select
-          initialValue={{
-            value: 0,
-            displayText: selectedCompound.symbol,
-            collapsedDisplayText: selectedCompound.symbol,
-          }}
-          selectOptions={compounds.map((compound, index) => ({
-            value: index,
-            displayText: compound.symbol,
-            collapsedDisplayText: compound.symbol,
-          }))}
-          onSelectionChange={(index) =>
-            setSelectedVariableIndex(index as number)
-          }
-        />
-      </SelectWrapper>
-      <VictoryChart style={styles.container}>
-        {/* Axis components */}
-        <VictoryAxis
-          crossAxis
-          domain={[0, lastElement(data).x]}
-          style={styles.axis}
-          standalone={false}
-        />
-        <VictoryAxis
-          dependentAxis
-          crossAxis
-          domain={[0, maxFunctionalValue([data]) * 1.02]}
-          style={styles.axis}
-          standalone={false}
-        />
-
-        {/* Line components */}
-        <VictoryLine
-          style={{
-            data: {
-              stroke:
-                COMPOUND_COLORS[
-                  selectedCompound.color as keyof typeof COMPOUND_COLORS
-                ],
-            },
-            parent: { border: "1px solid #ccc" },
-          }}
-          data={data}
-        />
-      </VictoryChart>
+      <OptionsButton onClick={toggleOptionsVisible}>Options</OptionsButton>
+      <SidebarOptions
+        {...{
+          optionsVisible,
+          toggleOptionsVisible,
+          selectedVariables,
+          setSelectedVariables,
+        }}
+      />
+      <Plot data={data} colors={colors} />
     </>
   )
 }
 
 export default ResultsPage
 
-const styles = {
-  container: {
-    parent: {
-      fontFamily: "'Mulish', sans-serif",
-      backgroundColor: "hsl(213, 20%, 95%)",
-      borderRadius: "5px",
-      height: "auto",
-    },
-  },
-  axis: {
-    axis: { fontFamily: "'Mulish', sans-serif" },
-    ticks: { size: 5, stroke: "black", strokeWidth: 1 },
-    tickLabels: { fontFamily: "inherit", fontSize: 10 },
-  },
-}
+const OptionsButton = styled.button`
+  float: right;
+  margin-bottom: 0.5rem;
+  padding: 0.8rem;
+  background-color: var(--color-grey-lighter);
+  border: none;
+  font-size: 1rem;
+  border-radius: 5px;
 
-const SelectWrapper = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 200px;
-  display: flex;
-  align-items: center;
-
-  p {
-    margin: 0;
-    margin-right: 1rem;
-    font-size: 1rem;
+  &:hover {
+    background-color: var(--color-grey-lightest);
   }
 `
