@@ -1,6 +1,7 @@
 /* Components */
 import ReactionCard from "./ReactionCard"
 import ReactionEditModal from "./ReactionEditModal"
+import NoResource from "../NoResource"
 
 /* Hooks */
 import { useData } from "../../context/DataContext"
@@ -27,6 +28,10 @@ const ReactionList: React.FC = () => {
 
   return (
     <>
+      {reactions.length === 0 && (
+        <NoResource>No reactions added yet</NoResource>
+      )}
+
       {reactions.map((reaction, index) => (
         <ReactionCard
           reaction={reaction}
