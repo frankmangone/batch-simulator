@@ -7,6 +7,7 @@ import NoResource from "../NoResource"
 
 /* Hooks */
 import { useData } from "../../context/DataContext"
+import { useState, useMemo } from "react"
 
 /* Types */
 import { Compound } from "../../types/Compound"
@@ -17,17 +18,19 @@ interface ICompoundListProps {
 
 const CompoundList: React.FC<ICompoundListProps> = (props) => {
   const { compounds } = props
-  const {
-    editedCompoundId,
-    editCompound,
-    findCompound,
-    updateCompound,
-    removeCompound,
-  } = useData()
+  const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
+    undefined
+  )
+  const editCompound = (id?: string) => setEditedCompoundId(id)
+  const { updateCompound, removeCompound } = useData()
 
-  const editedCompound = editedCompoundId
-    ? findCompound(editedCompoundId)
-    : undefined
+  const editedCompound = useMemo(
+    () =>
+      editedCompoundId
+        ? compounds.find((c) => c.id === editedCompoundId)
+        : undefined,
+    [compounds, editedCompoundId]
+  )
 
   return (
     <CompoundListWrapper>
@@ -40,7 +43,7 @@ const CompoundList: React.FC<ICompoundListProps> = (props) => {
           key={index}
           compound={compound}
           editCompound={(): void => {
-            editCompound(index)
+            editCompound(compound.id)
           }}
           updateCompound={(compound: Compound): void => {
             updateCompound(index, compound)

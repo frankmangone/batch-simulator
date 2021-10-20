@@ -9,7 +9,6 @@ import CompoundList from "../components/compounds/CompoundList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
 
 /* Hooks */
-import { useEffect } from "react"
 import { useData } from "../context/DataContext"
 
 /* Constants */
@@ -38,15 +37,7 @@ const CompoundsPage: React.FC = () => {
     dispatch(addCompound(newCompound))
   }
 
-  const { editCompound, removeAllCompounds } = useData()
-
-  useEffect(() => {
-    return () => {
-      /* Sets edited compound to undefined on dismount */
-      editCompound()
-    }
-    // eslint-disable-next-line
-  }, [])
+  const { removeAllCompounds } = useData()
 
   const onRemoveAllCompounds = () => {
     const confirmation = window.confirm(
