@@ -4,6 +4,7 @@ import ReactionEditModal from "./ReactionEditModal"
 import NoResource from "../NoResource"
 
 /* Hooks */
+import { useMemo, useState } from "react"
 import { useData } from "../../context/DataContext"
 import useCompounds from "../../hooks/useCompounds"
 import useReactions from "../../hooks/useReactions"
@@ -12,18 +13,21 @@ import useReactions from "../../hooks/useReactions"
 import { Reaction } from "../../types/Reaction"
 
 const ReactionList: React.FC = () => {
-  const { editedReactionId, editReaction, removeReaction } = useData()
-
+  const { removeReaction } = useData()
   const { compounds } = useCompounds()
   const { reactions } = useReactions()
+  const [editedReactionId, setEditedReactionId] = useState<string | undefined>(
+    undefined
+  )
 
-  const editedReactionIndex = editedReactionId
-    ? reactions.findIndex((reaction) => reaction.id === editedReactionId)
-    : undefined
-
-  const editedReaction = editedReactionId
-    ? reactions[editedReactionIndex as number]
-    : undefined
+  const editReaction = (id?: string) => setEditedReactionId(id)
+  const editedReaction = useMemo(
+    () =>
+      editedReactionId
+        ? reactions.find((r) => r.id === editedReactionId)
+        : undefined,
+    [reactions, editedReactionId]
+  )
 
   return (
     <>
@@ -36,7 +40,7 @@ const ReactionList: React.FC = () => {
           reaction={reaction}
           reactionIndex={index}
           editReaction={(): void => {
-            editReaction(index)
+            editReaction(reaction.id)
           }}
           removeReaction={(): void => {
             removeReaction(index)
