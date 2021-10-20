@@ -7,15 +7,12 @@ import {
 } from "react"
 import randomstring from "randomstring"
 
-/* Constants */
-import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
-import { COMPOUND_SYMBOLS } from "../constants/compoundSymbols"
-
 /* Helpers */
 import { Token, TokenTypes } from "../helpers/tokenization"
 
 /* Hooks */
 import useLocalStorageState from "../hooks/useLocalStorageState"
+import useCompounds from "../hooks/useCompounds"
 
 /* Types */
 import { Compound } from "../types/Compound"
@@ -34,16 +31,6 @@ export enum CompoundType {
 }
 
 interface IDefaultValue {
-  /* Compounds */
-  compounds: Compound[]
-  addCompound: () => void
-  editCompound: (index?: number) => void
-  findCompound: (id?: string) => Compound | undefined
-  updateCompound: (index: number, updatedCompound: Compound) => void
-  removeCompound: (index: number) => void
-  removeAllCompounds: () => void
-  editedCompoundId: string | undefined
-
   /* Reactions */
   reactions: Reaction[]
   addReaction: () => void
@@ -75,18 +62,6 @@ const defaultSettingsValue: Settings = {
 }
 
 const defaultValue: IDefaultValue = {
-  /* Compounds */
-  compounds: [],
-  addCompound: () => {},
-  editCompound: () => {},
-  findCompound: () => {
-    return undefined
-  },
-  updateCompound: () => {},
-  removeCompound: () => {},
-  removeAllCompounds: () => {},
-  editedCompoundId: undefined,
-
   /* Reactions */
   reactions: [],
   addReaction: () => {},
@@ -121,12 +96,9 @@ export const useData = () => {
  */
 export const DataStore: React.FC<FCWithChildren> = (props) => {
   const { children } = props
-  const [currentColor, setCurrentColor] = useState<number>(0)
+  // const [currentColor, setCurrentColor] = useState<number>(0)
+  const { findCompound } = useCompounds()
 
-  const [compounds, setCompounds] = useLocalStorageState<Compound[]>(
-    "compounds",
-    []
-  ) as [Compound[], Dispatch<SetStateAction<Compound[]>>]
   const [reactions, setReactions] = useLocalStorageState<Reaction[]>(
     "reactions",
     []
@@ -140,10 +112,6 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
     SimulationResults | undefined
   >(undefined)
 
-  // To keep track of edited elements:
-  const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
-    undefined
-  )
   const [editedReactionId, setEditedReactionId] = useState<string | undefined>(
     undefined
   )
@@ -152,106 +120,62 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
    * Helper functions
    */
 
-  const nextColor = () => {
-    if (currentColor === COMPOUND_COLORS_CODES.length - 1) {
-      setCurrentColor(0)
-      return
-    }
-    setCurrentColor(currentColor + 1)
-  }
+  // const nextColor = () => {
+  //   if (currentColor === COMPOUND_COLORS_CODES.length - 1) {
+  //     setCurrentColor(0)
+  //     return
+  //   }
+  //   setCurrentColor(currentColor + 1)
+  // }
 
-  const availableSymbol = (): string => {
-    const foundSymbols = new Array(COMPOUND_SYMBOLS.length).fill(false)
+  // const availableSymbol = (): string => {
+  //   const foundSymbols = new Array(COMPOUND_SYMBOLS.length).fill(false)
 
-    compounds.forEach((compound) => {
-      const index = COMPOUND_SYMBOLS.indexOf(compound.symbol)
-      if (index !== -1) foundSymbols[index] = true
-    })
-    for (let i = 0; i < foundSymbols.length; i++) {
-      if (!foundSymbols[i]) {
-        return COMPOUND_SYMBOLS[i]
-      }
-    }
-    return ""
-  }
+  //   compounds.forEach((compound) => {
+  //     const index = COMPOUND_SYMBOLS.indexOf(compound.symbol)
+  //     if (index !== -1) foundSymbols[index] = true
+  //   })
+  //   for (let i = 0; i < foundSymbols.length; i++) {
+  //     if (!foundSymbols[i]) {
+  //       return COMPOUND_SYMBOLS[i]
+  //     }
+  //   }
+  //   return ""
+  // }
 
-  /**
-   * Compounds state handling
-   */
-  const addCompound = (): void => {
-    const updatedCompounds = [...compounds]
+  // const removeCompound = (index: number): void => {
+  //   const compoundId = compounds[index].id
 
-    updatedCompounds.push({
-      id: randomstring.generate(8),
-      color: COMPOUND_COLORS_CODES[currentColor],
-      concentration: 0,
-      molecularWeight: 0,
-      symbol: availableSymbol(),
-      name: "",
-    })
-    nextColor()
+  //   /**
+  //    * Remove from reactions that have this compound
+  //    */
+  //   const updatedReactions = JSON.parse(JSON.stringify(reactions))
+  //   updatedReactions.forEach((reaction: Reaction) => {
+  //     reaction.reactants = reaction.reactants.filter(
+  //       (reactionCompound: ReactionCompound) =>
+  //         reactionCompound.compoundId !== compoundId
+  //     )
 
-    setCompounds(updatedCompounds)
-  }
+  //     reaction.products = reaction.products.filter(
+  //       (reactionCompound: ReactionCompound) =>
+  //         reactionCompound.compoundId !== compoundId
+  //     )
 
-  const findCompound = (id?: string): Compound | undefined => {
-    return compounds.find((compound) => compound.id === id)
-  }
+  //     if (reaction.keyCompound === compoundId) {
+  //       reaction.keyCompound = undefined
+  //     }
+  //   })
 
-  const editCompound = (index?: number): void => {
-    if (typeof index === "undefined") {
-      setEditedCompoundId(undefined)
-      return
-    }
-    const id = compounds[index].id
-    setEditedCompoundId(id)
-  }
+  //   setReactions(updatedReactions)
 
-  const updateCompound = (index: number, updatedCompound: Compound): void => {
-    const updatedCompounds = [...compounds]
-    updatedCompounds[index] = updatedCompound
-
-    setCompounds(updatedCompounds)
-  }
-
-  const removeCompound = (index: number): void => {
-    const compoundId = compounds[index].id
-
-    /**
-     * Remove from reactions that have this compound
-     */
-    const updatedReactions = JSON.parse(JSON.stringify(reactions))
-    updatedReactions.forEach((reaction: Reaction) => {
-      reaction.reactants = reaction.reactants.filter(
-        (reactionCompound: ReactionCompound) =>
-          reactionCompound.compoundId !== compoundId
-      )
-
-      reaction.products = reaction.products.filter(
-        (reactionCompound: ReactionCompound) =>
-          reactionCompound.compoundId !== compoundId
-      )
-
-      if (reaction.keyCompound === compoundId) {
-        reaction.keyCompound = undefined
-      }
-    })
-
-    setReactions(updatedReactions)
-
-    /**
-     * Remove from compounds array
-     */
-    setCompounds([
-      ...compounds.slice(0, index),
-      ...compounds.slice(index + 1, compounds.length),
-    ])
-  }
-
-  const removeAllCompounds = () => {
-    setReactions([])
-    setCompounds([])
-  }
+  //   /**
+  //    * Remove from compounds array
+  //    */
+  //   setCompounds([
+  //     ...compounds.slice(0, index),
+  //     ...compounds.slice(index + 1, compounds.length),
+  //   ])
+  // }
 
   /**
    * Reactions state handling
@@ -389,16 +313,6 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
   return (
     <DataContext.Provider
       value={{
-        /* Compounds */
-        compounds,
-        addCompound,
-        editCompound,
-        findCompound,
-        updateCompound,
-        removeCompound,
-        removeAllCompounds,
-        editedCompoundId,
-
         /* Reactions */
         reactions,
         addReaction,

@@ -9,7 +9,7 @@ import { FiArrowRight, FiPlus } from "react-icons/fi"
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 /* Hooks */
-import { useData } from "../../context/DataContext"
+import useCompounds from "../../hooks/useCompounds"
 
 /* Types */
 import { Compound } from "../../types/Compound"
@@ -21,7 +21,7 @@ interface IReactionPreviewProps {
 
 const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
   const { reaction } = props
-  const { findCompound } = useData()
+  const { findCompound } = useCompounds()
 
   return (
     <ReactionPreviewWrapper>

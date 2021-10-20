@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { Equation, Subindex } from "../MathExpressions"
 
 /* Hooks */
-import { useData } from "../../context/DataContext"
+import useCompounds from "../../hooks/useCompounds"
 
 /* Types */
 import { Reaction } from "../../types/Reaction"
@@ -16,7 +16,7 @@ interface IReactionEquationProps {
 
 const ReactionEquation: React.FC<IReactionEquationProps> = (props) => {
   const { reaction } = props
-  const { findCompound } = useData()
+  const { findCompound } = useCompounds()
 
   const keyCompound = findCompound(reaction.keyCompound)
   const keyCompoundSymbol: string | undefined = keyCompound?.symbol || undefined
