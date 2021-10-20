@@ -27,10 +27,18 @@ export const compoundsSlice = createSlice({
       if (index === -1) return state
       return [...state.slice(0, index), ...state.slice(index + 1, state.length)]
     },
+
+    removeAllCompounds: () => {
+      return []
+    },
   },
 })
 
-export const { addCompound, updateCompound, removeCompound } =
-  compoundsSlice.actions
+export const {
+  addCompound,
+  updateCompound,
+  removeCompound,
+  removeAllCompounds,
+} = compoundsSlice.actions
 
 export default compoundsSlice.reducer

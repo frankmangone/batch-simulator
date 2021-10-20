@@ -5,7 +5,6 @@ import CompoundList from "../components/compounds/CompoundList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
 
 /* Hooks */
-import { useData } from "../context/DataContext"
 import useCompounds from "../hooks/useCompounds"
 
 const deleteButtonStyle = `
@@ -16,10 +15,9 @@ const deleteButtonStyle = `
 `
 
 const CompoundsPage: React.FC = () => {
-  const { addCompound } = useCompounds()
-  const { removeAllCompounds } = useData()
+  const { addCompound, removeAllCompounds } = useCompounds()
 
-  const onRemoveAllCompounds = () => {
+  const handleAllCompounds = () => {
     const confirmation = window.confirm(
       "Are you sure you want to delete all compounds? This will also delete all reactions"
     )
@@ -35,7 +33,7 @@ const CompoundsPage: React.FC = () => {
       <Button
         color="red"
         buttonStyle={deleteButtonStyle}
-        onClick={onRemoveAllCompounds}
+        onClick={handleAllCompounds}
       >
         <FiTrash2 size={20} />
       </Button>

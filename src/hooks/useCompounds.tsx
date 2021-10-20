@@ -4,6 +4,7 @@ import {
   addCompound,
   updateCompound,
   removeCompound,
+  removeAllCompounds,
 } from "../features/compoundsSlice"
 
 /* Constants */
@@ -38,6 +39,11 @@ const useCompounds = () => {
     removeCompound: (id: string) => {
       // TODO: Dispatch update reactions!!
       dispatch(removeCompound({ id }))
+    },
+
+    removeAllCompounds: () => {
+      // TODO: Dispatch update reactions!!
+      dispatch(removeAllCompounds())
     },
   }
 }
