@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import type { Reaction } from "../types/Reaction"
+import type { ReactionCompound } from "../types/Reaction"
 
 type ReactionsState = Reaction[]
 const initialState: ReactionsState = []
@@ -21,7 +22,7 @@ export const reactionsSlice = createSlice({
       return [...state, action.payload]
     },
 
-    // updateCompound: (state, action: PayloadAction<UpdateCompoundPayload>) => {
+    // update: (state, action: PayloadAction<UpdateCompoundPayload>) => {
     //   const index = state.findIndex((c) => c.id === action.payload.id)
     //   if (index === -1) return state
     //   state[index] = action.payload.compound
@@ -34,7 +35,27 @@ export const reactionsSlice = createSlice({
     },
 
     removeCompound: (state, action: PayloadAction<RemoveCompoundPayload>) => {
-      //
+      /**
+       * Remove from reactions that have this compound
+       */
+      const compoundId = action.payload.id
+      state.forEach((reaction: Reaction) => {
+        reaction.reactants = reaction.reactants.filter(
+          (reactionCompound: ReactionCompound) =>
+            reactionCompound.compoundId !== compoundId
+        )
+
+        reaction.products = reaction.products.filter(
+          (reactionCompound: ReactionCompound) =>
+            reactionCompound.compoundId !== compoundId
+        )
+
+        if (reaction.keyCompound === compoundId) {
+          reaction.keyCompound = undefined
+        }
+      })
+
+      return state
     },
 
     // removeAllCompounds: () => {

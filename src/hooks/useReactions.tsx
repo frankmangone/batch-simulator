@@ -49,6 +49,10 @@ const useCompounds = () => {
     //   dispatch(updateCompound({ id, compound: updatedCompound }))
     // },
 
+    removeCompoundFromReactions: (compoundId: string): void => {
+      dispatch(removeCompound({ id: compoundId }))
+    },
+
     removeReaction: (id: string): void => {
       dispatch(remove({ id }))
     },

@@ -12,7 +12,7 @@ import { Compound } from "../types/Compound"
 const useCompounds = () => {
   const dispatch = useAppDispatch()
   const compounds = useAppSelector((state) => state.compounds)
-  const { resetReactions } = useReactions()
+  const { resetReactions, removeCompoundFromReactions } = useReactions()
 
   return {
     compounds,
@@ -38,7 +38,7 @@ const useCompounds = () => {
     },
 
     removeCompound: (id: string): void => {
-      // Remove from reactions that have the specified compound
+      removeCompoundFromReactions(id)
       dispatch(remove({ id }))
     },
 
