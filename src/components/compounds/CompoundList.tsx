@@ -7,22 +7,21 @@ import NoResource from "../NoResource"
 
 /* Hooks */
 import { useData } from "../../context/DataContext"
+import useCompounds from "../../hooks/useCompounds"
 import { useState, useMemo } from "react"
 
 /* Types */
 import { Compound } from "../../types/Compound"
 
-interface ICompoundListProps {
-  compounds: Compound[]
-}
+const CompoundList: React.FC = (props) => {
+  const { compounds, updateCompound } = useCompounds()
 
-const CompoundList: React.FC<ICompoundListProps> = (props) => {
-  const { compounds } = props
   const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
     undefined
   )
   const editCompound = (id?: string) => setEditedCompoundId(id)
-  const { updateCompound, removeCompound } = useData()
+
+  const { removeCompound } = useData()
 
   const editedCompound = useMemo(
     () =>
@@ -46,7 +45,7 @@ const CompoundList: React.FC<ICompoundListProps> = (props) => {
             editCompound(compound.id)
           }}
           updateCompound={(compound: Compound): void => {
-            updateCompound(index, compound)
+            updateCompound(compound.id, compound)
           }}
           removeCompound={(): void => {
             removeCompound(index)
