@@ -20,7 +20,7 @@ const useCompounds = () => {
   return {
     compounds,
 
-    addCompound: () => {
+    addCompound: (): void => {
       const newCompound = {
         id: randomstring.generate(8),
         color: COMPOUND_COLORS_CODES[0],
@@ -32,16 +32,20 @@ const useCompounds = () => {
       dispatch(addCompound(newCompound))
     },
 
-    updateCompound: (id: string, updatedCompound: Compound) => {
+    findCompound: (id?: string): Compound | undefined => {
+      return compounds.find((c) => c.id === id)
+    },
+
+    updateCompound: (id: string, updatedCompound: Compound): void => {
       dispatch(updateCompound({ id, compound: updatedCompound }))
     },
 
-    removeCompound: (id: string) => {
+    removeCompound: (id: string): void => {
       // TODO: Dispatch update reactions!!
       dispatch(removeCompound({ id }))
     },
 
-    removeAllCompounds: () => {
+    removeAllCompounds: (): void => {
       // TODO: Dispatch update reactions!!
       dispatch(removeAllCompounds())
     },
