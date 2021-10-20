@@ -6,6 +6,7 @@ import {
   removeCompound,
   removeAllCompounds,
 } from "../features/compoundsSlice"
+import useReactions from "./useReactions"
 
 /* Constants */
 import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
@@ -16,6 +17,7 @@ import { Compound } from "../types/Compound"
 const useCompounds = () => {
   const dispatch = useAppDispatch()
   const compounds = useAppSelector((state) => state.compounds)
+  const { resetReactions } = useReactions()
 
   return {
     compounds,
@@ -41,12 +43,12 @@ const useCompounds = () => {
     },
 
     removeCompound: (id: string): void => {
-      // TODO: Dispatch update reactions!!
+      // Remove from reactions that have the specified compound
       dispatch(removeCompound({ id }))
     },
 
     removeAllCompounds: (): void => {
-      // TODO: Dispatch update reactions!!
+      resetReactions()
       dispatch(removeAllCompounds())
     },
   }

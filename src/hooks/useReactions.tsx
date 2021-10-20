@@ -2,6 +2,7 @@ import randomstring from "randomstring"
 import { useAppDispatch, useAppSelector } from "./useStore"
 import {
   addReaction,
+  resetReactions,
   // updateReaction,
   removeReaction,
   // removeAllReactions,
@@ -19,6 +20,10 @@ const useCompounds = () => {
 
   return {
     reactions,
+
+    resetReactions: (): void => {
+      dispatch(resetReactions())
+    },
 
     addReaction: (): void => {
       const newReaction = {
