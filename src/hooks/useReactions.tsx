@@ -1,10 +1,11 @@
 import randomstring from "randomstring"
 import { useAppDispatch, useAppSelector } from "./useStore"
 import {
-  addReaction,
-  resetReactions,
+  add,
+  reset,
   // updateReaction,
-  removeReaction,
+  remove,
+  removeCompound,
   // removeAllReactions,
 } from "../features/reactionsSlice"
 
@@ -22,7 +23,7 @@ const useCompounds = () => {
     reactions,
 
     resetReactions: (): void => {
-      dispatch(resetReactions())
+      dispatch(reset())
     },
 
     addReaction: (): void => {
@@ -37,7 +38,7 @@ const useCompounds = () => {
         },
         kineticEquation: [new Token(TokenTypes.Parameter, "<k>")],
       }
-      dispatch(addReaction(newReaction))
+      dispatch(add(newReaction))
     },
 
     // findCompound: (id?: string): Compound | undefined => {
@@ -49,7 +50,7 @@ const useCompounds = () => {
     // },
 
     removeReaction: (id: string): void => {
-      dispatch(removeReaction({ id }))
+      dispatch(remove({ id }))
     },
 
     // removeAllCompounds: (): void => {

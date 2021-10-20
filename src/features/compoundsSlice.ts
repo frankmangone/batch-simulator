@@ -4,41 +4,36 @@ import type { Compound } from "../types/Compound"
 type CompoundsState = Compound[]
 const initialState: CompoundsState = []
 
-type AddCompoundPayload = Compound
-type UpdateCompoundPayload = { id: string; compound: Compound }
-type RemoveCompoundPayload = { id: string }
+type AddPayload = Compound
+type UpdatePayload = { id: string; compound: Compound }
+type RemovePayload = { id: string }
 
 export const compoundsSlice = createSlice({
   name: "compounds",
   initialState,
   reducers: {
-    addCompound: (state, action: PayloadAction<AddCompoundPayload>) => {
+    add: (state, action: PayloadAction<AddPayload>) => {
       return [...state, action.payload]
     },
 
-    updateCompound: (state, action: PayloadAction<UpdateCompoundPayload>) => {
+    update: (state, action: PayloadAction<UpdatePayload>) => {
       const index = state.findIndex((c) => c.id === action.payload.id)
       if (index === -1) return state
       state[index] = action.payload.compound
     },
 
-    removeCompound: (state, action: PayloadAction<RemoveCompoundPayload>) => {
+    remove: (state, action: PayloadAction<RemovePayload>) => {
       const index = state.findIndex((c) => c.id === action.payload.id)
       if (index === -1) return state
       return [...state.slice(0, index), ...state.slice(index + 1, state.length)]
     },
 
-    removeAllCompounds: () => {
+    reset: () => {
       return []
     },
   },
 })
 
-export const {
-  addCompound,
-  updateCompound,
-  removeCompound,
-  removeAllCompounds,
-} = compoundsSlice.actions
+export const { add, update, remove, reset } = compoundsSlice.actions
 
 export default compoundsSlice.reducer

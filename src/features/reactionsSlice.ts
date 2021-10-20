@@ -4,20 +4,20 @@ import type { Reaction } from "../types/Reaction"
 type ReactionsState = Reaction[]
 const initialState: ReactionsState = []
 
-type AddReactionPayload = Reaction
-type UpdateReactionPayload = { id: string; reaction: Reaction }
-type RemoveReactionPayload = { id: string }
+type AddPayload = Reaction
+type UpdatePayload = { id: string; reaction: Reaction }
+type RemovePayload = { id: string }
 type RemoveCompoundPayload = { id: string }
 
 export const reactionsSlice = createSlice({
   name: "reactions",
   initialState,
   reducers: {
-    resetReactions: (state) => {
+    reset: (state) => {
       return []
     },
 
-    addReaction: (state, action: PayloadAction<AddReactionPayload>) => {
+    add: (state, action: PayloadAction<AddPayload>) => {
       return [...state, action.payload]
     },
 
@@ -27,16 +27,13 @@ export const reactionsSlice = createSlice({
     //   state[index] = action.payload.compound
     // },
 
-    removeReaction: (state, action: PayloadAction<RemoveReactionPayload>) => {
+    remove: (state, action: PayloadAction<RemovePayload>) => {
       const index = state.findIndex((r) => r.id === action.payload.id)
       if (index === -1) return state
       return [...state.slice(0, index), ...state.slice(index + 1, state.length)]
     },
 
-    removeCompoundFromReactions: (
-      state,
-      action: PayloadAction<RemoveCompoundPayload>
-    ) => {
+    removeCompound: (state, action: PayloadAction<RemoveCompoundPayload>) => {
       //
     },
 
@@ -47,10 +44,11 @@ export const reactionsSlice = createSlice({
 })
 
 export const {
-  resetReactions,
-  addReaction,
+  reset,
+  add,
   // updateCompound,
-  removeReaction,
+  remove,
+  removeCompound,
   // removeAllCompounds,
 } = reactionsSlice.actions
 

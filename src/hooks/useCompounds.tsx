@@ -1,11 +1,6 @@
 import randomstring from "randomstring"
 import { useAppDispatch, useAppSelector } from "./useStore"
-import {
-  addCompound,
-  updateCompound,
-  removeCompound,
-  removeAllCompounds,
-} from "../features/compoundsSlice"
+import { add, update, remove, reset } from "../features/compoundsSlice"
 import useReactions from "./useReactions"
 
 /* Constants */
@@ -31,7 +26,7 @@ const useCompounds = () => {
         symbol: "A",
         name: "",
       }
-      dispatch(addCompound(newCompound))
+      dispatch(add(newCompound))
     },
 
     findCompound: (id?: string): Compound | undefined => {
@@ -39,17 +34,17 @@ const useCompounds = () => {
     },
 
     updateCompound: (id: string, updatedCompound: Compound): void => {
-      dispatch(updateCompound({ id, compound: updatedCompound }))
+      dispatch(update({ id, compound: updatedCompound }))
     },
 
     removeCompound: (id: string): void => {
       // Remove from reactions that have the specified compound
-      dispatch(removeCompound({ id }))
+      dispatch(remove({ id }))
     },
 
     removeAllCompounds: (): void => {
       resetReactions()
-      dispatch(removeAllCompounds())
+      dispatch(reset())
     },
   }
 }
