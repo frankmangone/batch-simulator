@@ -22,11 +22,11 @@ export const reactionsSlice = createSlice({
       return [...state, action.payload]
     },
 
-    // update: (state, action: PayloadAction<UpdateCompoundPayload>) => {
-    //   const index = state.findIndex((c) => c.id === action.payload.id)
-    //   if (index === -1) return state
-    //   state[index] = action.payload.compound
-    // },
+    update: (state, action: PayloadAction<UpdatePayload>) => {
+      const index = state.findIndex((r) => r.id === action.payload.id)
+      if (index === -1) return state
+      state[index] = action.payload.reaction
+    },
 
     remove: (state, action: PayloadAction<RemovePayload>) => {
       const index = state.findIndex((r) => r.id === action.payload.id)
@@ -57,20 +57,10 @@ export const reactionsSlice = createSlice({
 
       return state
     },
-
-    // removeAllCompounds: () => {
-    //   return []
-    // },
   },
 })
 
-export const {
-  reset,
-  add,
-  // updateCompound,
-  remove,
-  removeCompound,
-  // removeAllCompounds,
-} = reactionsSlice.actions
+export const { reset, add, update, remove, removeCompound } =
+  reactionsSlice.actions
 
 export default reactionsSlice.reducer

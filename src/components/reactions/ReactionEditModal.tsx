@@ -27,6 +27,7 @@ import ReactionPreview from "./ReactionPreview"
 import { useMemo, useState, useRef } from "react"
 import { useData } from "../../context/DataContext"
 import useCompounds from "../../hooks/useCompounds"
+import useReactions from "../../hooks/useReactions"
 
 /* Types */
 import { Compound } from "../../types/Compound"
@@ -42,7 +43,8 @@ interface IReactionEditModalProps {
 const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const { compounds, reaction, closeModal } = props
   const { findCompound } = useCompounds()
-  const { reactions, serializeKineticEquation, updateReaction } = useData()
+  const { reactions, updateReaction } = useReactions()
+  const { serializeKineticEquation } = useData()
   const [closing, setClosing] = useState<boolean>(false)
   const reactionIndex = reactions.findIndex((rea) => rea.id === reaction.id)
   /**
@@ -392,7 +394,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
       <SubmitButton
         color="green"
         onClick={() => {
-          updateReaction(reactionIndex, modalReaction)
+          updateReaction(reaction.id, modalReaction)
           scrollRef?.current?.scrollTo({ top: 0, behavior: "smooth" })
           setClosing(true)
         }}

@@ -3,10 +3,9 @@ import { useAppDispatch, useAppSelector } from "./useStore"
 import {
   add,
   reset,
-  // updateReaction,
+  update,
   remove,
   removeCompound,
-  // removeAllReactions,
 } from "../features/reactionsSlice"
 
 /* Helpers */
@@ -45,9 +44,9 @@ const useCompounds = () => {
     //   return compounds.find((c) => c.id === id)
     // },
 
-    // updateCompound: (id: string, updatedCompound: Compound): void => {
-    //   dispatch(updateCompound({ id, compound: updatedCompound }))
-    // },
+    updateReaction: (id: string, updatedReaction: Reaction): void => {
+      dispatch(update({ id, reaction: updatedReaction }))
+    },
 
     removeCompoundFromReactions: (compoundId: string): void => {
       dispatch(removeCompound({ id: compoundId }))
@@ -56,11 +55,6 @@ const useCompounds = () => {
     removeReaction: (id: string): void => {
       dispatch(remove({ id }))
     },
-
-    // removeAllCompounds: (): void => {
-    //   // TODO: Dispatch update reactions!!
-    //   dispatch(removeAllCompounds())
-    // },
   }
 }
 
