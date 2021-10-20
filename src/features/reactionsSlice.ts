@@ -6,7 +6,7 @@ const initialState: ReactionsState = []
 
 type AddReactionPayload = Reaction
 type UpdateReactionPayload = { id: string; reaction: Reaction }
-type RemoveCompoundPayload = { id: string }
+type RemoveReactionPayload = { id: string }
 
 export const reactionsSlice = createSlice({
   name: "reactions",
@@ -22,11 +22,11 @@ export const reactionsSlice = createSlice({
     //   state[index] = action.payload.compound
     // },
 
-    // removeCompound: (state, action: PayloadAction<RemoveCompoundPayload>) => {
-    //   const index = state.findIndex((c) => c.id === action.payload.id)
-    //   if (index === -1) return state
-    //   return [...state.slice(0, index), ...state.slice(index + 1, state.length)]
-    // },
+    removeReaction: (state, action: PayloadAction<RemoveReactionPayload>) => {
+      const index = state.findIndex((r) => r.id === action.payload.id)
+      if (index === -1) return state
+      return [...state.slice(0, index), ...state.slice(index + 1, state.length)]
+    },
 
     // removeAllCompounds: () => {
     //   return []
@@ -37,7 +37,7 @@ export const reactionsSlice = createSlice({
 export const {
   addReaction,
   // updateCompound,
-  // removeCompound,
+  removeReaction,
   // removeAllCompounds,
 } = reactionsSlice.actions
 

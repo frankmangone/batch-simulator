@@ -5,7 +5,6 @@ import NoResource from "../NoResource"
 
 /* Hooks */
 import { useMemo, useState } from "react"
-import { useData } from "../../context/DataContext"
 import useCompounds from "../../hooks/useCompounds"
 import useReactions from "../../hooks/useReactions"
 
@@ -13,9 +12,8 @@ import useReactions from "../../hooks/useReactions"
 import { Reaction } from "../../types/Reaction"
 
 const ReactionList: React.FC = () => {
-  const { removeReaction } = useData()
   const { compounds } = useCompounds()
-  const { reactions } = useReactions()
+  const { reactions, removeReaction } = useReactions()
   const [editedReactionId, setEditedReactionId] = useState<string | undefined>(
     undefined
   )
@@ -43,7 +41,7 @@ const ReactionList: React.FC = () => {
             editReaction(reaction.id)
           }}
           removeReaction={(): void => {
-            removeReaction(index)
+            removeReaction(reaction.id)
           }}
           key={index}
         >

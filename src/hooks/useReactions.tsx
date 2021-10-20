@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "./useStore"
 import {
   addReaction,
   // updateReaction,
-  // removeReaction,
+  removeReaction,
   // removeAllReactions,
 } from "../features/reactionsSlice"
 
@@ -43,10 +43,9 @@ const useCompounds = () => {
     //   dispatch(updateCompound({ id, compound: updatedCompound }))
     // },
 
-    // removeCompound: (id: string): void => {
-    //   // TODO: Dispatch update reactions!!
-    //   dispatch(removeCompound({ id }))
-    // },
+    removeReaction: (id: string): void => {
+      dispatch(removeReaction({ id }))
+    },
 
     // removeAllCompounds: (): void => {
     //   // TODO: Dispatch update reactions!!
