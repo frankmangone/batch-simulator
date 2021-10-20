@@ -5,7 +5,6 @@ import {
   Dispatch,
   SetStateAction,
 } from "react"
-import randomstring from "randomstring"
 
 /* Helpers */
 import { Token, TokenTypes } from "../helpers/tokenization"
@@ -32,13 +31,6 @@ export enum CompoundType {
 
 interface IDefaultValue {
   /* Reactions */
-  reactions: Reaction[]
-  addReaction: () => void
-  editReaction: (index?: number) => void
-  updateReaction: (index: number, updatedReaction: Reaction) => void
-  removeReaction: (index: number) => void
-  removeAllReactions: () => void
-  editedReactionId: string | undefined
   serializeKineticEquation: (reaction: Reaction, index: number) => Token[]
 
   /* Settings */
@@ -63,13 +55,6 @@ const defaultSettingsValue: Settings = {
 
 const defaultValue: IDefaultValue = {
   /* Reactions */
-  reactions: [],
-  addReaction: () => {},
-  editReaction: () => {},
-  updateReaction: () => {},
-  removeReaction: () => {},
-  removeAllReactions: () => {},
-  editedReactionId: undefined,
   serializeKineticEquation: () => {
     return []
   },
@@ -96,13 +81,9 @@ export const useData = () => {
  */
 export const DataStore: React.FC<FCWithChildren> = (props) => {
   const { children } = props
-  // const [currentColor, setCurrentColor] = useState<number>(0)
   const { findCompound } = useCompounds()
 
-  const [reactions, setReactions] = useLocalStorageState<Reaction[]>(
-    "reactions",
-    []
-  ) as [Reaction[], Dispatch<SetStateAction<Reaction[]>>]
+  // const [currentColor, setCurrentColor] = useState<number>(0)
   const [settings, setSettings] = useLocalStorageState<Settings>(
     "settings",
     defaultSettingsValue
@@ -176,58 +157,6 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
   //     ...compounds.slice(index + 1, compounds.length),
   //   ])
   // }
-
-  /**
-   * Reactions state handling
-   */
-  const addReaction = (): void => {
-    const updatedReactions = [...reactions]
-
-    updatedReactions.push({
-      id: randomstring.generate(8),
-      name: "",
-      reactants: [],
-      products: [],
-      kineticModel: 0,
-      kineticConstants: {
-        k: 1,
-      },
-      kineticEquation: [new Token(TokenTypes.Parameter, "<k>")],
-    })
-
-    setReactions(updatedReactions)
-  }
-
-  const editReaction = (index?: number): void => {
-    if (typeof index === "undefined") {
-      setEditedReactionId(undefined)
-      return
-    }
-    const id = reactions[index].id
-    setEditedReactionId(id)
-  }
-
-  const updateReaction = (index: number, updatedReaction: Reaction): void => {
-    updatedReaction.kineticEquation = serializeKineticEquation(
-      updatedReaction,
-      index
-    )
-    const updatedReactions = JSON.parse(JSON.stringify(reactions))
-    updatedReactions[index] = updatedReaction
-
-    setReactions(updatedReactions)
-  }
-
-  const removeReaction = (index: number): void => {
-    setReactions([
-      ...reactions.slice(0, index),
-      ...reactions.slice(index + 1, reactions.length),
-    ])
-  }
-
-  const removeAllReactions = () => {
-    setReactions([])
-  }
 
   const serializeKineticEquation = (
     reaction: Reaction,
@@ -314,13 +243,6 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
     <DataContext.Provider
       value={{
         /* Reactions */
-        reactions,
-        addReaction,
-        editReaction,
-        updateReaction,
-        removeReaction,
-        removeAllReactions,
-        editedReactionId,
         serializeKineticEquation,
 
         /* Settings */
