@@ -1,3 +1,7 @@
+import randomstring from "randomstring"
+import { useAppSelector, useAppDispatch } from "../hooks/useStore"
+import { addCompound } from "../features/compoundsSlice"
+
 /* Components */
 import Button from "../components/Button"
 import PageTitle from "../components/PageTitle"
@@ -8,6 +12,9 @@ import { FiPlus, FiTrash2 } from "react-icons/fi"
 import { useEffect } from "react"
 import { useData } from "../context/DataContext"
 
+/* Constants */
+import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
+
 const deleteButtonStyle = `
   position: absolute;
   top: 1rem;
@@ -16,7 +23,22 @@ const deleteButtonStyle = `
 `
 
 const CompoundsPage: React.FC = () => {
-  const { compounds, addCompound, editCompound, removeAllCompounds } = useData()
+  const compounds = useAppSelector((state) => state.compounds)
+  const dispatch = useAppDispatch()
+
+  const addCompoundAction = () => {
+    const newCompound = {
+      id: randomstring.generate(8),
+      color: COMPOUND_COLORS_CODES[0],
+      concentration: 0,
+      molecularWeight: 0,
+      symbol: "A",
+      name: "",
+    }
+    dispatch(addCompound(newCompound))
+  }
+
+  const { editCompound, removeAllCompounds } = useData()
 
   useEffect(() => {
     return () => {
@@ -36,7 +58,7 @@ const CompoundsPage: React.FC = () => {
   return (
     <>
       <PageTitle>Compounds</PageTitle>
-      <Button color="green" onClick={addCompound}>
+      <Button color="green" onClick={addCompoundAction}>
         Add <FiPlus />
       </Button>
       <Button
@@ -46,7 +68,7 @@ const CompoundsPage: React.FC = () => {
       >
         <FiTrash2 size={20} />
       </Button>
-      <CompoundList compounds={compounds} />
+      <CompoundList compounds={compounds || []} />
     </>
   )
 }
