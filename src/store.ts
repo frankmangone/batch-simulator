@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
 import compoundsReducer from "./features/compoundsSlice"
+import reactionsReducer from "./features/reactionsSlice"
 
 const store = configureStore({
   reducer: {
     compounds: compoundsReducer,
+    reactions: reactionsReducer,
   },
 })
 

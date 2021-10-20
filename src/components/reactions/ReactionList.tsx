@@ -6,15 +6,16 @@ import NoResource from "../NoResource"
 /* Hooks */
 import { useData } from "../../context/DataContext"
 import useCompounds from "../../hooks/useCompounds"
+import useReactions from "../../hooks/useReactions"
 
 /* Types */
 import { Reaction } from "../../types/Reaction"
 
 const ReactionList: React.FC = () => {
-  const { reactions, editedReactionId, editReaction, removeReaction } =
-    useData()
+  const { editedReactionId, editReaction, removeReaction } = useData()
 
   const { compounds } = useCompounds()
+  const { reactions } = useReactions()
 
   const editedReactionIndex = editedReactionId
     ? reactions.findIndex((reaction) => reaction.id === editedReactionId)

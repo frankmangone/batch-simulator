@@ -7,6 +7,7 @@ import { FiPlus, FiTrash2 } from "react-icons/fi"
 /* Hooks */
 import { useEffect } from "react"
 import { useData } from "../context/DataContext"
+import useReactions from "../hooks/useReactions"
 
 const deleteButtonStyle = `
   position: absolute;
@@ -16,7 +17,8 @@ const deleteButtonStyle = `
 `
 
 const ReactionsPage: React.FC = () => {
-  const { addReaction, editReaction, removeAllReactions } = useData()
+  const { addReaction } = useReactions()
+  const { editReaction, removeAllReactions } = useData()
 
   useEffect(() => {
     return () => {

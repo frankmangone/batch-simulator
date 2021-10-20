@@ -9,7 +9,7 @@ type UpdateCompoundPayload = { id: string; compound: Compound }
 type RemoveCompoundPayload = { id: string }
 
 export const compoundsSlice = createSlice({
-  name: "counter",
+  name: "compounds",
   initialState,
   reducers: {
     addCompound: (state, action: PayloadAction<AddCompoundPayload>) => {
