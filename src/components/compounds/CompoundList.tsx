@@ -6,7 +6,6 @@ import CompoundEditModal from "./CompoundEditModal"
 import NoResource from "../NoResource"
 
 /* Hooks */
-import { useData } from "../../context/DataContext"
 import useCompounds from "../../hooks/useCompounds"
 import { useState, useMemo } from "react"
 
@@ -14,15 +13,12 @@ import { useState, useMemo } from "react"
 import { Compound } from "../../types/Compound"
 
 const CompoundList: React.FC = (props) => {
-  const { compounds, updateCompound } = useCompounds()
-
+  const { compounds, updateCompound, removeCompound } = useCompounds()
   const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
     undefined
   )
+
   const editCompound = (id?: string) => setEditedCompoundId(id)
-
-  const { removeCompound } = useData()
-
   const editedCompound = useMemo(
     () =>
       editedCompoundId
@@ -48,7 +44,7 @@ const CompoundList: React.FC = (props) => {
             updateCompound(compound.id, compound)
           }}
           removeCompound={(): void => {
-            removeCompound(index)
+            removeCompound(compound.id)
           }}
           validateUnicity={(field: string, value: any): boolean => {
             for (var i = 0; i < compounds.length; i++) {

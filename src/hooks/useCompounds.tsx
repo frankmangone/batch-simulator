@@ -1,6 +1,10 @@
 import randomstring from "randomstring"
 import { useAppDispatch, useAppSelector } from "./useStore"
-import { addCompound, updateCompound } from "../features/compoundsSlice"
+import {
+  addCompound,
+  updateCompound,
+  removeCompound,
+} from "../features/compoundsSlice"
 
 /* Constants */
 import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
@@ -29,6 +33,11 @@ const useCompounds = () => {
 
     updateCompound: (id: string, updatedCompound: Compound) => {
       dispatch(updateCompound({ id, compound: updatedCompound }))
+    },
+
+    removeCompound: (id: string) => {
+      // TODO: Dispatch update reactions!!
+      dispatch(removeCompound({ id }))
     },
   }
 }
