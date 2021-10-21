@@ -6,17 +6,11 @@ import {
   SetStateAction,
 } from "react"
 
-/* Helpers */
-import { Token, TokenTypes } from "../helpers/tokenization"
-
 /* Hooks */
 import useLocalStorageState from "../hooks/useLocalStorageState"
-import useCompounds from "../hooks/useCompounds"
 
 /* Types */
-import { Compound } from "../types/Compound"
 import { Settings } from "../types/Settings"
-import { Reaction, ReactionCompound } from "../types/Reaction"
 import { SimulationResults } from "../types/SimulationResults"
 import { FCWithChildren } from "../types/FCWithChildren"
 
@@ -30,9 +24,6 @@ export enum CompoundType {
 }
 
 interface IDefaultValue {
-  /* Reactions */
-  serializeKineticEquation: (reaction: Reaction, index: number) => Token[]
-
   /* Settings */
   settings: Settings
   updateSettings: (updatedSettings: Settings) => void
@@ -54,11 +45,6 @@ const defaultSettingsValue: Settings = {
 }
 
 const defaultValue: IDefaultValue = {
-  /* Reactions */
-  serializeKineticEquation: () => {
-    return []
-  },
-
   /* Settings */
   settings: defaultSettingsValue,
   updateSettings: () => {},
@@ -81,7 +67,6 @@ export const useData = () => {
  */
 export const DataStore: React.FC<FCWithChildren> = (props) => {
   const { children } = props
-  const { findCompound } = useCompounds()
 
   // const [currentColor, setCurrentColor] = useState<number>(0)
   const [settings, setSettings] = useLocalStorageState<Settings>(
@@ -92,10 +77,6 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
   const [simulationResults, setSimulationResults] = useState<
     SimulationResults | undefined
   >(undefined)
-
-  const [editedReactionId, setEditedReactionId] = useState<string | undefined>(
-    undefined
-  )
 
   /**
    * Helper functions
@@ -158,80 +139,6 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
   //   ])
   // }
 
-  const serializeKineticEquation = (
-    reaction: Reaction,
-    index: number
-  ): Token[] => {
-    const equationTokens: Token[] = []
-    /**
-     * TODO: this is just a placeholder for a future serialization system, maybe
-     * with direct user input!
-     */
-    /* Returns infix notation */
-    switch (reaction.kineticModel) {
-      case 1:
-        equationTokens.push(new Token(TokenTypes.Parameter, `<\\mu>`))
-
-        reaction.reactants.forEach((reactionCompound) => {
-          const { symbol } = findCompound(
-            reactionCompound.compoundId
-          ) as Compound
-          equationTokens.push(new Token(TokenTypes.Operator, "*"))
-          equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
-          equationTokens.push(new Token(TokenTypes.Operator, "/"))
-          equationTokens.push(new Token(TokenTypes.LeftParenthesis, "("))
-          equationTokens.push(new Token(TokenTypes.Parameter, `<K_${symbol}>`))
-          equationTokens.push(new Token(TokenTypes.Operator, "+"))
-          equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
-          equationTokens.push(new Token(TokenTypes.RightParenthesis, ")"))
-        })
-        return equationTokens
-      //
-      case 2:
-        equationTokens.push(new Token(TokenTypes.Parameter, `<k>`))
-
-        reaction.reactants.forEach((reactionCompound) => {
-          const { symbol } = findCompound(
-            reactionCompound.compoundId
-          ) as Compound
-          equationTokens.push(new Token(TokenTypes.Operator, "*"))
-          equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
-          equationTokens.push(new Token(TokenTypes.Operator, "^"))
-          equationTokens.push(
-            new Token(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
-          )
-        })
-        reaction.products.forEach((reactionCompound) => {
-          const { symbol } = findCompound(
-            reactionCompound.compoundId
-          ) as Compound
-          equationTokens.push(new Token(TokenTypes.Operator, "*"))
-          equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
-          equationTokens.push(new Token(TokenTypes.Operator, "^"))
-          equationTokens.push(
-            new Token(TokenTypes.Parameter, `<\\beta_${symbol}>`)
-          )
-        })
-        return equationTokens
-      //
-      default:
-        equationTokens.push(new Token(TokenTypes.Parameter, `<k>`))
-
-        reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
-          const { symbol } = findCompound(
-            reactionCompound.compoundId
-          ) as Compound
-          equationTokens.push(new Token(TokenTypes.Operator, "*"))
-          equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
-          equationTokens.push(new Token(TokenTypes.Operator, "^"))
-          equationTokens.push(
-            new Token(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
-          )
-        })
-        return equationTokens
-    }
-  }
-
   /**
    * Settings state handling
    */
@@ -242,9 +149,6 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
   return (
     <DataContext.Provider
       value={{
-        /* Reactions */
-        serializeKineticEquation,
-
         /* Settings */
         settings,
         updateSettings,

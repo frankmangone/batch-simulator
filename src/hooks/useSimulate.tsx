@@ -1,5 +1,6 @@
 import { useData } from "../context/DataContext"
 import useCompounds from "../hooks/useCompounds"
+import useReactions from "../hooks/useReactions"
 
 /* Helpers */
 import { parseEquation } from "../helpers/tokenParser"
@@ -18,7 +19,8 @@ import { Token, TokenTypes } from "../helpers/tokenization"
 
 const useSimulate = () => {
   const { compounds } = useCompounds()
-  const { reactions, settings, setSimulationResults } = useData()
+  const { reactions } = useReactions()
+  const { settings, setSimulationResults } = useData()
 
   //: SimulationResults => {
   const simulate = () => {

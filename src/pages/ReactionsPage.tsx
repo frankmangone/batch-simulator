@@ -5,8 +5,6 @@ import ReactionList from "../components/reactions/ReactionList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
 
 /* Hooks */
-import { useEffect } from "react"
-import { useData } from "../context/DataContext"
 import useReactions from "../hooks/useReactions"
 
 const deleteButtonStyle = `
@@ -17,22 +15,13 @@ const deleteButtonStyle = `
 `
 
 const ReactionsPage: React.FC = () => {
-  const { addReaction } = useReactions()
-  const { editReaction, removeAllReactions } = useData()
+  const { addReaction, resetReactions } = useReactions()
 
-  useEffect(() => {
-    return () => {
-      /* Sets edited reaction to undefined on dismount */
-      editReaction()
-    }
-    // eslint-disable-next-line
-  }, [])
-
-  const onRemoveAllReactions = () => {
+  const handleResetReactions = () => {
     const confirmation = window.confirm(
       "Are you sure you want to delete all reactions?"
     )
-    if (confirmation) removeAllReactions()
+    if (confirmation) resetReactions()
   }
 
   return (
@@ -44,7 +33,7 @@ const ReactionsPage: React.FC = () => {
       <Button
         color="red"
         buttonStyle={deleteButtonStyle}
-        onClick={onRemoveAllReactions}
+        onClick={handleResetReactions}
       >
         <FiTrash2 size={20} />
       </Button>

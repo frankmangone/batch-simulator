@@ -25,7 +25,6 @@ import ReactionPreview from "./ReactionPreview"
 
 /* Hooks */
 import { useMemo, useState, useRef } from "react"
-import { useData } from "../../context/DataContext"
 import useCompounds from "../../hooks/useCompounds"
 import useReactions from "../../hooks/useReactions"
 
@@ -43,8 +42,7 @@ interface IReactionEditModalProps {
 const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const { compounds, reaction, closeModal } = props
   const { findCompound } = useCompounds()
-  const { reactions, updateReaction } = useReactions()
-  const { serializeKineticEquation } = useData()
+  const { reactions, updateReaction, serializeKineticEquation } = useReactions()
   const [closing, setClosing] = useState<boolean>(false)
   const reactionIndex = reactions.findIndex((rea) => rea.id === reaction.id)
   /**
