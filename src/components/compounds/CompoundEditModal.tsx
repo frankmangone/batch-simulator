@@ -11,8 +11,8 @@ import { validateNotEmpty, validateGreaterThan } from "../../helpers/validators"
 
 /* Hooks */
 import { useState } from "react"
-import { useData } from "../../context/DataContext"
 import useCompounds from "../../hooks/useCompounds"
+import useSettings from "../../hooks/useSettings"
 
 /* Types */
 import { Compound } from "../../types/Compound"
@@ -25,7 +25,7 @@ interface ICompoundEditModalProps {
 const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
   const { compound, closeModal } = props
   const { compounds, updateCompound } = useCompounds()
-  const { settings } = useData()
+  const { settings } = useSettings()
   const [closing, setClosing] = useState<boolean>(false)
   const compoundIndex = compounds.findIndex((comp) => comp.id === compound.id)
 

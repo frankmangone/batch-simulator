@@ -1,16 +1,6 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  Dispatch,
-  SetStateAction,
-} from "react"
-
-/* Hooks */
-import useLocalStorageState from "../hooks/useLocalStorageState"
+import { createContext, useContext, useState } from "react"
 
 /* Types */
-import { Settings } from "../types/Settings"
 import { SimulationResults } from "../types/SimulationResults"
 import { FCWithChildren } from "../types/FCWithChildren"
 
@@ -24,31 +14,12 @@ export enum CompoundType {
 }
 
 interface IDefaultValue {
-  /* Settings */
-  settings: Settings
-  updateSettings: (updatedSettings: Settings) => void
-
   /* Simulation results */
   simulationResults: SimulationResults | undefined
   setSimulationResults: (simulationResults: SimulationResults) => void
 }
 
-const defaultSettingsValue: Settings = {
-  reactionTime: 30,
-  deadTime: 30,
-  timeStep: 0.1,
-  //
-  timeUnits: "s",
-  volumeUnits: "L",
-  molarUnits: "mol",
-  massUnits: "kg",
-}
-
 const defaultValue: IDefaultValue = {
-  /* Settings */
-  settings: defaultSettingsValue,
-  updateSettings: () => {},
-
   /* Simulation results */
   simulationResults: undefined,
   setSimulationResults: () => {},
@@ -67,12 +38,6 @@ export const useData = () => {
  */
 export const DataStore: React.FC<FCWithChildren> = (props) => {
   const { children } = props
-
-  // const [currentColor, setCurrentColor] = useState<number>(0)
-  const [settings, setSettings] = useLocalStorageState<Settings>(
-    "settings",
-    defaultSettingsValue
-  ) as [Settings, Dispatch<SetStateAction<Settings>>]
 
   const [simulationResults, setSimulationResults] = useState<
     SimulationResults | undefined
@@ -142,17 +107,10 @@ export const DataStore: React.FC<FCWithChildren> = (props) => {
   /**
    * Settings state handling
    */
-  const updateSettings = (updatedSettings: Settings): void => {
-    setSettings(updatedSettings)
-  }
 
   return (
     <DataContext.Provider
       value={{
-        /* Settings */
-        settings,
-        updateSettings,
-
         /* Simulation results */
         simulationResults,
         setSimulationResults,
