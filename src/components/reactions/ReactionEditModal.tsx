@@ -23,6 +23,9 @@ import ReactionEquation from "./ReactionEquation"
 import ReactionKineticParameters from "./ReactionKineticParameters"
 import ReactionPreview from "./ReactionPreview"
 
+/* Helpers */
+import serializeKineticEquation from "../../helpers/serializeKineticEquation"
+
 /* Hooks */
 import { useMemo, useState, useRef } from "react"
 import useCompounds from "../../hooks/useCompounds"
@@ -42,7 +45,7 @@ interface IReactionEditModalProps {
 const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const { compounds, reaction, closeModal } = props
   const { findCompound } = useCompounds()
-  const { reactions, updateReaction, serializeKineticEquation } = useReactions()
+  const { reactions, updateReaction } = useReactions()
   const [closing, setClosing] = useState<boolean>(false)
   const reactionIndex = reactions.findIndex((rea) => rea.id === reaction.id)
   /**
@@ -144,7 +147,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
     updatedReaction.kineticConstants = kineticConstants
     updatedReaction.kineticEquation = serializeKineticEquation(
       updatedReaction,
-      reactionIndex
+      compounds
     )
 
     setModalReaction(updatedReaction)
@@ -196,7 +199,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
     updatedReaction.kineticConstants = kineticConstants
     updatedReaction.kineticEquation = serializeKineticEquation(
       updatedReaction,
-      reactionIndex
+      compounds
     )
 
     setModalReaction(updatedReaction)
@@ -341,7 +344,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               updatedReaction.kineticModel = value
               updatedReaction.kineticEquation = serializeKineticEquation(
                 updatedReaction,
-                reactionIndex
+                compounds
               )
 
               setModalReaction(updatedReaction)
