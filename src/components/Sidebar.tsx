@@ -9,7 +9,7 @@ import { AiOutlineExperiment } from "react-icons/ai"
 
 /* Hooks */
 import useSimulate from "../hooks/useSimulate"
-import { useData } from "../context/DataContext"
+import useSimulationResults from "../hooks/useSimulationResults"
 import { useState } from "react"
 
 interface ISidebarLinkProps {
@@ -20,7 +20,7 @@ interface ISidebarLinkProps {
 
 const Sidebar: React.FC = () => {
   const { simulate } = useSimulate()
-  const { simulationResults } = useData()
+  const { simulationResults } = useSimulationResults()
   const history = useHistory()
   const [expanded, setExpanded] = useState<boolean>(false)
 

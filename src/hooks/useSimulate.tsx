@@ -1,7 +1,7 @@
-import { useData } from "../context/DataContext"
 import useSettings from "../hooks/useSettings"
 import useCompounds from "../hooks/useCompounds"
 import useReactions from "../hooks/useReactions"
+import useSimulationResults from "../hooks/useSimulationResults"
 
 /* Helpers */
 import { parseEquation } from "../helpers/tokenParser"
@@ -22,7 +22,7 @@ const useSimulate = () => {
   const { compounds } = useCompounds()
   const { reactions } = useReactions()
   const { settings } = useSettings()
-  const { setSimulationResults } = useData()
+  const { saveSimulationResults } = useSimulationResults()
 
   //: SimulationResults => {
   const simulate = () => {
@@ -41,7 +41,8 @@ const useSimulate = () => {
 
     // Start simulation execution
     const results = executeSimulation(initialValues, parsedReactions, settings)
-    setSimulationResults(results)
+
+    saveSimulationResults(results)
   }
 
   return { simulate }

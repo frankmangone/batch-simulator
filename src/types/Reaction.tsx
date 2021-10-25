@@ -21,6 +21,15 @@ export interface Reaction {
   keyCompound?: string // It's a compound (reactant) id
 }
 
+/**
+ * To mark whether if a compound is a reactant or a product,
+ * the following enum is used
+ *  */
+export enum CompoundType {
+  Reactant = 0,
+  Product,
+}
+
 export interface ReactionCompound {
   compoundId: string
   stoichiometricCoefficient: number

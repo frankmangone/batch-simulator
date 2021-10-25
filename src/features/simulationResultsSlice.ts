@@ -11,7 +11,7 @@ export const simulationResultsSlice = createSlice({
   initialState,
   reducers: {
     save: (state, action: SaveAction) => {
-      state = action.payload
+      return action.payload
     },
   },
 })

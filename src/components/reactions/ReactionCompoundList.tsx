@@ -6,8 +6,7 @@ import useCompounds from "../../hooks/useCompounds"
 
 /* Types */
 import { Compound } from "../../types/Compound"
-import { ReactionCompound } from "../../types/Reaction"
-import { CompoundType } from "../../context/DataContext"
+import { ReactionCompound, CompoundType } from "../../types/Reaction"
 
 interface IReactionCompoundListProps {
   compoundType: CompoundType
