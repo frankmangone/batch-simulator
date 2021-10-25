@@ -6,28 +6,26 @@ import CompoundEditModal from "./CompoundEditModal"
 import NoResource from "../NoResource"
 
 /* Hooks */
-import { useData } from "../../context/DataContext"
+import useCompounds from "../../hooks/useCompounds"
+import { useState, useMemo } from "react"
 
 /* Types */
 import { Compound } from "../../types/Compound"
 
-interface ICompoundListProps {
-  compounds: Compound[]
-}
+const CompoundList: React.FC = (props) => {
+  const { compounds, updateCompound, removeCompound } = useCompounds()
+  const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
+    undefined
+  )
 
-const CompoundList: React.FC<ICompoundListProps> = (props) => {
-  const { compounds } = props
-  const {
-    editedCompoundId,
-    editCompound,
-    findCompound,
-    updateCompound,
-    removeCompound,
-  } = useData()
-
-  const editedCompound = editedCompoundId
-    ? findCompound(editedCompoundId)
-    : undefined
+  const editCompound = (id?: string) => setEditedCompoundId(id)
+  const editedCompound = useMemo(
+    () =>
+      editedCompoundId
+        ? compounds.find((c) => c.id === editedCompoundId)
+        : undefined,
+    [compounds, editedCompoundId]
+  )
 
   return (
     <CompoundListWrapper>
@@ -40,13 +38,13 @@ const CompoundList: React.FC<ICompoundListProps> = (props) => {
           key={index}
           compound={compound}
           editCompound={(): void => {
-            editCompound(index)
+            editCompound(compound.id)
           }}
           updateCompound={(compound: Compound): void => {
-            updateCompound(index, compound)
+            updateCompound(compound.id, compound)
           }}
           removeCompound={(): void => {
-            removeCompound(index)
+            removeCompound(compound.id)
           }}
           validateUnicity={(field: string, value: any): boolean => {
             for (var i = 0; i < compounds.length; i++) {

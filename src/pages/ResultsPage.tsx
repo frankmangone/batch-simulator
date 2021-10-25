@@ -10,14 +10,14 @@ import { COMPOUND_COLORS } from "../constants/compoundColors"
 
 /* Hooks */
 import { useMemo, useState } from "react"
-import { useData } from "../context/DataContext"
+import useCompounds from "../hooks/useCompounds"
 import useGetData from "../hooks/useGetData"
 
 import type { Point } from "../hooks/useGetData"
 
 const ResultsPage: React.FC = () => {
   const { variableData } = useGetData()
-  const { compounds } = useData()
+  const { compounds } = useCompounds()
   const [selectedVariables, setSelectedVariables] = useState<number[]>([0])
   const [optionsVisible, setOptionsVisible] = useState<boolean>(false)
 

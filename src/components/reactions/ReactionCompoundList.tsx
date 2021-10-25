@@ -2,12 +2,11 @@
 import ReactionCompoundCard from "./ReactionCompoundCard"
 
 /* Hooks */
-import { useData } from "../../context/DataContext"
+import useCompounds from "../../hooks/useCompounds"
 
 /* Types */
 import { Compound } from "../../types/Compound"
-import { ReactionCompound } from "../../types/Reaction"
-import { CompoundType } from "../../context/DataContext"
+import { ReactionCompound, CompoundType } from "../../types/Reaction"
 
 interface IReactionCompoundListProps {
   compoundType: CompoundType
@@ -24,7 +23,7 @@ interface IReactionCompoundListProps {
 const ReactionCompoundList: React.FC<IReactionCompoundListProps> = (props) => {
   const { reactionCompounds, removeCompound, updateCompound, compoundType } =
     props
-  const { findCompound } = useData()
+  const { findCompound } = useCompounds()
 
   return (
     <>

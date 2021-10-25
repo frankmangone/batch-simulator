@@ -1,7 +1,7 @@
 import { Switch, Redirect, Route } from "react-router-dom"
 
 /* Hooks */
-import { useData } from "./context/DataContext"
+import useSimulationResults from "./hooks/useSimulationResults"
 
 /* Pages */
 import CompoundsPage from "./pages/CompoundsPage"
@@ -10,7 +10,7 @@ import ReactionsPage from "./pages/ReactionsPage"
 import ResultsPage from "./pages/ResultsPage"
 
 const Routes = () => {
-  const { simulationResults } = useData()
+  const { simulationResults } = useSimulationResults()
 
   return (
     <Switch>
@@ -30,7 +30,7 @@ const Routes = () => {
 
       {/* Redirect /results to / if no data is available */}
       <Route path="/results" component={ResultsPage}>
-        {simulationResults ? (
+        {simulationResults?.length ? (
           <ResultsPage />
         ) : (
           <Redirect

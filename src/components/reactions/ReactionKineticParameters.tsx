@@ -9,7 +9,7 @@ import { Compound } from "../../types/Compound"
 import { Reaction } from "../../types/Reaction"
 
 import { Token, TokenTypes } from "../../helpers/tokenization"
-import { useData } from "../../context/DataContext"
+import useSettings from "../../hooks/useSettings"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]
@@ -23,7 +23,7 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   props
 ) => {
   const { reaction, updateKineticConstant } = props
-  const { settings } = useData()
+  const { settings } = useSettings()
 
   const tokenizedMuUnits = [
     new Token(TokenTypes.Parameter, `${settings.timeUnits}`),

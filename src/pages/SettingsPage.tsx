@@ -8,14 +8,14 @@ import PageTitle from "../components/PageTitle"
 import { validateNotEmpty, validateGreaterThan } from "../helpers/validators"
 
 /* Hooks */
-import { useData } from "../context/DataContext"
+import useSettings from "../hooks/useSettings"
 import { useFormik } from "formik"
 
 /* Types */
 import { Settings, SettingsErrors } from "../types/Settings"
 
 const SettingsPage: React.FC = () => {
-  const { settings, updateSettings } = useData()
+  const { settings, saveSettings } = useSettings()
 
   /**
    * Form validation function
@@ -49,7 +49,7 @@ const SettingsPage: React.FC = () => {
     initialValues: { ...settings },
     validate,
     onSubmit: (values) => {
-      updateSettings(values)
+      saveSettings(values)
     },
   })
 

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useData } from "../../context/DataContext"
+import useCompounds from "../../hooks/useCompounds"
 import { FaCheck } from "react-icons/fa"
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 import type { Dispatch, SetStateAction } from "react"
@@ -11,7 +11,7 @@ interface VariableCheckboxesProps {
 
 const VariableCheckboxes = (props: VariableCheckboxesProps) => {
   const { selectedVariables, setSelectedVariables } = props
-  const { compounds } = useData()
+  const { compounds } = useCompounds()
 
   const isToggled = (compoundIndex: number): boolean => {
     const foundIndex = selectedVariables.findIndex(

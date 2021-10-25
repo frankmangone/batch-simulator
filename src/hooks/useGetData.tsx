@@ -1,4 +1,4 @@
-import { useData } from "../context/DataContext"
+import useSimulationResults from "../hooks/useSimulationResults"
 
 /* Types */
 import { TimePoint } from "../types/SimulationResults"
@@ -9,7 +9,7 @@ export interface Point {
 }
 
 const useGetData = () => {
-  const { simulationResults } = useData()
+  const { simulationResults } = useSimulationResults()
 
   /**
    * Maps requested variable data to Victory-readable data

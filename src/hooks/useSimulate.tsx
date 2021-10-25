@@ -1,4 +1,7 @@
-import { useData } from "../context/DataContext"
+import useSettings from "../hooks/useSettings"
+import useCompounds from "../hooks/useCompounds"
+import useReactions from "../hooks/useReactions"
+import useSimulationResults from "../hooks/useSimulationResults"
 
 /* Helpers */
 import { parseEquation } from "../helpers/tokenParser"
@@ -16,8 +19,10 @@ import { TimePoint, SimulationResults } from "../types/SimulationResults"
 import { Token, TokenTypes } from "../helpers/tokenization"
 
 const useSimulate = () => {
-  // Get data from context
-  const { compounds, reactions, settings, setSimulationResults } = useData()
+  const { compounds } = useCompounds()
+  const { reactions } = useReactions()
+  const { settings } = useSettings()
+  const { saveSimulationResults } = useSimulationResults()
 
   //: SimulationResults => {
   const simulate = () => {
@@ -36,7 +41,8 @@ const useSimulate = () => {
 
     // Start simulation execution
     const results = executeSimulation(initialValues, parsedReactions, settings)
-    setSimulationResults(results)
+
+    saveSimulationResults(results)
   }
 
   return { simulate }

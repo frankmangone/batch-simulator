@@ -1,8 +1,7 @@
 import { BrowserRouter as Router } from "react-router-dom"
+import { Provider } from "react-redux"
+import store from "./store"
 import GlobalStyles from "./GlobalStyles"
-
-/* Context */
-import { DataStore } from "./context/DataContext"
 
 /* Layouts */
 import MainLayout from "./layouts/MainLayout"
@@ -12,14 +11,14 @@ import Routes from "./Routes"
 
 const App = () => {
   return (
-    <DataStore>
+    <Provider store={store}>
       <Router>
         <GlobalStyles />
         <MainLayout>
           <Routes />
         </MainLayout>
       </Router>
-    </DataStore>
+    </Provider>
   )
 }
 

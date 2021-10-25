@@ -5,8 +5,7 @@ import CompoundList from "../components/compounds/CompoundList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
 
 /* Hooks */
-import { useEffect } from "react"
-import { useData } from "../context/DataContext"
+import useCompounds from "../hooks/useCompounds"
 
 const deleteButtonStyle = `
   position: absolute;
@@ -16,17 +15,9 @@ const deleteButtonStyle = `
 `
 
 const CompoundsPage: React.FC = () => {
-  const { compounds, addCompound, editCompound, removeAllCompounds } = useData()
+  const { addCompound, removeAllCompounds } = useCompounds()
 
-  useEffect(() => {
-    return () => {
-      /* Sets edited compound to undefined on dismount */
-      editCompound()
-    }
-    // eslint-disable-next-line
-  }, [])
-
-  const onRemoveAllCompounds = () => {
+  const handleAllCompounds = () => {
     const confirmation = window.confirm(
       "Are you sure you want to delete all compounds? This will also delete all reactions"
     )
@@ -42,11 +33,11 @@ const CompoundsPage: React.FC = () => {
       <Button
         color="red"
         buttonStyle={deleteButtonStyle}
-        onClick={onRemoveAllCompounds}
+        onClick={handleAllCompounds}
       >
         <FiTrash2 size={20} />
       </Button>
-      <CompoundList compounds={compounds} />
+      <CompoundList />
     </>
   )
 }
