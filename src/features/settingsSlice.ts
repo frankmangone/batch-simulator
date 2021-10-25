@@ -13,12 +13,11 @@ const initialState: SettingsState = {
   massUnits: "kg",
 }
 
-// type AddPayload = Compound
 type SaveFieldAction = PayloadAction<{ field: string; value: string | number }>
 type SaveAction = PayloadAction<Settings>
 
-export const compoundsSlice = createSlice({
-  name: "compounds",
+export const settingsSlice = createSlice({
+  name: "settings",
   initialState,
   reducers: {
     save: (state, action: SaveAction) => {
@@ -34,6 +33,6 @@ export const compoundsSlice = createSlice({
   },
 })
 
-export const { save, saveField } = compoundsSlice.actions
+export const { save, saveField } = settingsSlice.actions
 
-export default compoundsSlice.reducer
+export default settingsSlice.reducer
