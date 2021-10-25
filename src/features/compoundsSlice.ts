@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { loadFromKey } from "../helpers/localStorage"
 import type { Compound } from "../types/Compound"
 
 type CompoundsState = Compound[]
-const initialState: CompoundsState = []
+export const STORAGE_KEY = "batch-simulator:compounds"
+const initialState: CompoundsState = loadFromKey(STORAGE_KEY) || []
 
 type AddPayload = Compound
 type UpdatePayload = { id: string; compound: Compound }

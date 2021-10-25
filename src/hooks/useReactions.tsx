@@ -1,4 +1,5 @@
 import randomstring from "randomstring"
+import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "./useStore"
 import {
   add,
@@ -7,6 +8,10 @@ import {
   remove,
   removeCompound,
 } from "../features/reactionsSlice"
+import { saveToKey } from "../helpers/localStorage"
+
+/* Constants */
+import { STORAGE_KEY } from "../features/reactionsSlice"
 
 /* Helpers */
 import { Token, TokenTypes } from "../helpers/tokenization"
@@ -17,6 +22,11 @@ import type { Reaction } from "../types/Reaction"
 const useReactions = () => {
   const dispatch = useAppDispatch()
   const reactions = useAppSelector((state) => state.reactions)
+
+  useEffect(() => {
+    /* Save to localStorage upon changes to state */
+    saveToKey(reactions, STORAGE_KEY)
+  }, [reactions])
 
   return {
     reactions,

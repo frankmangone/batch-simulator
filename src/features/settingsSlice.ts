@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { loadFromKey } from "../helpers/localStorage"
 import type { Settings } from "../types/Settings"
 
 type SettingsState = Settings
-const initialState: SettingsState = {
+export const STORAGE_KEY = "batch-simulator:settings"
+const initialState: SettingsState = loadFromKey(STORAGE_KEY) || {
   reactionTime: 30,
   deadTime: 30,
   timeStep: 0.1,
