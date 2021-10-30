@@ -17,7 +17,7 @@ const deleteButtonStyle = `
 const CompoundsPage: React.FC = () => {
   const { addCompound, removeAllCompounds } = useCompounds()
 
-  const handleAllCompounds = () => {
+  const handleResetCompounds = () => {
     const confirmation = window.confirm(
       "Are you sure you want to delete all compounds? This will also delete all reactions"
     )
@@ -33,7 +33,7 @@ const CompoundsPage: React.FC = () => {
       <Button
         color="red"
         buttonStyle={deleteButtonStyle}
-        onClick={handleAllCompounds}
+        onClick={handleResetCompounds}
       >
         <FiTrash2 size={20} />
       </Button>
