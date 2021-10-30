@@ -50,6 +50,14 @@ const UnitsSection: VFC<UnitsProps> = (props) => {
         error={formik.errors.massUnits}
         {...{ onBlur, onChange }}
       />
+      <FieldInput
+        fieldName="temperatureUnits"
+        label="Temperature units:"
+        type="text"
+        value={formik.values.temperatureUnits}
+        error={formik.errors.temperatureUnits}
+        {...{ onBlur, onChange }}
+      />
     </InputSection>
   )
 }
