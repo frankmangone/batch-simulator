@@ -3,7 +3,7 @@ import { useFormik } from "formik"
 
 /* Components */
 import EditModal from "../EditModal"
-import FieldInput from "../FieldInput"
+import FieldInput from "../forms/FieldInput"
 import SubmitButton from "../SubmitButton"
 
 /* Helpers */

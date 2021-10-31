@@ -12,6 +12,7 @@ export interface Settings {
   temperatureUnits: string
 
   // Heat Exchange
+  isothermal: boolean
   initialTemperature: number
 }
 
@@ -29,5 +30,6 @@ export interface SettingsErrors {
   temperatureUnits?: string
 
   // Heat Exchange
+  isothermal?: string
   initialTemperature?: string
 }

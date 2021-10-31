@@ -6,7 +6,7 @@ import Input from "./Input"
 import InfoTooltip from "./InfoTooltip"
 
 /* Constants */
-import { COMPOUND_COLORS } from "../constants/compoundColors"
+import { COMPOUND_COLORS } from "../../constants/compoundColors"
 interface IFieldInputProps {
   big?: boolean
   color?: string

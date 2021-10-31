@@ -1,5 +1,5 @@
 import InputSection from "./InputSection"
-import FieldInput from "../FieldInput"
+import FieldInput from "../forms/FieldInput"
 
 /* Types */
 import type { Settings } from "../../types/Settings"
@@ -17,6 +17,14 @@ const HeatExchangeSection: React.VFC<HeatExchangeProps> = (props) => {
   return (
     <InputSection>
       <h2>Heat Exchange</h2>
+      <FieldInput
+        fieldName="initialTemperature"
+        label="Initial Temperature:"
+        type="number"
+        value={formik.values.initialTemperature}
+        error={formik.errors.initialTemperature}
+        {...{ onBlur, onChange }}
+      />
       <FieldInput
         fieldName="initialTemperature"
         label="Initial Temperature:"

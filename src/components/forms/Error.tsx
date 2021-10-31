@@ -1,15 +1,10 @@
 import styled from "styled-components"
 
-/* Types */
-import { FCWithChildren } from "../types/FCWithChildren"
-
-interface IError {
+interface ErrorProps {
   big?: boolean
 }
 
-type IErrorProps = FCWithChildren & IError
-
-const Error: React.FC<IErrorProps> = (props) => {
+const Error: React.FC<ErrorProps> = (props) => {
   const { big, children } = props
   return (
     <ErrorWrapper big={big} className="error">
@@ -18,7 +13,7 @@ const Error: React.FC<IErrorProps> = (props) => {
   )
 }
 
-const ErrorWrapper = styled.div<IError>`
+const ErrorWrapper = styled.div<ErrorProps>`
   position: absolute;
   ${(props) =>
     props.big

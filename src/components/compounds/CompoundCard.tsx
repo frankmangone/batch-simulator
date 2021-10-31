@@ -49,21 +49,7 @@ export default CompoundCard
  * Styled components
  */
 
-const CompoundCardWrapper = styled.li`
-  /* flex-basis: 25%;
-
-  @media only screen and (max-width: 1200px) {
-    flex-basis: 33.3%;
-  }
-
-  @media only screen and (max-width: 960px) {
-    flex-basis: 50%;
-  }
-
-  @media only screen and (max-width: 520px) {
-    flex-basis: 100%;
-  } */
-`
+const CompoundCardWrapper = styled.li``
 
 const CompoundCardInner = styled.div`
   margin: 5px;
