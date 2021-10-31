@@ -51,6 +51,7 @@ const ReactionCardWrapper = styled.div`
   animation-iteration-count: 1;
   background-color: var(--color-grey-lighter);
   border-radius: 5px;
+  border: 1.5px solid var(--color-grey-lightest);
   display: flex;
   color: var(--color-grey-dark);
   cursor: pointer;
@@ -58,25 +59,8 @@ const ReactionCardWrapper = styled.div`
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    background-color: var(--color-grey-lightest);
-
-    & {
-      box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
-      transform: translateY(-2px);
-    }
-
-    & > button {
-      opacity: 1;
-    }
-
-    & > .bullet {
-      transform: scale(20);
-      border-color: var(--color-grey-lighter);
-    }
-    & > .symbol-input:after {
-      margin-left: 0%;
-      width: auto;
-    }
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
   }
 
   p:not(:first-child) {
