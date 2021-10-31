@@ -31,17 +31,18 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
     new Token(TokenTypes.Parameter, `-1`),
   ]
 
+  const tokenizedKUnits = [
+    new Token(TokenTypes.Parameter, `${settings.timeUnits}`),
+    new Token(TokenTypes.Operator, "^"),
+    new Token(TokenTypes.Parameter, `-1`),
+  ]
+
   const globalOrder = Object.entries(reaction?.kineticConstants)
     .map(([key, value]) => value)
     .reduce(
       (accumulator, currentValue) => accumulator + currentValue,
       -reaction?.kineticConstants.k || 0
     )
-  const tokenizedKUnits = [
-    new Token(TokenTypes.Parameter, `${settings.timeUnits}`),
-    new Token(TokenTypes.Operator, "^"),
-    new Token(TokenTypes.Parameter, `-1`),
-  ]
 
   if (globalOrder !== 1) {
     tokenizedKUnits.push(new Token(TokenTypes.Operator, "*"))
@@ -63,16 +64,31 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   return (
     <KineticParamsWrapper>
       {Object.entries(reaction.kineticConstants).map(([param, value]) => {
-        let units = undefined
-        if (param === "k")
-          units = <Equation tokenizedEquation={tokenizedKUnits} />
-        if (param === "\\mu")
-          units = <Equation tokenizedEquation={tokenizedMuUnits} />
+        let units, symbol
+
+        switch (param) {
+          case "k":
+            units = <Equation tokenizedEquation={tokenizedKUnits} />
+            symbol = param
+            break
+          case "\\mu":
+            units = <Equation tokenizedEquation={tokenizedMuUnits} />
+            symbol = param
+            break
+          case "preExponential":
+            symbol = "k_0"
+            break
+          case "activationEnergy":
+            symbol = "E_A"
+            break
+          default:
+            symbol = param
+        }
 
         return (
           <ReactionParamInputCard
             key={param}
-            paramSymbol={<SymbolComponent symbol={param} />}
+            paramSymbol={<SymbolComponent symbol={symbol} />}
             value={value as number}
             units={units}
             updateValue={(value: number) => {

@@ -44,6 +44,8 @@ const useReactions = () => {
         kineticModel: 0,
         kineticConstants: {
           k: 1,
+          preExponential: 1000000,
+          activationEnergy: 30000,
         },
         kineticEquation: [new Token(TokenTypes.Parameter, "<k>")],
       }

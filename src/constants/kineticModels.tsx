@@ -1,9 +1,5 @@
 /* Types */
-import {
-  KineticConstants,
-  Reaction,
-  ReactionCompound,
-} from "../types/Reaction"
+import { KineticConstants, Reaction, ReactionCompound } from "../types/Reaction"
 import { Compound } from "../types/Compound"
 
 /**
@@ -40,7 +36,11 @@ const generateSimpleModelConstants = (
   reaction: Reaction,
   compounds: Compound[]
 ) => {
-  const updatedExponents: KineticConstants = {}
+  const updatedExponents: KineticConstants = {
+    preExponential: reaction.kineticConstants.preExponential,
+    activationEnergy: reaction.kineticConstants.activationEnergy,
+  }
+
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
     const compound = compounds.find(
       (c) => c.id === reactionCompound.compoundId
@@ -62,7 +62,11 @@ const generateHiperbolicModelConstants = (
   reaction: Reaction,
   compounds: Compound[]
 ) => {
-  const updatedExponents: KineticConstants = {}
+  const updatedExponents: KineticConstants = {
+    preExponential: reaction.kineticConstants.preExponential,
+    activationEnergy: reaction.kineticConstants.activationEnergy,
+  }
+
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
     const compound = compounds.find(
       (c) => c.id === reactionCompound.compoundId
@@ -84,7 +88,10 @@ const generateAutocatalyticModelConstants = (
   reaction: Reaction,
   compounds: Compound[]
 ) => {
-  const updatedExponents: KineticConstants = {}
+  const updatedExponents: KineticConstants = {
+    preExponential: reaction.kineticConstants.preExponential,
+    activationEnergy: reaction.kineticConstants.activationEnergy,
+  }
 
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
     const compound = compounds.find(
