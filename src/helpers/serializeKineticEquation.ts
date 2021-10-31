@@ -21,58 +21,93 @@ const serializeKineticEquation = (
    */
   switch (reaction.kineticModel) {
     case KineticModel.hyperbolic:
-      equationTokens.push(new Token(TokenTypes.Parameter, `<\\mu_\\inf>`))
+      equationTokens.push(new Token(TokenTypes.Parameter, `<k_\\inf>`))
+      addArrheniusExponential(equationTokens)
 
       reaction.reactants.forEach((reactionCompound) => {
         const { symbol } = findCompound(reactionCompound.compoundId) as Compound
-        equationTokens.push(new Token(TokenTypes.Operator, "*"))
-        equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
-        equationTokens.push(new Token(TokenTypes.Operator, "/"))
-        equationTokens.push(new Token(TokenTypes.LeftParenthesis, "("))
-        equationTokens.push(new Token(TokenTypes.Parameter, `<K_${symbol}>`))
-        equationTokens.push(new Token(TokenTypes.Operator, "+"))
-        equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
-        equationTokens.push(new Token(TokenTypes.RightParenthesis, ")"))
+        addHyperbolicTerm(equationTokens, symbol)
       })
       return equationTokens
+
     //
+
     case KineticModel.autocatalytic:
       equationTokens.push(new Token(TokenTypes.Parameter, `<k_\\inf>`))
+      addArrheniusExponential(equationTokens)
 
       reaction.reactants.forEach((reactionCompound) => {
         const { symbol } = findCompound(reactionCompound.compoundId) as Compound
-        equationTokens.push(new Token(TokenTypes.Operator, "*"))
-        equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
-        equationTokens.push(new Token(TokenTypes.Operator, "^"))
-        equationTokens.push(
-          new Token(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
-        )
+        addReactantWithExponent(equationTokens, symbol)
       })
       reaction.products.forEach((reactionCompound) => {
         const { symbol } = findCompound(reactionCompound.compoundId) as Compound
-        equationTokens.push(new Token(TokenTypes.Operator, "*"))
-        equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
-        equationTokens.push(new Token(TokenTypes.Operator, "^"))
-        equationTokens.push(
-          new Token(TokenTypes.Parameter, `<\\beta_${symbol}>`)
-        )
+        addProductWithExponent(equationTokens, symbol)
       })
       return equationTokens
+
     //
+
     default:
       equationTokens.push(new Token(TokenTypes.Parameter, `<k_\\inf>`))
+      addArrheniusExponential(equationTokens)
 
       reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
         const { symbol } = findCompound(reactionCompound.compoundId) as Compound
-        equationTokens.push(new Token(TokenTypes.Operator, "*"))
-        equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
-        equationTokens.push(new Token(TokenTypes.Operator, "^"))
-        equationTokens.push(
-          new Token(TokenTypes.Parameter, `<\\alpha_${symbol}>`)
-        )
+        addReactantWithExponent(equationTokens, symbol)
       })
       return equationTokens
   }
 }
 
 export default serializeKineticEquation
+
+// Helpers
+
+const addArrheniusExponential = (equationTokens: Token[]): void => {
+  equationTokens.push(new Token(TokenTypes.Operator, "*"))
+  equationTokens.push(new Token(TokenTypes.Parameter, "e"))
+  equationTokens.push(new Token(TokenTypes.Operator, "^"))
+  equationTokens.push(new Token(TokenTypes.LeftParenthesis, "("))
+  equationTokens.push(new Token(TokenTypes.LeftParenthesis, "("))
+  equationTokens.push(new Token(TokenTypes.Parameter, "<E_A>"))
+  equationTokens.push(new Token(TokenTypes.RightParenthesis, ")"))
+  equationTokens.push(new Token(TokenTypes.Operator, "/"))
+  equationTokens.push(new Token(TokenTypes.LeftParenthesis, "("))
+  equationTokens.push(new Token(TokenTypes.Parameter, "<R>"))
+  equationTokens.push(new Token(TokenTypes.Operator, "*"))
+  equationTokens.push(new Token(TokenTypes.Variable, "{T}"))
+  equationTokens.push(new Token(TokenTypes.RightParenthesis, ")"))
+  equationTokens.push(new Token(TokenTypes.RightParenthesis, ")"))
+}
+
+const addReactantWithExponent = (
+  equationTokens: Token[],
+  symbol: string
+): void => {
+  equationTokens.push(new Token(TokenTypes.Operator, "*"))
+  equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
+  equationTokens.push(new Token(TokenTypes.Operator, "^"))
+  equationTokens.push(new Token(TokenTypes.Parameter, `<\\alpha_${symbol}>`))
+}
+
+const addProductWithExponent = (
+  equationTokens: Token[],
+  symbol: string
+): void => {
+  equationTokens.push(new Token(TokenTypes.Operator, "*"))
+  equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
+  equationTokens.push(new Token(TokenTypes.Operator, "^"))
+  equationTokens.push(new Token(TokenTypes.Parameter, `<\\beta_${symbol}>`))
+}
+
+const addHyperbolicTerm = (equationTokens: Token[], symbol: string): void => {
+  equationTokens.push(new Token(TokenTypes.Operator, "*"))
+  equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
+  equationTokens.push(new Token(TokenTypes.Operator, "/"))
+  equationTokens.push(new Token(TokenTypes.LeftParenthesis, "("))
+  equationTokens.push(new Token(TokenTypes.Parameter, `<K_${symbol}>`))
+  equationTokens.push(new Token(TokenTypes.Operator, "+"))
+  equationTokens.push(new Token(TokenTypes.Variable, `{[${symbol}]}`))
+  equationTokens.push(new Token(TokenTypes.RightParenthesis, ")"))
+}

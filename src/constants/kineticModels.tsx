@@ -1,5 +1,10 @@
 /* Types */
-import { KineticConstants, Reaction, ReactionCompound } from "../types/Reaction"
+import {
+  KineticConstants,
+  KineticModel,
+  Reaction,
+  ReactionCompound,
+} from "../types/Reaction"
 import { Compound } from "../types/Compound"
 
 /**
@@ -17,17 +22,17 @@ import { Compound } from "../types/Compound"
 export const KINETIC_MODELS = ["Simple", "Hiperbolic", "Autocatalytic"]
 
 export const generateKineticConstants = (
-  model: number,
+  model: KineticModel,
   reaction: Reaction,
   compounds: Compound[]
 ): KineticConstants => {
   switch (model) {
-    case 1:
+    case KineticModel.hyperbolic:
       return generateHiperbolicModelConstants(reaction, compounds)
-    case 2:
+    case KineticModel.autocatalytic:
       return generateAutocatalyticModelConstants(reaction, compounds)
     default:
-      // 0
+      // simple
       return generateSimpleModelConstants(reaction, compounds)
   }
 }
@@ -37,8 +42,8 @@ const generateSimpleModelConstants = (
   compounds: Compound[]
 ) => {
   const updatedExponents: KineticConstants = {
-    preExponential: reaction.kineticConstants.preExponential,
-    activationEnergy: reaction.kineticConstants.activationEnergy,
+    "k_\\inf": reaction.kineticConstants["k_\\inf"],
+    E_A: reaction.kineticConstants.E_A,
   }
 
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
@@ -55,7 +60,7 @@ const generateSimpleModelConstants = (
     }
   })
 
-  return { k: 1, ...updatedExponents }
+  return { ...updatedExponents }
 }
 
 const generateHiperbolicModelConstants = (
@@ -63,8 +68,8 @@ const generateHiperbolicModelConstants = (
   compounds: Compound[]
 ) => {
   const updatedExponents: KineticConstants = {
-    preExponential: reaction.kineticConstants.preExponential,
-    activationEnergy: reaction.kineticConstants.activationEnergy,
+    "k_\\inf": reaction.kineticConstants["k_\\inf"],
+    E_A: reaction.kineticConstants.E_A,
   }
 
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
@@ -81,7 +86,7 @@ const generateHiperbolicModelConstants = (
     }
   })
 
-  return { "\\mu": 1, ...updatedExponents }
+  return { ...updatedExponents }
 }
 
 const generateAutocatalyticModelConstants = (
@@ -89,8 +94,8 @@ const generateAutocatalyticModelConstants = (
   compounds: Compound[]
 ) => {
   const updatedExponents: KineticConstants = {
-    preExponential: reaction.kineticConstants.preExponential,
-    activationEnergy: reaction.kineticConstants.activationEnergy,
+    "k_\\inf": reaction.kineticConstants["k_\\inf"],
+    E_A: reaction.kineticConstants.E_A,
   }
 
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
@@ -120,7 +125,7 @@ const generateAutocatalyticModelConstants = (
     }
   })
 
-  return { k: 1, ...updatedExponents }
+  return { ...updatedExponents }
 }
 
 // Some placeholder parameters

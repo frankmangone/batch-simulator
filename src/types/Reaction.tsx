@@ -37,8 +37,8 @@ export interface ReactionCompound {
 
 export interface KineticConstants {
   [key: string]: number
-  preExponential: number
-  activationEnergy: number
+  "k_\\inf": number
+  E_A: number
 }
 
 export type KineticEquation = Token[]

@@ -43,11 +43,26 @@ const useReactions = () => {
         products: [],
         kineticModel: 0,
         kineticConstants: {
-          k: 1,
-          preExponential: 1000000,
-          activationEnergy: 30000,
+          "k_\\inf": 1000000, // Pre exponential term for Arrhenius
+          E_A: 30000, // Arrhenius activation energy
         },
-        kineticEquation: [new Token(TokenTypes.Parameter, "<k>")],
+        kineticEquation: [
+          new Token(TokenTypes.Parameter, "<k_\\inf>"),
+          new Token(TokenTypes.Operator, "*"),
+          new Token(TokenTypes.Parameter, "e"),
+          new Token(TokenTypes.Operator, "^"),
+          new Token(TokenTypes.LeftParenthesis, "("),
+          new Token(TokenTypes.LeftParenthesis, "("),
+          new Token(TokenTypes.Parameter, "<E_A>"),
+          new Token(TokenTypes.RightParenthesis, ")"),
+          new Token(TokenTypes.Operator, "/"),
+          new Token(TokenTypes.LeftParenthesis, "("),
+          new Token(TokenTypes.Parameter, "<R>"),
+          new Token(TokenTypes.Operator, "*"),
+          new Token(TokenTypes.Variable, "{T}"),
+          new Token(TokenTypes.RightParenthesis, ")"),
+          new Token(TokenTypes.RightParenthesis, ")"),
+        ],
       }
       dispatch(add(newReaction))
     },
