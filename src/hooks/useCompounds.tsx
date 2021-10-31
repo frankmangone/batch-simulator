@@ -6,10 +6,7 @@ import useReactions from "./useReactions"
 import { saveToKey } from "../helpers/localStorage"
 
 /* Constants */
-import {
-  COMPOUND_COLORS,
-  COMPOUND_COLORS_CODES,
-} from "../constants/compoundColors"
+import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
 import { STORAGE_KEY } from "../features/compoundsSlice"
 
 /* Types */
