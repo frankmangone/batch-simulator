@@ -7,12 +7,6 @@ import { FiEdit, FiTrash2 } from "react-icons/fi"
 /* Constants */
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
-/* Hooks */
-import { useEffect, useState } from "react"
-
-/* Helpers */
-import { validateNotEmpty } from "../../helpers/validators"
-
 /* Types */
 import { Compound } from "../../types/Compound"
 
@@ -25,53 +19,15 @@ interface ICompoundCardProps {
 }
 
 const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
-  const {
-    compound,
-    editCompound,
-    updateCompound,
-    removeCompound,
-    validateUnicity,
-  } = props
-  const [symbolInput, setSymbolInput] = useState<string>(compound.symbol)
-
-  useEffect(() => {
-    setSymbolInput(compound.symbol)
-  }, [compound])
-
-  /**
-   * Form submission handling
-   */
-  const handleSymbolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSymbolInput(event.target.value)
-  }
-
-  const validateAndUpdateSymbol = () => {
-    if (
-      validateNotEmpty(symbolInput) &&
-      validateUnicity("symbol", symbolInput)
-    ) {
-      /* Update symbol */
-      const updatedCompound = { ...compound }
-      updatedCompound.symbol = symbolInput
-      updateCompound(updatedCompound)
-    } else {
-      /* Reset input initial state */
-      setSymbolInput(compound.symbol)
-    }
-  }
-
-  /**
-   * Toggling
-   */
+  const { compound, editCompound, removeCompound } = props
 
   return (
     <CompoundCardWrapper>
       <CompoundCardInner>
-        <SymbolInput
-          value={symbolInput}
-          onBlur={validateAndUpdateSymbol}
-          onChange={handleSymbolChange}
-        />
+        {/* Tile to display symbol */}
+        <CompoundTile color={compound.color as keyof typeof COMPOUND_COLORS}>
+          {compound.symbol}
+        </CompoundTile>
 
         {/* Button to toggle modal edition */}
         <CardButton onClick={editCompound}>
@@ -82,12 +38,6 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
         <CardButton onClick={removeCompound}>
           <FiTrash2 />
         </CardButton>
-
-        {/* Bullet to display the color associated with the compound */}
-        <CompoundColorBullet
-          className="bullet"
-          color={compound.color as keyof typeof COMPOUND_COLORS}
-        />
       </CompoundCardInner>
     </CompoundCardWrapper>
   )
@@ -100,7 +50,7 @@ export default CompoundCard
  */
 
 const CompoundCardWrapper = styled.li`
-  flex-basis: 25%;
+  /* flex-basis: 25%;
 
   @media only screen and (max-width: 1200px) {
     flex-basis: 33.3%;
@@ -112,7 +62,7 @@ const CompoundCardWrapper = styled.li`
 
   @media only screen and (max-width: 520px) {
     flex-basis: 100%;
-  }
+  } */
 `
 
 const CompoundCardInner = styled.div`
@@ -127,6 +77,7 @@ const CompoundCardInner = styled.div`
   animation-iteration-count: 1;
   background-color: var(--color-grey-lighter);
   border-radius: 5px;
+  border: 1.5px solid var(--color-grey-lightest);
   display: flex;
   color: var(--color-grey-lightest);
   cursor: pointer;
@@ -134,23 +85,8 @@ const CompoundCardInner = styled.div`
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    & {
-      box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
-      transform: translateY(-2px);
-    }
-
-    & > button {
-      opacity: 1;
-    }
-
-    & > .bullet {
-      transform: scale(60);
-      border-color: var(--color-grey-lighter);
-    }
-    & > .symbol-input:after {
-      margin-left: 0%;
-      width: auto;
-    }
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
   }
 
   button {
@@ -162,23 +98,12 @@ interface ICompoundColorBulletProps {
   color: keyof typeof COMPOUND_COLORS
 }
 
-const CompoundColorBullet = styled.div<ICompoundColorBulletProps>`
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 10px;
-  right: 10px;
-  border-radius: 50%;
-  transition: all 0.2s ease-in-out;
-  z-index: 1;
-
+const CompoundTile = styled.div<ICompoundColorBulletProps>`
   background-color: ${(props) => COMPOUND_COLORS[props.color]};
-  border: 1px solid var(--color-grey-light);
-`
-
-const SymbolInput = styled.input`
-  font-size: 2rem;
-  margin-left: 0;
-  margin-right: 0.5rem;
-  z-index: 2;
+  border-radius: 5px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
+  color: var(--color-grey-dark);
+  font-size: 1.6rem;
+  padding: 0.5rem 0.9rem;
+  margin-right: 1rem;
 `
