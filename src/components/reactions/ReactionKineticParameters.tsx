@@ -17,8 +17,6 @@ interface IReactionKineticParametersProps {
   updateKineticConstant: (key: string, value: number) => void
 }
 
-// const mu_units = <Equation></Equation>
-
 const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   props
 ) => {
@@ -37,12 +35,14 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
     new Token(TokenTypes.Parameter, `-1`),
   ]
 
-  const globalOrder = Object.entries(reaction?.kineticConstants)
-    .map(([key, value]) => value)
-    .reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      -reaction?.kineticConstants.k || 0
-    )
+  const globalOrder = Object.entries(reaction?.kineticConstants).reduce(
+    (accumulator, [key, value]) => {
+      if (key === "preExponential" || key === "activationEnergy")
+        return accumulator
+      return accumulator + value
+    },
+    -reaction?.kineticConstants.k || 0
+  )
 
   if (globalOrder !== 1) {
     tokenizedKUnits.push(new Token(TokenTypes.Operator, "*"))
