@@ -74,10 +74,10 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
           case "preExponential":
             if (kineticModel === KineticModel.hyperbolic) {
               units = <Equation tokenizedEquation={tokenizedMuUnits} />
-              symbol = "\\mu_0"
+              symbol = "\\mu_\\inf"
             } else {
               units = <Equation tokenizedEquation={tokenizedKUnits} />
-              symbol = "k_0"
+              symbol = "k_\\inf"
             }
             break
           case "activationEnergy":
