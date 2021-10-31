@@ -7,21 +7,28 @@ interface IEquation {
   tokenizedEquation: Token[]
 }
 
+// It is necessary to specify the 'parenthesis level' at which the operation is done
+interface Operation {
+  code: JSX.Element | string
+  level: number
+}
+
 export const Equation: React.FC<IEquation> = (props) => {
   const { tokenizedEquation } = props
   const components: JSX.Element[] = []
 
   const parenthesisStack: (JSX.Element | string)[][] = []
-  const operationStack: (JSX.Element | string)[] = []
+  const operationStack: Operation[] = []
 
   tokenizedEquation.forEach((token) => {
+    console.log({ components, parenthesisStack, operationStack, token })
     /**
      * Parenthesis treatment takes precedence over everything else.
      *
      * A buffer is pushed to the parenthesis stack upon finding a left bracket.
      *
      * When a right parenthesis is found, the last element from the buffer is popped,
-     * and added as a parenthesis component
+     * and added as a parenthesis component to the latest parenthesis stack, or the components array
      */
     if (token.type === TokenTypes.LeftParenthesis) {
       parenthesisStack.push([])
@@ -29,27 +36,43 @@ export const Equation: React.FC<IEquation> = (props) => {
       // If the syntax is correct, pop should never return undefined
       const parenthesis = parenthesisStack.pop() as (string | JSX.Element)[]
 
-      // If there are operations in the operationStack, pop most recent one
-      if (operationStack.length > 0) {
-        const operation = operationStack.pop()
+      // If there are elements in the parenthesisStack, then push any new components to it
+      // If not, push any new components to the components array
+      const currentStack =
+        parenthesisStack.length === 0
+          ? components
+          : parenthesisStack[parenthesisStack.length - 1]
+
+      // If there are operations in the operationStack, and if the latest operation
+      // matches the parenthesis level, pop most recent one
+      if (
+        operationStack.length > 0 &&
+        operationStack[operationStack.length - 1].level ===
+          parenthesisStack.length
+      ) {
+        const operation = operationStack.pop() as Operation
+
         //
-        if (operation === "/") {
-          const numerator = components.pop() as string | JSX.Element
-          components.push(
+        if (operation.code === "/") {
+          const numerator = currentStack.pop() as string | JSX.Element
+          currentStack.push(
             <Division
               numerator={numerator}
               denominator={<Parenthesis elements={parenthesis} />}
             />
           )
-        } else if (operation === "^") {
-          const base = components.pop() as string | JSX.Element
-          components.push(
+        } else if (operation.code === "^") {
+          const base = currentStack.pop() as string | JSX.Element
+          currentStack.push(
             <Power base={base} power={<Parenthesis elements={parenthesis} />} />
           )
+        } else if (operation.code === "-" || operation.code === "+") {
+          currentStack.push(operation.code)
+          currentStack.push(<Parenthesis elements={parenthesis} />)
         }
       } else {
-        // No operations in operationStack, simply push component
-        components.push(<Parenthesis elements={parenthesis} />)
+        // No *valid* operations in operationStack, simply push component
+        currentStack.push(<Parenthesis elements={parenthesis} />)
       }
     }
     //
@@ -82,9 +105,9 @@ export const Equation: React.FC<IEquation> = (props) => {
         /**
          * Pop most recent operation from stack
          */
-        const operation = operationStack.pop()
+        const operation = operationStack.pop() as Operation
         //
-        if (operation === "/") {
+        if (operation.code === "/") {
           const numerator = components.pop() as string | JSX.Element
           components.push(
             <Division
@@ -96,7 +119,7 @@ export const Equation: React.FC<IEquation> = (props) => {
               }
             />
           )
-        } else if (operation === "^") {
+        } else if (operation.code === "^") {
           const base = components.pop() as string | JSX.Element
           components.push(
             <Power
@@ -130,7 +153,10 @@ export const Equation: React.FC<IEquation> = (props) => {
     else if (token.type === TokenTypes.Operator) {
       if (token.value === "/" || token.value === "^") {
         //
-        operationStack.push(token.value)
+        operationStack.push({
+          code: token.value,
+          level: parenthesisStack.length,
+        })
       }
       //
       else if (parenthesisStack.length > 0) {

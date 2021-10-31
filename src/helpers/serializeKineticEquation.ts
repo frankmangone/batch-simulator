@@ -70,6 +70,7 @@ const addArrheniusExponential = (equationTokens: Token[]): void => {
   equationTokens.push(new Token(TokenTypes.Operator, "^"))
   equationTokens.push(new Token(TokenTypes.LeftParenthesis, "("))
   equationTokens.push(new Token(TokenTypes.LeftParenthesis, "("))
+  equationTokens.push(new Token(TokenTypes.Operator, "-"))
   equationTokens.push(new Token(TokenTypes.Parameter, "<E_A>"))
   equationTokens.push(new Token(TokenTypes.RightParenthesis, ")"))
   equationTokens.push(new Token(TokenTypes.Operator, "/"))

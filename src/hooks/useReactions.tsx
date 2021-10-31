@@ -53,6 +53,7 @@ const useReactions = () => {
           new Token(TokenTypes.Operator, "^"),
           new Token(TokenTypes.LeftParenthesis, "("),
           new Token(TokenTypes.LeftParenthesis, "("),
+          new Token(TokenTypes.Operator, "-"),
           new Token(TokenTypes.Parameter, "<E_A>"),
           new Token(TokenTypes.RightParenthesis, ")"),
           new Token(TokenTypes.Operator, "/"),
