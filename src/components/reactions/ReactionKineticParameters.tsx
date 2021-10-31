@@ -1,15 +1,16 @@
 import styled from "styled-components"
 
+/* Hooks */
+import useSettings from "../../hooks/useSettings"
+
 /* Components */
 import ReactionParamInputCard from "./ReactionParamInputCard"
 import { Equation, SymbolComponent } from "../MathExpressions"
 
 /* Types */
-import { Compound } from "../../types/Compound"
-import { Reaction } from "../../types/Reaction"
-
 import { Token, TokenTypes } from "../../helpers/tokenization"
-import useSettings from "../../hooks/useSettings"
+import { Reaction, KineticModel } from "../../types/Reaction"
+import type { Compound } from "../../types/Compound"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]
@@ -22,6 +23,7 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
 ) => {
   const { reaction, updateKineticConstant } = props
   const { settings } = useSettings()
+  const kineticModel: KineticModel = reaction.kineticModel
 
   const tokenizedMuUnits = [
     new Token(TokenTypes.Parameter, `${settings.timeUnits}`),
@@ -66,17 +68,17 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
       {Object.entries(reaction.kineticConstants).map(([param, value]) => {
         let units, symbol
 
+        if (param === "k" || param === "\\mu") return null
+
         switch (param) {
-          case "k":
-            units = <Equation tokenizedEquation={tokenizedKUnits} />
-            symbol = param
-            break
-          case "\\mu":
-            units = <Equation tokenizedEquation={tokenizedMuUnits} />
-            symbol = param
-            break
           case "preExponential":
-            symbol = "k_0"
+            if (kineticModel === KineticModel.hyperbolic) {
+              units = <Equation tokenizedEquation={tokenizedMuUnits} />
+              symbol = "\\mu_0"
+            } else {
+              units = <Equation tokenizedEquation={tokenizedKUnits} />
+              symbol = "k_0"
+            }
             break
           case "activationEnergy":
             symbol = "E_A"

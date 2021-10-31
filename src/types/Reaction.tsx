@@ -42,3 +42,9 @@ export interface KineticConstants {
 }
 
 export type KineticEquation = Token[]
+
+export enum KineticModel {
+  simple = 0,
+  hyperbolic,
+  autocatalytic,
+}
