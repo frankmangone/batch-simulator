@@ -318,9 +318,10 @@ export const Power: React.FC<IPowerProps> = (props) => {
 const PowerWrapper = styled.div`
   position: relative;
   display: flex;
+  align-items: center;
 
   & > .exponent {
-    transform: translateY(-40%) scale(0.8);
+    transform: translateY(-30%) scale(0.7);
   }
 `
 
