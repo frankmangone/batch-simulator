@@ -49,7 +49,6 @@ const useSimulate = () => {
     // Start simulation execution
     const results = executeSimulation(initialValues, parsedReactions, settings)
 
-    console.log(results)
     saveSimulationResults(results)
   }
 
@@ -299,9 +298,10 @@ const calculateReactionRate = (
     // and then perform binary operations
     if (token.type === TokenTypes.Parameter)
       resultStack.push(token.value as number)
-    else if (token.type === TokenTypes.Variable)
+    else if (token.type === TokenTypes.Variable) {
+      console.log(`${token.value}: ${oldTimePoint[token.value]}`)
       resultStack.push(oldTimePoint[token.value])
-    else {
+    } else {
       // Can only be a binary operator. Parenthesis have been removed in RPN.
       // Because it is a binary operator, it will always involve the last two
       // elements added to the stack, so we first have to pop them
