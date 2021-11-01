@@ -21,7 +21,6 @@ export const Equation: React.FC<IEquation> = (props) => {
   const operationStack: Operation[] = []
 
   tokenizedEquation.forEach((token) => {
-    console.log({ components, parenthesisStack, operationStack, token })
     /**
      * Parenthesis treatment takes precedence over everything else.
      *
