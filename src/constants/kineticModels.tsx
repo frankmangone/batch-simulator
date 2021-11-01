@@ -1,6 +1,7 @@
 /* Types */
 import {
   KineticConstants,
+  KineticModel,
   Reaction,
   ReactionCompound,
 } from "../types/Reaction"
@@ -21,17 +22,17 @@ import { Compound } from "../types/Compound"
 export const KINETIC_MODELS = ["Simple", "Hiperbolic", "Autocatalytic"]
 
 export const generateKineticConstants = (
-  model: number,
+  model: KineticModel,
   reaction: Reaction,
   compounds: Compound[]
 ): KineticConstants => {
   switch (model) {
-    case 1:
+    case KineticModel.hyperbolic:
       return generateHiperbolicModelConstants(reaction, compounds)
-    case 2:
+    case KineticModel.autocatalytic:
       return generateAutocatalyticModelConstants(reaction, compounds)
     default:
-      // 0
+      // simple
       return generateSimpleModelConstants(reaction, compounds)
   }
 }
@@ -40,7 +41,11 @@ const generateSimpleModelConstants = (
   reaction: Reaction,
   compounds: Compound[]
 ) => {
-  const updatedExponents: KineticConstants = {}
+  const updatedExponents: KineticConstants = {
+    "k_\\inf": reaction.kineticConstants["k_\\inf"],
+    E_A: reaction.kineticConstants.E_A,
+  }
+
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
     const compound = compounds.find(
       (c) => c.id === reactionCompound.compoundId
@@ -55,14 +60,18 @@ const generateSimpleModelConstants = (
     }
   })
 
-  return { k: 1, ...updatedExponents }
+  return { ...updatedExponents }
 }
 
 const generateHiperbolicModelConstants = (
   reaction: Reaction,
   compounds: Compound[]
 ) => {
-  const updatedExponents: KineticConstants = {}
+  const updatedExponents: KineticConstants = {
+    "k_\\inf": reaction.kineticConstants["k_\\inf"],
+    E_A: reaction.kineticConstants.E_A,
+  }
+
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
     const compound = compounds.find(
       (c) => c.id === reactionCompound.compoundId
@@ -77,14 +86,17 @@ const generateHiperbolicModelConstants = (
     }
   })
 
-  return { "\\mu": 1, ...updatedExponents }
+  return { ...updatedExponents }
 }
 
 const generateAutocatalyticModelConstants = (
   reaction: Reaction,
   compounds: Compound[]
 ) => {
-  const updatedExponents: KineticConstants = {}
+  const updatedExponents: KineticConstants = {
+    "k_\\inf": reaction.kineticConstants["k_\\inf"],
+    E_A: reaction.kineticConstants.E_A,
+  }
 
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
     const compound = compounds.find(
@@ -113,7 +125,7 @@ const generateAutocatalyticModelConstants = (
     }
   })
 
-  return { k: 1, ...updatedExponents }
+  return { ...updatedExponents }
 }
 
 // Some placeholder parameters

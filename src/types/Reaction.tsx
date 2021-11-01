@@ -37,6 +37,14 @@ export interface ReactionCompound {
 
 export interface KineticConstants {
   [key: string]: number
+  "k_\\inf": number
+  E_A: number
 }
 
 export type KineticEquation = Token[]
+
+export enum KineticModel {
+  simple = 0,
+  hyperbolic,
+  autocatalytic,
+}

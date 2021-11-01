@@ -9,7 +9,7 @@ import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 /* Components */
 import EditModal from "../EditModal"
-import FieldInput from "../FieldInput"
+import FieldInput from "../forms/FieldInput"
 import Notice from "../Notice"
 import Select from "../Select"
 import SubmitButton from "../SubmitButton"

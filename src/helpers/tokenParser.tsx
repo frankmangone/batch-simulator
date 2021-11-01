@@ -9,6 +9,8 @@ export const parseEquation = (tokenizedEquation: Token[]): Token[] => {
    * Based on: https://blog.shalvah.me/posts/parsing-math-expressions-with-javascript
    */
 
+  const tokens = replaceSigns(tokenizedEquation)
+
   const outputQueue: Token[] = []
   const operationStack: Token[] = []
 
@@ -16,7 +18,7 @@ export const parseEquation = (tokenizedEquation: Token[]): Token[] => {
     return array.slice(-1)[0]
   }
 
-  tokenizedEquation.forEach((token: Token) => {
+  tokens.forEach((token: Token) => {
     // Push parameters and variables to output queue
     if (
       token.type === TokenTypes.Parameter ||
@@ -43,14 +45,15 @@ export const parseEquation = (tokenizedEquation: Token[]): Token[] => {
       operationStack.push(token)
     }
 
-    //If the token is a left parenthesis (i.e. "("), then push it onto the stack.
+    // If the token is a left parenthesis (i.e. "("), then push it onto the stack.
     else if (token.type === TokenTypes.LeftParenthesis) {
       operationStack.push(token)
     }
 
-    //If the token is a right parenthesis (i.e. ")"):
+    // If the token is a right parenthesis (i.e. ")"):
     else if (token.type === TokenTypes.RightParenthesis) {
-      //Until the token at the top of the stack is a left parenthesis, pop operators off the stack onto the output queue.
+      // Until the token at the top of the stack is a left parenthesis,
+      // pop operators off the stack onto the output queue.
       while (
         peek(operationStack) &&
         peek(operationStack).type !== TokenTypes.LeftParenthesis
@@ -58,7 +61,8 @@ export const parseEquation = (tokenizedEquation: Token[]): Token[] => {
         outputQueue.push(operationStack.pop() as Token)
       }
 
-      //Pop the left parenthesis from the stack, but not onto the output queue.
+      // Pop the left parenthesis from the stack, but not onto the output queue.
+      // (We 'consume' the parenthesis)
       operationStack.pop()
     }
   })
@@ -68,4 +72,51 @@ export const parseEquation = (tokenizedEquation: Token[]): Token[] => {
 
 export const rpnToString = (rpn: Token[]) => {
   return rpn.map((token) => token.value).join(" ")
+}
+
+//
+
+const replaceSigns = (tokenizedEquation: Token[]): Token[] => {
+  // A special case needs to be accounted for:
+  // If the previous element on the serialized equation is a LeftParenthesis, and the current
+  // element is a (+) or a (-), it's a *SIGN* rather than an operation.
+  //
+  // For this reason, we want to update that token, switching it by a number (parameter)
+  // of value 1 or -1, and add a '*' operation.  let i = 0, parenthesisFound: boolean
+
+  let i = 0,
+    parenthesisFound = false
+
+  while (i < tokenizedEquation.length) {
+    if (tokenizedEquation[i].type === TokenTypes.LeftParenthesis) {
+      parenthesisFound = true
+    }
+    //
+    else if (
+      parenthesisFound &&
+      (tokenizedEquation[i].value === "+" || tokenizedEquation[i].value === "-")
+    ) {
+      // Set sign to a parameter of value 1 or -1
+      tokenizedEquation[i].type = TokenTypes.Parameter
+      if (tokenizedEquation[i].value === "+") tokenizedEquation[i].value = 1
+      else tokenizedEquation[i].value = -1
+
+      // Add an operation (multiplication) right after
+      tokenizedEquation = [
+        ...tokenizedEquation.slice(0, i + 1),
+        new Token(TokenTypes.Operator, "*"),
+        ...tokenizedEquation.slice(i + 1, tokenizedEquation.length),
+      ]
+
+      parenthesisFound = false
+    }
+    //
+    else {
+      parenthesisFound = false
+    }
+
+    i++
+  }
+
+  return tokenizedEquation
 }

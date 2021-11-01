@@ -18,6 +18,13 @@ import {
 import { TimePoint, SimulationResults } from "../types/SimulationResults"
 import { Token, TokenTypes } from "../helpers/tokenization"
 
+const CONSTANTS = {
+  e: 2.7182818,
+  // TODO: Make it so it's converted in accordance with selected units
+  R: 0.082, // L.atm/J.K
+  T: 290, // K
+}
+
 const useSimulate = () => {
   const { compounds } = useCompounds()
   const { reactions } = useReactions()
@@ -36,7 +43,7 @@ const useSimulate = () => {
     )
 
     // Initialize simulation results
-    const initialValues: TimePoint = { t: 0 }
+    const initialValues: TimePoint = { t: 0, T: settings.initialTemperature }
     compounds.forEach((c) => (initialValues[`[${c.symbol}]`] = c.concentration))
 
     // Start simulation execution
@@ -94,16 +101,20 @@ const parseParametersAndVariables = (reaction: Reaction): KineticEquation => {
     JSON.stringify(reaction.kineticEquation)
   )
 
-  kineticEquationCopy.forEach((token: Token) => {
+  kineticEquationCopy.forEach((token: Token, index: number) => {
     if (token.type === TokenTypes.Parameter) {
       // Replace parameter by numeric value
       const key = (token.value as string).replace(/<|>/g, "")
-      const value = reaction.kineticConstants[key]
-      token.value = value
+      // Param. may be reaction-related, or be a thermodynamic constant
+      if (reaction.kineticConstants[key])
+        token.value = reaction.kineticConstants[key]
+      else token.value = CONSTANTS[key as keyof typeof CONSTANTS]
     } else if (token.type === TokenTypes.Variable) {
       // Strip variable of {} symbols
       token.value = (token.value as string).replace(/{|}/g, "")
     }
+
+    kineticEquationCopy[index] = new Token(token.type, token.value)
   })
 
   return kineticEquationCopy
@@ -207,7 +218,8 @@ const explicitEulerStep = (
   const oldTimePoint: TimePoint = JSON.parse(
     JSON.stringify(results[results.length - 1])
   )
-  const newTimePoint: TimePoint = { t: 0 }
+  // TODO: Conditionally run T equation if not an isothermic system
+  const newTimePoint: TimePoint = { t: 0, T: oldTimePoint.T }
 
   // Reaction rates can be calculated for each reaction once,
   // and reused when calculating compound net reaction rates
@@ -286,9 +298,9 @@ const calculateReactionRate = (
     // and then perform binary operations
     if (token.type === TokenTypes.Parameter)
       resultStack.push(token.value as number)
-    else if (token.type === TokenTypes.Variable)
+    else if (token.type === TokenTypes.Variable) {
       resultStack.push(oldTimePoint[token.value])
-    else {
+    } else {
       // Can only be a binary operator. Parenthesis have been removed in RPN.
       // Because it is a binary operator, it will always involve the last two
       // elements added to the stack, so we first have to pop them

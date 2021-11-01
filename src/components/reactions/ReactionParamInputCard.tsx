@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 /* Components */
-import InfoTooltip from "../InfoTooltip"
+import InfoTooltip from "../forms/InfoTooltip"
 
 /* Helpers */
 import { validateNotEmpty } from "../../helpers/validators"

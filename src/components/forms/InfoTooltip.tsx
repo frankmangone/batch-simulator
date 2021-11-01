@@ -9,7 +9,7 @@ const InfoTooltip = (props: InfoTooltipProps) => {
 
   return (
     <Icon>
-      <FiInfo color="hsl(213, 20%, 95%)" size={20} />
+      <FiInfo color="hsl(213, 20%, 95%)" size={14} />
       <InfoWrapper>
         <Info>{text}</Info>
       </InfoWrapper>
@@ -23,11 +23,11 @@ const Icon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background-color: var(--color-grey-normal);
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   color: var(--color-white);
   cursor: pointer;
   position: relative;
@@ -40,7 +40,7 @@ const Info = styled.div`
   position: relative;
   opacity: 0;
   transition: opacity 0.15s linear;
-  padding: 0.5rem;
+  padding: 1rem;
   background-color: var(--color-grey-normal);
   border-radius: 5px;
   margin-left: 1rem;

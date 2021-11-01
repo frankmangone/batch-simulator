@@ -1,15 +1,16 @@
 import styled from "styled-components"
 
+/* Hooks */
+import useSettings from "../../hooks/useSettings"
+
 /* Components */
 import ReactionParamInputCard from "./ReactionParamInputCard"
 import { Equation, SymbolComponent } from "../MathExpressions"
 
 /* Types */
-import { Compound } from "../../types/Compound"
-import { Reaction } from "../../types/Reaction"
-
 import { Token, TokenTypes } from "../../helpers/tokenization"
-import useSettings from "../../hooks/useSettings"
+import { Reaction, KineticModel } from "../../types/Reaction"
+import type { Compound } from "../../types/Compound"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]
@@ -17,13 +18,12 @@ interface IReactionKineticParametersProps {
   updateKineticConstant: (key: string, value: number) => void
 }
 
-// const mu_units = <Equation></Equation>
-
 const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   props
 ) => {
   const { reaction, updateKineticConstant } = props
   const { settings } = useSettings()
+  const kineticModel: KineticModel = reaction.kineticModel
 
   const tokenizedMuUnits = [
     new Token(TokenTypes.Parameter, `${settings.timeUnits}`),
@@ -31,17 +31,20 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
     new Token(TokenTypes.Parameter, `-1`),
   ]
 
-  const globalOrder = Object.entries(reaction?.kineticConstants)
-    .map(([key, value]) => value)
-    .reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      -reaction?.kineticConstants.k || 0
-    )
   const tokenizedKUnits = [
     new Token(TokenTypes.Parameter, `${settings.timeUnits}`),
     new Token(TokenTypes.Operator, "^"),
     new Token(TokenTypes.Parameter, `-1`),
   ]
+
+  const globalOrder = Object.entries(reaction?.kineticConstants).reduce(
+    (accumulator, [key, value]) => {
+      if (key === "preExponential" || key === "activationEnergy")
+        return accumulator
+      return accumulator + value
+    },
+    -reaction?.kineticConstants.k || 0
+  )
 
   if (globalOrder !== 1) {
     tokenizedKUnits.push(new Token(TokenTypes.Operator, "*"))
@@ -63,16 +66,21 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   return (
     <KineticParamsWrapper>
       {Object.entries(reaction.kineticConstants).map(([param, value]) => {
-        let units = undefined
-        if (param === "k")
-          units = <Equation tokenizedEquation={tokenizedKUnits} />
-        if (param === "\\mu")
-          units = <Equation tokenizedEquation={tokenizedMuUnits} />
+        let units, symbol
+
+        if ("k_\\inf") {
+          if (kineticModel === KineticModel.hyperbolic) {
+            units = <Equation tokenizedEquation={tokenizedMuUnits} />
+          } else {
+            units = <Equation tokenizedEquation={tokenizedKUnits} />
+          }
+        }
+        symbol = param
 
         return (
           <ReactionParamInputCard
             key={param}
-            paramSymbol={<SymbolComponent symbol={param} />}
+            paramSymbol={<SymbolComponent symbol={symbol} />}
             value={value as number}
             units={units}
             updateValue={(value: number) => {

@@ -5,14 +5,21 @@ import type { Settings } from "../types/Settings"
 type SettingsState = Settings
 export const STORAGE_KEY = "batch-simulator:settings"
 const initialState: SettingsState = loadFromKey(STORAGE_KEY) || {
+  // Reaction times
   reactionTime: 30,
   deadTime: 30,
   timeStep: 0.1,
-  //
+
+  // Units
   timeUnits: "s",
   volumeUnits: "L",
   molarUnits: "mol",
   massUnits: "kg",
+  temperatureUnits: "K",
+
+  // Heat Exchange
+  isothermal: true,
+  initialTemperature: 25,
 }
 
 type SaveFieldAction = PayloadAction<{ field: string; value: string | number }>

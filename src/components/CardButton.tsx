@@ -6,10 +6,9 @@ const CardButton = styled.button`
   background-color: unset;
   border: none;
   border-radius: 5px;
-  color: var(--color-grey-dark);
+  color: var(--color-grey-normal);
   cursor: pointer;
   display: flex;
-  opacity: 0;
   font-size: 1.5em;
   margin-left: 0.2rem;
   padding: 0.5rem;
@@ -17,7 +16,8 @@ const CardButton = styled.button`
   z-index: 2;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.3);
+    color: var(--color-grey-dark);
   }
 `
 

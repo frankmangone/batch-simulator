@@ -12,6 +12,10 @@ import { STORAGE_KEY } from "../features/compoundsSlice"
 /* Types */
 import { Compound } from "../types/Compound"
 
+interface UsedColors {
+  [key: string]: boolean
+}
+
 const useCompounds = () => {
   const dispatch = useAppDispatch()
   const compounds = useAppSelector((state) => state.compounds)
@@ -22,13 +26,34 @@ const useCompounds = () => {
     saveToKey(compounds, STORAGE_KEY)
   }, [compounds])
 
+  const unusedColor = () => {
+    const colorKeys = COMPOUND_COLORS_CODES
+
+    // Initialize object to keep track of used colors
+    let usedColors: UsedColors = {}
+    colorKeys.forEach((key: string) => (usedColors[key] = false))
+
+    // Find currently used colors
+    compounds.forEach((compound) => (usedColors[compound.color] = true))
+
+    // Find the first unused color
+    let k = 0,
+      foundColor
+    while (k < colorKeys.length && !foundColor) {
+      if (!usedColors[colorKeys[k]]) foundColor = colorKeys[k]
+      k++
+    }
+
+    return foundColor || "blue1"
+  }
+
   return {
     compounds,
 
     addCompound: (): void => {
       const newCompound = {
         id: randomstring.generate(8),
-        color: COMPOUND_COLORS_CODES[0],
+        color: unusedColor(),
         concentration: 0,
         molecularWeight: 0,
         symbol: "A",

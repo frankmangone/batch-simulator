@@ -1,51 +1,82 @@
 import styled from "styled-components"
 
 /* Components */
-import FieldInput from "../components/FieldInput"
 import PageTitle from "../components/PageTitle"
+import OperatingTimesSection from "../components/settings/OperatingTimesSection"
+import UnitsSection from "../components/settings/UnitsSection"
+import HeatExchangeSection from "../components/settings/HeatExchangeSection"
 
 /* Helpers */
-import { validateNotEmpty, validateGreaterThan } from "../helpers/validators"
+import {
+  validateEqual,
+  validateNotEmpty,
+  validateGreaterThan,
+} from "../helpers/validators"
 
 /* Hooks */
 import useSettings from "../hooks/useSettings"
 import { useFormik } from "formik"
 
 /* Types */
-import { Settings, SettingsErrors } from "../types/Settings"
+import type { Settings, SettingsErrors } from "../types/Settings"
+import type { FormikProps } from "formik"
 
-const SettingsPage: React.FC = () => {
+const SettingsPage: React.VFC = () => {
   const { settings, saveSettings } = useSettings()
 
   /**
    * Form validation function
    */
   const validate = (values: Settings): SettingsErrors => {
+    const { deadTime, initialTemperature, timeStep, reactionTime } = values
     const errors: SettingsErrors = {}
 
     /* Reaction time validation */
-    if (!validateNotEmpty(values.reactionTime))
+    if (!validateNotEmpty(reactionTime))
       errors.reactionTime = "Reaction time cannot be empty"
-    else if (!validateGreaterThan(values.reactionTime, 0, true))
+    else if (!validateGreaterThan(reactionTime, 0, true))
       errors.reactionTime = "Reaction time cannot be lower than 0"
 
     /* Dead time validation */
-    if (!validateNotEmpty(values.deadTime))
+    if (!validateNotEmpty(deadTime))
       errors.deadTime = "Dead time cannot be empty"
-    else if (!validateGreaterThan(values.deadTime, 0, true))
+    else if (!validateGreaterThan(deadTime, 0, true))
       errors.deadTime = "Dead time cannot be lower than 0"
 
     /* Time step validation */
-    if (!validateNotEmpty(values.timeStep))
+    if (!validateNotEmpty(timeStep))
       errors.timeStep = "Time step cannot be empty"
-    else if (!validateGreaterThan(values.timeStep, 0, false))
+    else if (!validateGreaterThan(timeStep, 0, false))
       errors.timeStep = "Time step has to be greater than 0"
     // TODO: Time step has to be lower than reaction time
+
+    /* Initial temperature validation */
+    if (!validateNotEmpty(timeStep))
+      errors.initialTemperature = "Initial temperature cannot be empty"
+    else if (
+      (validateEqual(initialTemperature, "K") ||
+        validateEqual(initialTemperature, "R")) &&
+      !validateGreaterThan(initialTemperature, 0, false)
+    )
+      errors.initialTemperature =
+        "Initial temperature cannot be equal or lower than 0"
+    else if (
+      validateEqual(initialTemperature, "°C") &&
+      !validateGreaterThan(initialTemperature, -273.15, false)
+    )
+      errors.initialTemperature =
+        "Initial temperature cannot be equal or lower than -273.15"
+    else if (
+      validateEqual(initialTemperature, "°F") &&
+      !validateGreaterThan(initialTemperature, -459.67, false)
+    )
+      errors.initialTemperature =
+        "Initial temperature cannot be equal or lower than -459.67"
 
     return errors
   }
 
-  const formik = useFormik({
+  const formik: FormikProps<Settings> = useFormik({
     initialValues: { ...settings },
     validate,
     onSubmit: (values) => {
@@ -61,76 +92,20 @@ const SettingsPage: React.FC = () => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     formik.handleChange(event)
 
+  const sectionProps = {
+    formik,
+    onBlur,
+    onChange,
+  }
+
   return (
     <>
       <PageTitle>Operation</PageTitle>
 
       <Form>
-        <InputSection>
-          <h2>Operating times</h2>
-          <FieldInput
-            fieldName="reactionTime"
-            label="Reaction time:"
-            type="number"
-            value={formik.values.reactionTime}
-            error={formik.errors.reactionTime}
-            {...{ onBlur, onChange }}
-          />
-          <FieldInput
-            fieldName="deadTime"
-            label="Dead time:"
-            type="number"
-            tooltip="Time needed for discharge, cleaning, etc."
-            value={formik.values.deadTime}
-            error={formik.errors.deadTime}
-            {...{ onBlur, onChange }}
-          />
-          <FieldInput
-            fieldName="timeStep"
-            label="Time step:"
-            type="number"
-            tooltip="Small time interval for numerical calculation purposes"
-            value={formik.values.timeStep}
-            error={formik.errors.timeStep}
-            {...{ onBlur, onChange }}
-          />
-        </InputSection>
-
-        <InputSection>
-          <h2>Units</h2>
-          <FieldInput
-            fieldName="timeUnits"
-            label="Time units:"
-            type="text"
-            value={formik.values.timeUnits}
-            error={formik.errors.timeUnits}
-            {...{ onBlur, onChange }}
-          />
-          <FieldInput
-            fieldName="volumeUnits"
-            label="Volume units:"
-            type="text"
-            value={formik.values.volumeUnits}
-            error={formik.errors.volumeUnits}
-            {...{ onBlur, onChange }}
-          />
-          <FieldInput
-            fieldName="molarUnits"
-            label="Molar units:"
-            type="text"
-            value={formik.values.molarUnits}
-            error={formik.errors.molarUnits}
-            {...{ onBlur, onChange }}
-          />
-          <FieldInput
-            fieldName="massUnits"
-            label="Mass units:"
-            type="text"
-            value={formik.values.massUnits}
-            error={formik.errors.massUnits}
-            {...{ onBlur, onChange }}
-          />
-        </InputSection>
+        <OperatingTimesSection {...sectionProps} />
+        <UnitsSection {...sectionProps} />
+        <HeatExchangeSection {...sectionProps} />
       </Form>
     </>
   )
@@ -142,45 +117,4 @@ const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
   margin-top: 1rem;
-`
-
-const InputSection = ({
-  children,
-}: {
-  children: JSX.Element | JSX.Element[]
-}) => {
-  return (
-    <InputSectionWrapper>
-      <InputSectionInner>{children}</InputSectionInner>
-    </InputSectionWrapper>
-  )
-}
-
-const InputSectionWrapper = styled.div`
-  display: flex;
-  flex-basis: 50%;
-
-  @media only screen and (max-width: 940px) {
-    flex-basis: 100%;
-  }
-`
-
-const InputSectionInner = styled.div`
-  flex-grow: 1;
-  background-color: var(--color-grey-lighter);
-  border-radius: 5px;
-  flex-direction: column;
-  padding: 1rem;
-  margin: 1rem;
-  margin-bottom: 0;
-
-  h2 {
-    color: var(--color-grey-normal);
-    font-size: 1.2rem;
-    margin-top: 0;
-  }
-
-  input {
-    width: auto;
-  }
 `
