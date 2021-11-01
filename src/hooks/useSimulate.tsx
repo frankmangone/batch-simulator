@@ -299,7 +299,6 @@ const calculateReactionRate = (
     if (token.type === TokenTypes.Parameter)
       resultStack.push(token.value as number)
     else if (token.type === TokenTypes.Variable) {
-      console.log(`${token.value}: ${oldTimePoint[token.value]}`)
       resultStack.push(oldTimePoint[token.value])
     } else {
       // Can only be a binary operator. Parenthesis have been removed in RPN.

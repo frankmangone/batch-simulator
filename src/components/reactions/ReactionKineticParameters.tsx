@@ -68,24 +68,14 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
       {Object.entries(reaction.kineticConstants).map(([param, value]) => {
         let units, symbol
 
-        if (param === "k" || param === "\\mu") return null
-
-        switch (param) {
-          case "preExponential":
-            if (kineticModel === KineticModel.hyperbolic) {
-              units = <Equation tokenizedEquation={tokenizedMuUnits} />
-              symbol = "\\mu_\\inf"
-            } else {
-              units = <Equation tokenizedEquation={tokenizedKUnits} />
-              symbol = "k_\\inf"
-            }
-            break
-          case "activationEnergy":
-            symbol = "E_A"
-            break
-          default:
-            symbol = param
+        if ("k_\\inf") {
+          if (kineticModel === KineticModel.hyperbolic) {
+            units = <Equation tokenizedEquation={tokenizedMuUnits} />
+          } else {
+            units = <Equation tokenizedEquation={tokenizedKUnits} />
+          }
         }
+        symbol = param
 
         return (
           <ReactionParamInputCard
