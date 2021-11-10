@@ -18,7 +18,6 @@ import useSettings from "../hooks/useSettings"
 import { useFormik } from "formik"
 
 /* Types */
-import type { Settings, SettingsErrors } from "../types/Settings"
 import type { FormikProps } from "formik"
 
 const SettingsPage: React.VFC = () => {

@@ -3,9 +3,6 @@ import { useAppDispatch, useAppSelector } from "./useStore"
 import { save, saveField } from "../features/settingsSlice"
 import { saveToKey } from "../helpers/localStorage"
 
-/* Types */
-import type { Settings } from "../types/Settings"
-
 /* Constants */
 import { STORAGE_KEY } from "../features/settingsSlice"
 

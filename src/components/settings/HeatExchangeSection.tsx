@@ -5,8 +5,6 @@ import CheckboxInput from "../forms/CheckboxInput"
 /* Hooks */
 import useSettings from "../../hooks/useSettings"
 
-/* Types */
-import type { Settings } from "../../types/Settings"
 import type { FormikProps } from "formik"
 
 interface HeatExchangeProps {
