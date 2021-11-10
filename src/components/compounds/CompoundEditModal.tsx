@@ -14,9 +14,6 @@ import { useState } from "react"
 import useCompounds from "../../hooks/useCompounds"
 import useSettings from "../../hooks/useSettings"
 
-/* Types */
-import { Compound } from "../../types/Compound"
-
 interface ICompoundEditModalProps {
   compound: Compound
   closeModal: () => void

@@ -9,7 +9,6 @@ import { getCoefficientForComponent } from "../helpers/reactions"
 
 /* Types */
 import { Settings } from "../types/Settings"
-import { Compound } from "../types/Compound"
 import { Reaction, ReactionCompound, KineticEquation } from "../types/Reaction"
 import {
   ParsedReaction,

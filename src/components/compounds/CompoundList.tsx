@@ -9,9 +9,6 @@ import NoResource from "../NoResource"
 import useCompounds from "../../hooks/useCompounds"
 import { useState, useMemo } from "react"
 
-/* Types */
-import { Compound } from "../../types/Compound"
-
 const CompoundList: React.FC = (props) => {
   const { compounds, updateCompound, removeCompound } = useCompounds()
   const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(

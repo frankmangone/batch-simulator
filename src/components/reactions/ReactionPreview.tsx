@@ -12,7 +12,6 @@ import { COMPOUND_COLORS } from "../../constants/compoundColors"
 import useCompounds from "../../hooks/useCompounds"
 
 /* Types */
-import { Compound } from "../../types/Compound"
 import { Reaction } from "../../types/Reaction"
 
 interface IReactionPreviewProps {

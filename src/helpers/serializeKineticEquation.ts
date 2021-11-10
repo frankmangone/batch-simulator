@@ -1,7 +1,6 @@
 /* Helpers */
 import { Token, TokenTypes } from "../helpers/tokenization"
 import { KineticModel } from "../types/Reaction"
-import type { Compound } from "../types/Compound"
 import type { Reaction, ReactionCompound } from "../types/Reaction"
 
 const serializeKineticEquation = (

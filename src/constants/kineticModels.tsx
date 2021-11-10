@@ -5,7 +5,6 @@ import {
   Reaction,
   ReactionCompound,
 } from "../types/Reaction"
-import { Compound } from "../types/Compound"
 
 /**
  * This is a placeholder for more complex kinetic models,

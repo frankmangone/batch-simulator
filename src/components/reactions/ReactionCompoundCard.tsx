@@ -14,7 +14,6 @@ import { validateNotEmpty } from "../../helpers/validators"
 import { useState } from "react"
 
 /* Types */
-import { Compound } from "../../types/Compound"
 import { ReactionCompound } from "../../types/Reaction"
 
 interface IReactionCompoundCardProps {
