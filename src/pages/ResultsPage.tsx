@@ -13,9 +13,7 @@ import { useMemo, useState } from "react"
 import useCompounds from "../hooks/useCompounds"
 import useGetData from "../hooks/useGetData"
 
-import type { Point } from "../hooks/useGetData"
-
-const ResultsPage: React.FC = () => {
+const ResultsPage: React.VFC = () => {
   const { variableData } = useGetData()
   const { compounds } = useCompounds()
   const [selectedVariables, setSelectedVariables] = useState<number[]>([0])

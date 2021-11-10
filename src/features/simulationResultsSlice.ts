@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import type { SimulationResults } from "../types/SimulationResults"
 
 type SimulationResultsState = SimulationResults
 const initialState: SimulationResultsState = []

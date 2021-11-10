@@ -1,5 +1,3 @@
-import type { Point } from "../hooks/useGetData"
-
 interface Ticks {
   tickDistance: number
   totalTicks: number

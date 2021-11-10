@@ -13,7 +13,6 @@ import {
   ParsedReaction,
   CompoundWithCoefficient,
 } from "../types/ParsedReaction"
-import { TimePoint, SimulationResults } from "../types/SimulationResults"
 import { Token, TokenTypes } from "../helpers/tokenization"
 
 const CONSTANTS = {
