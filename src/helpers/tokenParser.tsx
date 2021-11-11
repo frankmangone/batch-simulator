@@ -1,4 +1,5 @@
-import { associativity, precedence, TokenTypes } from "./tokenization"
+import { associativity, precedence } from "./tokenization"
+import { TokenTypes } from "./tokenTypes"
 
 export const parseEquation = (tokenizedEquation: Token[]): Token[] => {
   /**

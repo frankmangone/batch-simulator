@@ -1,14 +1,8 @@
 import styled from "styled-components"
-
-/* Hooks */
-import useSettings from "../../hooks/useSettings"
-
-/* Components */
 import ReactionParamInputCard from "./ReactionParamInputCard"
+import useSettings from "../../hooks/useSettings"
 import { Equation, SymbolComponent } from "../MathExpressions"
-
-/* Types */
-import { TokenTypes } from "../../helpers/tokenization"
+import { TokenTypes } from "../../helpers/tokenTypes"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]

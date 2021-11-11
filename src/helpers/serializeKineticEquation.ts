@@ -1,5 +1,4 @@
-/* Helpers */
-import { TokenTypes } from "../helpers/tokenization"
+import { TokenTypes } from "./tokenTypes"
 
 const serializeKineticEquation = (
   reaction: Reaction,

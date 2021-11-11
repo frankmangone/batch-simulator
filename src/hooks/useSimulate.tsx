@@ -3,16 +3,15 @@ import useCompounds from "../hooks/useCompounds"
 import useReactions from "../hooks/useReactions"
 import useSimulationResults from "../hooks/useSimulationResults"
 
-/* Helpers */
 import { parseEquation } from "../helpers/tokenParser"
 import { getCoefficientForComponent } from "../helpers/reactions"
+import { TokenTypes } from "../helpers/tokenTypes"
 
 /* Types */
 import {
   ParsedReaction,
   CompoundWithCoefficient,
 } from "../types/ParsedReaction"
-import { TokenTypes } from "../helpers/tokenization"
 
 const CONSTANTS = {
   e: 2.7182818,

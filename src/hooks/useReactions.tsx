@@ -8,13 +8,9 @@ import {
   remove,
   removeCompound,
 } from "../features/reactionsSlice"
-import { saveToKey } from "../helpers/localStorage"
-
-/* Constants */
 import { STORAGE_KEY } from "../features/reactionsSlice"
-
-/* Helpers */
-import { TokenTypes } from "../helpers/tokenization"
+import { saveToKey } from "../helpers/localStorage"
+import { TokenTypes } from "../helpers/tokenTypes"
 
 const useReactions = () => {
   const dispatch = useAppDispatch()

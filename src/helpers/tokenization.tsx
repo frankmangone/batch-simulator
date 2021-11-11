@@ -1,16 +1,10 @@
+import { TokenTypes } from "./tokenTypes"
+
 /**
  * Equation tokenization
  * https://blog.shalvah.me/posts/how-to-build-a-math-expression-tokenizer-using-javascript-or-any-other-language
  * https://blog.shalvah.me/posts/parsing-math-expressions-with-javascript
  */
-
-export enum TokenTypes {
-  Parameter = 0,
-  Variable,
-  Operator,
-  LeftParenthesis,
-  RightParenthesis,
-}
 
 export const tokenizeEquation = (equation: string): Token[] => {
   const tokensArray: Token[] = []
