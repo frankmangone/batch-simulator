@@ -8,7 +8,7 @@ import ReactionParamInputCard from "./ReactionParamInputCard"
 import { Equation, SymbolComponent } from "../MathExpressions"
 
 /* Types */
-import { Token, TokenTypes } from "../../helpers/tokenization"
+import { TokenTypes } from "../../helpers/tokenization"
 import { Reaction, KineticModel } from "../../types/Reaction"
 
 interface IReactionKineticParametersProps {
@@ -25,15 +25,15 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   const kineticModel: KineticModel = reaction.kineticModel
 
   const tokenizedMuUnits = [
-    new Token(TokenTypes.Parameter, `${settings.timeUnits}`),
-    new Token(TokenTypes.Operator, "^"),
-    new Token(TokenTypes.Parameter, `-1`),
+    { type: TokenTypes.Parameter, value: `${settings.timeUnits}` },
+    { type: TokenTypes.Operator, value: "^" },
+    { type: TokenTypes.Parameter, value: `-1` },
   ]
 
   const tokenizedKUnits = [
-    new Token(TokenTypes.Parameter, `${settings.timeUnits}`),
-    new Token(TokenTypes.Operator, "^"),
-    new Token(TokenTypes.Parameter, `-1`),
+    { type: TokenTypes.Parameter, value: `${settings.timeUnits}` },
+    { type: TokenTypes.Operator, value: "^" },
+    { type: TokenTypes.Parameter, value: `-1` },
   ]
 
   const globalOrder = Object.entries(reaction?.kineticConstants).reduce(
@@ -46,20 +46,26 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   )
 
   if (globalOrder !== 1) {
-    tokenizedKUnits.push(new Token(TokenTypes.Operator, "*"))
-    tokenizedKUnits.push(
-      new Token(TokenTypes.Parameter, `${settings.volumeUnits}`)
-    )
-    tokenizedKUnits.push(new Token(TokenTypes.Operator, "^"))
-    tokenizedKUnits.push(new Token(TokenTypes.Parameter, `${globalOrder - 1}`))
-    tokenizedKUnits.push(new Token(TokenTypes.Operator, "*"))
-    tokenizedKUnits.push(
-      new Token(TokenTypes.Parameter, `${settings.molarUnits}`)
-    )
-    tokenizedKUnits.push(new Token(TokenTypes.Operator, "^"))
-    tokenizedKUnits.push(
-      new Token(TokenTypes.Parameter, `${-(globalOrder - 1)}`)
-    )
+    tokenizedKUnits.push({ type: TokenTypes.Operator, value: "*" })
+    tokenizedKUnits.push({
+      type: TokenTypes.Parameter,
+      value: `${settings.volumeUnits}`,
+    })
+    tokenizedKUnits.push({ type: TokenTypes.Operator, value: "^" })
+    tokenizedKUnits.push({
+      type: TokenTypes.Parameter,
+      value: `${globalOrder - 1}`,
+    })
+    tokenizedKUnits.push({ type: TokenTypes.Operator, value: "*" })
+    tokenizedKUnits.push({
+      type: TokenTypes.Parameter,
+      value: `${settings.molarUnits}`,
+    })
+    tokenizedKUnits.push({ type: TokenTypes.Operator, value: "^" })
+    tokenizedKUnits.push({
+      type: TokenTypes.Parameter,
+      value: `${-(globalOrder - 1)}`,
+    })
   }
 
   return (

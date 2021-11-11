@@ -13,7 +13,7 @@ import {
   ParsedReaction,
   CompoundWithCoefficient,
 } from "../types/ParsedReaction"
-import { Token, TokenTypes } from "../helpers/tokenization"
+import { TokenTypes } from "../helpers/tokenization"
 
 const CONSTANTS = {
   e: 2.7182818,
@@ -111,7 +111,7 @@ const parseParametersAndVariables = (reaction: Reaction): KineticEquation => {
       token.value = (token.value as string).replace(/{|}/g, "")
     }
 
-    kineticEquationCopy[index] = new Token(token.type, token.value)
+    kineticEquationCopy[index] = token
   })
 
   return kineticEquationCopy

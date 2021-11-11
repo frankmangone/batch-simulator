@@ -31,7 +31,7 @@ export const tokenizeEquation = (equation: string): Token[] => {
   const emptyParameterBuffer = () => {
     // Push new parameter to the tokens array
     const newParam = parameterBuffer.join("")
-    tokensArray.push(new Token(TokenTypes.Parameter, newParam))
+    tokensArray.push({ type: TokenTypes.Parameter, value: newParam })
 
     // Empty parameter buffer
     parameterBuffer = []
@@ -40,7 +40,7 @@ export const tokenizeEquation = (equation: string): Token[] => {
   const emptyVariableBuffer = () => {
     // Push new variable to the tokens array
     const newVar = variableBuffer.join("")
-    tokensArray.push(new Token(TokenTypes.Variable, newVar))
+    tokensArray.push({ type: TokenTypes.Variable, value: newVar })
 
     // Empty variable buffer
     variableBuffer = []
@@ -50,7 +50,7 @@ export const tokenizeEquation = (equation: string): Token[] => {
    * Array traversal
    * This is the core of the tokenization function
    *  */
-  charsArray.forEach((char, index) => {
+  charsArray.forEach((char) => {
     /**
      * Parameters are always contained in <>, so if the parameterBuffer
      * isn't empty, you simply keep pushing to it.
@@ -90,11 +90,11 @@ export const tokenizeEquation = (equation: string): Token[] => {
      * Only operators and parenthesis remain, so:
      */
     else if (isOperator(char)) {
-      tokensArray.push(new Token(TokenTypes.Operator, char))
+      tokensArray.push({ type: TokenTypes.Operator, value: char })
     } else if (isLeftParenthesis(char)) {
-      tokensArray.push(new Token(TokenTypes.LeftParenthesis, char))
+      tokensArray.push({ type: TokenTypes.LeftParenthesis, value: char })
     } else if (isRightParenthesis(char)) {
-      tokensArray.push(new Token(TokenTypes.RightParenthesis, char))
+      tokensArray.push({ type: TokenTypes.RightParenthesis, value: char })
     }
   })
 
@@ -124,22 +124,12 @@ const prec = {
   "-": 2,
 }
 
-export class Token {
-  type: number
-  value: string | number
+export const precedence = (token: Token) => {
+  return prec[token.value as keyof typeof prec] || 1
+}
 
-  constructor(type: number, value: string | number) {
-    this.type = type
-    this.value = value
-  }
-
-  get precedence() {
-    return prec[this.value as keyof typeof prec] || 1
-  }
-
-  get associativity() {
-    return assoc[this.value as keyof typeof assoc] || "left"
-  }
+export const associativity = (token: Token) => {
+  return assoc[token.value as keyof typeof assoc] || "left"
 }
 
 /**

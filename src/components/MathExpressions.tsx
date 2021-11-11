@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import { Fragment } from "react"
-/* Types */
-import { Token, TokenTypes } from "../helpers/tokenization"
+import { TokenTypes } from "../helpers/tokenization"
 
 interface IEquation {
   tokenizedEquation: Token[]

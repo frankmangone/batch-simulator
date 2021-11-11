@@ -1,4 +1,4 @@
-import { Token, TokenTypes } from "./tokenization"
+import { associativity, precedence, TokenTypes } from "./tokenization"
 
 export const parseEquation = (tokenizedEquation: Token[]): Token[] => {
   /**
@@ -34,10 +34,10 @@ export const parseEquation = (tokenizedEquation: Token[]): Token[] => {
       while (
         peek(operationStack) &&
         peek(operationStack).type === TokenTypes.Operator &&
-        ((token.associativity === "left" &&
-          token.precedence <= peek(operationStack).precedence) ||
-          (token.associativity === "right" &&
-            token.precedence < peek(operationStack).precedence))
+        ((associativity(token) === "left" &&
+          precedence(token) <= precedence(peek(operationStack))) ||
+          (associativity(token) === "right" &&
+            precedence(token) < precedence(peek(operationStack))))
       ) {
         outputQueue.push(operationStack.pop() as Token)
       }
@@ -104,7 +104,7 @@ const replaceSigns = (tokenizedEquation: Token[]): Token[] => {
       // Add an operation (multiplication) right after
       tokenizedEquation = [
         ...tokenizedEquation.slice(0, i + 1),
-        new Token(TokenTypes.Operator, "*"),
+        { type: TokenTypes.Operator, value: "*" },
         ...tokenizedEquation.slice(i + 1, tokenizedEquation.length),
       ]
 

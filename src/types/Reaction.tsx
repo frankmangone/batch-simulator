@@ -1,5 +1,3 @@
-import { Token } from "../helpers/tokenization"
-
 export interface Reaction {
   id: string
 

@@ -1,5 +1,3 @@
-import { Token } from "../helpers/tokenization"
-
 /**
  *  This is a reduced model to represent reactions
  *  It only has the tokenized kineticEquation, and a list
