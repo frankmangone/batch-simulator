@@ -7,12 +7,6 @@ import { parseEquation } from "../helpers/tokenParser"
 import { getCoefficientForComponent } from "../helpers/reactions"
 import { TokenTypes } from "../helpers/tokenTypes"
 
-/* Types */
-import {
-  ParsedReaction,
-  CompoundWithCoefficient,
-} from "../types/ParsedReaction"
-
 const CONSTANTS = {
   e: 2.7182818,
   // TODO: Make it so it's converted in accordance with selected units
