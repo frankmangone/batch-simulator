@@ -10,6 +10,8 @@
  * the MVP1
  */
 
+import { KineticModels } from "../helpers/reactionTypes"
+
 export const KINETIC_MODELS = ["Simple", "Hiperbolic", "Autocatalytic"]
 
 export const generateKineticConstants = (
@@ -18,9 +20,9 @@ export const generateKineticConstants = (
   compounds: Compound[]
 ): KineticConstants => {
   switch (model) {
-    case KineticModel.hyperbolic:
+    case KineticModels.hyperbolic:
       return generateHiperbolicModelConstants(reaction, compounds)
-    case KineticModel.autocatalytic:
+    case KineticModels.autocatalytic:
       return generateAutocatalyticModelConstants(reaction, compounds)
     default:
       // simple

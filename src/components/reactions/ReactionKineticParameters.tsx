@@ -3,6 +3,7 @@ import ReactionParamInputCard from "./ReactionParamInputCard"
 import useSettings from "../../hooks/useSettings"
 import { Equation, SymbolComponent } from "../MathExpressions"
 import { TokenTypes } from "../../helpers/tokenTypes"
+import { KineticModels } from "../../helpers/reactionTypes"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]
@@ -67,7 +68,7 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
         let units, symbol
 
         if ("k_\\inf") {
-          if (kineticModel === KineticModel.hyperbolic) {
+          if (kineticModel === KineticModels.hyperbolic) {
             units = <Equation tokenizedEquation={tokenizedMuUnits} />
           } else {
             units = <Equation tokenizedEquation={tokenizedKUnits} />

@@ -25,13 +25,13 @@ import ReactionPreview from "./ReactionPreview"
 
 /* Helpers */
 import serializeKineticEquation from "../../helpers/serializeKineticEquation"
+import { CompoundTypes } from "../../helpers/reactionTypes"
 
 /* Hooks */
 import { useMemo, useState, useRef } from "react"
 import useCompounds from "../../hooks/useCompounds"
 import useReactions from "../../hooks/useReactions"
 
-/* Types */
 interface IReactionEditModalProps {
   compounds: Compound[]
   reaction: Reaction
@@ -117,7 +117,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
   const getCompoundKey = (
     compoundType: CompoundType
   ): "products" | "reactants" => {
-    if (compoundType === CompoundType.Reactant) return "reactants"
+    if (compoundType === CompoundTypes.Reactant) return "reactants"
     return "products"
   }
 
@@ -188,7 +188,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
 
     /* Recalculate kinetic constants and equation */
     const kineticConstants = generateKineticConstants(
-      updatedReaction.kineticModel,
+      updatedReaction.kineticModel as KineticModel,
       updatedReaction,
       compounds
     )
@@ -260,7 +260,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               selectOptions={reactantOptions}
               onSelectionChange={(index: number | undefined) => {
                 if (index !== undefined) {
-                  addCompound(compounds[index].id, CompoundType.Reactant)
+                  addCompound(compounds[index].id, CompoundTypes.Reactant)
                 }
                 setSelectReactantIndex(undefined)
               }}
@@ -273,7 +273,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
                 reactionCompounds={modalReaction.reactants}
                 removeCompound={removeCompound}
                 updateCompound={updateCompound}
-                compoundType={CompoundType.Reactant}
+                compoundType={CompoundTypes.Reactant}
               />
             ) : (
               <Notice>No compounds...</Notice>
@@ -291,7 +291,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               selectOptions={productOptions}
               onSelectionChange={(index: number | undefined) => {
                 if (index !== undefined) {
-                  addCompound(compounds[index].id, CompoundType.Product)
+                  addCompound(compounds[index].id, CompoundTypes.Product)
                 }
                 setSelectProductIndex(undefined)
               }}
@@ -304,7 +304,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
                 reactionCompounds={modalReaction.products}
                 removeCompound={removeCompound}
                 updateCompound={updateCompound}
-                compoundType={CompoundType.Product}
+                compoundType={CompoundTypes.Product}
               />
             ) : (
               <Notice>No compounds...</Notice>
@@ -333,7 +333,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
               const updatedReaction = JSON.parse(JSON.stringify(modalReaction))
 
               updatedReaction.kineticConstants = generateKineticConstants(
-                value as number,
+                value as KineticModel,
                 modalReaction,
                 compounds
               )

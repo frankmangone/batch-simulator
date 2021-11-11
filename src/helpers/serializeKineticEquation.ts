@@ -1,4 +1,5 @@
 import { TokenTypes } from "./tokenTypes"
+import { KineticModels } from "./reactionTypes"
 
 const serializeKineticEquation = (
   reaction: Reaction,
@@ -16,7 +17,7 @@ const serializeKineticEquation = (
    * Returns tokenized equation with standard notation
    */
   switch (reaction.kineticModel) {
-    case KineticModel.hyperbolic:
+    case KineticModels.hyperbolic:
       equationTokens.push({ type: TokenTypes.Parameter, value: `<k_\\inf>` })
       addArrheniusExponential(equationTokens)
 
@@ -28,7 +29,7 @@ const serializeKineticEquation = (
 
     //
 
-    case KineticModel.autocatalytic:
+    case KineticModels.autocatalytic:
       equationTokens.push({ type: TokenTypes.Parameter, value: `<k_\\inf>` })
       addArrheniusExponential(equationTokens)
 

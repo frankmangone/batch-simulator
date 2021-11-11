@@ -11,6 +11,7 @@ import {
 import { STORAGE_KEY } from "../features/reactionsSlice"
 import { saveToKey } from "../helpers/localStorage"
 import { TokenTypes } from "../helpers/tokenTypes"
+import { KineticModels } from "../helpers/reactionTypes"
 
 const useReactions = () => {
   const dispatch = useAppDispatch()
@@ -34,7 +35,7 @@ const useReactions = () => {
         name: "",
         reactants: [],
         products: [],
-        kineticModel: 0,
+        kineticModel: KineticModels.simple,
         kineticConstants: {
           "k_\\inf": 1000000, // Pre exponential term for Arrhenius
           E_A: 30000, // Arrhenius activation energy

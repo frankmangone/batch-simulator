@@ -13,7 +13,7 @@ interface Reaction {
    * Kinetic constants are saved as a mapping, where the keys
    * are not known in advance
    */
-  kineticModel: number
+  kineticModel: KineticModel
   kineticConstants: KineticConstants
   kineticEquation: KineticEquation // A tokenized version of the kinetic model
   keyCompound?: string // It's a compound (reactant) id
@@ -23,10 +23,7 @@ interface Reaction {
  * To mark whether if a compound is a reactant or a product,
  * the following enum is used
  *  */
-declare enum CompoundType {
-  Reactant = 0,
-  Product,
-}
+type CompoundType = 0 | 1
 
 interface ReactionCompound {
   compoundId: string
@@ -41,8 +38,4 @@ interface KineticConstants {
 
 type KineticEquation = Token[]
 
-declare enum KineticModel {
-  simple = 0,
-  hyperbolic,
-  autocatalytic,
-}
+type KineticModel = 0 | 1 | 2
