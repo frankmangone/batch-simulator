@@ -1,4 +1,4 @@
-export interface Reaction {
+interface Reaction {
   id: string
 
   name?: string
@@ -23,25 +23,25 @@ export interface Reaction {
  * To mark whether if a compound is a reactant or a product,
  * the following enum is used
  *  */
-export enum CompoundType {
+declare enum CompoundType {
   Reactant = 0,
   Product,
 }
 
-export interface ReactionCompound {
+interface ReactionCompound {
   compoundId: string
   stoichiometricCoefficient: number
 }
 
-export interface KineticConstants {
+interface KineticConstants {
   [key: string]: number
   "k_\\inf": number
   E_A: number
 }
 
-export type KineticEquation = Token[]
+type KineticEquation = Token[]
 
-export enum KineticModel {
+declare enum KineticModel {
   simple = 0,
   hyperbolic,
   autocatalytic,

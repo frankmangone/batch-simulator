@@ -16,9 +16,6 @@ import { STORAGE_KEY } from "../features/reactionsSlice"
 /* Helpers */
 import { TokenTypes } from "../helpers/tokenization"
 
-/* Types */
-import type { Reaction } from "../types/Reaction"
-
 const useReactions = () => {
   const dispatch = useAppDispatch()
   const reactions = useAppSelector((state) => state.reactions)

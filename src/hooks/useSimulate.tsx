@@ -8,7 +8,6 @@ import { parseEquation } from "../helpers/tokenParser"
 import { getCoefficientForComponent } from "../helpers/reactions"
 
 /* Types */
-import { Reaction, ReactionCompound, KineticEquation } from "../types/Reaction"
 import {
   ParsedReaction,
   CompoundWithCoefficient,

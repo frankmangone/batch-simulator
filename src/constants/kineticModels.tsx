@@ -1,11 +1,3 @@
-/* Types */
-import {
-  KineticConstants,
-  KineticModel,
-  Reaction,
-  ReactionCompound,
-} from "../types/Reaction"
-
 /**
  * This is a placeholder for more complex kinetic models,
  * where constants can be added and used in expressions

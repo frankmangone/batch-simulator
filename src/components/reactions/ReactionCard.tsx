@@ -5,9 +5,6 @@ import CardButton from "../CardButton"
 import ReactionPreview from "./ReactionPreview"
 import { FiEdit, FiTrash2 } from "react-icons/fi"
 
-/* Types */
-import { Reaction } from "../../types/Reaction"
-
 interface IReactionCardProps {
   reaction: Reaction
   reactionIndex: number

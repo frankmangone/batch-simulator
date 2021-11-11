@@ -8,9 +8,6 @@ import { useMemo, useState } from "react"
 import useCompounds from "../../hooks/useCompounds"
 import useReactions from "../../hooks/useReactions"
 
-/* Types */
-import { Reaction } from "../../types/Reaction"
-
 const ReactionList: React.FC = () => {
   const { compounds } = useCompounds()
   const { reactions, removeReaction } = useReactions()

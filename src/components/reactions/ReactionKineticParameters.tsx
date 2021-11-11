@@ -9,7 +9,6 @@ import { Equation, SymbolComponent } from "../MathExpressions"
 
 /* Types */
 import { TokenTypes } from "../../helpers/tokenization"
-import { Reaction, KineticModel } from "../../types/Reaction"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]

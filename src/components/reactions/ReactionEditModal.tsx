@@ -32,8 +32,6 @@ import useCompounds from "../../hooks/useCompounds"
 import useReactions from "../../hooks/useReactions"
 
 /* Types */
-import { Reaction, ReactionCompound, CompoundType } from "../../types/Reaction"
-
 interface IReactionEditModalProps {
   compounds: Compound[]
   reaction: Reaction

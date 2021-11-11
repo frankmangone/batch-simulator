@@ -6,9 +6,6 @@ import { Equation, Subindex } from "../MathExpressions"
 /* Hooks */
 import useCompounds from "../../hooks/useCompounds"
 
-/* Types */
-import { Reaction } from "../../types/Reaction"
-
 interface IReactionEquationProps {
   reaction: Reaction
   keyCompoundSymbol?: string
