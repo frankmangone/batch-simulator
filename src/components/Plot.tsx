@@ -1,6 +1,5 @@
 import { useEffect, useCallback, useRef, useState } from "react"
 import styled from "styled-components"
-import type { Point } from "../hooks/useGetData"
 import { drawPlot } from "../helpers/drawPlot"
 
 interface PlotProps {

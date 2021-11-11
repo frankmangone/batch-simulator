@@ -1,6 +1,4 @@
-import { Token } from "../helpers/tokenization"
-
-export interface Reaction {
+interface Reaction {
   id: string
 
   name?: string
@@ -15,7 +13,7 @@ export interface Reaction {
    * Kinetic constants are saved as a mapping, where the keys
    * are not known in advance
    */
-  kineticModel: number
+  kineticModel: KineticModel
   kineticConstants: KineticConstants
   kineticEquation: KineticEquation // A tokenized version of the kinetic model
   keyCompound?: string // It's a compound (reactant) id
@@ -25,26 +23,19 @@ export interface Reaction {
  * To mark whether if a compound is a reactant or a product,
  * the following enum is used
  *  */
-export enum CompoundType {
-  Reactant = 0,
-  Product,
-}
+type CompoundType = 0 | 1
 
-export interface ReactionCompound {
+interface ReactionCompound {
   compoundId: string
   stoichiometricCoefficient: number
 }
 
-export interface KineticConstants {
+interface KineticConstants {
   [key: string]: number
   "k_\\inf": number
   E_A: number
 }
 
-export type KineticEquation = Token[]
+type KineticEquation = Token[]
 
-export enum KineticModel {
-  simple = 0,
-  hyperbolic,
-  autocatalytic,
-}
+type KineticModel = 0 | 1 | 2

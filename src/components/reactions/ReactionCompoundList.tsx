@@ -4,10 +4,6 @@ import ReactionCompoundCard from "./ReactionCompoundCard"
 /* Hooks */
 import useCompounds from "../../hooks/useCompounds"
 
-/* Types */
-import { Compound } from "../../types/Compound"
-import { ReactionCompound, CompoundType } from "../../types/Reaction"
-
 interface IReactionCompoundListProps {
   compoundType: CompoundType
   reactionCompounds: ReactionCompound[]

@@ -1,13 +1,5 @@
 import useSimulationResults from "../hooks/useSimulationResults"
 
-/* Types */
-import { TimePoint } from "../types/SimulationResults"
-
-export interface Point {
-  x: number
-  y: number
-}
-
 const useGetData = () => {
   const { simulationResults } = useSimulationResults()
 

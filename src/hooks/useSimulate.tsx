@@ -3,20 +3,9 @@ import useCompounds from "../hooks/useCompounds"
 import useReactions from "../hooks/useReactions"
 import useSimulationResults from "../hooks/useSimulationResults"
 
-/* Helpers */
 import { parseEquation } from "../helpers/tokenParser"
 import { getCoefficientForComponent } from "../helpers/reactions"
-
-/* Types */
-import { Settings } from "../types/Settings"
-import { Compound } from "../types/Compound"
-import { Reaction, ReactionCompound, KineticEquation } from "../types/Reaction"
-import {
-  ParsedReaction,
-  CompoundWithCoefficient,
-} from "../types/ParsedReaction"
-import { TimePoint, SimulationResults } from "../types/SimulationResults"
-import { Token, TokenTypes } from "../helpers/tokenization"
+import { TokenTypes } from "../helpers/tokenTypes"
 
 const CONSTANTS = {
   e: 2.7182818,
@@ -114,7 +103,7 @@ const parseParametersAndVariables = (reaction: Reaction): KineticEquation => {
       token.value = (token.value as string).replace(/{|}/g, "")
     }
 
-    kineticEquationCopy[index] = new Token(token.type, token.value)
+    kineticEquationCopy[index] = token
   })
 
   return kineticEquationCopy

@@ -9,9 +9,6 @@ import { saveToKey } from "../helpers/localStorage"
 import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
 import { STORAGE_KEY } from "../features/compoundsSlice"
 
-/* Types */
-import { Compound } from "../types/Compound"
-
 interface UsedColors {
   [key: string]: boolean
 }

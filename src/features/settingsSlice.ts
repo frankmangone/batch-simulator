@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { loadFromKey } from "../helpers/localStorage"
-import type { Settings } from "../types/Settings"
 
 type SettingsState = Settings
 export const STORAGE_KEY = "batch-simulator:settings"

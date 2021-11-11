@@ -1,4 +1,4 @@
-export interface Compound {
+interface Compound {
   id: string
   symbol: string
   color: string

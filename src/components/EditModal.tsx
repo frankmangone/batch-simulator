@@ -6,18 +6,14 @@ import { FiX } from "react-icons/fi"
 /* Hooks */
 import { useEffect } from "react"
 
-/* Types */
-import { FCWithChildren } from "../types/FCWithChildren"
-
 export interface IClosing {
   closing?: boolean
 }
 
-type IEditModalProps = IClosing &
-  FCWithChildren & {
-    setClosing: (closing: boolean) => void
-    handleClose: () => void
-  }
+type IEditModalProps = IClosing & {
+  setClosing: (closing: boolean) => void
+  handleClose: () => void
+}
 
 const EditModal: React.FC<IEditModalProps> = (props) => {
   const { children, closing, setClosing, handleClose } = props

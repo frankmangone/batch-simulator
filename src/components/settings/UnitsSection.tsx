@@ -1,9 +1,6 @@
 import { VFC } from "react"
 import InputSection from "./InputSection"
 import FieldInput from "../forms/FieldInput"
-
-/* Types */
-import type { Settings } from "../../types/Settings"
 import type { FormikProps } from "formik"
 
 interface UnitsProps {

@@ -1,4 +1,4 @@
-export interface Settings {
+interface Settings {
   // Reaction times
   reactionTime: number
   deadTime: number
@@ -16,7 +16,7 @@ export interface Settings {
   initialTemperature: number
 }
 
-export interface SettingsErrors {
+interface SettingsErrors {
   // Reaction times
   reactionTime?: string
   deadTime?: string

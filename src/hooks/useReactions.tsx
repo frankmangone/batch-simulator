@@ -8,16 +8,10 @@ import {
   remove,
   removeCompound,
 } from "../features/reactionsSlice"
-import { saveToKey } from "../helpers/localStorage"
-
-/* Constants */
 import { STORAGE_KEY } from "../features/reactionsSlice"
-
-/* Helpers */
-import { Token, TokenTypes } from "../helpers/tokenization"
-
-/* Types */
-import type { Reaction } from "../types/Reaction"
+import { saveToKey } from "../helpers/localStorage"
+import { TokenTypes } from "../helpers/tokenTypes"
+import { KineticModels } from "../helpers/reactionTypes"
 
 const useReactions = () => {
   const dispatch = useAppDispatch()
@@ -41,28 +35,28 @@ const useReactions = () => {
         name: "",
         reactants: [],
         products: [],
-        kineticModel: 0,
+        kineticModel: KineticModels.simple,
         kineticConstants: {
           "k_\\inf": 1000000, // Pre exponential term for Arrhenius
           E_A: 30000, // Arrhenius activation energy
         },
         kineticEquation: [
-          new Token(TokenTypes.Parameter, "<k_\\inf>"),
-          new Token(TokenTypes.Operator, "*"),
-          new Token(TokenTypes.Parameter, "e"),
-          new Token(TokenTypes.Operator, "^"),
-          new Token(TokenTypes.LeftParenthesis, "("),
-          new Token(TokenTypes.LeftParenthesis, "("),
-          new Token(TokenTypes.Operator, "-"),
-          new Token(TokenTypes.Parameter, "<E_A>"),
-          new Token(TokenTypes.RightParenthesis, ")"),
-          new Token(TokenTypes.Operator, "/"),
-          new Token(TokenTypes.LeftParenthesis, "("),
-          new Token(TokenTypes.Parameter, "<R>"),
-          new Token(TokenTypes.Operator, "*"),
-          new Token(TokenTypes.Variable, "{T}"),
-          new Token(TokenTypes.RightParenthesis, ")"),
-          new Token(TokenTypes.RightParenthesis, ")"),
+          { type: TokenTypes.Parameter, value: "<k_\\inf>" },
+          { type: TokenTypes.Operator, value: "*" },
+          { type: TokenTypes.Parameter, value: "e" },
+          { type: TokenTypes.Operator, value: "^" },
+          { type: TokenTypes.LeftParenthesis, value: "(" },
+          { type: TokenTypes.LeftParenthesis, value: "(" },
+          { type: TokenTypes.Operator, value: "-" },
+          { type: TokenTypes.Parameter, value: "<E_A>" },
+          { type: TokenTypes.RightParenthesis, value: ")" },
+          { type: TokenTypes.Operator, value: "/" },
+          { type: TokenTypes.LeftParenthesis, value: "(" },
+          { type: TokenTypes.Parameter, value: "<R>" },
+          { type: TokenTypes.Operator, value: "*" },
+          { type: TokenTypes.Variable, value: "{T}" },
+          { type: TokenTypes.RightParenthesis, value: ")" },
+          { type: TokenTypes.RightParenthesis, value: ")" },
         ],
       }
       dispatch(add(newReaction))

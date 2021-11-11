@@ -1,5 +1,3 @@
-import { Token } from "../helpers/tokenization"
-
 /**
  *  This is a reduced model to represent reactions
  *  It only has the tokenized kineticEquation, and a list
@@ -12,13 +10,13 @@ import { Token } from "../helpers/tokenization"
  *  B = 2
  *  D = -1
  *  */
-export interface ParsedReaction {
+interface ParsedReaction {
   id?: string
   compounds?: CompoundWithCoefficient[]
   kineticEquation?: Token[]
 }
 
-export interface CompoundWithCoefficient {
+interface CompoundWithCoefficient {
   compoundId: string
   symbol: string
   coefficient: number

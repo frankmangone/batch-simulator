@@ -1,16 +1,9 @@
 import styled from "styled-components"
-
-/* Hooks */
-import useSettings from "../../hooks/useSettings"
-
-/* Components */
 import ReactionParamInputCard from "./ReactionParamInputCard"
+import useSettings from "../../hooks/useSettings"
 import { Equation, SymbolComponent } from "../MathExpressions"
-
-/* Types */
-import { Token, TokenTypes } from "../../helpers/tokenization"
-import { Reaction, KineticModel } from "../../types/Reaction"
-import type { Compound } from "../../types/Compound"
+import { TokenTypes } from "../../helpers/tokenTypes"
+import { KineticModels } from "../../helpers/reactionTypes"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]
@@ -26,15 +19,15 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   const kineticModel: KineticModel = reaction.kineticModel
 
   const tokenizedMuUnits = [
-    new Token(TokenTypes.Parameter, `${settings.timeUnits}`),
-    new Token(TokenTypes.Operator, "^"),
-    new Token(TokenTypes.Parameter, `-1`),
+    { type: TokenTypes.Parameter, value: `${settings.timeUnits}` },
+    { type: TokenTypes.Operator, value: "^" },
+    { type: TokenTypes.Parameter, value: `-1` },
   ]
 
   const tokenizedKUnits = [
-    new Token(TokenTypes.Parameter, `${settings.timeUnits}`),
-    new Token(TokenTypes.Operator, "^"),
-    new Token(TokenTypes.Parameter, `-1`),
+    { type: TokenTypes.Parameter, value: `${settings.timeUnits}` },
+    { type: TokenTypes.Operator, value: "^" },
+    { type: TokenTypes.Parameter, value: `-1` },
   ]
 
   const globalOrder = Object.entries(reaction?.kineticConstants).reduce(
@@ -47,20 +40,26 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   )
 
   if (globalOrder !== 1) {
-    tokenizedKUnits.push(new Token(TokenTypes.Operator, "*"))
-    tokenizedKUnits.push(
-      new Token(TokenTypes.Parameter, `${settings.volumeUnits}`)
-    )
-    tokenizedKUnits.push(new Token(TokenTypes.Operator, "^"))
-    tokenizedKUnits.push(new Token(TokenTypes.Parameter, `${globalOrder - 1}`))
-    tokenizedKUnits.push(new Token(TokenTypes.Operator, "*"))
-    tokenizedKUnits.push(
-      new Token(TokenTypes.Parameter, `${settings.molarUnits}`)
-    )
-    tokenizedKUnits.push(new Token(TokenTypes.Operator, "^"))
-    tokenizedKUnits.push(
-      new Token(TokenTypes.Parameter, `${-(globalOrder - 1)}`)
-    )
+    tokenizedKUnits.push({ type: TokenTypes.Operator, value: "*" })
+    tokenizedKUnits.push({
+      type: TokenTypes.Parameter,
+      value: `${settings.volumeUnits}`,
+    })
+    tokenizedKUnits.push({ type: TokenTypes.Operator, value: "^" })
+    tokenizedKUnits.push({
+      type: TokenTypes.Parameter,
+      value: `${globalOrder - 1}`,
+    })
+    tokenizedKUnits.push({ type: TokenTypes.Operator, value: "*" })
+    tokenizedKUnits.push({
+      type: TokenTypes.Parameter,
+      value: `${settings.molarUnits}`,
+    })
+    tokenizedKUnits.push({ type: TokenTypes.Operator, value: "^" })
+    tokenizedKUnits.push({
+      type: TokenTypes.Parameter,
+      value: `${-(globalOrder - 1)}`,
+    })
   }
 
   return (
@@ -69,7 +68,7 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
         let units, symbol
 
         if ("k_\\inf") {
-          if (kineticModel === KineticModel.hyperbolic) {
+          if (kineticModel === KineticModels.hyperbolic) {
             units = <Equation tokenizedEquation={tokenizedMuUnits} />
           } else {
             units = <Equation tokenizedEquation={tokenizedKUnits} />

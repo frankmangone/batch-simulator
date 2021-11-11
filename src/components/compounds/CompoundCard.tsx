@@ -7,9 +7,6 @@ import { FiEdit, FiTrash2 } from "react-icons/fi"
 /* Constants */
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
-/* Types */
-import { Compound } from "../../types/Compound"
-
 interface ICompoundCardProps {
   compound: Compound
   editCompound: () => void

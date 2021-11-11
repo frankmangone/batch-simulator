@@ -13,10 +13,6 @@ import { validateNotEmpty } from "../../helpers/validators"
 /* Hooks */
 import { useState } from "react"
 
-/* Types */
-import { Compound } from "../../types/Compound"
-import { ReactionCompound } from "../../types/Reaction"
-
 interface IReactionCompoundCardProps {
   key: string
   compound: Compound
