@@ -61,6 +61,7 @@ const SelectInputWrapper = styled.div`
 const LabelWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  flex-basis: 50%;
   align-items: center;
 `
 

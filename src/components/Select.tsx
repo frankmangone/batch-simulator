@@ -159,13 +159,13 @@ interface ISelecting {
 
 const SelectWrapper = styled.div`
   position: relative;
-  flex-grow: 1;
+  flex: 1;
 `
 
 const SelectValue = styled.div<ISelecting>`
   align-items: center;
   background-color: var(--color-grey-lightest);
-  border: none;
+  border: 2px solid var(--color-grey-normal);
   border-radius: 5px;
   cursor: pointer;
   display: flex;
