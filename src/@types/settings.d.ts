@@ -5,11 +5,11 @@ interface Settings {
   timeStep: number
 
   // Units
-  timeUnits: string
-  volumeUnits: string
-  molarUnits: string
-  massUnits: string
-  temperatureUnits: string
+  timeUnits: number
+  volumeUnits: number
+  molarUnits: number
+  massUnits: number
+  temperatureUnits: number
 
   // Heat Exchange
   isothermal: boolean

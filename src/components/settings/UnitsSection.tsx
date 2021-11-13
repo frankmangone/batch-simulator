@@ -1,59 +1,74 @@
 import { VFC } from "react"
 import InputSection from "./InputSection"
-import FieldInput from "../forms/FieldInput"
+import SelectInput from "../forms/SelectInput"
+import {
+  timeUnitsOptions,
+  volumeUnitsOptions,
+  massUnitsOptions,
+  molarUnitsOptions,
+  temperatureUnitsOptions,
+} from "../../helpers/units"
 import type { FormikProps } from "formik"
 
 interface UnitsProps {
   formik: FormikProps<Settings>
-  onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const UnitsSection: VFC<UnitsProps> = (props) => {
-  const { formik, onBlur, onChange } = props
+  const { formik } = props
 
   return (
     <InputSection>
       <h2>Units</h2>
-      <FieldInput
+      <SelectInput
+        selectedOption={timeUnitsOptions[formik.values.timeUnits]}
         fieldName="timeUnits"
         label="Time units:"
-        type="text"
-        value={formik.values.timeUnits}
-        error={formik.errors.timeUnits}
-        {...{ onBlur, onChange }}
+        selectOptions={timeUnitsOptions}
+        onSelectionChange={(value) => {
+          formik.setFieldValue("timeUnits", value, false)
+          formik.handleSubmit()
+        }}
       />
-      <FieldInput
+      <SelectInput
+        selectedOption={volumeUnitsOptions[formik.values.volumeUnits]}
         fieldName="volumeUnits"
         label="Volume units:"
-        type="text"
-        value={formik.values.volumeUnits}
-        error={formik.errors.volumeUnits}
-        {...{ onBlur, onChange }}
+        selectOptions={volumeUnitsOptions}
+        onSelectionChange={(value) => {
+          formik.setFieldValue("volumeUnits", value, false)
+          formik.handleSubmit()
+        }}
       />
-      <FieldInput
+      <SelectInput
+        selectedOption={molarUnitsOptions[formik.values.molarUnits]}
         fieldName="molarUnits"
         label="Molar units:"
-        type="text"
-        value={formik.values.molarUnits}
-        error={formik.errors.molarUnits}
-        {...{ onBlur, onChange }}
+        selectOptions={molarUnitsOptions}
+        onSelectionChange={(value) => {
+          formik.setFieldValue("molarUnits", value, false)
+          formik.handleSubmit()
+        }}
       />
-      <FieldInput
+      <SelectInput
+        selectedOption={massUnitsOptions[formik.values.massUnits]}
         fieldName="massUnits"
         label="Mass units:"
-        type="text"
-        value={formik.values.massUnits}
-        error={formik.errors.massUnits}
-        {...{ onBlur, onChange }}
+        selectOptions={massUnitsOptions}
+        onSelectionChange={(value) => {
+          formik.setFieldValue("massUnits", value, false)
+          formik.handleSubmit()
+        }}
       />
-      <FieldInput
+      <SelectInput
+        selectedOption={temperatureUnitsOptions[formik.values.temperatureUnits]}
         fieldName="temperatureUnits"
         label="Temperature units:"
-        type="text"
-        value={formik.values.temperatureUnits}
-        error={formik.errors.temperatureUnits}
-        {...{ onBlur, onChange }}
+        selectOptions={temperatureUnitsOptions}
+        onSelectionChange={(value) => {
+          formik.setFieldValue("temperatureUnits", value, false)
+          formik.handleSubmit()
+        }}
       />
     </InputSection>
   )

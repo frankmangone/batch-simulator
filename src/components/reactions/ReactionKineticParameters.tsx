@@ -4,6 +4,11 @@ import useSettings from "../../hooks/useSettings"
 import { Equation, SymbolComponent } from "../MathExpressions"
 import { TokenTypes } from "../../helpers/tokenTypes"
 import { KineticModels } from "../../helpers/reactionTypes"
+import {
+  timeUnitsValue,
+  volumeUnitsValue,
+  molarUnitsValue,
+} from "../../helpers/units"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]
@@ -18,14 +23,24 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   const { settings } = useSettings()
   const kineticModel: KineticModel = reaction.kineticModel
 
+  const timeUnits = timeUnitsValue(settings.timeUnits)
+  const volumeUnits = volumeUnitsValue(settings.volumeUnits)
+  const molarUnits = molarUnitsValue(settings.molarUnits)
+
   const tokenizedMuUnits = [
-    { type: TokenTypes.Parameter, value: `${settings.timeUnits}` },
+    {
+      type: TokenTypes.Parameter,
+      value: `${timeUnits}`,
+    },
     { type: TokenTypes.Operator, value: "^" },
     { type: TokenTypes.Parameter, value: `-1` },
   ]
 
   const tokenizedKUnits = [
-    { type: TokenTypes.Parameter, value: `${settings.timeUnits}` },
+    {
+      type: TokenTypes.Parameter,
+      value: `${timeUnits}`,
+    },
     { type: TokenTypes.Operator, value: "^" },
     { type: TokenTypes.Parameter, value: `-1` },
   ]
@@ -43,7 +58,7 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
     tokenizedKUnits.push({ type: TokenTypes.Operator, value: "*" })
     tokenizedKUnits.push({
       type: TokenTypes.Parameter,
-      value: `${settings.volumeUnits}`,
+      value: `${volumeUnits}`,
     })
     tokenizedKUnits.push({ type: TokenTypes.Operator, value: "^" })
     tokenizedKUnits.push({
@@ -53,7 +68,7 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
     tokenizedKUnits.push({ type: TokenTypes.Operator, value: "*" })
     tokenizedKUnits.push({
       type: TokenTypes.Parameter,
-      value: `${settings.molarUnits}`,
+      value: `${molarUnits}`,
     })
     tokenizedKUnits.push({ type: TokenTypes.Operator, value: "^" })
     tokenizedKUnits.push({

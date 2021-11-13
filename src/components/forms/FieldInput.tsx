@@ -15,7 +15,6 @@ interface IFieldInputProps {
   label: string
   type?: string
   tooltip?: string
-  row?: boolean
   value: any
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -28,7 +27,6 @@ const FieldInput: React.FC<IFieldInputProps> = (props) => {
     error,
     fieldName,
     label,
-    row,
     type,
     tooltip,
     value,
@@ -39,7 +37,7 @@ const FieldInput: React.FC<IFieldInputProps> = (props) => {
   const voidFunction = () => {}
 
   return (
-    <FieldInputWrapper color={color} big={big} row={row}>
+    <FieldInputWrapper color={color} big={big}>
       <LabelWrapper>
         <label htmlFor={fieldName}>{label}</label>
         {tooltip && <InfoTooltip text={tooltip} />}
@@ -61,14 +59,12 @@ const FieldInput: React.FC<IFieldInputProps> = (props) => {
 interface IFieldInputWrapperProps {
   color?: string
   big?: boolean
-  row?: boolean
 }
 
 const FieldInputWrapper = styled.div<IFieldInputWrapperProps>`
   display: flex;
-  flex-direction: ${(props) => (props.row ? "row" : "column")};
-  align-items: flex-start;
-  align-self: ${(props) => (props.row ? "unset" : "flex-start")};
+  flex-direction: row;
+  align-items: center;
   padding: 0.5rem;
   position: relative;
 
@@ -119,7 +115,7 @@ const LabelWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 0.5rem;
+  flex-basis: 50%;
 `
 
 export default FieldInput

@@ -10,15 +10,15 @@ const initialState: SettingsState = loadFromKey(STORAGE_KEY) || {
   timeStep: 0.1,
 
   // Units
-  timeUnits: "s",
-  volumeUnits: "L",
-  molarUnits: "mol",
-  massUnits: "kg",
-  temperatureUnits: "K",
+  timeUnits: 0,
+  volumeUnits: 0,
+  molarUnits: 0,
+  massUnits: 0,
+  temperatureUnits: 0,
 
   // Heat Exchange
   isothermal: true,
-  initialTemperature: 25,
+  initialTemperature: 300,
 }
 
 type SaveFieldAction = PayloadAction<{ field: string; value: string | number }>
