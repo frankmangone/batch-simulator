@@ -6,10 +6,10 @@ interface Settings {
 
   // Units
   timeUnits: number
-  volumeUnits: string
-  molarUnits: string
-  massUnits: string
-  temperatureUnits: string
+  volumeUnits: number
+  molarUnits: number
+  massUnits: number
+  temperatureUnits: number
 
   // Heat Exchange
   isothermal: boolean

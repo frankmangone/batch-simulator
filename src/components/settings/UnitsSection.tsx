@@ -2,7 +2,7 @@ import { VFC } from "react"
 import InputSection from "./InputSection"
 import FieldInput from "../forms/FieldInput"
 import SelectInput from "../forms/SelectInput"
-import { timeUnits } from "../../helpers/units"
+import { timeUnitsOptions, volumeUnitsOptions } from "../../helpers/units"
 import type { FormikProps } from "formik"
 
 interface UnitsProps {
@@ -14,32 +14,28 @@ interface UnitsProps {
 const UnitsSection: VFC<UnitsProps> = (props) => {
   const { formik, onBlur, onChange } = props
 
-  const timeUnitOptions = timeUnits.map((unit, index) => ({
-    value: index,
-    displayText: unit,
-    collapsedDisplayText: unit,
-  }))
-
   return (
     <InputSection>
       <h2>Units</h2>
       <SelectInput
-        selectedOption={timeUnitOptions[formik.values.timeUnits]}
+        selectedOption={timeUnitsOptions[formik.values.timeUnits]}
         fieldName="timeUnits"
         label="Time units:"
-        selectOptions={timeUnitOptions}
+        selectOptions={timeUnitsOptions}
         onSelectionChange={(value) => {
           formik.setFieldValue("timeUnits", value, false)
           formik.handleSubmit()
         }}
       />
-      <FieldInput
+      <SelectInput
+        selectedOption={volumeUnitsOptions[formik.values.volumeUnits]}
         fieldName="volumeUnits"
         label="Volume units:"
-        type="text"
-        value={formik.values.volumeUnits}
-        error={formik.errors.volumeUnits}
-        {...{ onBlur, onChange }}
+        selectOptions={volumeUnitsOptions}
+        onSelectionChange={(value) => {
+          formik.setFieldValue("volumeUnits", value, false)
+          formik.handleSubmit()
+        }}
       />
       <FieldInput
         fieldName="molarUnits"
