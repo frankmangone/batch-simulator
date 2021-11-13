@@ -8,6 +8,11 @@ import SubmitButton from "../SubmitButton"
 
 /* Helpers */
 import { validateNotEmpty, validateGreaterThan } from "../../helpers/validators"
+import {
+  volumeUnitsValue,
+  massUnitsValue,
+  molarUnitsValue,
+} from "../../helpers/units"
 
 /* Hooks */
 import { useState } from "react"
@@ -25,6 +30,10 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
   const { settings } = useSettings()
   const [closing, setClosing] = useState<boolean>(false)
   const compoundIndex = compounds.findIndex((comp) => comp.id === compound.id)
+
+  const molarUnits = molarUnitsValue(settings.molarUnits)
+  const volumeUnits = volumeUnitsValue(settings.volumeUnits)
+  const massUnits = massUnitsValue(settings.massUnits)
 
   /**
    * Validate method for Formik
@@ -112,7 +121,7 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
 
         <FieldInput
           fieldName="concentration"
-          label={`Initial concentration [${settings.molarUnits}/${settings.volumeUnits}]:`}
+          label={`Initial concentration [${molarUnits}/${volumeUnits}]:`}
           error={formik.errors.concentration}
           tooltip="Concentration in the loaded mixture"
           type="number"
@@ -124,7 +133,7 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
 
         <FieldInput
           fieldName="molecularWeight"
-          label={`Molecular weight [${settings.massUnits}/${settings.molarUnits}]:`}
+          label={`Molecular weight [${massUnits}/${molarUnits}]:`}
           error={formik.errors.molecularWeight}
           type="number"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

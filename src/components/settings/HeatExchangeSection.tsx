@@ -5,6 +5,8 @@ import CheckboxInput from "../forms/CheckboxInput"
 /* Hooks */
 import useSettings from "../../hooks/useSettings"
 
+import { temperatureUnitsValue } from "../../helpers/units"
+
 import type { FormikProps } from "formik"
 
 interface HeatExchangeProps {
@@ -17,6 +19,7 @@ const HeatExchangeSection: React.VFC<HeatExchangeProps> = (props) => {
   const { formik, onBlur, onChange } = props
   const { settings } = useSettings()
 
+  const temperatureUnits = temperatureUnitsValue(settings.temperatureUnits)
   return (
     <InputSection>
       <h2>Heat Exchange</h2>
@@ -27,7 +30,7 @@ const HeatExchangeSection: React.VFC<HeatExchangeProps> = (props) => {
       />
       <FieldInput
         fieldName="initialTemperature"
-        label={`Initial Temperature [${settings.temperatureUnits}]:`}
+        label={`Initial Temperature [${temperatureUnits}]:`}
         type="number"
         value={formik.values.initialTemperature}
         error={formik.errors.initialTemperature}
