@@ -48,8 +48,8 @@ const GlobalStyles = createGlobalStyle`
   }
 
   input {
-    background-color: rgba(0, 0, 0, 0.1);
-    border: none;
+    background-color: var(--color-grey-lightest);
+    border: 2px solid var(--color-grey-normal);
     border-radius: 5px;
     flex-grow: 1;
     font-family: 'Mulish', sans-serif;
@@ -58,17 +58,12 @@ const GlobalStyles = createGlobalStyle`
     outline: none;
     padding: 0.5rem 1rem;
 
-    &:hover,
-    &:focus {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-
     &:autofill {
       background-color: rgba(255, 255, 255, 0.2);
     }
 
     &:focus {
-      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+      box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
     }
   }
 

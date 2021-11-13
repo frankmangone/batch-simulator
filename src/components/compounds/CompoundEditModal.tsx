@@ -115,7 +115,6 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
           }}
           value={formik.values.symbol}
           color={compound.color}
-          row
           big
         />
 
