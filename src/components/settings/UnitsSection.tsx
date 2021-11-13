@@ -2,7 +2,7 @@ import { VFC } from "react"
 import InputSection from "./InputSection"
 import FieldInput from "../forms/FieldInput"
 import SelectInput from "../forms/SelectInput"
-import { timeUnits } from "../../constants/units"
+import { timeUnits } from "../../helpers/units"
 import type { FormikProps } from "formik"
 
 interface UnitsProps {
@@ -24,21 +24,14 @@ const UnitsSection: VFC<UnitsProps> = (props) => {
     <InputSection>
       <h2>Units</h2>
       <SelectInput
-        value={timeUnitOptions[formik.values.timeUnits]}
+        selectedOption={timeUnitOptions[formik.values.timeUnits]}
         fieldName="timeUnits"
         label="Time units:"
         selectOptions={timeUnitOptions}
         onSelectionChange={(value) => {
           formik.setFieldValue("timeUnits", value, false)
+          formik.handleSubmit()
         }}
-      />
-      <FieldInput
-        fieldName="timeUnits"
-        label="Time units:"
-        type="text"
-        value={formik.values.timeUnits}
-        error={formik.errors.timeUnits}
-        {...{ onBlur, onChange }}
       />
       <FieldInput
         fieldName="volumeUnits"

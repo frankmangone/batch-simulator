@@ -3,7 +3,7 @@ import InfoTooltip from "./InfoTooltip"
 import Select, { ISelectOption } from "../Select"
 
 interface SelectInputProps {
-  value: any
+  selectedOption: any
   fieldName: string
   selectOptions: ISelectOption<any>[]
   label: string
@@ -11,11 +11,19 @@ interface SelectInputProps {
   onSelectionChange: (value: any) => void
 }
 
-const FieldInput: React.FC<SelectInputProps> = (props) => {
-  const { fieldName, label, selectOptions, tooltip, value, onSelectionChange } =
-    props
-  const currentValue = selectOptions.find((option) => option.value === value)
+const SelectInput: React.FC<SelectInputProps> = (props) => {
+  const {
+    fieldName,
+    label,
+    selectOptions,
+    tooltip,
+    selectedOption,
+    onSelectionChange,
+  } = props
 
+  const currentValue = selectOptions.find((option) => {
+    return option.value === selectedOption.value
+  })
   return (
     <SelectInputWrapper>
       <LabelWrapper>
@@ -56,4 +64,4 @@ const LabelWrapper = styled.div`
   align-items: center;
 `
 
-export default FieldInput
+export default SelectInput

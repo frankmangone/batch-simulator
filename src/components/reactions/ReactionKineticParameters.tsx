@@ -4,6 +4,7 @@ import useSettings from "../../hooks/useSettings"
 import { Equation, SymbolComponent } from "../MathExpressions"
 import { TokenTypes } from "../../helpers/tokenTypes"
 import { KineticModels } from "../../helpers/reactionTypes"
+import { timeUnitsValue } from "../../helpers/units"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]
@@ -19,13 +20,19 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   const kineticModel: KineticModel = reaction.kineticModel
 
   const tokenizedMuUnits = [
-    { type: TokenTypes.Parameter, value: `${settings.timeUnits}` },
+    {
+      type: TokenTypes.Parameter,
+      value: `${timeUnitsValue(settings.timeUnits)}`,
+    },
     { type: TokenTypes.Operator, value: "^" },
     { type: TokenTypes.Parameter, value: `-1` },
   ]
 
   const tokenizedKUnits = [
-    { type: TokenTypes.Parameter, value: `${settings.timeUnits}` },
+    {
+      type: TokenTypes.Parameter,
+      value: `${timeUnitsValue(settings.timeUnits)}`,
+    },
     { type: TokenTypes.Operator, value: "^" },
     { type: TokenTypes.Parameter, value: `-1` },
   ]
