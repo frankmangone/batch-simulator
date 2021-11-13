@@ -5,7 +5,7 @@ interface Settings {
   timeStep: number
 
   // Units
-  timeUnits: string
+  timeUnits: number
   volumeUnits: string
   molarUnits: string
   massUnits: string

@@ -24,10 +24,10 @@ const UnitsSection: VFC<UnitsProps> = (props) => {
     <InputSection>
       <h2>Units</h2>
       <Select
-        initialValue={timeUnitOptions[0]}
+        initialValue={timeUnitOptions[formik.values.timeUnits]}
         selectOptions={timeUnitOptions}
-        onSelectionChange={() => {
-          /* set selected value */
+        onSelectionChange={(value) => {
+          formik.setFieldValue("timeUnits", value, false)
         }}
       />
       <FieldInput
