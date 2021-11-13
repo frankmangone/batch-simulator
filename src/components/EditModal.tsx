@@ -55,7 +55,7 @@ const EditModalWrapper = styled.div<IClosing>`
   left: 0;
   right: 0;
   min-height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.15);
 
   animation-name: dim-in;
   animation-timing-function: ease-in-out;
@@ -83,13 +83,13 @@ const EditModalWrapper = styled.div<IClosing>`
     }
 
     to {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.15);
     }
   }
 
   @keyframes dim-out {
     from {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.15);
     }
 
     to {
