@@ -1,6 +1,5 @@
 import styled from "styled-components"
-
-/* Components */
+import InfoTooltip from "./InfoTooltip"
 import Select, { ISelectOption } from "../Select"
 
 interface SelectInputProps {
@@ -8,19 +7,20 @@ interface SelectInputProps {
   fieldName: string
   selectOptions: ISelectOption<any>[]
   label: string
-  // tooltip?: string
+  tooltip?: string
   onSelectionChange: (value: any) => void
 }
 
 const FieldInput: React.FC<SelectInputProps> = (props) => {
-  const { fieldName, label, selectOptions, value, onSelectionChange } = props
+  const { fieldName, label, selectOptions, tooltip, value, onSelectionChange } =
+    props
   const currentValue = selectOptions.find((option) => option.value === value)
 
   return (
     <SelectInputWrapper>
       <LabelWrapper>
         <label htmlFor={fieldName}>{label}</label>
-        {/*tooltip && <InfoTooltip text={tooltip} />*/}
+        {tooltip && <InfoTooltip text={tooltip} />}
       </LabelWrapper>
       <Select
         initialValue={currentValue}
