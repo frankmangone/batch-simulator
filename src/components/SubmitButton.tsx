@@ -6,8 +6,7 @@ const SubmitButton = styled(Button)`
   font-size: 1.2rem;
   justify-content: center;
   margin-top: 1.5rem;
-  margin-left: 2.5%;
   padding: 0.5rem;
-  width: 95%;
+  width: 100%;
 `
 export default SubmitButton

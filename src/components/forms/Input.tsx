@@ -46,8 +46,13 @@ const Input = styled.input<IInputProps>`
     props.transparent
       ? `
       background-color: rgba(255,255,255,0.2);
-      border-color: var(--color-grey-darker);
+      border-color: hsla(213, 20%, 15%, 0.5);
       color: var(--color-grey-darker);
+
+      &:focus {
+        border-color: var(--color-grey-darker);
+        background-color: rgba(255,255,255,0.5);
+      }
       `
       : ""}
   ${(props) =>
