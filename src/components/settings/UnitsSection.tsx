@@ -1,7 +1,7 @@
 import { VFC } from "react"
 import InputSection from "./InputSection"
 import FieldInput from "../forms/FieldInput"
-import Select from "../Select"
+import SelectInput from "../forms/SelectInput"
 import { timeUnits } from "../../constants/units"
 import type { FormikProps } from "formik"
 
@@ -23,8 +23,10 @@ const UnitsSection: VFC<UnitsProps> = (props) => {
   return (
     <InputSection>
       <h2>Units</h2>
-      <Select
-        initialValue={timeUnitOptions[formik.values.timeUnits]}
+      <SelectInput
+        value={timeUnitOptions[formik.values.timeUnits]}
+        fieldName="timeUnits"
+        label="Time units:"
         selectOptions={timeUnitOptions}
         onSelectionChange={(value) => {
           formik.setFieldValue("timeUnits", value, false)

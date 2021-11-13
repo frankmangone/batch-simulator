@@ -16,7 +16,7 @@ interface ISelectProps<T> {
   onSelectionChange: (value?: T) => void
 }
 
-interface ISelectOption<T> {
+export interface ISelectOption<T> {
   value?: T
   displayText?: string
   collapsedDisplayText?: string
