@@ -3,6 +3,7 @@ import styled from "styled-components"
 /* Components */
 import CardButton from "../CardButton"
 import { FiTrash2 } from "react-icons/fi"
+import Input from "../forms/Input"
 
 /* Constants */
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
@@ -55,11 +56,12 @@ const ReactionCompoundCard: React.FC<IReactionCompoundCardProps> = (props) => {
       color={compound.color as keyof typeof COMPOUND_COLORS}
     >
       <h1>{compound.symbol}</h1>
-      <input
+      <Input
         value={coefficientInput}
         type="number"
         onChange={handleCoefficientChange}
         onBlur={validateAndUpdateCoefficient}
+        transparent
       />
       <CardButton onClick={removeCompound}>
         <FiTrash2 />
@@ -76,7 +78,7 @@ interface IReactionCompoundCardWrapperProps {
 
 const ReactionCompoundCardWrapper = styled.div<IReactionCompoundCardWrapperProps>`
   margin: 5px;
-  padding: 1.3rem;
+  padding: 1rem 1.3rem;
   position: relative;
 
   align-items: center;

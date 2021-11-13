@@ -431,7 +431,9 @@ const CompoundInputWrapper = styled.div`
 
 const CompoundInputInner = styled.div`
   background-color: var(--color-grey-lightest);
+  border: 1px solid var(--color-grey-light);
   border-radius: 5px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
   margin: 0.5rem 0.3rem;
   padding: 0.5rem;
 `
