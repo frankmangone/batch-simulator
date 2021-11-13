@@ -47,42 +47,6 @@ const GlobalStyles = createGlobalStyle`
     transition: all 0.15s ease-in-out;
   }
 
-  input {
-    background-color: var(--color-grey-lightest);
-    border: 2px solid var(--color-grey-normal);
-    border-radius: 5px;
-    flex-grow: 1;
-    font-family: 'Mulish', sans-serif;
-    min-width: 0;
-    width: 0;
-    outline: none;
-    padding: 0.5rem 1rem;
-
-    &:autofill {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    &:focus {
-      box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
-    }
-  }
-
-  /**
-   * Remove arrows from number inputs
-   */
-  
-  /* Chrome, Safari, Edge, Opera */
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  /* Firefox */
-  input[type=number] {
-    -moz-appearance: textfield;
-  }
-
   @keyframes slide-in {
     from {
       opacity: 0;
