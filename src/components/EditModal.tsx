@@ -114,6 +114,7 @@ const EditModalInner = styled.div<IClosing>`
   position: relative;
   max-width: 700px;
   max-height: 600px;
+  overflow-y: scroll;
   z-index: 3;
 
   /* Override animation upon modal close */
