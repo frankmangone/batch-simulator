@@ -15,6 +15,7 @@ interface IFieldInputProps {
   label: string
   type?: string
   tooltip?: string
+  transparent?: boolean
   value: any
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -29,6 +30,7 @@ const FieldInput: React.FC<IFieldInputProps> = (props) => {
     label,
     type,
     tooltip,
+    transparent,
     value,
     onBlur,
     onChange,
@@ -50,6 +52,7 @@ const FieldInput: React.FC<IFieldInputProps> = (props) => {
         onBlur={onBlur || voidFunction}
         onChange={onChange}
         value={value}
+        transparent={transparent}
       />
       {error && <Error big={big}>{error}</Error>}
     </FieldInputWrapper>
@@ -90,7 +93,8 @@ const FieldInputWrapper = styled.div<IFieldInputWrapperProps>`
   label {
     ${(props) => (props.big ? "font-size: 1.5rem;" : "")}
     font-weight: 600;
-    color: var(--color-grey-dark);
+    color: ${(props) =>
+      props.color ? "var(--color-grey-darker)" : "var(--color-grey-dark)"};
   }
 
   input {

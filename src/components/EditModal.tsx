@@ -10,12 +10,12 @@ export interface IClosing {
   closing?: boolean
 }
 
-type IEditModalProps = IClosing & {
+type EditModalProps = IClosing & {
   setClosing: (closing: boolean) => void
   handleClose: () => void
 }
 
-const EditModal: React.FC<IEditModalProps> = (props) => {
+const EditModal: React.FC<EditModalProps> = (props) => {
   const { children, closing, setClosing, handleClose } = props
 
   const closeModal = () => {
@@ -55,14 +55,15 @@ const EditModalWrapper = styled.div<IClosing>`
   left: 0;
   right: 0;
   min-height: 100%;
-  background-color: var(--color-grey-light);
+  background-color: rgba(0, 0, 0, 0.15);
 
   animation-name: dim-in;
   animation-timing-function: ease-in-out;
   animation-duration: 0.25s;
   animation-iteration-count: 1;
-  border-radius: 5px;
   display: flex;
+  align-items: center;
+  justify-content: center;
 
   /* Override animation upon modal close */
   ${(props) =>
@@ -82,13 +83,13 @@ const EditModalWrapper = styled.div<IClosing>`
     }
 
     to {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.15);
     }
   }
 
   @keyframes dim-out {
     from {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.15);
     }
 
     to {
@@ -98,12 +99,12 @@ const EditModalWrapper = styled.div<IClosing>`
 `
 
 const EditModalInner = styled.div<IClosing>`
-  align-self: stretch;
   animation-name: slide-in;
   animation-timing-function: ease-in-out;
   animation-duration: 0.25s;
   animation-iteration-count: 1;
   background-color: var(--color-grey-lighter);
+  border: 1px solid var(--color-grey-lightest);
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   flex-grow: 1;
@@ -111,6 +112,10 @@ const EditModalInner = styled.div<IClosing>`
   padding: 2rem;
   padding-top: 3.5rem;
   position: relative;
+  max-width: 700px;
+  max-height: 600px;
+  overflow-y: scroll;
+  overflow-x: visible;
   z-index: 3;
 
   /* Override animation upon modal close */
@@ -126,28 +131,7 @@ const EditModalInner = styled.div<IClosing>`
       : ""}
 
   label {
-    color: var(--color-grey-dark);
-  }
-
-  input {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    flex-grow: 1;
-    min-width: 0;
-    padding: 0.5rem 1rem;
-
-    &:hover,
-    &:focus {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    &:autofill {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    &:focus {
-      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
-    }
+    color: var(--color-grey-darker);
   }
 `
 
