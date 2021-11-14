@@ -96,7 +96,8 @@ interface ICompoundColorBulletProps {
 const CompoundTile = styled.div<ICompoundColorBulletProps>`
   background-color: ${(props) => COMPOUND_COLORS[props.color]};
   border-radius: 5px;
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--color-grey-normal);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
   color: var(--color-grey-dark);
   font-size: 1.6rem;
   margin: 0 0.5rem;

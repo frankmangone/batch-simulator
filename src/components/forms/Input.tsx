@@ -7,7 +7,7 @@ interface IInputProps extends React.HTMLProps<HTMLInputElement> {
 
 const Input = styled.input<IInputProps>`
   background-color: var(--color-grey-lightest);
-  border: 2px solid var(--color-grey-normal);
+  border: 1px solid var(--color-grey-normal);
   border-radius: 5px;
   flex-grow: 1;
   font-family: "Mulish", sans-serif;

@@ -165,7 +165,7 @@ const SelectWrapper = styled.div`
 const SelectValue = styled.div<ISelecting>`
   align-items: center;
   background-color: var(--color-grey-lightest);
-  border: 2px solid var(--color-grey-normal);
+  border: 1px solid var(--color-grey-normal);
   border-radius: 5px;
   cursor: pointer;
   display: flex;
