@@ -101,7 +101,7 @@ const ParamInputInner = styled.div`
   cursor: pointer;
   display: flex;
   margin: 0.5rem;
-  padding: 1.3rem;
+  padding: 1rem 1.3rem;
   transition: all 0.15s ease-in-out;
 
   &:hover {

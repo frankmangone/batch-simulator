@@ -50,6 +50,7 @@ const GlobalStyles = createGlobalStyle`
   /* Scrollbar */
   /* Width */
   ::-webkit-scrollbar {
+    opacity: 0;
     width: 5px;
   }
 
@@ -60,13 +61,13 @@ const GlobalStyles = createGlobalStyle`
   
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: var(--color-grey-dark); 
+    opacity: 0;
     border-radius: 10px;
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-grey-normal); 
+    opacity: 0;
   }
 
   @keyframes slide-in {
