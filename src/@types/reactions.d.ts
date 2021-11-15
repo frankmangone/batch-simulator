@@ -31,9 +31,9 @@ interface ReactionCompound {
 }
 
 interface KineticConstants {
-  [key: string]: number
-  "k_\\inf": number
-  E_A: number
+  [key: string]: string
+  "k_\\inf": string
+  E_A: string
 }
 
 type KineticEquation = Token[]
