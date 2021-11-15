@@ -6,6 +6,7 @@ import Input from "../forms/Input"
 
 /* Helpers */
 import { validateNotEmpty } from "../../helpers/validators"
+import { SCI_REGEX } from "../../constants/regexs"
 
 /* Hooks */
 import { useState } from "react"
@@ -13,30 +14,49 @@ import { useState } from "react"
 interface IReactionParamInputCardProps {
   paramSymbol: string | JSX.Element | JSX.Element[]
   units?: JSX.Element
-  value: number
-  updateValue: (value: number) => void
+  value: string
+  updateValue: (value: string) => void
 }
+
+const ALLOWED_CHARS = "0123456789.-+eE"
 
 const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
   props
 ) => {
   const { paramSymbol, value, units, updateValue } = props
-  const [valueInput, setValueInput] = useState<number | "">(value)
+  const [valueInput, setValueInput] = useState<string>(value)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === "") {
       setValueInput("")
       return
     }
-    setValueInput(parseFloat(event.target.value))
+
+    // Filter input unallowed characters
+    const filtered = event.target.value
+      .split("")
+      .filter((el) => ALLOWED_CHARS.indexOf(el) > -1)
+      .join("")
+
+    setValueInput(filtered)
   }
 
   const validateAndUpdateConstant = () => {
-    if (validateNotEmpty(valueInput)) {
-      updateValue(valueInput as number)
+    if (!validateNotEmpty(valueInput)) {
+      // Reset value
+      setValueInput(valueInput)
       return
     }
-    setValueInput(value)
+
+    const validString = valueInput.match(SCI_REGEX)?.[0]
+    if (!validString) {
+      // Reset value
+      setValueInput(valueInput)
+      return
+    }
+
+    updateValue(validString)
+    setValueInput(validString)
   }
 
   return (
@@ -45,7 +65,7 @@ const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
         <h1>{paramSymbol}</h1>
         <Input
           value={valueInput}
-          type="number"
+          type="text"
           onChange={handleChange}
           onBlur={validateAndUpdateConstant}
           transparent

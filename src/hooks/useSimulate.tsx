@@ -96,7 +96,7 @@ const parseParametersAndVariables = (reaction: Reaction): KineticEquation => {
       const key = (token.value as string).replace(/<|>/g, "")
       // Param. may be reaction-related, or be a thermodynamic constant
       if (reaction.kineticConstants[key])
-        token.value = reaction.kineticConstants[key]
+        token.value = parseFloat(reaction.kineticConstants[key])
       else token.value = CONSTANTS[key as keyof typeof CONSTANTS]
     } else if (token.type === TokenTypes.Variable) {
       // Strip variable of {} symbols

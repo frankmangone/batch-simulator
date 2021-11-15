@@ -205,7 +205,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
    * Handle kinetic constant change
    */
 
-  const handleKineticConstantUpdate = (key: string, value: number) => {
+  const handleKineticConstantUpdate = (key: string, value: string) => {
     const updatedReaction = JSON.parse(JSON.stringify(modalReaction))
     updatedReaction.kineticConstants[key] = value
     setModalReaction(updatedReaction)

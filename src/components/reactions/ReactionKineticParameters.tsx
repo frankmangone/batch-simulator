@@ -13,7 +13,7 @@ import {
 interface IReactionKineticParametersProps {
   compounds: Compound[]
   reaction: Reaction
-  updateKineticConstant: (key: string, value: number) => void
+  updateKineticConstant: (key: string, value: string) => void
 }
 
 const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
@@ -49,7 +49,7 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
     (accumulator, [key, value]) => {
       if (key === "preExponential" || key === "activationEnergy")
         return accumulator
-      return accumulator + value
+      return accumulator + parseFloat(value)
     },
     -reaction?.kineticConstants.k || 0
   )
@@ -95,9 +95,9 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
           <ReactionParamInputCard
             key={param}
             paramSymbol={<SymbolComponent symbol={symbol} />}
-            value={value as number}
+            value={value}
             units={units}
-            updateValue={(value: number) => {
+            updateValue={(value: string) => {
               updateKineticConstant(param, value)
             }}
           />

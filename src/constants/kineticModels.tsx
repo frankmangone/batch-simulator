@@ -47,7 +47,7 @@ const generateSimpleModelConstants = (
     const oldConstant = reaction.kineticConstants[paramKey]
 
     if (oldConstant === undefined) {
-      updatedExponents[paramKey] = 1
+      updatedExponents[paramKey] = "1"
     } else {
       updatedExponents[paramKey] = oldConstant
     }
@@ -73,7 +73,7 @@ const generateHiperbolicModelConstants = (
     const oldConstant = reaction.kineticConstants[paramKey]
 
     if (oldConstant === undefined) {
-      updatedExponents[paramKey] = 1
+      updatedExponents[paramKey] = "1"
     } else {
       updatedExponents[paramKey] = oldConstant
     }
@@ -99,7 +99,7 @@ const generateAutocatalyticModelConstants = (
     const oldConstant = reaction.kineticConstants[paramKey]
 
     if (oldConstant === undefined) {
-      updatedExponents[paramKey] = 1
+      updatedExponents[paramKey] = "1"
     } else {
       updatedExponents[paramKey] = oldConstant
     }
@@ -112,7 +112,7 @@ const generateAutocatalyticModelConstants = (
     const oldConstant = reaction.kineticConstants[paramKey]
 
     if (oldConstant === undefined) {
-      updatedExponents[paramKey] = 1
+      updatedExponents[paramKey] = "1"
     } else {
       updatedExponents[paramKey] = oldConstant
     }
