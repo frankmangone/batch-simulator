@@ -6,6 +6,7 @@ import Input from "../forms/Input"
 
 /* Helpers */
 import { validateNotEmpty } from "../../helpers/validators"
+import { SCI_REGEX } from "../../constants/regexs"
 
 /* Hooks */
 import { useState } from "react"
@@ -40,16 +41,22 @@ const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
     setValueInput(filtered)
   }
 
-  const scientificRegex: RegExp = /(\d+(.\d+)?([eE]{1,1}[-]?\d+(.\d+)?)?)/g
-
   const validateAndUpdateConstant = () => {
-    if (validateNotEmpty(valueInput)) {
-      const validString = valueInput.match(scientificRegex)?.[0]
-      if (!validString) return
-      updateValue(validString)
+    if (!validateNotEmpty(valueInput)) {
+      // Reset value
+      setValueInput(valueInput)
+      return
     }
 
-    setValueInput(value)
+    const validString = valueInput.match(SCI_REGEX)?.[0]
+    if (!validString) {
+      // Reset value
+      setValueInput(valueInput)
+      return
+    }
+
+    updateValue(validString)
+    setValueInput(validString)
   }
 
   return (
