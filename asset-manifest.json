@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/batch-simulator/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/batch-simulator/static/js/main.0198d5e2.chunk.js",
-    "main.js.map": "/batch-simulator/static/js/main.0198d5e2.chunk.js.map",
+    "main.js": "/batch-simulator/static/js/main.c9dec7c3.chunk.js",
+    "main.js.map": "/batch-simulator/static/js/main.c9dec7c3.chunk.js.map",
     "runtime-main.js": "/batch-simulator/static/js/runtime-main.17f5b27f.js",
     "runtime-main.js.map": "/batch-simulator/static/js/runtime-main.17f5b27f.js.map",
     "static/js/2.81c35339.chunk.js": "/batch-simulator/static/js/2.81c35339.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.17f5b27f.js",
     "static/js/2.81c35339.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.0198d5e2.chunk.js"
+    "static/js/main.c9dec7c3.chunk.js"
   ]
 }
