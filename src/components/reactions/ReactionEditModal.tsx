@@ -236,17 +236,19 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
     >
       <ReactionPreview reaction={modalReaction} />
       <br />
-      <FieldInput
-        fieldName="name"
-        label="Reaction name:"
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          setModalReaction({
-            ...modalReaction,
-            name: event.target.value,
-          })
-        }}
-        value={modalReaction.name}
-      />
+      <SelectField>
+        <FieldInput
+          fieldName="name"
+          label="Reaction name:"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setModalReaction({
+              ...modalReaction,
+              name: event.target.value,
+            })
+          }}
+          value={modalReaction.name}
+        />
+      </SelectField>
 
       {/* Compounds input */}
       <ModalInputSection>
@@ -414,10 +416,15 @@ const SelectField = styled.div`
     flex-grow: 1;
     font-size: 1rem;
     margin-right: 1.4rem;
+    flex-basis: 50%;
   }
 
   div {
     flex-basis: 45%;
+  }
+
+  @media screen and (max-width: 750px) {
+    width: 100%;
   }
 `
 
