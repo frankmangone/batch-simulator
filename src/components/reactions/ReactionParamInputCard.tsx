@@ -84,6 +84,10 @@ const ParamInputWrapper = styled.div`
   position: relative;
   z-index: 2;
 
+  @media screen and (max-width: 600px) {
+    flex-basis: 100%;
+  }
+
   &:hover {
     z-index: 3;
   }
@@ -110,6 +114,7 @@ const ParamInputInner = styled.div`
     font-size: 1.6rem;
     margin: 0;
     margin-right: 1rem;
+    flex-grow: 1;
 
     span {
       /* Greek symbols */
