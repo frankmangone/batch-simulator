@@ -47,6 +47,28 @@ const GlobalStyles = createGlobalStyle`
     transition: all 0.15s ease-in-out;
   }
 
+  /* Scrollbar */
+  /* Width */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--color-grey-lighter); 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-grey-dark); 
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-grey-normal); 
+  }
+
   @keyframes slide-in {
     from {
       opacity: 0;
