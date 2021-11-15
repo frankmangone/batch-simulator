@@ -30,7 +30,7 @@ const Sidebar: React.FC = () => {
     history.push("/results")
   }
 
-  const expandMenu = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  const expandMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     setExpanded(!expanded)
   }
@@ -47,13 +47,13 @@ const Sidebar: React.FC = () => {
   return (
     <SidebarWrapper expanded={expanded}>
       <nav>
-        <a href="/" onClick={expandMenu}>
+        <button onClick={expandMenu} id="hamburger">
           <SidebarLinkWrapper>
             <IconWrapper>
               <FiMenu {...iconProps} />
             </IconWrapper>
           </SidebarLinkWrapper>
-        </a>
+        </button>
         <SidebarLink
           onClick={() => navigateTo("/compounds")}
           title="Compounds"
@@ -115,6 +115,9 @@ const IconWrapper = styled.div`
   width: 25px;
   height: 25px;
   margin-right: 0.5rem;
+  @media only screen and (max-width: 750px) {
+    margin-right: 0;
+  }
 `
 
 interface SidebarWrapperProps {
@@ -129,10 +132,9 @@ const SidebarWrapper = styled.div<SidebarWrapperProps>`
   height: 100vh;
   max-width: ${(props) => (props.expanded ? "270px" : "90px")};
   @media screen and (max-width: 750px) {
-    height: 90px;
+    height: 80px;
     width: 100vw;
     max-width: 100vw;
-    flex-direction: row;
   }
   flex-grow: 0;
   flex-shrink: 0;
@@ -143,6 +145,12 @@ const SidebarWrapper = styled.div<SidebarWrapperProps>`
     margin: 1rem;
     display: flex;
     flex-direction: column;
+    @media screen and (max-width: 750px) {
+      flex-direction: row;
+      margin: 0 1rem;
+      align-items: center;
+      height: 100%;
+    }
 
     a,
     button {
@@ -165,6 +173,20 @@ const SidebarWrapper = styled.div<SidebarWrapperProps>`
       p {
         margin: 0;
       }
+
+      @media screen and (max-width: 750px) {
+        margin-bottom: 0;
+
+        p {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 750px) {
+    #hamburger {
+      display: none;
     }
   }
 `
