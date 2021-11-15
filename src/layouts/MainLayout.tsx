@@ -31,6 +31,10 @@ const MainContentWrapper = styled.div`
   flex-grow: 1;
   height: 100vh;
   margin-left: 90px;
+  @media screen and (max-width: 750px) {
+    margin-top: 90px;
+    margin-left: 0;
+  }
   position: relative;
   overflow-y: scroll;
 `

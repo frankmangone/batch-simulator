@@ -128,6 +128,12 @@ const SidebarWrapper = styled.div<SidebarWrapperProps>`
   z-index: 20;
   height: 100vh;
   max-width: ${(props) => (props.expanded ? "270px" : "90px")};
+  @media screen and (max-width: 750px) {
+    height: 90px;
+    width: 100vw;
+    max-width: 100vw;
+    flex-direction: row;
+  }
   flex-grow: 0;
   flex-shrink: 0;
   transition: all 0.15s linear;
