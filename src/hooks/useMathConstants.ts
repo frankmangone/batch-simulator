@@ -9,8 +9,8 @@ import {
 } from "../helpers/units"
 
 /**
- * Returns math and physiscal constants. For the latter, also handles unit conversions
- * based on app settings.
+ * Returns a function that can be called with a math or physical constant [string] as an argument.
+ * For the latter, also handles unit conversions based on app settings.
  *
  * It's important to define a standard set of base units. The chosen ones are:
  *  - K

@@ -57,9 +57,11 @@ const useSimulate = () => {
         // Replace parameter by numeric value
         const key = (token.value as string).replace(/<|>/g, "")
         // Param. may be reaction-related, or be a thermodynamic constant
-        if (reaction.kineticConstants[key])
+        if (reaction.kineticConstants[key]) {
           token.value = parseFloat(reaction.kineticConstants[key])
-        else token.value = getConstant(key as MathConstant)
+        } else {
+          token.value = getConstant(key as MathConstant)
+        }
       } else if (token.type === TokenTypes.Variable) {
         // Strip variable of {} symbols
         token.value = (token.value as string).replace(/{|}/g, "")
