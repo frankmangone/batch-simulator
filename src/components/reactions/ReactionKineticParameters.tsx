@@ -51,11 +51,13 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
 
   const globalOrder = Object.entries(reaction?.kineticConstants).reduce(
     (accumulator, [key, value]) => {
-      if (key === "preExponential" || key === "activationEnergy")
+      console.log(key)
+      if (key === "k_\\inf" || key === "E_A") {
         return accumulator
+      }
       return accumulator + parseFloat(value)
     },
-    -reaction?.kineticConstants.k || 0
+    0
   )
 
   if (globalOrder !== 1) {
