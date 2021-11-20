@@ -10,6 +10,7 @@ interface Settings {
   molarUnits: number
   massUnits: number
   temperatureUnits: number
+  energyUnits: number
 
   // Heat Exchange
   isothermal: boolean
@@ -28,8 +29,16 @@ interface SettingsErrors {
   molarUnits?: string
   massUnits?: string
   temperatureUnits?: string
+  energyUnits?: string
 
   // Heat Exchange
   isothermal?: string
   initialTemperature?: string
 }
+
+type TemperatureUnits = ["K", "R", "°C", "°F"]
+type TimeUnits = ["ms", "s", "min", "h"]
+type MassUnits = ["mg", "g", "kg", "lb"]
+type MolarUnits = ["mol", "kmol", "lbmol"]
+type VolumeUnits = ["L", "m3", "cm3"]
+type EnergyUnits = ["cal", "kcal", "J", "kJ"]
