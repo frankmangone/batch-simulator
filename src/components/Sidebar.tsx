@@ -135,6 +135,7 @@ const SidebarWrapper = styled.div<SidebarWrapperProps>`
     height: 80px;
     width: 100vw;
     max-width: 100vw;
+    position: fixed;
   }
   flex-grow: 0;
   flex-shrink: 0;
