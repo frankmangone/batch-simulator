@@ -2,23 +2,121 @@ import useSettings from "../hooks/useSettings"
 import useCompounds from "../hooks/useCompounds"
 import useReactions from "../hooks/useReactions"
 import useSimulationResults from "../hooks/useSimulationResults"
+import useMathConstants from "../hooks/useMathConstants"
 
 import { parseEquation } from "../helpers/tokenParser"
 import { getCoefficientForComponent } from "../helpers/reactions"
 import { TokenTypes } from "../helpers/tokenTypes"
 
-const CONSTANTS = {
-  e: 2.7182818,
-  // TODO: Make it so it's converted in accordance with selected units
-  R: 0.082, // L.atm/J.K
-  T: 290, // K
-}
-
 const useSimulate = () => {
+  const getConstant = useMathConstants()
   const { compounds } = useCompounds()
   const { reactions } = useReactions()
   const { settings } = useSettings()
   const { saveSimulationResults } = useSimulationResults()
+
+  const parseReactionEquations = (): ParsedReaction[] => {
+    /**
+     * Parsing a reaction entails:
+     *  1) Replacing parameters for their entered values
+     *  2) Modifying the token order to RPN
+     *  3) Merging reactants and products to compounds, which have a symbol
+     *    and a coefficient
+     *
+     *  The reactions are stored in a new object of type ParsedReaction
+     */
+    const parsedReactions: ParsedReaction[] = []
+
+    reactions.forEach((reaction, index) => {
+      const parsedReaction: ParsedReaction = {}
+
+      // 1) Replace parameters for values & strip variables of {} symbols
+      parsedReaction.kineticEquation = parseParametersAndVariables(reaction)
+
+      // 2) Modify token order to RPN
+      parsedReaction.kineticEquation = parseEquation(
+        parsedReaction.kineticEquation
+      )
+
+      // 3) Merge reactants and products
+      parsedReaction.compounds = mergeCompounds(reaction, compounds)
+
+      parsedReactions.push(parsedReaction)
+    })
+
+    return parsedReactions
+  }
+
+  const parseParametersAndVariables = (reaction: Reaction): KineticEquation => {
+    const kineticEquationCopy = JSON.parse(
+      JSON.stringify(reaction.kineticEquation)
+    )
+
+    kineticEquationCopy.forEach((token: Token, index: number) => {
+      if (token.type === TokenTypes.Parameter) {
+        // Replace parameter by numeric value
+        const key = (token.value as string).replace(/<|>/g, "")
+        // Param. may be reaction-related, or be a thermodynamic constant
+        if (reaction.kineticConstants[key])
+          token.value = parseFloat(reaction.kineticConstants[key])
+        else token.value = getConstant(key as MathConstant)
+      } else if (token.type === TokenTypes.Variable) {
+        // Strip variable of {} symbols
+        token.value = (token.value as string).replace(/{|}/g, "")
+      }
+
+      kineticEquationCopy[index] = token
+    })
+
+    return kineticEquationCopy
+  }
+
+  const mergeCompounds = (
+    reaction: Reaction,
+    compounds: Compound[]
+  ): CompoundWithCoefficient[] => {
+    const parsedCompounds: CompoundWithCoefficient[] = []
+
+    reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
+      const compound: CompoundWithCoefficient = Object.assign(
+        {},
+        {
+          compoundId: reactionCompound.compoundId,
+          symbol: `[${
+            compounds.find((c) => c.id === reactionCompound.compoundId)?.symbol
+          }]`,
+          coefficient: getCoefficientForComponent(
+            reaction,
+            reactionCompound.compoundId
+          ),
+        }
+      )
+      parsedCompounds.push(compound)
+    })
+
+    reaction.products.forEach((reactionCompound: ReactionCompound) => {
+      const compound: CompoundWithCoefficient = Object.assign(
+        {},
+        {
+          compoundId: reactionCompound.compoundId,
+          symbol: `[${
+            compounds.find((c) => c.id === reactionCompound.compoundId)?.symbol
+          }]`,
+          coefficient: getCoefficientForComponent(
+            reaction,
+            reactionCompound.compoundId
+          ),
+        }
+      )
+      parsedCompounds.push(compound)
+    })
+
+    return parsedCompounds
+  }
+
+  //
+  //
+  //
 
   //: SimulationResults => {
   const simulate = () => {
@@ -26,10 +124,7 @@ const useSimulate = () => {
      * Reaction equations (as tokens) are reordered to RPN notation
      * and some more magic happens. Check the method
      *  */
-    const parsedReactions: ParsedReaction[] = parseReactionEquations(
-      reactions,
-      compounds
-    )
+    const parsedReactions: ParsedReaction[] = parseReactionEquations()
 
     // Initialize simulation results
     const initialValues: TimePoint = { t: 0, T: settings.initialTemperature }
@@ -45,112 +140,6 @@ const useSimulate = () => {
 }
 
 export default useSimulate
-
-/**
- * Helper functions
- */
-
-const parseReactionEquations = (
-  reactions: Reaction[],
-  compounds: Compound[]
-): ParsedReaction[] => {
-  /**
-   * Parsing a reaction entails:
-   *  1) Replacing parameters for their entered values
-   *  2) Modifying the token order to RPN
-   *  3) Merging reactants and products to compounds, which have a symbol
-   *    and a coefficient
-   *
-   *  The reactions are stored in a new object of type ParsedReaction
-   */
-  const parsedReactions: ParsedReaction[] = []
-
-  reactions.forEach((reaction, index) => {
-    const parsedReaction: ParsedReaction = {}
-
-    // 1) Replace parameters for values & strip variables of {} symbols
-    parsedReaction.kineticEquation = parseParametersAndVariables(reaction)
-
-    // 2) Modify token order to RPN
-    parsedReaction.kineticEquation = parseEquation(
-      parsedReaction.kineticEquation
-    )
-
-    // 3) Merge reactants and products
-    parsedReaction.compounds = mergeCompounds(reaction, compounds)
-
-    parsedReactions.push(parsedReaction)
-  })
-
-  return parsedReactions
-}
-
-const parseParametersAndVariables = (reaction: Reaction): KineticEquation => {
-  const kineticEquationCopy = JSON.parse(
-    JSON.stringify(reaction.kineticEquation)
-  )
-
-  kineticEquationCopy.forEach((token: Token, index: number) => {
-    if (token.type === TokenTypes.Parameter) {
-      // Replace parameter by numeric value
-      const key = (token.value as string).replace(/<|>/g, "")
-      // Param. may be reaction-related, or be a thermodynamic constant
-      if (reaction.kineticConstants[key])
-        token.value = parseFloat(reaction.kineticConstants[key])
-      else token.value = CONSTANTS[key as keyof typeof CONSTANTS]
-    } else if (token.type === TokenTypes.Variable) {
-      // Strip variable of {} symbols
-      token.value = (token.value as string).replace(/{|}/g, "")
-    }
-
-    kineticEquationCopy[index] = token
-  })
-
-  return kineticEquationCopy
-}
-
-const mergeCompounds = (
-  reaction: Reaction,
-  compounds: Compound[]
-): CompoundWithCoefficient[] => {
-  const parsedCompounds: CompoundWithCoefficient[] = []
-
-  reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
-    const compound: CompoundWithCoefficient = Object.assign(
-      {},
-      {
-        compoundId: reactionCompound.compoundId,
-        symbol: `[${
-          compounds.find((c) => c.id === reactionCompound.compoundId)?.symbol
-        }]`,
-        coefficient: getCoefficientForComponent(
-          reaction,
-          reactionCompound.compoundId
-        ),
-      }
-    )
-    parsedCompounds.push(compound)
-  })
-
-  reaction.products.forEach((reactionCompound: ReactionCompound) => {
-    const compound: CompoundWithCoefficient = Object.assign(
-      {},
-      {
-        compoundId: reactionCompound.compoundId,
-        symbol: `[${
-          compounds.find((c) => c.id === reactionCompound.compoundId)?.symbol
-        }]`,
-        coefficient: getCoefficientForComponent(
-          reaction,
-          reactionCompound.compoundId
-        ),
-      }
-    )
-    parsedCompounds.push(compound)
-  })
-
-  return parsedCompounds
-}
 
 /****************************************************************
  *    SIMULATE METHOD                                           *

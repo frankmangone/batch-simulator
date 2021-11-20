@@ -35,10 +35,3 @@ interface SettingsErrors {
   isothermal?: string
   initialTemperature?: string
 }
-
-type TemperatureUnits = ["K", "R", "°C", "°F"]
-type TimeUnits = ["ms", "s", "min", "h"]
-type MassUnits = ["mg", "g", "kg", "lb"]
-type MolarUnits = ["mol", "kmol", "lbmol"]
-type VolumeUnits = ["L", "m3", "cm3"]
-type EnergyUnits = ["cal", "kcal", "J", "kJ"]
