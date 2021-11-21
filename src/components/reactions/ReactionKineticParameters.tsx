@@ -51,7 +51,6 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
 
   const globalOrder = Object.entries(reaction?.kineticConstants).reduce(
     (accumulator, [key, value]) => {
-      console.log(key)
       if (key === "k_\\inf" || key === "E_A") {
         return accumulator
       }
