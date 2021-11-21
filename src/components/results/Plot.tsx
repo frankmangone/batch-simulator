@@ -1,11 +1,17 @@
 import { useEffect, useCallback, useRef, useState } from "react"
 import styled from "styled-components"
 import { drawPlot } from "../../helpers/drawPlot"
+import { mobileBreakpoint } from "../../helpers/breakpoints"
 
 interface PlotProps {
   data: Point[][]
   colors: string[]
 }
+
+const MOBILE_WIDTH_SUSTRAEND = 44
+const MOBILE_HEIGHT_SUSTRAEND = 182
+const DESKTOP_WIDTH_SUSTRAEND = 137
+const DESKTOP_HEIGHT_SUSTRAEND = 105
 
 const Plot = (props: PlotProps) => {
   const { colors, data } = props
@@ -14,12 +20,23 @@ const Plot = (props: PlotProps) => {
   // https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const [canvasWidth, setCanvasWidth] = useState(window.innerWidth - 137)
-  const [canvasHeight, setCanvasHeight] = useState(window.innerHeight - 105)
+  const [canvasWidth, setCanvasWidth] = useState(() =>
+    window.innerWidth <= mobileBreakpoint
+      ? window.innerWidth - MOBILE_WIDTH_SUSTRAEND
+      : window.innerWidth - DESKTOP_WIDTH_SUSTRAEND
+  )
+  const [canvasHeight, setCanvasHeight] = useState(() =>
+    window.innerWidth <= mobileBreakpoint
+      ? window.innerHeight - MOBILE_HEIGHT_SUSTRAEND
+      : window.innerHeight - DESKTOP_HEIGHT_SUSTRAEND
+  )
 
   const resizeHandler = useCallback(() => {
-    setCanvasWidth(window.innerWidth - 137)
-    setCanvasHeight(window.innerHeight - 105)
+    const isMobile = window.innerWidth <= mobileBreakpoint
+    const ws = isMobile ? MOBILE_WIDTH_SUSTRAEND : DESKTOP_WIDTH_SUSTRAEND
+    const hs = isMobile ? MOBILE_HEIGHT_SUSTRAEND : DESKTOP_HEIGHT_SUSTRAEND
+    setCanvasWidth(window.innerWidth - ws)
+    setCanvasHeight(window.innerHeight - hs)
 
     // Re-draw plot
     drawPlot({
@@ -33,6 +50,7 @@ const Plot = (props: PlotProps) => {
   useEffect(() => {
     // Event listener to set width and height of canvas programatically
     window.addEventListener("resize", resizeHandler)
+
     drawPlot({
       canvas: canvasRef.current as HTMLCanvasElement,
       data,

@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import useCompounds from "../../hooks/useCompounds"
 import Show from "../Show"
+import { mobileBreakpoint } from "../../helpers/breakpoints"
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 interface ColorProps {
@@ -45,6 +46,11 @@ const Wrapper = styled.div`
   border: 1px solid var(--color-grey-normal);
   background-color: var(--color-grey-lightest);
   box-shadow: 0 2px 4px var(--color-grey-light);
+
+  @media screen and (max-width: ${mobileBreakpoint}px) {
+    top: 180px;
+    right: 40px;
+  }
 `
 
 const Compound = styled.div`

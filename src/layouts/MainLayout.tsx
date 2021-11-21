@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-
-/* Components */
 import Sidebar from "../components/Sidebar"
+import { mobileBreakpoint } from "../helpers/breakpoints"
+
 interface IProps {
   children: JSX.Element | JSX.Element[]
 }
@@ -31,7 +31,7 @@ const MainContentWrapper = styled.div`
   flex-grow: 1;
   height: 100vh;
   margin-left: 90px;
-  @media screen and (max-width: 750px) {
+  @media screen and (max-width: ${mobileBreakpoint}px) {
     margin-left: 0;
     padding-top: 80px;
     height: calc(100vh - 80px);
