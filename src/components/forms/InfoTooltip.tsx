@@ -44,6 +44,7 @@ const Info = styled.div`
   background-color: var(--color-grey-normal);
   border-radius: 5px;
   margin-left: 1rem;
+  margin-bottom: 25px;
   width: max-content;
   max-width: 180px;
   font-size: 1rem;
@@ -70,6 +71,6 @@ const InfoWrapper = styled.div`
   position: absolute;
   display: flex;
   right: 0;
-  transform: translateX(20px) translateY(-110%);
+  transform: translateX(20px) translateY(-50%);
   pointer-events: none;
 `
