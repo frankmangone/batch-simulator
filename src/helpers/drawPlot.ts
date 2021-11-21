@@ -58,24 +58,27 @@ const drawVerticalAxis = ({ context, ticks }: DrawAxisParams) => {
     const yPosition =
       height - DISTANCE_FROM_CORNER - (effectiveHeight * i) / totalTicks
 
+    // Ticks
     context.beginPath()
     context.strokeStyle = "hsl(213, 20%, 20%)"
-    context.moveTo(10, yPosition)
-    context.lineTo(DISTANCE_FROM_CORNER, yPosition)
+    context.moveTo(10 + DISTANCE_FROM_CORNER, yPosition)
+    context.lineTo(DISTANCE_FROM_CORNER * 2, yPosition)
     context.stroke()
 
+    // Plot lines in the back
     context.beginPath()
-    context.strokeStyle = "hsl(213, 20%, 85%)"
-    context.moveTo(DISTANCE_FROM_CORNER, yPosition)
+    context.strokeStyle = "hsl(213, 20%, 70%)"
+    context.moveTo(DISTANCE_FROM_CORNER * 2, yPosition)
     context.lineTo(width - DISTANCE_FROM_CORNER, yPosition)
     context.stroke()
 
+    // Text
     context.font = "16px Mulish"
-    context.fillStyle = "hsl(213, 20%, 80%)"
+    context.fillStyle = "hsl(213, 20%, 20%)"
     context.textAlign = "right"
     context.fillText(
       formatTickValue(i * tickDistance),
-      width - DISTANCE_FROM_CORNER,
+      DISTANCE_FROM_CORNER * 2 - 5,
       yPosition + 18
     )
   }
@@ -83,8 +86,8 @@ const drawVerticalAxis = ({ context, ticks }: DrawAxisParams) => {
   // Draw actual axis line
   context.strokeStyle = "hsl(213, 20%, 20%)"
   context.beginPath()
-  context.moveTo(DISTANCE_FROM_CORNER, DISTANCE_FROM_CORNER)
-  context.lineTo(DISTANCE_FROM_CORNER, height - DISTANCE_FROM_CORNER)
+  context.moveTo(DISTANCE_FROM_CORNER * 2, DISTANCE_FROM_CORNER)
+  context.lineTo(DISTANCE_FROM_CORNER * 2, height - DISTANCE_FROM_CORNER)
   context.stroke()
 }
 
@@ -94,7 +97,7 @@ const drawHorizontalAxis = ({ context, ticks }: DrawAxisParams) => {
 
   context.strokeStyle = "hsl(213, 20%, 30%)"
   context.beginPath()
-  context.moveTo(DISTANCE_FROM_CORNER, height - DISTANCE_FROM_CORNER)
+  context.moveTo(DISTANCE_FROM_CORNER * 2, height - DISTANCE_FROM_CORNER)
   context.lineTo(width - DISTANCE_FROM_CORNER, height - DISTANCE_FROM_CORNER)
   context.stroke()
 }
@@ -111,7 +114,7 @@ const drawPlotCurve = (params: DrawPlotCurveParams) => {
   const maxTimeValue = data.length !== 0 ? data[0][data[0].length - 1]?.x : 10
   const maxYAxisValue = yAxisTicks.tickDistance * yAxisTicks.totalTicks
 
-  const plotAreaWidth = context.canvas.width - DISTANCE_FROM_CORNER * 2
+  const plotAreaWidth = context.canvas.width - DISTANCE_FROM_CORNER * 3
   const plotAreaHeight = context.canvas.height - DISTANCE_FROM_CORNER * 2
 
   for (let j = 0; j < data.length; j++) {
@@ -121,17 +124,18 @@ const drawPlotCurve = (params: DrawPlotCurveParams) => {
     const color = colors[j]
     for (let i = 1; i < points.length; i++) {
       plotPath.moveTo(
-        DISTANCE_FROM_CORNER + (plotAreaWidth * points[i - 1].x) / maxTimeValue,
+        DISTANCE_FROM_CORNER * 2 +
+          (plotAreaWidth * points[i - 1].x) / maxTimeValue,
         DISTANCE_FROM_CORNER +
           plotAreaHeight * (1 - points[i - 1].y / maxYAxisValue)
       )
       plotPath.lineTo(
-        DISTANCE_FROM_CORNER + (plotAreaWidth * points[i].x) / maxTimeValue,
+        DISTANCE_FROM_CORNER * 2 + (plotAreaWidth * points[i].x) / maxTimeValue,
         DISTANCE_FROM_CORNER +
           plotAreaHeight * (1 - points[i].y / maxYAxisValue)
       )
     }
-    context.lineWidth = 4
+    context.lineWidth = 2
     context.strokeStyle = color
     context.stroke(plotPath)
   }
