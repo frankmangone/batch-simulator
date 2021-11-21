@@ -40,15 +40,15 @@ const SidebarOptionsWrapper = styled.div<SidebarWrapperProps>`
   top: 0;
   right: 0;
   bottom: 0;
-  width: calc(300px - 2rem);
+  width: calc(250px - 2rem);
   padding: 1rem;
   padding-top: 2rem;
   transform: ${(props) =>
     props.visible ? "translateX(0px)" : "translateX(300px)"};
-  background-color: var(--color-grey-light);
+  background-color: var(--color-grey-normal);
   transition: all 0.15s ease-in-out;
   box-shadow: ${(props) =>
-    props.visible ? "0 0 20px -5px var(--color-grey-normal)" : "unset"};
+    props.visible ? "0 0 20px -5px var(--color-grey-dark)" : "unset"};
 `
 
 const CloseButton = styled.div`

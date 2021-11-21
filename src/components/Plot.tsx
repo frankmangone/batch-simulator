@@ -14,12 +14,12 @@ const Plot = (props: PlotProps) => {
   // https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const [canvasWidth, setCanvasWidth] = useState(window.innerWidth - 130)
-  const [canvasHeight, setCanvasHeight] = useState(window.innerHeight - 80)
+  const [canvasWidth, setCanvasWidth] = useState(window.innerWidth - 137)
+  const [canvasHeight, setCanvasHeight] = useState(window.innerHeight - 105)
 
   const resizeHandler = useCallback(() => {
-    setCanvasWidth(window.innerWidth - 130)
-    setCanvasHeight(window.innerHeight - 120)
+    setCanvasWidth(window.innerWidth - 137)
+    setCanvasHeight(window.innerHeight - 105)
 
     // Re-draw plot
     drawPlot({
@@ -52,5 +52,6 @@ export default Plot
 
 const Canvas = styled.canvas`
   border-radius: 5px;
-  background-color: var(--color-grey-lightest);
+  background-color: var(--color-grey-lighter);
+  border: 1px solid white;
 `

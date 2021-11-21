@@ -38,7 +38,9 @@ const MainContentWrapper = styled.div`
   }
   position: relative;
   overflow-y: scroll;
+  overflow-x: hidden;
 `
 const MainContent = styled.div`
   margin: 20px;
+  min-height: calc(100% - 40px);
 `

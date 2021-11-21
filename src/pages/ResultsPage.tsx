@@ -4,6 +4,7 @@ import styled from "styled-components"
 import PageTitle from "../components/PageTitle"
 import Plot from "../components/Plot"
 import SidebarOptions from "../components/results/SidebarOptions"
+import Button from "../components/Button"
 
 /* Constants */
 import { COMPOUND_COLORS } from "../constants/compoundColors"
@@ -43,7 +44,9 @@ const ResultsPage: React.VFC = () => {
   return (
     <>
       <PageTitle>Results</PageTitle>
-      <OptionsButton onClick={toggleOptionsVisible}>Options</OptionsButton>
+      <OptionsButton onClick={toggleOptionsVisible} color="green">
+        Options
+      </OptionsButton>
       <SidebarOptions
         {...{
           optionsVisible,
@@ -59,16 +62,8 @@ const ResultsPage: React.VFC = () => {
 
 export default ResultsPage
 
-const OptionsButton = styled.button`
+const OptionsButton = styled(Button)`
   float: right;
   margin-bottom: 0.5rem;
   padding: 0.8rem;
-  background-color: var(--color-grey-lighter);
-  border: none;
-  font-size: 1rem;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: var(--color-grey-lightest);
-  }
 `
