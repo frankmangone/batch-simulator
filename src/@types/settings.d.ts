@@ -10,6 +10,7 @@ interface Settings {
   molarUnits: number
   massUnits: number
   temperatureUnits: number
+  energyUnits: number
 
   // Heat Exchange
   isothermal: boolean
@@ -28,6 +29,7 @@ interface SettingsErrors {
   molarUnits?: string
   massUnits?: string
   temperatureUnits?: string
+  energyUnits?: string
 
   // Heat Exchange
   isothermal?: string

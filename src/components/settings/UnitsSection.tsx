@@ -7,6 +7,7 @@ import {
   massUnitsOptions,
   molarUnitsOptions,
   temperatureUnitsOptions,
+  energyUnitsOptions,
 } from "../../helpers/units"
 import type { FormikProps } from "formik"
 
@@ -67,6 +68,16 @@ const UnitsSection: VFC<UnitsProps> = (props) => {
         selectOptions={temperatureUnitsOptions}
         onSelectionChange={(value) => {
           formik.setFieldValue("temperatureUnits", value, false)
+          formik.handleSubmit()
+        }}
+      />
+      <SelectInput
+        selectedOption={energyUnitsOptions[formik.values.energyUnits]}
+        fieldName="energyUnits"
+        label="Energy units:"
+        selectOptions={energyUnitsOptions}
+        onSelectionChange={(value) => {
+          formik.setFieldValue("energyUnits", value, false)
           formik.handleSubmit()
         }}
       />

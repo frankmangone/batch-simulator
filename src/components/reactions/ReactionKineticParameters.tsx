@@ -6,8 +6,10 @@ import { TokenTypes } from "../../helpers/tokenTypes"
 import { KineticModels } from "../../helpers/reactionTypes"
 import {
   timeUnitsValue,
+  temperatureUnitsValue,
   volumeUnitsValue,
   molarUnitsValue,
+  energyUnitsValue,
 } from "../../helpers/units"
 
 interface IReactionKineticParametersProps {
@@ -24,8 +26,10 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
   const kineticModel: KineticModel = reaction.kineticModel
 
   const timeUnits = timeUnitsValue(settings.timeUnits)
+  const temperatureUnits = temperatureUnitsValue(settings.temperatureUnits)
   const volumeUnits = volumeUnitsValue(settings.volumeUnits)
   const molarUnits = molarUnitsValue(settings.molarUnits)
+  const energyUnits = energyUnitsValue(settings.energyUnits)
 
   const tokenizedMuUnits = [
     {
@@ -47,11 +51,13 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
 
   const globalOrder = Object.entries(reaction?.kineticConstants).reduce(
     (accumulator, [key, value]) => {
-      if (key === "preExponential" || key === "activationEnergy")
+      console.log(key)
+      if (key === "k_\\inf" || key === "E_A") {
         return accumulator
+      }
       return accumulator + parseFloat(value)
     },
-    -reaction?.kineticConstants.k || 0
+    0
   )
 
   if (globalOrder !== 1) {
@@ -77,24 +83,68 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
     })
   }
 
+  const tokenizedActivationEnergyUnits = [
+    {
+      type: TokenTypes.Parameter,
+      value: `${energyUnits}`,
+    },
+    {
+      type: TokenTypes.Operator,
+      value: "*",
+    },
+    {
+      type: TokenTypes.Parameter,
+      value: `${molarUnits}`,
+    },
+    {
+      type: TokenTypes.Operator,
+      value: "^",
+    },
+    {
+      type: TokenTypes.Parameter,
+      value: "-1",
+    },
+    {
+      type: TokenTypes.Operator,
+      value: "*",
+    },
+    {
+      type: TokenTypes.Parameter,
+      value: `${temperatureUnits}`,
+    },
+    {
+      type: TokenTypes.Operator,
+      value: "^",
+    },
+    {
+      type: TokenTypes.Parameter,
+      value: "-1",
+    },
+  ]
+
   return (
     <KineticParamsWrapper>
       {Object.entries(reaction.kineticConstants).map(([param, value]) => {
-        let units, symbol
+        let units
 
-        if ("k_\\inf") {
+        if (param === "k_\\inf") {
           if (kineticModel === KineticModels.hyperbolic) {
             units = <Equation tokenizedEquation={tokenizedMuUnits} />
           } else {
             units = <Equation tokenizedEquation={tokenizedKUnits} />
           }
         }
-        symbol = param
+
+        if (param === "E_A") {
+          units = (
+            <Equation tokenizedEquation={tokenizedActivationEnergyUnits} />
+          )
+        }
 
         return (
           <ReactionParamInputCard
             key={param}
-            paramSymbol={<SymbolComponent symbol={symbol} />}
+            paramSymbol={<SymbolComponent symbol={param} />}
             value={value}
             units={units}
             updateValue={(value: string) => {

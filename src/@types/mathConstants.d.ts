@@ -1,0 +1,1 @@
+type MathConstant = "R" | "e"

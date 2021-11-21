@@ -44,6 +44,7 @@ const Info = styled.div`
   background-color: var(--color-grey-normal);
   border-radius: 5px;
   margin-left: 1rem;
+  margin-bottom: 25px;
   width: max-content;
   max-width: 180px;
   font-size: 1rem;
@@ -54,15 +55,15 @@ const Info = styled.div`
 
   &:before {
     position: absolute;
-    left: -8px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 22px;
+    bottom: 0%;
+    transform: translateY(100%);
     content: "";
     width: 0;
     height: 0;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-right: 8px solid var(--color-grey-normal);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid var(--color-grey-normal);
   }
 `
 
@@ -70,6 +71,6 @@ const InfoWrapper = styled.div`
   position: absolute;
   display: flex;
   right: 0;
-  transform: translateX(102%);
+  transform: translateX(20px) translateY(-50%);
   pointer-events: none;
 `

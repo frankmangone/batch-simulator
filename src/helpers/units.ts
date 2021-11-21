@@ -1,8 +1,9 @@
-export const temperatureUnits = ["K", "R", "°C", "°F"]
-export const timeUnits = ["ms", "s", "min", "h"]
-export const massUnits = ["mg", "g", "kg", "lb"]
-export const molarUnits = ["mol", "kmol", "lbmol"]
-export const volumeUnits = ["L", "m^3", "cm^3"]
+export const temperatureUnits: TemperatureUnits = ["K", "R", "°C", "°F"]
+export const timeUnits: TimeUnits = ["ms", "s", "min", "h"]
+export const massUnits: MassUnits = ["mg", "g", "kg", "lb"]
+export const molarUnits: MolarUnits = ["mol", "kmol", "lbmol"]
+export const volumeUnits: VolumeUnits = ["L", "m3", "cm3"]
+export const energyUnits: EnergyUnits = ["cal", "kcal", "J", "kJ"]
 
 /**
  * Value getters
@@ -29,6 +30,10 @@ export const temperatureUnitsValue = (index: number) => {
   return temperatureUnits[index]
 }
 
+export const energyUnitsValue = (index: number) => {
+  return energyUnits[index]
+}
+
 /**
  * Options mapping for selects
  */
@@ -45,3 +50,4 @@ export const massUnitsOptions = mapUnitOptions(massUnits)
 export const molarUnitsOptions = mapUnitOptions(molarUnits)
 export const volumeUnitsOptions = mapUnitOptions(volumeUnits)
 export const temperatureUnitsOptions = mapUnitOptions(temperatureUnits)
+export const energyUnitsOptions = mapUnitOptions(energyUnits)

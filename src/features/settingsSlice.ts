@@ -15,6 +15,7 @@ const initialState: SettingsState = loadFromKey(STORAGE_KEY) || {
   molarUnits: 0,
   massUnits: 0,
   temperatureUnits: 0,
+  energyUnits: 0,
 
   // Heat Exchange
   isothermal: true,
