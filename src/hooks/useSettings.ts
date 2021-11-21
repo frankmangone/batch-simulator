@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "./useStore"
-import { save, saveField } from "../features/settingsSlice"
+import { reset, save, saveField } from "../features/settingsSlice"
 import { saveToKey } from "../helpers/localStorage"
 
 /* Constants */
@@ -17,6 +17,10 @@ const useSettings = () => {
 
   return {
     settings,
+
+    resetSettings: (): void => {
+      dispatch(reset())
+    },
 
     saveSettings: (newSettings: Settings): void => {
       dispatch(save(newSettings))

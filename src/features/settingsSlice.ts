@@ -3,6 +3,7 @@ import { loadFromKey } from "../helpers/localStorage"
 
 type SettingsState = Settings
 export const STORAGE_KEY = "batch-simulator:settings"
+
 const initialState: SettingsState = loadFromKey(STORAGE_KEY) || {
   // Reaction times
   reactionTime: 30,
@@ -29,6 +30,10 @@ export const settingsSlice = createSlice({
   name: "settings",
   initialState,
   reducers: {
+    reset: () => {
+      return initialState
+    },
+
     save: (state, action: SaveAction) => {
       return action.payload
     },
@@ -42,6 +47,6 @@ export const settingsSlice = createSlice({
   },
 })
 
-export const { save, saveField } = settingsSlice.actions
+export const { reset, save, saveField } = settingsSlice.actions
 
 export default settingsSlice.reducer
