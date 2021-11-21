@@ -2,7 +2,8 @@ import styled from "styled-components"
 
 /* Components */
 import PageTitle from "../components/PageTitle"
-import Plot from "../components/Plot"
+import Plot from "../components/results/Plot"
+import PlotLegend from "../components/results/PlotLegend"
 import SidebarOptions from "../components/results/SidebarOptions"
 import Button from "../components/Button"
 
@@ -47,6 +48,8 @@ const ResultsPage: React.VFC = () => {
       <OptionsButton onClick={toggleOptionsVisible} color="green">
         Options
       </OptionsButton>
+      <Plot data={data} colors={colors} />
+      <PlotLegend selectedVariables={selectedVariables} />
       <SidebarOptions
         {...{
           optionsVisible,
@@ -55,7 +58,6 @@ const ResultsPage: React.VFC = () => {
           setSelectedVariables,
         }}
       />
-      <Plot data={data} colors={colors} />
     </>
   )
 }
