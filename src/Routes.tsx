@@ -2,6 +2,7 @@ import { Switch, Redirect, Route } from "react-router-dom"
 
 /* Hooks */
 import useSimulationResults from "./hooks/useSimulationResults"
+import useVersionControl from "./hooks/useVersionControl"
 
 /* Pages */
 import CompoundsPage from "./pages/CompoundsPage"
@@ -11,6 +12,8 @@ import ResultsPage from "./pages/ResultsPage"
 
 const Routes = () => {
   const { simulationResults } = useSimulationResults()
+
+  useVersionControl()
 
   return (
     <Switch>
