@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 const CardButton = styled.button`
   align-items: center;
-  align-self: stretch;
+  align-self: center;
   background-color: unset;
   border: none;
   border-radius: 5px;

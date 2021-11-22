@@ -36,7 +36,7 @@ const ReactionCard: React.FC<IReactionCardProps> = (props) => {
 export default ReactionCard
 
 const ReactionCardWrapper = styled.div`
-  margin: 10px;
+  margin: 5px;
   padding: 20px;
   position: relative;
 
@@ -52,6 +52,7 @@ const ReactionCardWrapper = styled.div`
   display: flex;
   color: var(--color-grey-dark);
   cursor: pointer;
+  flex-basis: 100%;
   overflow: hidden;
   transition: all 0.15s ease-in-out;
 

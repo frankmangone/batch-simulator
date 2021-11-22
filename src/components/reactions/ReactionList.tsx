@@ -1,9 +1,7 @@
-/* Components */
+import styled from "styled-components"
 import ReactionCard from "./ReactionCard"
 import ReactionEditModal from "./ReactionEditModal"
 import NoResource from "../NoResource"
-
-/* Hooks */
 import { useMemo, useState } from "react"
 import useCompounds from "../../hooks/useCompounds"
 import useReactions from "../../hooks/useReactions"
@@ -25,7 +23,7 @@ const ReactionList: React.FC = () => {
   )
 
   return (
-    <>
+    <ReactionListWrapper>
       {reactions.length === 0 && (
         <NoResource>No reactions added yet</NoResource>
       )}
@@ -54,8 +52,18 @@ const ReactionList: React.FC = () => {
           closeModal={() => editReaction()}
         />
       )}
-    </>
+    </ReactionListWrapper>
   )
 }
 
 export default ReactionList
+
+const ReactionListWrapper = styled.div`
+  align-self: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+`
