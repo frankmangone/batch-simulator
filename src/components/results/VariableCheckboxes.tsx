@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import useCompounds from "../../hooks/useCompounds"
-import { FaCheck } from "react-icons/fa"
+import Checkbox from "../../components/forms/Checkbox"
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 import type { Dispatch, SetStateAction } from "react"
 
@@ -52,9 +52,10 @@ const VariableCheckboxes = (props: VariableCheckboxesProps) => {
           >
             <ColorBadge color={color} toggled={isToggled(index)} />
             <CompoundSymbol>{compound.symbol}</CompoundSymbol>
-            <Checkbox>
-              {selectedVariables.includes(index) ? <FaCheck /> : null}
-            </Checkbox>
+            <Checkbox
+              toggled={!!selectedVariables.includes(index)}
+              onToggle={() => {}}
+            />
           </CheckboxWrapper>
         )
       })}
@@ -76,19 +77,22 @@ const Wrapper = styled.div`
 
 const CheckboxWrapper = styled.button<CheckboxProps>`
   background-color: ${(props) =>
-    props.toggled ? props.color : "var(--color-grey-lighter)"};
+    props.toggled ? "var(--color-grey-lighter)" : "var(--color-grey-light)"};
   border-radius: 5px;
-  border: none;
+  border: 2px solid
+    ${(props) => (props.toggled ? props.color : "var(--color-grey-light)")};
   margin-bottom: 0.5rem;
   padding: 0.5rem;
   display: flex;
   align-items: center;
 
   &:hover {
-    ${(props) =>
+    background-color: ${(props) =>
       props.toggled
-        ? "opacity: 0.8"
-        : "background-color: var(--color-grey-lightest)"};
+        ? "var(--color-grey-lightest)"
+        : "var(--color-grey-lighter)"};
+    border: 2px solid
+      ${(props) => (props.toggled ? props.color : "var(--color-grey-lighter)")};
   }
 `
 
@@ -106,18 +110,4 @@ const CompoundSymbol = styled.span`
   flex-grow: 1;
   text-align: left;
   font-size: 1rem;
-`
-
-const Checkbox = styled.div`
-  width: 1.1rem;
-  height: 1.1rem;
-  border: 2px solid var(--color-grey-darker);
-  border-radius: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  svg {
-    fill: var(--color-grey-darker);
-  }
 `

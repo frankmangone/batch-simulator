@@ -114,7 +114,7 @@ const EditModalInner = styled.div<IClosing>`
   position: relative;
   max-width: 700px;
   max-height: 600px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   z-index: 3;
 

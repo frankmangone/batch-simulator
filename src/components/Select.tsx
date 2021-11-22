@@ -210,7 +210,7 @@ const SelectOptions = styled.div<ISelectOptions>`
   font-size: 1.2rem;
   margin-top: 0.5rem;
   max-height: 400px;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 0.5rem;
   transition: all 0.05s linear;
   width: auto;
