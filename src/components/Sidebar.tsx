@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { useHistory } from "react-router-dom"
+import { mobileBreakpoint } from "../helpers/breakpoints"
 
 /* Components */
 import Button from "./Button"
@@ -115,7 +116,7 @@ const IconWrapper = styled.div`
   width: 25px;
   height: 25px;
   margin-right: 0.5rem;
-  @media only screen and (max-width: 750px) {
+  @media only screen and (max-width: ${mobileBreakpoint}px) {
     margin-right: 0;
   }
 `
@@ -131,7 +132,7 @@ const SidebarWrapper = styled.div<SidebarWrapperProps>`
   z-index: 20;
   height: 100vh;
   max-width: ${(props) => (props.expanded ? "270px" : "90px")};
-  @media screen and (max-width: 750px) {
+  @media screen and (max-width: ${mobileBreakpoint}px) {
     height: 80px;
     width: 100vw;
     max-width: 100vw;
@@ -146,7 +147,7 @@ const SidebarWrapper = styled.div<SidebarWrapperProps>`
     margin: 1rem;
     display: flex;
     flex-direction: column;
-    @media screen and (max-width: 750px) {
+    @media screen and (max-width: ${mobileBreakpoint}px) {
       flex-direction: row;
       margin: 0 1rem;
       align-items: center;
@@ -175,7 +176,7 @@ const SidebarWrapper = styled.div<SidebarWrapperProps>`
         margin: 0;
       }
 
-      @media screen and (max-width: 750px) {
+      @media screen and (max-width: ${mobileBreakpoint}px) {
         margin-bottom: 0;
 
         p {
@@ -185,7 +186,7 @@ const SidebarWrapper = styled.div<SidebarWrapperProps>`
     }
   }
 
-  @media screen and (max-width: 750px) {
+  @media screen and (max-width: ${mobileBreakpoint}px) {
     #hamburger {
       display: none;
     }

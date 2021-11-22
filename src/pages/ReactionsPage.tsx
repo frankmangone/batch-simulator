@@ -9,7 +9,7 @@ import useReactions from "../hooks/useReactions"
 
 const deleteButtonStyle = `
   position: absolute;
-  top: 1rem;
+  top: calc(80px + 1rem);
   right: 1rem;
   padding: 0.6rem 1rem;
 `
