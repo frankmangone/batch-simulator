@@ -23,7 +23,7 @@ const PlotLegend: React.VFC<PlotLegendProps> = (props) => {
         const color =
           COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS]
         return (
-          <Show when={selectedVariables.includes(index)}>
+          <Show when={selectedVariables.includes(index)} key={index}>
             <Compound>
               <ColorBadge color={color} />
               <p>{compound.symbol}</p>

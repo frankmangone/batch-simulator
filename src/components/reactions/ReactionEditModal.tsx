@@ -26,6 +26,7 @@ import ReactionPreview from "./ReactionPreview"
 /* Helpers */
 import serializeKineticEquation from "../../helpers/serializeKineticEquation"
 import { CompoundTypes } from "../../helpers/reactionTypes"
+import { mobileBreakpoint } from "../../helpers/breakpoints"
 
 /* Hooks */
 import { useMemo, useState, useRef } from "react"
@@ -423,7 +424,7 @@ const SelectField = styled.div`
     flex-basis: 45%;
   }
 
-  @media screen and (max-width: 750px) {
+  @media screen and (max-width: ${mobileBreakpoint}px) {
     width: 100%;
   }
 `
@@ -443,6 +444,10 @@ const CompoundInputInner = styled.div`
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
   margin: 0.5rem 0.3rem;
   padding: 0.5rem;
+
+  @media screen and (max-width: ${mobileBreakpoint}px) {
+    margin-bottom: 1.5rem;
+  }
 `
 
 const AddCompound = styled.div`

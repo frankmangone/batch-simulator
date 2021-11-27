@@ -1,12 +1,10 @@
 import styled from "styled-components"
-
-/* Components */
 import Error from "./Error"
 import Input from "./Input"
 import InfoTooltip from "./InfoTooltip"
-
-/* Constants */
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
+import { mobileBreakpoint } from "../../helpers/breakpoints"
+
 interface IFieldInputProps {
   big?: boolean
   color?: string
@@ -113,6 +111,16 @@ const FieldInputWrapper = styled.div<IFieldInputWrapperProps>`
   &:hover > .error {
     opacity: 1 !important;
   }
+
+  @media screen and (max-width: ${mobileBreakpoint}px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    input {
+      width: auto;
+      margin-left: 0;
+    }
+  }
 `
 
 const LabelWrapper = styled.div`
@@ -120,6 +128,10 @@ const LabelWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   flex-basis: 50%;
+
+  @media screen and (max-width: ${mobileBreakpoint}px) {
+    margin-bottom: 10px;
+  }
 `
 
 export default FieldInput

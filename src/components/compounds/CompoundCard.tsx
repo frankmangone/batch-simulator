@@ -1,11 +1,8 @@
 import styled from "styled-components"
-
-/* Components */
 import CardButton from "../CardButton"
 import { FiEdit, FiTrash2 } from "react-icons/fi"
-
-/* Constants */
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
+import { mobileBreakpoint } from "../../helpers/breakpoints"
 
 interface ICompoundCardProps {
   compound: Compound
@@ -26,15 +23,17 @@ const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
           {compound.symbol}
         </CompoundTile>
 
-        {/* Button to toggle modal edition */}
-        <CardButton onClick={editCompound}>
-          <FiEdit />
-        </CardButton>
+        <Buttons>
+          {/* Button to toggle modal edition */}
+          <CardButton onClick={editCompound}>
+            <FiEdit />
+          </CardButton>
 
-        {/* Button to delete the compound */}
-        <CardButton onClick={removeCompound}>
-          <FiTrash2 />
-        </CardButton>
+          {/* Button to delete the compound */}
+          <CardButton onClick={removeCompound}>
+            <FiTrash2 />
+          </CardButton>
+        </Buttons>
       </CompoundCardInner>
     </CompoundCardWrapper>
   )
@@ -46,7 +45,12 @@ export default CompoundCard
  * Styled components
  */
 
-const CompoundCardWrapper = styled.li``
+const CompoundCardWrapper = styled.li`
+  @media screen and (max-width: ${mobileBreakpoint}px) {
+    flex: 1;
+    flex-basis: 100%;
+  }
+`
 
 const CompoundCardInner = styled.div`
   margin: 5px;
@@ -64,6 +68,7 @@ const CompoundCardInner = styled.div`
   display: flex;
   color: var(--color-grey-lightest);
   cursor: pointer;
+  justify-content: space-between;
   overflow: hidden;
   transition: all 0.15s ease-in-out;
 
@@ -90,4 +95,9 @@ const CompoundTile = styled.div<ICompoundColorBulletProps>`
   font-size: 1.6rem;
   padding: 0.5rem 0.9rem;
   margin-right: 1rem;
+`
+
+const Buttons = styled.div`
+  align-self: center;
+  display: flex;
 `

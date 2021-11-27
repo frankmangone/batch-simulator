@@ -1,10 +1,7 @@
 import styled from "styled-components"
-
-/* Components */
 import { FiX } from "react-icons/fi"
-
-/* Hooks */
 import { useEffect } from "react"
+import { mobileBreakpoint } from "../helpers/breakpoints"
 
 export interface IClosing {
   closing?: boolean
@@ -132,6 +129,13 @@ const EditModalInner = styled.div<IClosing>`
 
   label {
     color: var(--color-grey-darker);
+  }
+
+  @media screen and (max-width: ${mobileBreakpoint}px) {
+    max-width: 100vw;
+    max-height: calc(100vh - 190px);
+    position: absolute;
+    bottom: 0;
   }
 `
 

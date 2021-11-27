@@ -1,17 +1,19 @@
-/* Components */
 import Button from "../components/Button"
 import PageTitle from "../components/PageTitle"
 import ReactionList from "../components/reactions/ReactionList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
-
-/* Hooks */
 import useReactions from "../hooks/useReactions"
+import { mobileBreakpoint } from "../helpers/breakpoints"
 
 const deleteButtonStyle = `
   position: absolute;
   top: 1rem;
   right: 1rem;
   padding: 0.6rem 1rem;
+
+  @media screen and (max-width: ${mobileBreakpoint}px) {
+    top: calc(80px + 1rem);
+  }
 `
 
 const ReactionsPage: React.FC = () => {

@@ -40,6 +40,7 @@ const MainContentWrapper = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
 `
+
 const MainContent = styled.div`
   margin: 20px;
   min-height: calc(100% - 40px);
