@@ -35,3 +35,13 @@ const getStoichiomericCoefficientForKeyCompound = (reaction: Reaction) => {
   ) as ReactionCompound
   return keyCompound.stoichiometricCoefficient
 }
+
+export const reactionConstantsSymbols = {
+  activationEnergy: "E_A",
+  preExponential: "k_\\inf",
+  reactionEnthalpy: "\\Delta+H_r",
+}
+
+export const isVariableRelatedParam = (param: string) => {
+  return Object.values(reactionConstantsSymbols).includes(param)
+}

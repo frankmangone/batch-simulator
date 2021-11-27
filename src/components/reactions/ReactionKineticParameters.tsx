@@ -11,6 +11,10 @@ import {
   molarUnitsValue,
   energyUnitsValue,
 } from "../../helpers/units"
+import {
+  reactionConstantsSymbols,
+  isVariableRelatedParam,
+} from "../../helpers/reactions"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]
@@ -51,7 +55,7 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
 
   const globalOrder = Object.entries(reaction?.kineticConstants).reduce(
     (accumulator, [key, value]) => {
-      if (key === "k_\\inf" || key === "E_A") {
+      if (isVariableRelatedParam(key)) {
         return accumulator
       }
       return accumulator + parseFloat(value)
@@ -121,12 +125,35 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
     },
   ]
 
+  const tokenizedReactionEnthalpyUnits = [
+    {
+      type: TokenTypes.Parameter,
+      value: `${energyUnits}`,
+    },
+    {
+      type: TokenTypes.Operator,
+      value: "*",
+    },
+    {
+      type: TokenTypes.Parameter,
+      value: `${molarUnits}`,
+    },
+    {
+      type: TokenTypes.Operator,
+      value: "^",
+    },
+    {
+      type: TokenTypes.Parameter,
+      value: "-1",
+    },
+  ]
+
   return (
     <KineticParamsWrapper>
       {Object.entries(reaction.kineticConstants).map(([param, value]) => {
         let units
 
-        if (param === "k_\\inf") {
+        if (param === reactionConstantsSymbols.preExponential) {
           if (kineticModel === KineticModels.hyperbolic) {
             units = <Equation tokenizedEquation={tokenizedMuUnits} />
           } else {
@@ -134,9 +161,15 @@ const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
           }
         }
 
-        if (param === "E_A") {
+        if (param === reactionConstantsSymbols.activationEnergy) {
           units = (
             <Equation tokenizedEquation={tokenizedActivationEnergyUnits} />
+          )
+        }
+
+        if (param === reactionConstantsSymbols.reactionEnthalpy) {
+          units = (
+            <Equation tokenizedEquation={tokenizedReactionEnthalpyUnits} />
           )
         }
 
