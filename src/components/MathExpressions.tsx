@@ -231,7 +231,13 @@ export const SymbolComponent: React.FC<ISymbolComponent> = (props) => {
     )
 
     // Join terms that go together into a single term
-    separatedTerms[index] = <>{termGroup.map((term) => term)}</>
+    separatedTerms[index] = (
+      <>
+        {termGroup.map((term, index) => (
+          <Fragment key={index}>{term}</Fragment>
+        ))}
+      </>
+    )
   })
 
   separatedTerms.forEach(

@@ -37,6 +37,7 @@ const generateSimpleModelConstants = (
   const updatedExponents: KineticConstants = {
     "k_\\inf": reaction.kineticConstants["k_\\inf"],
     E_A: reaction.kineticConstants.E_A,
+    "\\Delta+H_r": reaction.kineticConstants["\\Delta+H_r"],
   }
 
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
@@ -63,6 +64,7 @@ const generateHiperbolicModelConstants = (
   const updatedExponents: KineticConstants = {
     "k_\\inf": reaction.kineticConstants["k_\\inf"],
     E_A: reaction.kineticConstants.E_A,
+    "\\Delta+H_r": reaction.kineticConstants["\\Delta+H_r"],
   }
 
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
@@ -89,6 +91,7 @@ const generateAutocatalyticModelConstants = (
   const updatedExponents: KineticConstants = {
     "k_\\inf": reaction.kineticConstants["k_\\inf"],
     E_A: reaction.kineticConstants.E_A,
+    "\\Delta+H_r": reaction.kineticConstants["\\Delta+H_r"],
   }
 
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
