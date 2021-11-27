@@ -212,6 +212,9 @@ export const SymbolComponent: React.FC<ISymbolComponent> = (props) => {
       case "\\mu":
         separatedTerms[index] = <GreekMu />
         break
+      case "\\Delta":
+        separatedTerms[index] = <GreekDeltaCapital />
+        break
       case "\\inf":
         separatedTerms[index] = <SymbolInfinity />
         break
@@ -359,6 +362,8 @@ const SubindexWrapper = styled.div`
 export const GreekAlpha = () => <span>&alpha;</span>
 export const GreekBeta = () => <span>&beta;</span>
 export const GreekMu = () => <span>&mu;</span>
+
+export const GreekDeltaCapital = () => <span>&Delta;</span>
 
 // ----------------------------------------------------------------
 /**
