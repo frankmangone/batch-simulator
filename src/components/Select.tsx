@@ -213,7 +213,7 @@ const SelectOptions = styled.div<ISelectOptions>`
   overflow-y: auto;
   padding: 0.5rem;
   transition: all 0.05s linear;
-  width: auto;
+  width: calc(100% - 1rem);
   z-index: 20;
 `
 

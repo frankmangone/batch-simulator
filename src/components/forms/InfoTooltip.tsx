@@ -25,6 +25,8 @@ const Icon = styled.div`
   justify-content: center;
   width: 22px;
   height: 22px;
+  flex-basis: 22px;
+  flex-shrink: 0;
   border-radius: 50%;
   background-color: var(--color-grey-normal);
   margin-left: 0.5rem;

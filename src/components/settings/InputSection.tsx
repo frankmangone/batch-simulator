@@ -29,8 +29,7 @@ const InputSectionInner = styled.div`
   border-radius: 5px;
   flex-direction: column;
   padding: 1rem;
-  margin: 1rem;
-  margin-bottom: 0;
+  margin: 0.5rem;
 
   h2 {
     color: var(--color-grey-normal);
