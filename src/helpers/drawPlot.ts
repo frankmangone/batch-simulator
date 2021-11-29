@@ -1,6 +1,7 @@
 interface Ticks {
   tickDistance: number
   totalTicks: number
+  initialValue: number
 }
 
 const DISTANCE_FROM_CORNER = 30
@@ -49,7 +50,7 @@ const drawVerticalAxis = ({ context, ticks }: DrawAxisParams) => {
   const height = context.canvas.height
   const effectiveHeight = height - DISTANCE_FROM_CORNER * 2
 
-  const { totalTicks, tickDistance } = ticks
+  const { totalTicks, tickDistance, initialValue } = ticks
 
   // Once we get the total ticks, it's time to draw them.
   // We use the entire canvas height for the ticks, so that the
@@ -77,7 +78,7 @@ const drawVerticalAxis = ({ context, ticks }: DrawAxisParams) => {
     context.fillStyle = "hsl(213, 20%, 20%)"
     context.textAlign = "right"
     context.fillText(
-      formatTickValue(i * tickDistance),
+      formatTickValue(i * tickDistance + initialValue),
       DISTANCE_FROM_CORNER * 2 - 5,
       yPosition + 18
     )
@@ -111,8 +112,13 @@ interface DrawPlotCurveParams {
 
 const drawPlotCurve = (params: DrawPlotCurveParams) => {
   const { colors, context, data, yAxisTicks } = params
+  const { initialValue, tickDistance, totalTicks } = yAxisTicks
+
   const maxTimeValue = data.length !== 0 ? data[0][data[0].length - 1]?.x : 10
-  const maxYAxisValue = yAxisTicks.tickDistance * yAxisTicks.totalTicks
+
+  const minYAxisValue = Math.floor(initialValue / tickDistance) * tickDistance
+  const maxYAxisValue = minYAxisValue + tickDistance * totalTicks
+  const range = maxYAxisValue - minYAxisValue
 
   const plotAreaWidth = context.canvas.width - DISTANCE_FROM_CORNER * 3
   const plotAreaHeight = context.canvas.height - DISTANCE_FROM_CORNER * 2
@@ -127,12 +133,12 @@ const drawPlotCurve = (params: DrawPlotCurveParams) => {
         DISTANCE_FROM_CORNER * 2 +
           (plotAreaWidth * points[i - 1].x) / maxTimeValue,
         DISTANCE_FROM_CORNER +
-          plotAreaHeight * (1 - points[i - 1].y / maxYAxisValue)
+          (plotAreaHeight * (maxYAxisValue - points[i - 1].y)) / range
       )
       plotPath.lineTo(
         DISTANCE_FROM_CORNER * 2 + (plotAreaWidth * points[i].x) / maxTimeValue,
         DISTANCE_FROM_CORNER +
-          plotAreaHeight * (1 - points[i].y / maxYAxisValue)
+          (plotAreaHeight * (maxYAxisValue - points[i].y)) / range
       )
     }
     context.lineWidth = 2
@@ -156,18 +162,22 @@ const getTicksYAxis = (params: GetTicksYAxisParams): Ticks => {
 
   const targetTicks =
     Math.floor((height - DISTANCE_FROM_CORNER) / AVERAGE_TICK_DISTANCE) || 10
-  const maxValue = maxFunctionalValue(data) || 10
-  const tickDistance = getTickDistance(maxValue, targetTicks)
-  const totalTicks = Math.ceil(maxValue / tickDistance)
+  const maxValue = maxFunctionalValue(data)
+  const minValue = minFunctionalValue(data)
+  const range = maxValue - minValue
 
-  return { tickDistance, totalTicks }
+  const tickDistance = getTickDistance(range, targetTicks)
+  const totalTicks = Math.ceil(range / tickDistance)
+  const initialValue = Math.floor(minValue / tickDistance) * tickDistance
+
+  return { tickDistance, totalTicks, initialValue }
 }
 
 // Gets max functional value to set axis values correctly
 const maxFunctionalValue = (data: Point[][]) => {
   const maxValuesForEachVariable: number[] = []
 
-  if (data.length === 0) return 10
+  if (!data || data.length === 0) return 10
 
   data.forEach((points: Point[]) => {
     maxValuesForEachVariable.push(
@@ -178,11 +188,26 @@ const maxFunctionalValue = (data: Point[][]) => {
   return Math.max(...maxValuesForEachVariable)
 }
 
-// Gets tick distance given a max value and a target tick amount
-const getTickDistance = (maxValue: number, targetTickAmount: number) => {
-  const powerOfTen = getPowerOfTen(maxValue)
+// Gets min functional value to set axis values correctly
+const minFunctionalValue = (data: Point[][]) => {
+  const minValuesForEachVariable: number[] = []
 
-  if (maxValue / 10 ** powerOfTen < 3) {
+  if (!data || data.length === 0) return 0
+
+  data.forEach((points: Point[]) => {
+    minValuesForEachVariable.push(
+      Math.min(...points.map((point: Point) => point.y))
+    )
+  })
+
+  return Math.min(...minValuesForEachVariable)
+}
+
+// Gets tick distance given a max value and a target tick amount
+const getTickDistance = (range: number, targetTickAmount: number) => {
+  const powerOfTen = getPowerOfTen(range)
+
+  if (range / 10 ** powerOfTen < 3) {
     return 10 ** (powerOfTen - 1)
   }
   return 10 ** powerOfTen
