@@ -1,7 +1,7 @@
 /**
  *  This is a reduced model to represent reactions
- *  It only has the tokenized kineticEquation, and a list
- *  of the components in the reaction, with the respective
+ *  It only has the tokenized kineticEquation, reaction enthalpy,
+ *  and a list of the components in the reaction, with the respective
  *  coefficient that multiplies the reaction velocity.
  *
  *  i.e.: A + 2B --> D
@@ -14,6 +14,7 @@ interface ParsedReaction {
   id?: string
   compounds?: CompoundWithCoefficient[]
   kineticEquation?: Token[]
+  enthalpy?: number
 }
 
 interface CompoundWithCoefficient {
