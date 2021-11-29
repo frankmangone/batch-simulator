@@ -19,6 +19,7 @@ const ResultsPage: React.VFC = () => {
   const { variableData } = useGetData()
   const { compounds } = useCompounds()
   const [selectedVariables, setSelectedVariables] = useState<number[]>([0])
+  const [temperatureSelected, setTemperatureSelected] = useState<boolean>(false)
   const [optionsVisible, setOptionsVisible] = useState<boolean>(false)
 
   const toggleOptionsVisible = () => setOptionsVisible(!optionsVisible)
@@ -56,6 +57,8 @@ const ResultsPage: React.VFC = () => {
           toggleOptionsVisible,
           selectedVariables,
           setSelectedVariables,
+          temperatureSelected,
+          setTemperatureSelected,
         }}
       />
     </>
