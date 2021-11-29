@@ -30,6 +30,7 @@ const ResultsPage: React.VFC = () => {
     const data: Point[][] = []
     const colors: string[] = []
 
+    // Sets data for selected variables (compounds)
     selectedVariables.forEach((compoundIndex: number) => {
       const selectedCompound = compounds[compoundIndex]
       const compoundData: Point[] = variableData(`[${selectedCompound.symbol}]`)
@@ -39,9 +40,15 @@ const ResultsPage: React.VFC = () => {
       )
     })
 
+    if (!temperatureSelected) return [data, colors]
+
+    // Sets data for temperature
+    data.push(variableData("T"))
+    colors.push("#000")
     return [data, colors]
+
     // eslint-disable-next-line
-  }, [selectedVariables])
+  }, [selectedVariables, temperatureSelected])
 
   return (
     <>
@@ -50,7 +57,12 @@ const ResultsPage: React.VFC = () => {
         Options
       </OptionsButton>
       <Plot data={data} colors={colors} />
-      <PlotLegend selectedVariables={selectedVariables} />
+      <PlotLegend
+        {...{
+          selectedVariables,
+          temperatureSelected,
+        }}
+      />
       <SidebarOptions
         {...{
           optionsVisible,

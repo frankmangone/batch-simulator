@@ -11,10 +11,11 @@ interface ColorProps {
 
 interface PlotLegendProps {
   selectedVariables: number[]
+  temperatureSelected: boolean
 }
 
 const PlotLegend: React.VFC<PlotLegendProps> = (props) => {
-  const { selectedVariables } = props
+  const { selectedVariables, temperatureSelected } = props
   const { compounds } = useCompounds()
 
   return (
@@ -24,13 +25,20 @@ const PlotLegend: React.VFC<PlotLegendProps> = (props) => {
           COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS]
         return (
           <Show when={selectedVariables.includes(index)} key={index}>
-            <Compound>
+            <Variable>
               <ColorBadge color={color} />
               <p>{compound.symbol}</p>
-            </Compound>
+            </Variable>
           </Show>
         )
       })}
+
+      <Show when={temperatureSelected}>
+        <Variable>
+          <ColorBadge color="#000" />
+          <p>Temp.</p>
+        </Variable>
+      </Show>
     </Wrapper>
   )
 }
@@ -53,7 +61,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Compound = styled.div`
+const Variable = styled.div`
   display: flex;
   align-items: center;
 
