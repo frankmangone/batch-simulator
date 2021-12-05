@@ -170,7 +170,12 @@ const executeSimulation = (
 
         if (currentTime < endTime) {
           result = { done: false }
-          explicitEulerStep(parsedReactions, timeStep, results)
+          explicitEulerStep(
+            parsedReactions,
+            timeStep,
+            settings.isothermic,
+            results
+          )
           return result
         }
         return { done: true }
@@ -199,6 +204,7 @@ const executeSimulation = (
 const explicitEulerStep = (
   parsedReactions: ParsedReaction[],
   timeStep: number,
+  isothermic: boolean,
   results: SimulationResults
 ): void => {
   const oldTimePoint: TimePoint = JSON.parse(
@@ -226,10 +232,9 @@ const explicitEulerStep = (
     }
 
     if (variable === "T") {
-      const temperatureRateOfChange = calculateTemperatureNetRateOfChange(
-        parsedReactions,
-        reactionRates
-      )
+      const temperatureRateOfChange = isothermic
+        ? 0
+        : calculateTemperatureNetRateOfChange(parsedReactions, reactionRates)
 
       newTimePoint.T = oldTimePoint.T - temperatureRateOfChange * timeStep
       return

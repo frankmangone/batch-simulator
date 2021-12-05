@@ -19,7 +19,7 @@ const initialState: SettingsState = loadFromKey(STORAGE_KEY) || {
   energyUnits: 0,
 
   // Heat Exchange
-  isothermal: true,
+  isothermic: true,
   initialTemperature: 300,
 }
 

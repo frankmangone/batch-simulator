@@ -1,7 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 import useCompounds from "../../hooks/useCompounds"
-import Checkbox from "../../components/forms/Checkbox"
+import useSettings from "../../hooks/useSettings"
+import Checkbox from "../forms/Checkbox"
+import Show from "../Show"
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 import type { Dispatch, SetStateAction } from "react"
 
@@ -21,6 +23,7 @@ const VariableCheckboxes: React.VFC<VariableCheckboxesProps> = (props) => {
   } = props
 
   const { compounds } = useCompounds()
+  const { settings } = useSettings()
 
   const isToggled = (compoundIndex: number): boolean => {
     const foundIndex = selectedVariables.findIndex(
@@ -80,15 +83,17 @@ const VariableCheckboxes: React.VFC<VariableCheckboxesProps> = (props) => {
       })}
 
       {/* Temperature */}
-      <CheckboxWrapper
-        onClick={toggleTemperature}
-        toggled={temperatureSelected}
-        color="#000"
-      >
-        <ColorBadge color="#000" toggled={temperatureSelected} />
-        <CompoundSymbol>Temperature</CompoundSymbol>
-        <Checkbox toggled={temperatureSelected} onToggle={() => {}} />
-      </CheckboxWrapper>
+      <Show when={!settings.isothermic}>
+        <CheckboxWrapper
+          onClick={toggleTemperature}
+          toggled={temperatureSelected}
+          color="#000"
+        >
+          <ColorBadge color="#000" toggled={temperatureSelected} />
+          <CompoundSymbol>Temperature</CompoundSymbol>
+          <Checkbox toggled={temperatureSelected} onToggle={() => {}} />
+        </CheckboxWrapper>
+      </Show>
     </Wrapper>
   )
 }

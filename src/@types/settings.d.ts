@@ -13,7 +13,7 @@ interface Settings {
   energyUnits: number
 
   // Heat Exchange
-  isothermal: boolean
+  isothermic: boolean
   initialTemperature: number
 }
 
@@ -32,6 +32,6 @@ interface SettingsErrors {
   energyUnits?: string
 
   // Heat Exchange
-  isothermal?: string
+  isothermic?: string
   initialTemperature?: string
 }
