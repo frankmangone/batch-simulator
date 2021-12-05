@@ -10,7 +10,16 @@ import {
 } from "../features/reactionsSlice"
 import { STORAGE_KEY } from "../features/reactionsSlice"
 import { saveToKey } from "../lib/localStorage"
-import { TokenTypes } from "../lib/tokens/tokenTypes"
+import {
+  divisionToken,
+  exponentiationToken,
+  multiplicationToken,
+  subtractionToken,
+  parameterToken,
+  variableToken,
+  leftParenthesisToken,
+  rightParenthesisToken,
+} from "../lib/tokens/tokenTypes"
 import { KineticModels } from "../lib/reactionTypes"
 
 const useReactions = () => {
@@ -42,22 +51,22 @@ const useReactions = () => {
           "\\Delta+H_r": "200", // Arrhenius activation energy
         },
         kineticEquation: [
-          { type: TokenTypes.Parameter, value: "<k_\\inf>" },
-          { type: TokenTypes.Operator, value: "*" },
-          { type: TokenTypes.Parameter, value: "e" },
-          { type: TokenTypes.Operator, value: "^" },
-          { type: TokenTypes.LeftParenthesis, value: "(" },
-          { type: TokenTypes.LeftParenthesis, value: "(" },
-          { type: TokenTypes.Operator, value: "-" },
-          { type: TokenTypes.Parameter, value: "<E_A>" },
-          { type: TokenTypes.RightParenthesis, value: ")" },
-          { type: TokenTypes.Operator, value: "/" },
-          { type: TokenTypes.LeftParenthesis, value: "(" },
-          { type: TokenTypes.Parameter, value: "<R>" },
-          { type: TokenTypes.Operator, value: "*" },
-          { type: TokenTypes.Variable, value: "{T}" },
-          { type: TokenTypes.RightParenthesis, value: ")" },
-          { type: TokenTypes.RightParenthesis, value: ")" },
+          parameterToken("<k_\\inf>"),
+          multiplicationToken,
+          parameterToken("e"),
+          exponentiationToken,
+          leftParenthesisToken,
+          leftParenthesisToken,
+          subtractionToken,
+          parameterToken("<E_A>"),
+          rightParenthesisToken,
+          divisionToken,
+          leftParenthesisToken,
+          parameterToken("<R>"),
+          multiplicationToken,
+          variableToken("{T}"),
+          rightParenthesisToken,
+          rightParenthesisToken,
         ],
       }
       dispatch(add(newReaction))

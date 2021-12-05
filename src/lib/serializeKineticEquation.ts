@@ -1,4 +1,14 @@
-import { TokenTypes } from "./tokens/tokenTypes"
+import {
+  divisionToken,
+  exponentiationToken,
+  multiplicationToken,
+  subtractionToken,
+  parameterToken,
+  variableToken,
+  leftParenthesisToken,
+  rightParenthesisToken,
+  additionToken,
+} from "./tokens/tokenTypes"
 import { KineticModels } from "./reactionTypes"
 
 const serializeKineticEquation = (
@@ -12,13 +22,13 @@ const serializeKineticEquation = (
   const equationTokens: Token[] = []
   /**
    * TODO: this is just a placeholder for a future serialization system, maybe
-   * with direct user input!
+   * TODO: with direct user input!
    *
    * Returns tokenized equation with standard notation
    */
   switch (reaction.kineticModel) {
     case KineticModels.hyperbolic:
-      equationTokens.push({ type: TokenTypes.Parameter, value: `<k_\\inf>` })
+      equationTokens.push(parameterToken(`<k_\\inf>`))
       addArrheniusExponential(equationTokens)
 
       reaction.reactants.forEach((reactionCompound) => {
@@ -30,7 +40,7 @@ const serializeKineticEquation = (
     //
 
     case KineticModels.autocatalytic:
-      equationTokens.push({ type: TokenTypes.Parameter, value: `<k_\\inf>` })
+      equationTokens.push(parameterToken(`<k_\\inf>`))
       addArrheniusExponential(equationTokens)
 
       reaction.reactants.forEach((reactionCompound) => {
@@ -46,7 +56,7 @@ const serializeKineticEquation = (
     //
 
     default:
-      equationTokens.push({ type: TokenTypes.Parameter, value: `<k_\\inf>` })
+      equationTokens.push(parameterToken(`<k_\\inf>`))
       addArrheniusExponential(equationTokens)
 
       reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
@@ -62,56 +72,50 @@ export default serializeKineticEquation
 // Helpers
 
 const addArrheniusExponential = (equationTokens: Token[]): void => {
-  equationTokens.push({ type: TokenTypes.Operator, value: "*" })
-  equationTokens.push({ type: TokenTypes.Parameter, value: "e" })
-  equationTokens.push({ type: TokenTypes.Operator, value: "^" })
-  equationTokens.push({ type: TokenTypes.LeftParenthesis, value: "(" })
-  equationTokens.push({ type: TokenTypes.LeftParenthesis, value: "(" })
-  equationTokens.push({ type: TokenTypes.Operator, value: "-" })
-  equationTokens.push({ type: TokenTypes.Parameter, value: "<E_A>" })
-  equationTokens.push({ type: TokenTypes.RightParenthesis, value: ")" })
-  equationTokens.push({ type: TokenTypes.Operator, value: "/" })
-  equationTokens.push({ type: TokenTypes.LeftParenthesis, value: "(" })
-  equationTokens.push({ type: TokenTypes.Parameter, value: "<R>" })
-  equationTokens.push({ type: TokenTypes.Operator, value: "*" })
-  equationTokens.push({ type: TokenTypes.Variable, value: "{T}" })
-  equationTokens.push({ type: TokenTypes.RightParenthesis, value: ")" })
-  equationTokens.push({ type: TokenTypes.RightParenthesis, value: ")" })
+  equationTokens.push(multiplicationToken)
+  equationTokens.push(parameterToken("e"))
+  equationTokens.push(exponentiationToken)
+  equationTokens.push(leftParenthesisToken)
+  equationTokens.push(leftParenthesisToken)
+  equationTokens.push(subtractionToken)
+  equationTokens.push(parameterToken("<E_A>"))
+  equationTokens.push(rightParenthesisToken)
+  equationTokens.push(divisionToken)
+  equationTokens.push(leftParenthesisToken)
+  equationTokens.push(parameterToken("<R>"))
+  equationTokens.push(multiplicationToken)
+  equationTokens.push(variableToken("{T}"))
+  equationTokens.push(rightParenthesisToken)
+  equationTokens.push(rightParenthesisToken)
 }
 
 const addReactantWithExponent = (
   equationTokens: Token[],
   symbol: string
 ): void => {
-  equationTokens.push({ type: TokenTypes.Operator, value: "*" })
-  equationTokens.push({ type: TokenTypes.Variable, value: `{[${symbol}]}` })
-  equationTokens.push({ type: TokenTypes.Operator, value: "^" })
-  equationTokens.push({
-    type: TokenTypes.Parameter,
-    value: `<\\alpha_${symbol}>`,
-  })
+  equationTokens.push(multiplicationToken)
+  equationTokens.push(variableToken(`{[${symbol}]}`))
+  equationTokens.push(exponentiationToken)
+  equationTokens.push(parameterToken(`<\\alpha_${symbol}>`))
 }
 
 const addProductWithExponent = (
   equationTokens: Token[],
   symbol: string
 ): void => {
-  equationTokens.push({ type: TokenTypes.Operator, value: "*" })
-  equationTokens.push({ type: TokenTypes.Variable, value: `{[${symbol}]}` })
-  equationTokens.push({ type: TokenTypes.Operator, value: "^" })
-  equationTokens.push({
-    type: TokenTypes.Parameter,
-    value: `<\\beta_${symbol}>`,
-  })
+  equationTokens.push(multiplicationToken)
+  equationTokens.push(variableToken(`{[${symbol}]}`))
+  equationTokens.push(exponentiationToken)
+  equationTokens.push(parameterToken(`<\\beta_${symbol}>`))
 }
 
 const addHyperbolicTerm = (equationTokens: Token[], symbol: string): void => {
-  equationTokens.push({ type: TokenTypes.Operator, value: "*" })
-  equationTokens.push({ type: TokenTypes.Variable, value: `{[${symbol}]}` })
-  equationTokens.push({ type: TokenTypes.Operator, value: "/" })
-  equationTokens.push({ type: TokenTypes.LeftParenthesis, value: "(" })
-  equationTokens.push({ type: TokenTypes.Parameter, value: `<K_${symbol}>` })
-  equationTokens.push({ type: TokenTypes.Operator, value: "+" })
-  equationTokens.push({ type: TokenTypes.Variable, value: `{[${symbol}]}` })
-  equationTokens.push({ type: TokenTypes.RightParenthesis, value: ")" })
+  equationTokens.push(multiplicationToken)
+  equationTokens.push(variableToken(`{[${symbol}]}`))
+  equationTokens.push(divisionToken)
+  equationTokens.push(leftParenthesisToken)
+  equationTokens.push(parameterToken(`<K_${symbol}>`))
+  equationTokens.push(additionToken)
+  equationTokens.push(variableToken(`{[${symbol}]}`))
+  equationTokens.push(rightParenthesisToken)
 }

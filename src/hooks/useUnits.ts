@@ -5,8 +5,13 @@ import {
   molarUnitsValue,
   energyUnitsValue,
 } from "../lib/units"
+import {
+  multiplicationToken,
+  exponentiationToken,
+  parameterToken,
+  minusOneToken,
+} from "../lib/tokens/tokenTypes"
 import useSettings from "./useSettings"
-import { TokenTypes } from "../lib/tokens/tokenTypes"
 
 const useUnits = () => {
   const { settings } = useSettings()
@@ -24,107 +29,47 @@ const useUnits = () => {
    * Constant units
    */
   const tokenizedMuUnits = [
-    {
-      type: TokenTypes.Parameter,
-      value: `${timeUnits}`,
-    },
-    { type: TokenTypes.Operator, value: "^" },
-    { type: TokenTypes.Parameter, value: `-1` },
+    parameterToken(timeUnits),
+    exponentiationToken,
+    minusOneToken,
   ]
 
   const tokenizedActivationEnergyUnits = [
-    {
-      type: TokenTypes.Parameter,
-      value: `${energyUnits}`,
-    },
-    {
-      type: TokenTypes.Operator,
-      value: "*",
-    },
-    {
-      type: TokenTypes.Parameter,
-      value: `${molarUnits}`,
-    },
-    {
-      type: TokenTypes.Operator,
-      value: "^",
-    },
-    {
-      type: TokenTypes.Parameter,
-      value: "-1",
-    },
-    {
-      type: TokenTypes.Operator,
-      value: "*",
-    },
-    {
-      type: TokenTypes.Parameter,
-      value: `${temperatureUnits}`,
-    },
-    {
-      type: TokenTypes.Operator,
-      value: "^",
-    },
-    {
-      type: TokenTypes.Parameter,
-      value: "-1",
-    },
+    parameterToken(energyUnits),
+    multiplicationToken,
+    parameterToken(molarUnits),
+    exponentiationToken,
+    minusOneToken,
+    multiplicationToken,
+    parameterToken(temperatureUnits),
+    exponentiationToken,
+    minusOneToken,
   ]
 
   const tokenizedReactionEnthalpyUnits = [
-    {
-      type: TokenTypes.Parameter,
-      value: `${energyUnits}`,
-    },
-    {
-      type: TokenTypes.Operator,
-      value: "*",
-    },
-    {
-      type: TokenTypes.Parameter,
-      value: `${molarUnits}`,
-    },
-    {
-      type: TokenTypes.Operator,
-      value: "^",
-    },
-    {
-      type: TokenTypes.Parameter,
-      value: "-1",
-    },
+    parameterToken(energyUnits),
+    multiplicationToken,
+    parameterToken(molarUnits),
+    exponentiationToken,
+    minusOneToken,
   ]
 
   const tokenizedKUnits = (order: number) => {
     const kUnits = [
-      {
-        type: TokenTypes.Parameter,
-        value: `${timeUnits}`,
-      },
-      { type: TokenTypes.Operator, value: "^" },
-      { type: TokenTypes.Parameter, value: `-1` },
+      parameterToken(timeUnits),
+      exponentiationToken,
+      minusOneToken,
     ]
 
     if (order !== 1) {
-      kUnits.push({ type: TokenTypes.Operator, value: "*" })
-      kUnits.push({
-        type: TokenTypes.Parameter,
-        value: `${volumeUnits}`,
-      })
-      kUnits.push({ type: TokenTypes.Operator, value: "^" })
-      kUnits.push({
-        type: TokenTypes.Parameter,
-        value: `${order - 1}`,
-      })
-      kUnits.push({ type: TokenTypes.Operator, value: "*" })
-      kUnits.push({
-        type: TokenTypes.Parameter,
-        value: `${molarUnits}`,
-      })
-      kUnits.push({ type: TokenTypes.Operator, value: "^" })
-      kUnits.push({
-        type: TokenTypes.Parameter,
-        value: `${-(order - 1)}`,
-      })
+      kUnits.push(multiplicationToken)
+      kUnits.push(parameterToken(volumeUnits))
+      kUnits.push(exponentiationToken)
+      kUnits.push(parameterToken(`${order - 1}`))
+      kUnits.push(multiplicationToken)
+      kUnits.push(parameterToken(molarUnits))
+      kUnits.push(exponentiationToken)
+      kUnits.push(parameterToken(`${-(order - 1)}`))
     }
 
     return kUnits
