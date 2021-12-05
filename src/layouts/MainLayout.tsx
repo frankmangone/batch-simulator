@@ -24,6 +24,13 @@ export default MainLayout
 
 const MainLayoutWrapper = styled.div`
   height: 100vh;
+  @media screen and (max-width: ${mobileBreakpoint}px) {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    left: 0;
+    height: calc(100vh - 80px);
+  }
 `
 
 const MainContentWrapper = styled.div`
@@ -33,7 +40,6 @@ const MainContentWrapper = styled.div`
   margin-left: 90px;
   @media screen and (max-width: ${mobileBreakpoint}px) {
     margin-left: 0;
-    padding-top: 80px;
     height: calc(100vh - 80px);
   }
   position: relative;
