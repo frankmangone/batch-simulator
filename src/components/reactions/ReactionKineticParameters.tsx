@@ -1,39 +1,27 @@
 import styled from "styled-components"
 import ReactionParamInputCard from "./ReactionParamInputCard"
-import useSettings from "../../hooks/useSettings"
 import { Equation, SymbolComponent } from "../MathExpressions"
 import { TokenTypes } from "../../lib/tokenTypes"
 import { KineticModels } from "../../lib/reactionTypes"
 import {
-  timeUnitsValue,
-  temperatureUnitsValue,
-  volumeUnitsValue,
-  molarUnitsValue,
-  energyUnitsValue,
-} from "../../lib/units"
-import {
   reactionConstantsSymbols,
   isVariableRelatedParam,
 } from "../../lib/reactions"
-
-interface IReactionKineticParametersProps {
+import useUnits from "../../hooks/useUnits"
+interface ReactionKineticParametersProps {
   compounds: Compound[]
   reaction: Reaction
   updateKineticConstant: (key: string, value: string) => void
 }
 
-const ReactionKineticParameters: React.FC<IReactionKineticParametersProps> = (
+const ReactionKineticParameters: React.FC<ReactionKineticParametersProps> = (
   props
 ) => {
   const { reaction, updateKineticConstant } = props
-  const { settings } = useSettings()
   const kineticModel: KineticModel = reaction.kineticModel
 
-  const timeUnits = timeUnitsValue(settings.timeUnits)
-  const temperatureUnits = temperatureUnitsValue(settings.temperatureUnits)
-  const volumeUnits = volumeUnitsValue(settings.volumeUnits)
-  const molarUnits = molarUnitsValue(settings.molarUnits)
-  const energyUnits = energyUnitsValue(settings.energyUnits)
+  const { timeUnits, temperatureUnits, volumeUnits, molarUnits, energyUnits } =
+    useUnits()
 
   const tokenizedMuUnits = [
     {
