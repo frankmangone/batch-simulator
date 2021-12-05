@@ -2,19 +2,19 @@ import styled from "styled-components"
 import ReactionParamInputCard from "./ReactionParamInputCard"
 import useSettings from "../../hooks/useSettings"
 import { Equation, SymbolComponent } from "../MathExpressions"
-import { TokenTypes } from "../../helpers/tokenTypes"
-import { KineticModels } from "../../helpers/reactionTypes"
+import { TokenTypes } from "../../lib/tokenTypes"
+import { KineticModels } from "../../lib/reactionTypes"
 import {
   timeUnitsValue,
   temperatureUnitsValue,
   volumeUnitsValue,
   molarUnitsValue,
   energyUnitsValue,
-} from "../../helpers/units"
+} from "../../lib/units"
 import {
   reactionConstantsSymbols,
   isVariableRelatedParam,
-} from "../../helpers/reactions"
+} from "../../lib/reactions"
 
 interface IReactionKineticParametersProps {
   compounds: Compound[]

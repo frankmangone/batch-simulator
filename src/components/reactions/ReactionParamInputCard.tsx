@@ -5,7 +5,7 @@ import InfoTooltip from "../forms/InfoTooltip"
 import Input from "../forms/Input"
 
 /* Helpers */
-import { validateNotEmpty } from "../../helpers/validators"
+import { validateNotEmpty } from "../../lib/validators"
 import { SCI_REGEX } from "../../constants/regexs"
 
 /* Hooks */

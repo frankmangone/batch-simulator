@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { Fragment } from "react"
-import { TokenTypes } from "../helpers/tokenTypes"
+import { TokenTypes } from "../lib/tokenTypes"
 
 type Term = string | JSX.Element
 

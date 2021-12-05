@@ -4,9 +4,9 @@ import useReactions from "../hooks/useReactions"
 import useSimulationResults from "../hooks/useSimulationResults"
 import useMathConstants from "../hooks/useMathConstants"
 
-import { parseEquation } from "../helpers/tokenParser"
-import { getCoefficientForComponent } from "../helpers/reactions"
-import { TokenTypes } from "../helpers/tokenTypes"
+import { parseEquation } from "../lib/tokenParser"
+import { getCoefficientForComponent } from "../lib/reactions"
+import { TokenTypes } from "../lib/tokenTypes"
 
 const useSimulate = () => {
   const getConstant = useMathConstants()

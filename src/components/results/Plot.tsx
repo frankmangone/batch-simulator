@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useRef, useState } from "react"
 import styled from "styled-components"
-import { drawPlot } from "../../helpers/drawPlot"
-import { mobileBreakpoint } from "../../helpers/breakpoints"
+import { drawPlot } from "../../lib/plot/drawPlot"
+import { mobileBreakpoint } from "../../lib/breakpoints"
 
 interface PlotProps {
   data: Point[][]

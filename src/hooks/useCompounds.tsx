@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "./useStore"
 import { add, update, remove, reset } from "../features/compoundsSlice"
 import useReactions from "./useReactions"
-import { saveToKey } from "../helpers/localStorage"
+import { saveToKey } from "../lib/localStorage"
 
 /* Constants */
 import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"

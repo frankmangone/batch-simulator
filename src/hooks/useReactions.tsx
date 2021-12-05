@@ -9,9 +9,9 @@ import {
   removeCompound,
 } from "../features/reactionsSlice"
 import { STORAGE_KEY } from "../features/reactionsSlice"
-import { saveToKey } from "../helpers/localStorage"
-import { TokenTypes } from "../helpers/tokenTypes"
-import { KineticModels } from "../helpers/reactionTypes"
+import { saveToKey } from "../lib/localStorage"
+import { TokenTypes } from "../lib/tokenTypes"
+import { KineticModels } from "../lib/reactionTypes"
 
 const useReactions = () => {
   const dispatch = useAppDispatch()

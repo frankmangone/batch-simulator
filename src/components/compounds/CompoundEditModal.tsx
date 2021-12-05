@@ -7,12 +7,12 @@ import FieldInput from "../forms/FieldInput"
 import SubmitButton from "../SubmitButton"
 
 /* Helpers */
-import { validateNotEmpty, validateGreaterThan } from "../../helpers/validators"
+import { validateNotEmpty, validateGreaterThan } from "../../lib/validators"
 import {
   volumeUnitsValue,
   massUnitsValue,
   molarUnitsValue,
-} from "../../helpers/units"
+} from "../../lib/units"
 
 /* Hooks */
 import { useState } from "react"

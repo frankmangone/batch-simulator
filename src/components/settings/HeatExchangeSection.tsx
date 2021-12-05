@@ -5,7 +5,7 @@ import CheckboxInput from "../forms/CheckboxInput"
 /* Hooks */
 import useSettings from "../../hooks/useSettings"
 
-import { temperatureUnitsValue } from "../../helpers/units"
+import { temperatureUnitsValue } from "../../lib/units"
 
 import type { FormikProps } from "formik"
 
