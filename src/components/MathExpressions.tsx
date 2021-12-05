@@ -1,13 +1,16 @@
 import styled from "styled-components"
 import { Fragment } from "react"
-import { TokenTypes } from "../helpers/tokenTypes"
+import { TokenTypes } from "../lib/tokens/tokenTypes"
+
+type Term = string | JSX.Element
+
 interface IEquation {
   tokenizedEquation: Token[]
 }
 
 // It is necessary to specify the 'parenthesis level' at which the operation is done
 interface Operation {
-  code: JSX.Element | string
+  code: Term
   level: number
 }
 
@@ -15,7 +18,7 @@ export const Equation: React.FC<IEquation> = (props) => {
   const { tokenizedEquation } = props
   const components: JSX.Element[] = []
 
-  const parenthesisStack: (JSX.Element | string)[][] = []
+  const parenthesisStack: Term[][] = []
   const operationStack: Operation[] = []
 
   tokenizedEquation.forEach((token) => {
@@ -190,6 +193,24 @@ interface ISymbolComponent {
   symbol: string
 }
 
+const replaceBySymbol = (symbol: string | JSX.Element) => {
+  // Replace symbols represented as strings for components
+  switch (symbol) {
+    case "\\alpha":
+      return <GreekAlpha />
+    case "\\beta":
+      return <GreekBeta />
+    case "\\mu":
+      return <GreekMu />
+    case "\\Delta":
+      return <GreekDeltaCapital />
+    case "\\inf":
+      return <SymbolInfinity />
+    default:
+      return symbol
+  }
+}
+
 export const SymbolComponent: React.FC<ISymbolComponent> = (props) => {
   const { symbol } = props
 
@@ -198,26 +219,30 @@ export const SymbolComponent: React.FC<ISymbolComponent> = (props) => {
    * For now, they may not have superindices (TODO: maybe?)
    * TODO: Support commas for subindex separation?
    */
-  const separatedTerms: (string | JSX.Element)[] = symbol.split("_")
+  const separatedTerms: Term[] = symbol.split("_")
+  const termsThatGoTogether: Term[][] = separatedTerms.map((term) =>
+    (term as string).split("+")
+  )
 
-  // Replace symbols represented as strings for components
-  separatedTerms.forEach((term, index) => {
-    switch (term) {
-      case "\\alpha":
-        separatedTerms[index] = <GreekAlpha />
-        break
-      case "\\beta":
-        separatedTerms[index] = <GreekBeta />
-        break
-      case "\\mu":
-        separatedTerms[index] = <GreekMu />
-        break
-      case "\\inf":
-        separatedTerms[index] = <SymbolInfinity />
-        break
-      default:
-    }
+  termsThatGoTogether.forEach((termGroup: Term[], index) => {
+    // Replace symbols represented as strings for components
+    termGroup.forEach(
+      (term: Term, index) => (termGroup[index] = replaceBySymbol(term))
+    )
+
+    // Join terms that go together into a single term
+    separatedTerms[index] = (
+      <>
+        {termGroup.map((term, index) => (
+          <Fragment key={index}>{term}</Fragment>
+        ))}
+      </>
+    )
   })
+
+  separatedTerms.forEach(
+    (term, index) => (separatedTerms[index] = replaceBySymbol(term))
+  )
 
   for (let i = separatedTerms.length - 1; i > 0; i--) {
     // Last term will be the subindex
@@ -359,6 +384,8 @@ const SubindexWrapper = styled.div`
 export const GreekAlpha = () => <span>&alpha;</span>
 export const GreekBeta = () => <span>&beta;</span>
 export const GreekMu = () => <span>&mu;</span>
+
+export const GreekDeltaCapital = () => <span>&Delta;</span>
 
 // ----------------------------------------------------------------
 /**

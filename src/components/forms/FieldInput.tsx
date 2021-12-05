@@ -3,7 +3,7 @@ import Error from "./Error"
 import Input from "./Input"
 import InfoTooltip from "./InfoTooltip"
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
-import { mobileBreakpoint } from "../../helpers/breakpoints"
+import { mobileBreakpoint } from "../../lib/breakpoints"
 
 interface IFieldInputProps {
   big?: boolean

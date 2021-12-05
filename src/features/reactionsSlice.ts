@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { loadFromKey } from "../helpers/localStorage"
+import { loadFromKey } from "../lib/localStorage"
 
 type ReactionsState = Reaction[]
 export const STORAGE_KEY = "batch-simulator:reactions"
@@ -14,7 +14,7 @@ export const reactionsSlice = createSlice({
   name: "reactions",
   initialState,
   reducers: {
-    reset: (state) => {
+    reset: () => {
       return []
     },
 

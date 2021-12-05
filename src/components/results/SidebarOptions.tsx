@@ -8,6 +8,8 @@ interface SidebarOptionsProps {
   toggleOptionsVisible: () => void
   selectedVariables: number[]
   setSelectedVariables: Dispatch<SetStateAction<number[]>>
+  temperatureSelected: boolean
+  setTemperatureSelected: Dispatch<SetStateAction<boolean>>
 }
 
 const SidebarOptions = (props: SidebarOptionsProps) => {
@@ -16,6 +18,8 @@ const SidebarOptions = (props: SidebarOptionsProps) => {
     toggleOptionsVisible,
     selectedVariables,
     setSelectedVariables,
+    temperatureSelected,
+    setTemperatureSelected,
   } = props
 
   return (
@@ -24,7 +28,14 @@ const SidebarOptions = (props: SidebarOptionsProps) => {
         <FiX size={20} />
       </CloseButton>
       <h3>Variables</h3>
-      <VariableCheckboxes {...{ selectedVariables, setSelectedVariables }} />
+      <VariableCheckboxes
+        {...{
+          selectedVariables,
+          setSelectedVariables,
+          temperatureSelected,
+          setTemperatureSelected,
+        }}
+      />
     </SidebarOptionsWrapper>
   )
 }

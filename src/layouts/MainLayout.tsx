@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import Sidebar from "../components/Sidebar"
-import { mobileBreakpoint } from "../helpers/breakpoints"
+import { mobileBreakpoint } from "../lib/breakpoints"
 
 interface IProps {
   children: JSX.Element | JSX.Element[]

@@ -4,9 +4,9 @@ import useReactions from "../hooks/useReactions"
 import useSimulationResults from "../hooks/useSimulationResults"
 import useMathConstants from "../hooks/useMathConstants"
 
-import { parseEquation } from "../helpers/tokenParser"
-import { getCoefficientForComponent } from "../helpers/reactions"
-import { TokenTypes } from "../helpers/tokenTypes"
+import { parseEquation } from "../lib/tokenParser"
+import { getCoefficientForComponent } from "../lib/reactions"
+import { TokenTypes } from "../lib/tokens/tokenTypes"
 
 const useSimulate = () => {
   const getConstant = useMathConstants()
@@ -22,6 +22,7 @@ const useSimulate = () => {
      *  2) Modifying the token order to RPN
      *  3) Merging reactants and products to compounds, which have a symbol
      *    and a coefficient
+     *  4) Add additional information
      *
      *  The reactions are stored in a new object of type ParsedReaction
      */
@@ -40,6 +41,11 @@ const useSimulate = () => {
 
       // 3) Merge reactants and products
       parsedReaction.compounds = mergeCompounds(reaction, compounds)
+
+      // 4) Adds additional keys with important information
+      parsedReaction.enthalpy = parseFloat(
+        reaction.kineticConstants["\\Delta+H_r"]
+      )
 
       parsedReactions.push(parsedReaction)
     })
@@ -164,7 +170,12 @@ const executeSimulation = (
 
         if (currentTime < endTime) {
           result = { done: false }
-          explicitEulerStep(parsedReactions, timeStep, results)
+          explicitEulerStep(
+            parsedReactions,
+            timeStep,
+            settings.isothermic,
+            results
+          )
           return result
         }
         return { done: true }
@@ -193,6 +204,7 @@ const executeSimulation = (
 const explicitEulerStep = (
   parsedReactions: ParsedReaction[],
   timeStep: number,
+  isothermic: boolean,
   results: SimulationResults
 ): void => {
   const oldTimePoint: TimePoint = JSON.parse(
@@ -203,16 +215,28 @@ const explicitEulerStep = (
 
   // Reaction rates can be calculated for each reaction once,
   // and reused when calculating compound net reaction rates
+  //
+  // TODO: Rethink this for other kind of numeric methods
   const reactionRates: number[] = parsedReactions.map((parsedReaction) => {
     return calculateReactionRate(parsedReaction, oldTimePoint)
   })
 
   Object.entries(oldTimePoint).forEach(([variable, value]) => {
-    // variable corresponds to "t" or a compound symbol in brackets i.e. "[A]"
+    // variable corresponds to "t" (time), "T" (temperature),
+    // or a compound symbol in brackets i.e. "[A]"
     //
-    // variable "t" has to be treated differently than the others
+    // variables "t" and "T" have to be treated differently than the others
     if (variable === "t") {
       newTimePoint.t = value + timeStep
+      return
+    }
+
+    if (variable === "T") {
+      const temperatureRateOfChange = isothermic
+        ? 0
+        : calculateTemperatureNetRateOfChange(parsedReactions, reactionRates)
+
+      newTimePoint.T = oldTimePoint.T - temperatureRateOfChange * timeStep
       return
     }
 
@@ -259,6 +283,20 @@ const calculateNetRateOfChange = (
   })
 
   return reactionRate
+}
+
+const calculateTemperatureNetRateOfChange = (
+  parsedReactions: ParsedReaction[],
+  reactionRates: number[]
+) => {
+  let netRate = 0
+
+  // Rates are calculated in relation to the key compound
+  parsedReactions.forEach((reaction: ParsedReaction, index: number) => {
+    netRate += reactionRates[index] * reaction.enthalpy!
+  })
+
+  return netRate
 }
 
 const calculateReactionRate = (

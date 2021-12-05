@@ -1,4 +1,10 @@
-import { TokenTypes } from "./tokenTypes"
+import {
+  parameterToken,
+  variableToken,
+  operationToken,
+  leftParenthesisToken,
+  rightParenthesisToken,
+} from "./tokens/tokenTypes"
 
 /**
  * Equation tokenization
@@ -25,7 +31,7 @@ export const tokenizeEquation = (equation: string): Token[] => {
   const emptyParameterBuffer = () => {
     // Push new parameter to the tokens array
     const newParam = parameterBuffer.join("")
-    tokensArray.push({ type: TokenTypes.Parameter, value: newParam })
+    tokensArray.push(parameterToken(newParam))
 
     // Empty parameter buffer
     parameterBuffer = []
@@ -34,7 +40,7 @@ export const tokenizeEquation = (equation: string): Token[] => {
   const emptyVariableBuffer = () => {
     // Push new variable to the tokens array
     const newVar = variableBuffer.join("")
-    tokensArray.push({ type: TokenTypes.Variable, value: newVar })
+    tokensArray.push(variableToken(newVar))
 
     // Empty variable buffer
     variableBuffer = []
@@ -84,11 +90,11 @@ export const tokenizeEquation = (equation: string): Token[] => {
      * Only operators and parenthesis remain, so:
      */
     else if (isOperator(char)) {
-      tokensArray.push({ type: TokenTypes.Operator, value: char })
+      tokensArray.push(operationToken(char))
     } else if (isLeftParenthesis(char)) {
-      tokensArray.push({ type: TokenTypes.LeftParenthesis, value: char })
+      tokensArray.push(leftParenthesisToken)
     } else if (isRightParenthesis(char)) {
-      tokensArray.push({ type: TokenTypes.RightParenthesis, value: char })
+      tokensArray.push(rightParenthesisToken)
     }
   })
 

@@ -9,7 +9,7 @@ import Input from "../forms/Input"
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 /* Helpers */
-import { validateNotEmpty } from "../../helpers/validators"
+import { validateNotEmpty } from "../../lib/validators"
 
 /* Hooks */
 import { useState } from "react"

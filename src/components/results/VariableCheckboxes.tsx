@@ -1,17 +1,29 @@
+import React from "react"
 import styled from "styled-components"
 import useCompounds from "../../hooks/useCompounds"
-import Checkbox from "../../components/forms/Checkbox"
+import useSettings from "../../hooks/useSettings"
+import Checkbox from "../forms/Checkbox"
+import Show from "../Show"
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 import type { Dispatch, SetStateAction } from "react"
 
 interface VariableCheckboxesProps {
   selectedVariables: number[]
   setSelectedVariables: Dispatch<SetStateAction<number[]>>
+  temperatureSelected: boolean
+  setTemperatureSelected: Dispatch<SetStateAction<boolean>>
 }
 
-const VariableCheckboxes = (props: VariableCheckboxesProps) => {
-  const { selectedVariables, setSelectedVariables } = props
+const VariableCheckboxes: React.VFC<VariableCheckboxesProps> = (props) => {
+  const {
+    selectedVariables,
+    setSelectedVariables,
+    temperatureSelected,
+    setTemperatureSelected,
+  } = props
+
   const { compounds } = useCompounds()
+  const { settings } = useSettings()
 
   const isToggled = (compoundIndex: number): boolean => {
     const foundIndex = selectedVariables.findIndex(
@@ -38,6 +50,16 @@ const VariableCheckboxes = (props: VariableCheckboxesProps) => {
     ])
   }
 
+  const toggleTemperature = (): void => {
+    if (!temperatureSelected) {
+      setTemperatureSelected(true)
+      setSelectedVariables([])
+      return
+    }
+
+    setTemperatureSelected(false)
+  }
+
   return (
     <Wrapper>
       {compounds.map((compound, index) => {
@@ -59,6 +81,19 @@ const VariableCheckboxes = (props: VariableCheckboxesProps) => {
           </CheckboxWrapper>
         )
       })}
+
+      {/* Temperature */}
+      <Show when={!settings.isothermic}>
+        <CheckboxWrapper
+          onClick={toggleTemperature}
+          toggled={temperatureSelected}
+          color="#000"
+        >
+          <ColorBadge color="#000" toggled={temperatureSelected} />
+          <CompoundSymbol>Temperature</CompoundSymbol>
+          <Checkbox toggled={temperatureSelected} onToggle={() => {}} />
+        </CheckboxWrapper>
+      </Show>
     </Wrapper>
   )
 }

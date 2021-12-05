@@ -3,7 +3,7 @@ import PageTitle from "../components/PageTitle"
 import CompoundList from "../components/compounds/CompoundList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
 import useCompounds from "../hooks/useCompounds"
-import { mobileBreakpoint } from "../helpers/breakpoints"
+import { mobileBreakpoint } from "../lib/breakpoints"
 
 const deleteButtonStyle = `
   position: absolute;

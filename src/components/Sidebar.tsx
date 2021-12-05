@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useHistory } from "react-router-dom"
-import { mobileBreakpoint } from "../helpers/breakpoints"
+import { mobileBreakpoint } from "../lib/breakpoints"
 
 /* Components */
 import Button from "./Button"

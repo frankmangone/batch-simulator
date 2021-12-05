@@ -24,9 +24,9 @@ import ReactionKineticParameters from "./ReactionKineticParameters"
 import ReactionPreview from "./ReactionPreview"
 
 /* Helpers */
-import serializeKineticEquation from "../../helpers/serializeKineticEquation"
-import { CompoundTypes } from "../../helpers/reactionTypes"
-import { mobileBreakpoint } from "../../helpers/breakpoints"
+import serializeKineticEquation from "../../lib/serializeKineticEquation"
+import { CompoundTypes } from "../../lib/reactionTypes"
+import { mobileBreakpoint } from "../../lib/breakpoints"
 
 /* Hooks */
 import { useMemo, useState, useRef } from "react"

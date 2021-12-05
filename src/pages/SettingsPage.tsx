@@ -11,7 +11,7 @@ import {
   validateEqual,
   validateNotEmpty,
   validateGreaterThan,
-} from "../helpers/validators"
+} from "../lib/validators"
 
 /* Hooks */
 import useSettings from "../hooks/useSettings"
