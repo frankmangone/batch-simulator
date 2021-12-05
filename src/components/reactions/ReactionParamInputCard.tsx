@@ -1,17 +1,11 @@
 import styled from "styled-components"
-
-/* Components */
 import InfoTooltip from "../forms/InfoTooltip"
 import Input from "../forms/Input"
-
-/* Helpers */
 import { validateNotEmpty } from "../../lib/validators"
 import { SCI_REGEX, SCI_POSITIVE_REGEX } from "../../constants/regexs"
-
-/* Hooks */
 import { useState } from "react"
 
-interface IReactionParamInputCardProps {
+interface ReactionParamInputCardProps {
   paramSymbol: string | JSX.Element | JSX.Element[]
   units?: JSX.Element
   value: string
@@ -21,7 +15,7 @@ interface IReactionParamInputCardProps {
 
 const ALLOWED_CHARS = "0123456789.-+eE"
 
-const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
+const ReactionParamInputCard: React.FC<ReactionParamInputCardProps> = (
   props
 ) => {
   const { paramSymbol, value, positive = false, units, updateValue } = props
