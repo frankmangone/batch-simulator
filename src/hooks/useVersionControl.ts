@@ -3,7 +3,7 @@ import useLocalStorageState from "./useLocalStorageState"
 import useCompounds from "./useCompounds"
 import useSettings from "./useSettings"
 
-const CURRENT_VERSION = "1.0.0"
+const CURRENT_VERSION = "1.0.1"
 
 const useVersionControl = () => {
   const [version, setVersion] = useLocalStorageState("currentVersion")
