@@ -132,10 +132,15 @@ const EditModalInner = styled.div<IClosing>`
   }
 
   @media screen and (max-width: ${mobileBreakpoint}px) {
-    max-width: 100vw;
-    max-height: calc(100vh - 190px);
+    max-width: unset;
+    max-height: unset;
+    height: calc(100vh - 190px);
     position: absolute;
+    padding-left: 1rem;
+    padding-right: 1rem;
     bottom: 0;
+    left: 0;
+    right: 0;
   }
 `
 

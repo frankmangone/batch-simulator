@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import InfoTooltip from "../forms/InfoTooltip"
 import Input from "../forms/Input"
+import { mobileBreakpoint } from "../../lib/breakpoints"
 import { validateNotEmpty } from "../../lib/validators"
 import { SCI_REGEX, SCI_POSITIVE_REGEX } from "../../constants/regexs"
 import { useState } from "react"
@@ -114,6 +115,12 @@ const ParamInputInner = styled.div`
     margin: 0;
     margin-right: 1rem;
     flex-grow: 1;
+
+    @media screen and (max-width: ${mobileBreakpoint}px) {
+      flex-basis: 0;
+      flex-grow: 0;
+      flex-shrink: 1;
+    }
 
     span {
       /* Greek symbols */

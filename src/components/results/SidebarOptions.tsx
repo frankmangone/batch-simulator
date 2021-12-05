@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { FiX } from "react-icons/fi"
+import { mobileBreakpoint } from "../../lib/breakpoints"
 import VariableCheckboxes from "./VariableCheckboxes"
 import type { Dispatch, SetStateAction } from "react"
 
@@ -25,7 +26,7 @@ const SidebarOptions = (props: SidebarOptionsProps) => {
   return (
     <SidebarOptionsWrapper visible={optionsVisible}>
       <CloseButton onClick={toggleOptionsVisible}>
-        <FiX size={20} />
+        <FiX size={20} color="#FFF" />
       </CloseButton>
       <h3>Variables</h3>
       <VariableCheckboxes
@@ -56,10 +57,18 @@ const SidebarOptionsWrapper = styled.div<SidebarWrapperProps>`
   padding-top: 2rem;
   transform: ${(props) =>
     props.visible ? "translateX(0px)" : "translateX(300px)"};
-  background-color: var(--color-grey-normal);
+  background-color: var(--color-grey-dark);
   transition: all 0.15s ease-in-out;
   box-shadow: ${(props) =>
     props.visible ? "0 0 20px -5px var(--color-grey-dark)" : "unset"};
+
+  @media screen and (max-width: ${mobileBreakpoint}px) {
+    top: 80px;
+  }
+
+  h3 {
+    color: var(--color-grey-lightest);
+  }
 `
 
 const CloseButton = styled.div`
