@@ -1,3 +1,5 @@
+const MAX_TICK_AMOUNT = 15
+
 // Format tick value to 1 decimals and scientific notation if needed
 export const formatTickValue = (value: number) => {
   if (value >= 100 || value < 0.1) {
@@ -62,7 +64,7 @@ export const minFunctionalValue = (data: Point[][]) => {
 export const getTickDistance = (range: number, targetTickAmount: number) => {
   const powerOfTen = getPowerOfTen(range)
 
-  if (range / 10 ** powerOfTen < 3) {
+  if (range / 10 ** powerOfTen < MAX_TICK_AMOUNT / 10) {
     return 10 ** (powerOfTen - 1)
   }
   return 10 ** powerOfTen

@@ -16,6 +16,7 @@ const getTicksYAxis = (params: GetTicksYAxisParams): Ticks => {
 
   const targetTicks =
     Math.floor((height - DISTANCE_FROM_CORNER) / AVERAGE_TICK_DISTANCE) || 10
+
   const maxValue = maxFunctionalValue(data)
   const minValue = minFunctionalValue(data)
   const range = maxValue - minValue
