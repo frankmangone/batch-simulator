@@ -167,6 +167,7 @@ const ReactionKineticParameters: React.FC<ReactionKineticParametersProps> = (
             paramSymbol={<SymbolComponent symbol={param} />}
             value={value}
             units={units}
+            positive={param !== reactionConstantsSymbols.reactionEnthalpy}
             updateValue={(value: string) => {
               updateKineticConstant(param, value)
             }}

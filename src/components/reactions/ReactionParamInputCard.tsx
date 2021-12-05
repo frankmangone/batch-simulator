@@ -6,7 +6,7 @@ import Input from "../forms/Input"
 
 /* Helpers */
 import { validateNotEmpty } from "../../lib/validators"
-import { SCI_REGEX } from "../../constants/regexs"
+import { SCI_REGEX, SCI_POSITIVE_REGEX } from "../../constants/regexs"
 
 /* Hooks */
 import { useState } from "react"
@@ -15,6 +15,7 @@ interface IReactionParamInputCardProps {
   paramSymbol: string | JSX.Element | JSX.Element[]
   units?: JSX.Element
   value: string
+  positive?: boolean
   updateValue: (value: string) => void
 }
 
@@ -23,7 +24,7 @@ const ALLOWED_CHARS = "0123456789.-+eE"
 const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
   props
 ) => {
-  const { paramSymbol, value, units, updateValue } = props
+  const { paramSymbol, value, positive = false, units, updateValue } = props
   const [valueInput, setValueInput] = useState<string>(value)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +49,11 @@ const ReactionParamInputCard: React.FC<IReactionParamInputCardProps> = (
       return
     }
 
-    const validString = valueInput.match(SCI_REGEX)?.[0]
+    let validString: string | undefined
+
+    if (positive) validString = valueInput.match(SCI_POSITIVE_REGEX)?.[0]
+    else validString = valueInput.match(SCI_REGEX)?.[0]
+
     if (!validString) {
       // Reset value
       setValueInput(valueInput)
