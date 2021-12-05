@@ -1,4 +1,4 @@
-import { TokenTypes } from "./tokenTypes"
+import { TokenTypes } from "./tokens/tokenTypes"
 
 /**
  * Equation tokenization

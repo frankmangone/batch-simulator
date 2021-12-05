@@ -6,7 +6,7 @@ import useMathConstants from "../hooks/useMathConstants"
 
 import { parseEquation } from "../lib/tokenParser"
 import { getCoefficientForComponent } from "../lib/reactions"
-import { TokenTypes } from "../lib/tokenTypes"
+import { TokenTypes } from "../lib/tokens/tokenTypes"
 
 const useSimulate = () => {
   const getConstant = useMathConstants()

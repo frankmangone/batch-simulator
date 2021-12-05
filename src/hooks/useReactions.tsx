@@ -10,7 +10,7 @@ import {
 } from "../features/reactionsSlice"
 import { STORAGE_KEY } from "../features/reactionsSlice"
 import { saveToKey } from "../lib/localStorage"
-import { TokenTypes } from "../lib/tokenTypes"
+import { TokenTypes } from "../lib/tokens/tokenTypes"
 import { KineticModels } from "../lib/reactionTypes"
 
 const useReactions = () => {

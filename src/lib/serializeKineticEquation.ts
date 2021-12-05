@@ -1,4 +1,4 @@
-import { TokenTypes } from "./tokenTypes"
+import { TokenTypes } from "./tokens/tokenTypes"
 import { KineticModels } from "./reactionTypes"
 
 const serializeKineticEquation = (

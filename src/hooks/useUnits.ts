@@ -6,7 +6,7 @@ import {
   energyUnitsValue,
 } from "../lib/units"
 import useSettings from "./useSettings"
-import { TokenTypes } from "../lib/tokenTypes"
+import { TokenTypes } from "../lib/tokens/tokenTypes"
 
 const useUnits = () => {
   const { settings } = useSettings()
