@@ -48,7 +48,7 @@ const useReactions = () => {
         kineticConstants: {
           "k_\\inf": "1e7", // Pre exponential term for Arrhenius
           E_A: "4.5e4", // Arrhenius activation energy
-          "\\Delta+H_r": "200", // Arrhenius activation energy
+          "\\Delta+H_r": "2", // Arrhenius activation energy
         },
         kineticEquation: [
           parameterToken("<k_\\inf>"),
