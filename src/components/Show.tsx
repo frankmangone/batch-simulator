@@ -15,7 +15,6 @@ interface ShowProps<T> {
  * @param children: Content to be shown if `when` is true/truthy.
  * @param fallback?: Content to be shown if `when` is false/falsy.
  * */
-
 export default function Show<T>({ when, children, fallback }: ShowProps<T>) {
   return (
     <>

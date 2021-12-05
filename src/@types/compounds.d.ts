@@ -6,3 +6,5 @@ interface Compound {
   name?: string
   molecularWeight?: number
 }
+
+type CompoundInput = Omin<Omit<Compound, "id">, "color">
