@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { useHistory } from "react-router-dom"
 import { mobileBreakpoint } from "../lib/breakpoints"
-import Button from "./Button"
+import Button from "./general/Button"
 import { FiMenu, FiSliders, FiPlay } from "react-icons/fi"
 import { BiAtom, BiLineChart } from "react-icons/bi"
 import { AiOutlineExperiment } from "react-icons/ai"

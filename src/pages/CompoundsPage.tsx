@@ -1,11 +1,12 @@
-import Button from "../components/Button"
+import styled from "styled-components"
+import Button from "../components/general/Button"
 import PageTitle from "../components/PageTitle"
 import CompoundList from "../components/compounds/CompoundList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
 import useCompounds from "../hooks/useCompounds"
 import { mobileBreakpoint } from "../lib/breakpoints"
 
-const deleteButtonStyle = `
+const DeleteButton = styled(Button)`
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -32,13 +33,9 @@ const CompoundsPage: React.FC = () => {
       <Button color="green" onClick={addCompound}>
         Add <FiPlus />
       </Button>
-      <Button
-        color="red"
-        buttonStyle={deleteButtonStyle}
-        onClick={handleResetCompounds}
-      >
+      <DeleteButton color="red" onClick={handleResetCompounds}>
         <FiTrash2 size={20} />
-      </Button>
+      </DeleteButton>
       <CompoundList />
     </>
   )

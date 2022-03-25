@@ -1,11 +1,16 @@
-import styled from "styled-components"
+import styled, { CSSProperties } from "styled-components"
 
-interface IButton {
+interface BaseButtonProps {
   color?: string
-  buttonStyle?: string
 }
 
-const Button = styled.button<IButton>`
+type ButtonProps = {
+  type?: any
+  onClick?: () => void
+  style?: CSSProperties
+} & BaseButtonProps
+
+const BaseButton = styled.button<BaseButtonProps>`
   align-items: center;
   border-radius: 5px;
   border: none;
@@ -21,10 +26,11 @@ const Button = styled.button<IButton>`
   &:hover {
     ${(props) => colorsHover(props.color)}
   }
-
-  /* Any additional custom styles */
-  ${(props) => props.buttonStyle ?? ""}
 `
+
+const Button: React.FC<ButtonProps> = (props) => {
+  return <BaseButton {...props} />
+}
 
 export default Button
 
