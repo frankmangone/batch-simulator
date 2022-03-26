@@ -8,8 +8,7 @@ interface CardButtonProps {
 }
 
 const Button = styled.div`
-  background-color: ${(props) =>
-    props.theme.getColor({ name: "baseBlack", shade: 900 })};
+  background-color: transparent;
   border: none;
   border-radius: 3px;
   display: flex;
@@ -18,7 +17,7 @@ const Button = styled.div`
 
   &:hover {
     background-color: ${(props) =>
-      props.theme.getColor({ name: "baseBlack", shade: 700 })};
+      props.theme.getColor({ name: "baseBlack", shade: 600 })};
   }
 `
 
