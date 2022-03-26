@@ -3,7 +3,7 @@ import Show from "../Show"
 import CompoundCard from "./CompoundCard"
 import CompoundEditModal from "./CompoundEditModal"
 import NoResource from "../NoResource"
-import useCompounds from "../../hooks/useCompounds"
+import useCompounds from "../../hooks/entities/useCompounds"
 import { useState, useMemo } from "react"
 
 const CompoundList: React.FC = (props) => {

@@ -1,5 +1,5 @@
 import useSettings from "../hooks/useSettings"
-import useCompounds from "../hooks/useCompounds"
+import useCompounds from "../hooks/entities/useCompounds"
 import useReactions from "../hooks/useReactions"
 import useSimulationResults from "../hooks/useSimulationResults"
 import useMathConstants from "../hooks/useMathConstants"

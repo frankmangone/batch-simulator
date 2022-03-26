@@ -12,7 +12,7 @@ import { COMPOUND_COLORS } from "../constants/compoundColors"
 
 /* Hooks */
 import { useMemo, useState } from "react"
-import useCompounds from "../hooks/useCompounds"
+import useCompounds from "../hooks/entities/useCompounds"
 import useGetData from "../hooks/useGetData"
 
 const ResultsPage: React.VFC = () => {

@@ -9,7 +9,7 @@ import { FiArrowRight, FiPlus } from "react-icons/fi"
 import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 /* Hooks */
-import useCompounds from "../../hooks/useCompounds"
+import useCompounds from "../../hooks/entities/useCompounds"
 
 interface IReactionPreviewProps {
   reaction: Reaction

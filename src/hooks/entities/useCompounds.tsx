@@ -1,13 +1,13 @@
 import randomstring from "randomstring"
 import { useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "./useStore"
-import { add, update, remove, reset } from "../features/compoundsSlice"
-import useReactions from "./useReactions"
-import { saveToKey } from "../lib/localStorage"
+import { useAppDispatch, useAppSelector } from "../useStore"
+import { add, update, remove, reset } from "../../features/compoundsSlice"
+import useReactions from "../useReactions"
+import { saveToKey } from "../../lib/localStorage"
 
 /* Constants */
-import { COMPOUND_COLORS_CODES } from "../constants/compoundColors"
-import { STORAGE_KEY } from "../features/compoundsSlice"
+import { COMPOUND_COLORS_CODES } from "../../constants/compoundColors"
+import { STORAGE_KEY } from "../../features/compoundsSlice"
 
 interface UsedColors {
   [key: string]: boolean

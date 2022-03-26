@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import useCompounds from "../../hooks/useCompounds"
+import useCompounds from "../../hooks/entities/useCompounds"
 import Show from "../Show"
 import { mobileBreakpoint } from "../../lib/breakpoints"
 import { COMPOUND_COLORS } from "../../constants/compoundColors"

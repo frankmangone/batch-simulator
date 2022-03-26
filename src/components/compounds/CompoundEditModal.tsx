@@ -5,7 +5,7 @@ import SubmitButton from "../SubmitButton"
 import { validateNotEmpty, validateGreaterThan } from "../../lib/validators"
 import { useState } from "react"
 import { useFormik } from "formik"
-import useCompounds from "../../hooks/useCompounds"
+import useCompounds from "../../hooks/entities/useCompounds"
 import useUnits from "../../hooks/useUnits"
 
 interface CompoundEditModalProps {

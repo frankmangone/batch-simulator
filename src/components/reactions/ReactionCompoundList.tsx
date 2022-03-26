@@ -2,7 +2,7 @@
 import ReactionCompoundCard from "./ReactionCompoundCard"
 
 /* Hooks */
-import useCompounds from "../../hooks/useCompounds"
+import useCompounds from "../../hooks/entities/useCompounds"
 
 interface IReactionCompoundListProps {
   compoundType: CompoundType
