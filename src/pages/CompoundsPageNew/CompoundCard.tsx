@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { EditIcon, DeleteIcon, RerollIcon } from "../../components/Icons"
-import { useTheme } from "../../contexts/Theme"
+import CardButton from "./CardButton"
 
 interface CompoundCardProps {
   compound: Compound
@@ -18,7 +18,8 @@ const Wrapper = styled.div`
   box-shadow: 0 0 6px ${(props) => props.theme.getColor("baseBlack")};
   cursor: pointer;
   display: flex;
-  flex-basis: 160px;
+  flex-basis: 180px;
+  flex-shrink: 0;
   flex-direction: column;
   height: 70px;
   margin: 0px 5px 10px;
@@ -27,7 +28,7 @@ const Wrapper = styled.div`
   transition: height 0.15s ease-in-out;
 
   &:hover {
-    height: 110px;
+    height: 130px;
   }
 `
 
@@ -45,23 +46,20 @@ const Buttons = styled.div`
   display: flex;
   height: 30px;
   justify-content: space-between;
-  margin: 16px 16px;
+  margin: 16px 16px 0;
 `
 
 const CompoundCard: React.FC<CompoundCardProps> = (props) => {
   const { compound } = props
   const { symbol, color } = compound
 
-  const { getColor } = useTheme()
-  const white = getColor({ name: "baseBlack", shade: 500 })
-
   return (
     <Wrapper>
       <Symbol color={color}>{symbol}</Symbol>
       <Buttons>
-        <RerollIcon color={white} />
-        <EditIcon color={white} />
-        <DeleteIcon color={white} />
+        <CardButton Icon={RerollIcon} onClick={() => console.log("reroll")} />
+        <CardButton Icon={EditIcon} onClick={() => console.log("edit")} />
+        <CardButton Icon={DeleteIcon} onClick={() => console.log("delete")} />
       </Buttons>
     </Wrapper>
   )

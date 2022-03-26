@@ -2,7 +2,9 @@ import React from "react"
 
 export type BaseIconProps = {
   color?: string
-  icon: (color: string) => string
+  size?: number
+  style?: any
+  icon: (color: string, size: number) => string
 }
 
 /**
@@ -18,18 +20,15 @@ const BaseIcon: React.FC<BaseIconProps> = (props) => {
    * It will be multiplied by the 'aspectRatio', which is ( width / height )
    *  */
 
-  const { color = "#000", icon } = props
+  const { color = "#000", size = 30, style, icon } = props
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
+    <div style={{ width: size, height: size, ...style }}>
       <img
-        src={`data:image/svg+xml;utf8,${encodeURIComponent(icon(color))}`}
-        alt=""
+        src={`data:image/svg+xml;utf8,${encodeURIComponent(icon(color, size))}`}
+        width={`${size}px`}
+        height={`${size}px`}
+        alt="icon"
       />
     </div>
   )

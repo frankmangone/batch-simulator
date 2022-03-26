@@ -7,6 +7,7 @@ import rerollIcon from "../lib/icons/reroll"
 
 interface IconProps {
   color?: string
+  size?: number
 }
 
 export const EditIcon: React.VFC<IconProps> = (props): JSX.Element => (
