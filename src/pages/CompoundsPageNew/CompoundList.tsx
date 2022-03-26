@@ -1,10 +1,14 @@
-// import styled from "styled-components"
+import styled from "styled-components"
 import Show from "../../components/Show"
 import CompoundCard from "./CompoundCard"
 // import CompoundEditModal from "../../components/compounds/CompoundEditModal"
 import NoResource from "../../components/NoResource"
 import useCompounds from "../../hooks/entities/useCompounds"
 // import { useState, useMemo } from "react"
+
+const Wrapper = styled.div`
+  display: flex;
+`
 
 const CompoundList: React.VFC = () => {
   const { compounds } = useCompounds()
@@ -24,7 +28,7 @@ const CompoundList: React.VFC = () => {
   // )
 
   return (
-    <>
+    <Wrapper>
       <Show when={!compounds.length}>
         <NoResource>No compounds added yet</NoResource>
       </Show>
@@ -40,7 +44,7 @@ const CompoundList: React.VFC = () => {
           closeModal={() => editCompound()}
         />
       </Show> */}
-    </>
+    </Wrapper>
   )
 }
 
