@@ -7,4 +7,4 @@ interface Compound {
   molecularWeight?: number
 }
 
-type CompoundInput = Omin<Omit<Compound, "id">, "color">
+type CompoundInput = Omit<Omit<Compound, "id">, "color">

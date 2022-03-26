@@ -4,7 +4,7 @@ import ReactionEditModal from "./ReactionEditModal"
 import NoResource from "../NoResource"
 import { useMemo, useState } from "react"
 import useCompounds from "../../hooks/entities/useCompounds"
-import useReactions from "../../hooks/useReactions"
+import useReactions from "../../hooks/entities/useReactions"
 
 const ReactionList: React.FC = () => {
   const { compounds } = useCompounds()

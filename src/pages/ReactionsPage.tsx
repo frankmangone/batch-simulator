@@ -3,7 +3,7 @@ import Button from "../components/general/Button"
 import PageTitle from "../components/PageTitle"
 import ReactionList from "../components/reactions/ReactionList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
-import useReactions from "../hooks/useReactions"
+import useReactions from "../hooks/entities/useReactions"
 import { mobileBreakpoint } from "../lib/breakpoints"
 
 const DeleteButton = styled(Button)`

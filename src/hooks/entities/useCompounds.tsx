@@ -2,7 +2,7 @@ import randomstring from "randomstring"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../useStore"
 import { add, update, remove, reset } from "../../features/compoundsSlice"
-import useReactions from "../useReactions"
+import useReactions from "./useReactions"
 import { saveToKey } from "../../lib/localStorage"
 
 /* Constants */

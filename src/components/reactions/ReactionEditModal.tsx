@@ -31,7 +31,7 @@ import { mobileBreakpoint } from "../../lib/breakpoints"
 /* Hooks */
 import { useMemo, useState, useRef } from "react"
 import useCompounds from "../../hooks/entities/useCompounds"
-import useReactions from "../../hooks/useReactions"
+import useReactions from "../../hooks/entities/useReactions"
 
 interface IReactionEditModalProps {
   compounds: Compound[]
