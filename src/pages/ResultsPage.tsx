@@ -7,9 +7,6 @@ import PlotLegend from "../components/results/PlotLegend"
 import SidebarOptions from "../components/results/SidebarOptions"
 import Button from "../components/general/Button"
 
-/* Constants */
-import { COMPOUND_COLORS } from "../constants/compoundColors"
-
 /* Hooks */
 import { useMemo, useState } from "react"
 import useCompounds from "../hooks/entities/useCompounds"
@@ -35,9 +32,7 @@ const ResultsPage: React.VFC = () => {
       const selectedCompound = compounds[compoundIndex]
       const compoundData: Point[] = variableData(`[${selectedCompound.symbol}]`)
       data.push(compoundData)
-      colors.push(
-        COMPOUND_COLORS[selectedCompound.color as keyof typeof COMPOUND_COLORS]
-      )
+      colors.push(selectedCompound.color)
     })
 
     if (!temperatureSelected) return [data, colors]

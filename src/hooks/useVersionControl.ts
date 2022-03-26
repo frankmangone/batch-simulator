@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import useLocalStorageState from "./useLocalStorageState"
-import useCompounds from "./useCompounds"
+import useCompounds from "./entities/useCompounds"
 import useSettings from "./useSettings"
 
 const CURRENT_VERSION = "1.0.1"

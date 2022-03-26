@@ -4,7 +4,6 @@ import useCompounds from "../../hooks/entities/useCompounds"
 import useSettings from "../../hooks/useSettings"
 import Checkbox from "../forms/Checkbox"
 import Show from "../Show"
-import { COMPOUND_COLORS } from "../../constants/compoundColors"
 import type { Dispatch, SetStateAction } from "react"
 
 interface VariableCheckboxesProps {
@@ -63,8 +62,7 @@ const VariableCheckboxes: React.VFC<VariableCheckboxesProps> = (props) => {
   return (
     <Wrapper>
       {compounds.map((compound, index) => {
-        const color =
-          COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS]
+        const color = compound.color
         return (
           <CheckboxWrapper
             onClick={() => toggleIndex(index)}

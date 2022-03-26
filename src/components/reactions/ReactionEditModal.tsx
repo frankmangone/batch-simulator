@@ -5,7 +5,6 @@ import {
   KINETIC_MODELS,
   generateKineticConstants,
 } from "../../constants/kineticModels"
-import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 /* Components */
 import EditModal from "../EditModal"
@@ -33,13 +32,13 @@ import { useMemo, useState, useRef } from "react"
 import useCompounds from "../../hooks/entities/useCompounds"
 import useReactions from "../../hooks/entities/useReactions"
 
-interface IReactionEditModalProps {
+interface ReactionEditModalProps {
   compounds: Compound[]
   reaction: Reaction
   closeModal: () => void
 }
 
-const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
+const ReactionEditModal: React.FC<ReactionEditModalProps> = (props) => {
   const { compounds, reaction, closeModal } = props
   const { findCompound } = useCompounds()
   const { reactions, updateReaction } = useReactions()
@@ -82,8 +81,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
           value: index,
           displayText: compound.symbol,
           collapsedDisplayText: compound.symbol,
-          hoverBackgroundColor:
-            COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS],
+          hoverBackgroundColor: compound.color,
         }
       })
     // eslint-disable-next-line
@@ -105,8 +103,7 @@ const ReactionEditModal: React.FC<IReactionEditModalProps> = (props) => {
           value: index,
           displayText: compound.symbol,
           collapsedDisplayText: compound.symbol,
-          hoverBackgroundColor:
-            COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS],
+          hoverBackgroundColor: compound.color,
         }
       })
     // eslint-disable-next-line

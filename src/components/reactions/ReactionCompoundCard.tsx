@@ -5,16 +5,13 @@ import CardButton from "../CardButton"
 import { FiTrash2 } from "react-icons/fi"
 import Input from "../forms/Input"
 
-/* Constants */
-import { COMPOUND_COLORS } from "../../constants/compoundColors"
-
 /* Helpers */
 import { validateNotEmpty } from "../../lib/validators"
 
 /* Hooks */
 import { useState } from "react"
 
-interface IReactionCompoundCardProps {
+interface ReactionCompoundCardProps {
   key: string
   compound: Compound
   reactionCompound: ReactionCompound
@@ -22,7 +19,7 @@ interface IReactionCompoundCardProps {
   removeCompound: () => void
 }
 
-const ReactionCompoundCard: React.FC<IReactionCompoundCardProps> = (props) => {
+const ReactionCompoundCard: React.FC<ReactionCompoundCardProps> = (props) => {
   const { compound, reactionCompound, updateCompound, removeCompound } = props
 
   /* Coefficient is short for Stoichiometric Coefficient in this component */
@@ -52,9 +49,7 @@ const ReactionCompoundCard: React.FC<IReactionCompoundCardProps> = (props) => {
   }
 
   return (
-    <ReactionCompoundCardWrapper
-      color={compound.color as keyof typeof COMPOUND_COLORS}
-    >
+    <ReactionCompoundCardWrapper color={compound.color}>
       <h1>{compound.symbol}</h1>
       <Input
         value={coefficientInput}
@@ -72,11 +67,11 @@ const ReactionCompoundCard: React.FC<IReactionCompoundCardProps> = (props) => {
 
 export default ReactionCompoundCard
 
-interface IReactionCompoundCardWrapperProps {
-  color: keyof typeof COMPOUND_COLORS
+interface ReactionCompoundCardWrapperProps {
+  color: string
 }
 
-const ReactionCompoundCardWrapper = styled.div<IReactionCompoundCardWrapperProps>`
+const ReactionCompoundCardWrapper = styled.div<ReactionCompoundCardWrapperProps>`
   margin: 5px;
   padding: 1rem 1.3rem;
   position: relative;
@@ -86,7 +81,7 @@ const ReactionCompoundCardWrapper = styled.div<IReactionCompoundCardWrapperProps
   animation-timing-function: ease-in-out;
   animation-duration: 0.25s;
   animation-iteration-count: 1;
-  background-color: ${(props) => COMPOUND_COLORS[props.color]};
+  background-color: ${(props) => props.color};
   border-radius: 5px;
   color: var(--color-grey-dark);
   display: flex;
