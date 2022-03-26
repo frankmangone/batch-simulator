@@ -5,6 +5,7 @@ import ReactionList from "../components/reactions/ReactionList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
 import useReactions from "../hooks/entities/useReactions"
 import { mobileBreakpoint } from "../lib/breakpoints"
+import MainLayout from "../layouts/MainLayout"
 
 const DeleteButton = styled(Button)`
   position: absolute;
@@ -28,7 +29,7 @@ const ReactionsPage: React.FC = () => {
   }
 
   return (
-    <>
+    <MainLayout>
       <PageTitle>Reactions</PageTitle>
       <Button color="green" onClick={addReaction}>
         Add <FiPlus />
@@ -37,7 +38,7 @@ const ReactionsPage: React.FC = () => {
         <FiTrash2 size={20} />
       </DeleteButton>
       <ReactionList />
-    </>
+    </MainLayout>
   )
 }
 

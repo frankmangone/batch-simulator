@@ -31,7 +31,8 @@ const GlobalStyles = createGlobalStyle`
   
   body {
     margin: 0;
-    background-color: var(--color-grey-lighter);
+    background-color: ${(props) =>
+      props.theme.getColor({ name: "baseBlack", shade: 600 })};
     font-family: 'Mulish', sans-serif;
 
     @media (max-width: 800px) {
