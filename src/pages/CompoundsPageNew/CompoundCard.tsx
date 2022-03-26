@@ -14,6 +14,24 @@ interface SymbolProps {
   color: string
 }
 
+const Symbol = styled.p<SymbolProps>`
+  color: ${(props) => props.color};
+  font-family: "Comfortaa", sans-serif;
+  font-size: ${(props) => props.theme.fontSizes.h3};
+  line-height: ${(props) => props.theme.lineHeights.h3};
+  font-weight: 700;
+  margin: 16px 16px 0px;
+`
+
+const Buttons = styled.div`
+  align-self: stretch;
+  display: flex;
+  height: 30px;
+  justify-content: space-between;
+  margin: 5px 16px 0;
+  opacity: 0;
+`
+
 const Wrapper = styled.div`
   align-items: center;
   background-color: ${(props) =>
@@ -36,26 +54,13 @@ const Wrapper = styled.div`
   &:hover {
     background-color: ${(props) =>
       props.theme.getColor({ name: "baseBlack", shade: 700 })};
-    height: 130px;
+    height: 110px;
     margin-bottom: -50px;
+
+    & > div${Buttons} {
+      opacity: 1;
+    }
   }
-`
-
-const Symbol = styled.p<SymbolProps>`
-  color: ${(props) => props.color};
-  font-family: "Comfortaa", sans-serif;
-  font-size: ${(props) => props.theme.fontSizes.h3};
-  line-height: ${(props) => props.theme.lineHeights.h3};
-  font-weight: 700;
-  margin: 16px 16px 0px;
-`
-
-const Buttons = styled.div`
-  align-self: stretch;
-  display: flex;
-  height: 30px;
-  justify-content: space-between;
-  margin: 16px 16px 0;
 `
 
 const CompoundCard: React.FC<CompoundCardProps> = (props) => {

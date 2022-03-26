@@ -26,7 +26,7 @@ const useCompounds = () => {
    */
   const randomCompoundColor = () => {
     const hue = Math.floor(Math.random() * 360)
-    return buildHSLString([hue, 50, 50], 100)
+    return buildHSLString([hue, 40, 60], 100)
   }
 
   /**

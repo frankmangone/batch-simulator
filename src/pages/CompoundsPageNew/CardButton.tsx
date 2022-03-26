@@ -12,7 +12,7 @@ const Button = styled.div`
   border: none;
   border-radius: 3px;
   display: flex;
-  height: 45px;
+  height: 35px;
   transition: background 0.15s linear;
 
   &:hover {
@@ -24,11 +24,11 @@ const Button = styled.div`
 const CardButton: React.VFC<CardButtonProps> = (props) => {
   const { Icon, onClick } = props
   const { getColor } = useTheme()
-  const white = getColor({ name: "baseBlack", shade: 500 })
+  const white = getColor({ name: "baseBlack", shade: 400 })
 
   return (
     <Button onClick={onClick}>
-      <Icon color={white} size={25} style={{ margin: 10 }} />
+      <Icon color={white} size={25} style={{ margin: 5 }} />
     </Button>
   )
 }
