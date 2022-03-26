@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { FiPlus } from "react-icons/fi"
 import Button from "../components/general/Button"
 import PageTitle from "../components/PageTitle"
-import CompoundList from "../components/compounds/CompoundList"
+import CompoundList from "./CompoundsPageComponents/CompoundList"
 import useCompounds from "../hooks/entities/useCompounds"
 
 const Wrapper = styled.main`
