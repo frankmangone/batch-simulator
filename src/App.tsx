@@ -1,6 +1,5 @@
 import { BrowserRouter as Router } from "react-router-dom"
-import { Provider } from "react-redux"
-import store from "./store"
+import ContextProvider from "./ContextProvider"
 import GlobalStyles from "./GlobalStyles"
 
 /* Layouts */
@@ -9,16 +8,16 @@ import MainLayout from "./layouts/MainLayout"
 /* Components */
 import Routes from "./Routes"
 
-const App = () => {
+const App: React.VFC = () => {
   return (
-    <Provider store={store}>
+    <ContextProvider>
       <Router>
         <GlobalStyles />
         <MainLayout>
           <Routes />
         </MainLayout>
       </Router>
-    </Provider>
+    </ContextProvider>
   )
 }
 
