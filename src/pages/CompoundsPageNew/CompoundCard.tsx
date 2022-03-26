@@ -9,6 +9,7 @@ interface SymbolProps {
 }
 
 const Wrapper = styled.div`
+  align-items: center;
   background-color: ${(props) =>
     props.theme.getColor({ name: "baseBlack", shade: 800 })};
   border-radius: 5px;
@@ -16,9 +17,16 @@ const Wrapper = styled.div`
   cursor: pointer;
   display: flex;
   flex-basis: 100px;
-  justify-content: center;
-  padding: 16px 30px;
+  flex-direction: column;
+  height: 70px;
   margin: 0px 5px 10px;
+  overflow: hidden;
+  padding: 0px 30px;
+  transition: height 0.15s ease-in-out;
+
+  &:hover {
+    height: 100px;
+  }
 `
 
 const Symbol = styled.p<SymbolProps>`
@@ -28,6 +36,12 @@ const Symbol = styled.p<SymbolProps>`
   line-height: ${(props) => props.theme.lineHeights.h3};
   font-weight: 700;
   margin: 0;
+  margin-top: 16px;
+`
+
+const Buttons = styled.div`
+  margin-top: 16px;
+  height: 30px;
 `
 
 const CompoundCard: React.FC<CompoundCardProps> = (props) => {
@@ -37,6 +51,7 @@ const CompoundCard: React.FC<CompoundCardProps> = (props) => {
   return (
     <Wrapper>
       <Symbol color={color}>{symbol}</Symbol>
+      <Buttons>asdasdasd</Buttons>
     </Wrapper>
   )
 }
