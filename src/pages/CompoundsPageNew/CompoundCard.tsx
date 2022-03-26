@@ -1,9 +1,12 @@
 import styled from "styled-components"
 import { EditIcon, DeleteIcon, RerollIcon } from "../../components/Icons"
 import CardButton from "./CardButton"
+import useCompounds from "../../hooks/entities/useCompounds"
+import type { Dispatch, SetStateAction } from "react"
 
 interface CompoundCardProps {
   compound: Compound
+  setEditedCompoundId: Dispatch<SetStateAction<string | undefined>>
 }
 
 interface SymbolProps {
@@ -50,16 +53,20 @@ const Buttons = styled.div`
 `
 
 const CompoundCard: React.FC<CompoundCardProps> = (props) => {
-  const { compound } = props
-  const { symbol, color } = compound
+  const { compound, setEditedCompoundId } = props
+  const { id, symbol, color } = compound
+  const { removeCompound } = useCompounds()
+
+  const handleEdit = () => setEditedCompoundId(id)
+  const handleRemove = () => removeCompound(id)
 
   return (
     <Wrapper>
       <Symbol color={color}>{symbol}</Symbol>
       <Buttons>
         <CardButton Icon={RerollIcon} onClick={() => console.log("reroll")} />
-        <CardButton Icon={EditIcon} onClick={() => console.log("edit")} />
-        <CardButton Icon={DeleteIcon} onClick={() => console.log("delete")} />
+        <CardButton Icon={EditIcon} onClick={handleEdit} />
+        <CardButton Icon={DeleteIcon} onClick={handleRemove} />
       </Buttons>
     </Wrapper>
   )
