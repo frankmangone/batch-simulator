@@ -55,8 +55,9 @@ const Buttons = styled.div`
 const CompoundCard: React.FC<CompoundCardProps> = (props) => {
   const { compound, setEditedCompoundId } = props
   const { id, symbol, color } = compound
-  const { removeCompound } = useCompounds()
+  const { removeCompound, rerollCompoundColor } = useCompounds()
 
+  const handleReroll = () => rerollCompoundColor(id)
   const handleEdit = () => setEditedCompoundId(id)
   const handleRemove = () => removeCompound(id)
 
@@ -64,7 +65,7 @@ const CompoundCard: React.FC<CompoundCardProps> = (props) => {
     <Wrapper>
       <Symbol color={color}>{symbol}</Symbol>
       <Buttons>
-        <CardButton Icon={RerollIcon} onClick={() => console.log("reroll")} />
+        <CardButton Icon={RerollIcon} onClick={handleReroll} />
         <CardButton Icon={EditIcon} onClick={handleEdit} />
         <CardButton Icon={DeleteIcon} onClick={handleRemove} />
       </Buttons>

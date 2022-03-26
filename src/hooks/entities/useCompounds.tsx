@@ -59,6 +59,20 @@ const useCompounds = () => {
   }
 
   /**
+   * rerollCompoundColor
+   *
+   * Rerolls the color for component with `id`
+   *
+   * @param {string} id
+   */
+  const rerollCompoundColor = (id: string): void => {
+    const compound = compounds.find((c) => c.id === id) as Compound
+    const updatedCompound = { ...compound }
+    updatedCompound.color = randomCompoundColor()
+    dispatch(update({ id, compound: updatedCompound }))
+  }
+
+  /**
    * updateCompound
    *
    * Updates target compound with `id`, with the new values specified in `updatedCompound`
@@ -96,6 +110,7 @@ const useCompounds = () => {
     compounds,
     addCompound,
     findCompound,
+    rerollCompoundColor,
     updateCompound,
     removeCompound,
     removeAllCompounds,
