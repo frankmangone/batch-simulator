@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import CardButton from "../CardButton"
 import { FiEdit, FiTrash2 } from "react-icons/fi"
-import { COMPOUND_COLORS } from "../../constants/compoundColors"
 import { mobileBreakpoint } from "../../lib/breakpoints"
 
 interface ICompoundCardProps {
@@ -15,13 +14,13 @@ interface ICompoundCardProps {
 const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
   const { compound, editCompound, removeCompound } = props
 
+  console.log(compound)
+
   return (
     <CompoundCardWrapper>
       <CompoundCardInner>
         {/* Tile to display symbol */}
-        <CompoundTile color={compound.color as keyof typeof COMPOUND_COLORS}>
-          {compound.symbol}
-        </CompoundTile>
+        <CompoundTile color={compound.color}>{compound.symbol}</CompoundTile>
 
         <Buttons>
           {/* Button to toggle modal edition */}
@@ -82,12 +81,12 @@ const CompoundCardInner = styled.div`
   }
 `
 
-interface ICompoundColorBulletProps {
-  color: keyof typeof COMPOUND_COLORS
+interface CompoundColorBulletProps {
+  color: string
 }
 
-const CompoundTile = styled.div<ICompoundColorBulletProps>`
-  background-color: ${(props) => COMPOUND_COLORS[props.color]};
+const CompoundTile = styled.div<CompoundColorBulletProps>`
+  background-color: ${(props) => props.color};
   border-radius: 5px;
   border: 1px solid var(--color-grey-normal);
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);

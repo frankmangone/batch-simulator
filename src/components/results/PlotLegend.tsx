@@ -3,7 +3,6 @@ import styled from "styled-components"
 import useCompounds from "../../hooks/entities/useCompounds"
 import Show from "../Show"
 import { mobileBreakpoint } from "../../lib/breakpoints"
-import { COMPOUND_COLORS } from "../../constants/compoundColors"
 
 interface ColorProps {
   color: string
@@ -21,8 +20,7 @@ const PlotLegend: React.VFC<PlotLegendProps> = (props) => {
   return (
     <Wrapper>
       {compounds.map((compound, index) => {
-        const color =
-          COMPOUND_COLORS[compound.color as keyof typeof COMPOUND_COLORS]
+        const color = compound.color
         return (
           <Show when={selectedVariables.includes(index)} key={index}>
             <Variable>

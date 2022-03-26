@@ -5,17 +5,14 @@ import { Fragment } from "react"
 import Notice from "../Notice"
 import { FiArrowRight, FiPlus } from "react-icons/fi"
 
-/* Constants */
-import { COMPOUND_COLORS } from "../../constants/compoundColors"
-
 /* Hooks */
 import useCompounds from "../../hooks/entities/useCompounds"
 
-interface IReactionPreviewProps {
+interface ReactionPreviewProps {
   reaction: Reaction
 }
 
-const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
+const ReactionPreview: React.FC<ReactionPreviewProps> = (props) => {
   const { reaction } = props
   const { findCompound } = useCompounds()
 
@@ -33,9 +30,7 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
             {index !== 0 && <FiPlus size={25} />}
             <CompoundWrapper>
               <p>{reactionCompound.stoichiometricCoefficient}</p>
-              <CompoundTile
-                color={compound.color as keyof typeof COMPOUND_COLORS}
-              >
+              <CompoundTile color={compound.color}>
                 {compound.symbol}
               </CompoundTile>
             </CompoundWrapper>
@@ -55,9 +50,7 @@ const ReactionPreview: React.FC<IReactionPreviewProps> = (props) => {
             {index !== 0 && <FiPlus size={25} />}
             <CompoundWrapper>
               <p>{reactionCompound.stoichiometricCoefficient}</p>
-              <CompoundTile
-                color={compound.color as keyof typeof COMPOUND_COLORS}
-              >
+              <CompoundTile color={compound.color}>
                 {compound.symbol}
               </CompoundTile>
             </CompoundWrapper>
@@ -89,12 +82,12 @@ const CompoundWrapper = styled.div`
   }
 `
 
-interface ICompoundColorBulletProps {
-  color: keyof typeof COMPOUND_COLORS
+interface CompoundColorBulletProps {
+  color: string
 }
 
-const CompoundTile = styled.div<ICompoundColorBulletProps>`
-  background-color: ${(props) => COMPOUND_COLORS[props.color]};
+const CompoundTile = styled.div<CompoundColorBulletProps>`
+  background-color: ${(props) => props.color};
   border-radius: 5px;
   border: 1px solid var(--color-grey-normal);
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);

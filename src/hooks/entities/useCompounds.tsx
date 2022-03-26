@@ -4,14 +4,10 @@ import { useAppDispatch, useAppSelector } from "../useStore"
 import { add, update, remove, reset } from "../../features/compoundsSlice"
 import useReactions from "./useReactions"
 import { saveToKey } from "../../lib/localStorage"
+import buildHSLString from "../../lib/color/buildHSLString"
 
 /* Constants */
-import { COMPOUND_COLORS_CODES } from "../../constants/compoundColors"
 import { STORAGE_KEY } from "../../features/compoundsSlice"
-
-interface UsedColors {
-  [key: string]: boolean
-}
 
 const useCompounds = () => {
   const dispatch = useAppDispatch()
@@ -23,25 +19,14 @@ const useCompounds = () => {
     saveToKey(compounds, STORAGE_KEY)
   }, [compounds])
 
-  const unusedColor = () => {
-    const colorKeys = COMPOUND_COLORS_CODES
-
-    // Initialize object to keep track of used colors
-    let usedColors: UsedColors = {}
-    colorKeys.forEach((key: string) => (usedColors[key] = false))
-
-    // Find currently used colors
-    compounds.forEach((compound) => (usedColors[compound.color] = true))
-
-    // Find the first unused color
-    let k = 0,
-      foundColor
-    while (k < colorKeys.length && !foundColor) {
-      if (!usedColors[colorKeys[k]]) foundColor = colorKeys[k]
-      k++
-    }
-
-    return foundColor || "blue1"
+  /**
+   * randomCompoundColor
+   *
+   * Creates a random compound color to be used
+   */
+  const randomCompoundColor = () => {
+    const hue = Math.floor(Math.random() * 255)
+    return buildHSLString([hue, 50, 50], 100)
   }
 
   /**
@@ -52,7 +37,7 @@ const useCompounds = () => {
   const addCompound = (): void => {
     const newCompound = {
       id: randomstring.generate(8),
-      color: unusedColor(),
+      color: randomCompoundColor(),
       concentration: 0,
       molecularWeight: 0,
       symbol: "A",

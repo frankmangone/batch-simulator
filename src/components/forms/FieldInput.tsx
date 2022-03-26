@@ -2,7 +2,6 @@ import styled from "styled-components"
 import Error from "./Error"
 import Input from "./Input"
 import InfoTooltip from "./InfoTooltip"
-import { COMPOUND_COLORS } from "../../constants/compoundColors"
 import { mobileBreakpoint } from "../../lib/breakpoints"
 
 interface IFieldInputProps {
@@ -72,9 +71,7 @@ const FieldInputWrapper = styled.div<IFieldInputWrapperProps>`
   ${(props) =>
     props.color
       ? `
-    background-color: ${
-      COMPOUND_COLORS[props.color as keyof typeof COMPOUND_COLORS]
-    };
+    background-color: ${props.color};
     border-radius: 5px;
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
   `
