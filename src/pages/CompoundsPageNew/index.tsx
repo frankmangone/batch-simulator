@@ -1,9 +1,9 @@
 import styled from "styled-components"
 import { FiPlus } from "react-icons/fi"
-import Button from "../components/general/Button"
-import PageTitle from "../components/PageTitle"
-import CompoundList from "./CompoundsPageComponents/CompoundList"
-import useCompounds from "../hooks/entities/useCompounds"
+import Button from "../../components/general/Button"
+import PageTitle from "../../components/PageTitle"
+import CompoundList from "./CompoundList"
+import useCompounds from "../../hooks/entities/useCompounds"
 
 const Wrapper = styled.main`
   max-width: 900px;

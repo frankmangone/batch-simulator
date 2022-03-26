@@ -6,7 +6,7 @@ import useVersionControl from "./hooks/useVersionControl"
 
 /* Pages */
 import CompoundsPage from "./pages/CompoundsPage"
-import CompoundsPageNew from "./pages/CompoundsPageNew"
+import CompoundsPageNew from "./pages/CompoundsPageNew/index"
 import SettingsPage from "./pages/SettingsPage"
 import ReactionsPage from "./pages/ReactionsPage"
 import ResultsPage from "./pages/ResultsPage"
