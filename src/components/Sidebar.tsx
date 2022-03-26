@@ -1,14 +1,10 @@
 import styled from "styled-components"
 import { useHistory } from "react-router-dom"
 import { mobileBreakpoint } from "../lib/breakpoints"
-
-/* Components */
-import Button from "./Button"
+import Button from "./general/Button"
 import { FiMenu, FiSliders, FiPlay } from "react-icons/fi"
 import { BiAtom, BiLineChart } from "react-icons/bi"
 import { AiOutlineExperiment } from "react-icons/ai"
-
-/* Hooks */
 import useSimulate from "../hooks/useSimulate"
 import useSimulationResults from "../hooks/useSimulationResults"
 import { useState } from "react"
@@ -99,7 +95,6 @@ const SidebarLink: React.FC<ISidebarLinkProps> = (props) => {
       <SidebarLinkWrapper>
         <IconWrapper>{icon}</IconWrapper>
         <p>{title}</p>
-        {/* <FiChevronRight /> */}
       </SidebarLinkWrapper>
     </Button>
   )

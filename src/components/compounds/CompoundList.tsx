@@ -1,12 +1,9 @@
 import styled from "styled-components"
-
-/* Components */
+import Show from "../Show"
 import CompoundCard from "./CompoundCard"
 import CompoundEditModal from "./CompoundEditModal"
 import NoResource from "../NoResource"
-
-/* Hooks */
-import useCompounds from "../../hooks/useCompounds"
+import useCompounds from "../../hooks/entities/useCompounds"
 import { useState, useMemo } from "react"
 
 const CompoundList: React.FC = (props) => {
@@ -26,9 +23,9 @@ const CompoundList: React.FC = (props) => {
 
   return (
     <CompoundListWrapper>
-      {compounds.length === 0 && (
+      <Show when={!compounds.length}>
         <NoResource>No compounds added yet</NoResource>
-      )}
+      </Show>
 
       {compounds.map((compound, index) => (
         <CompoundCard
@@ -45,8 +42,10 @@ const CompoundList: React.FC = (props) => {
           }}
           validateUnicity={(field: string, value: any): boolean => {
             for (var i = 0; i < compounds.length; i++) {
-              // @ts-ignore
-              if (i !== index && compounds[i][field] === value) {
+              if (
+                i !== index &&
+                compounds[i][field as keyof Compound] === value
+              ) {
                 return false
               }
             }
@@ -56,12 +55,12 @@ const CompoundList: React.FC = (props) => {
       ))}
 
       {/* Edit modal */}
-      {editedCompoundId && (
+      <Show when={editedCompoundId}>
         <CompoundEditModal
           compound={editedCompound as Compound}
           closeModal={() => editCompound()}
         />
-      )}
+      </Show>
     </CompoundListWrapper>
   )
 }

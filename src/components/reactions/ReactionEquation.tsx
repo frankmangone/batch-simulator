@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { Equation, Subindex } from "../MathExpressions"
 
 /* Hooks */
-import useCompounds from "../../hooks/useCompounds"
+import useCompounds from "../../hooks/entities/useCompounds"
 
 interface IReactionEquationProps {
   reaction: Reaction

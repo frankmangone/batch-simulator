@@ -1,52 +1,39 @@
 import styled from "styled-components"
-import { useFormik } from "formik"
-
-/* Components */
 import EditModal from "../EditModal"
-import FieldInput from "../forms/FieldInput"
+import CompoundInputField from "./CompoundInputField"
 import SubmitButton from "../SubmitButton"
-
-/* Helpers */
 import { validateNotEmpty, validateGreaterThan } from "../../lib/validators"
-import {
-  volumeUnitsValue,
-  massUnitsValue,
-  molarUnitsValue,
-} from "../../lib/units"
-
-/* Hooks */
 import { useState } from "react"
-import useCompounds from "../../hooks/useCompounds"
-import useSettings from "../../hooks/useSettings"
+import { useFormik } from "formik"
+import useCompounds from "../../hooks/entities/useCompounds"
+import useUnits from "../../hooks/useUnits"
 
-interface ICompoundEditModalProps {
+interface CompoundEditModalProps {
   compound: Compound
   closeModal: () => void
 }
 
-const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
+interface Errors {
+  symbol?: string
+  concentration?: string
+  name?: string
+  molecularWeight?: string
+}
+
+const CompoundEditModal: React.FC<CompoundEditModalProps> = (props) => {
   const { compound, closeModal } = props
   const { compounds, updateCompound } = useCompounds()
-  const { settings } = useSettings()
   const [closing, setClosing] = useState<boolean>(false)
   const compoundIndex = compounds.findIndex((comp) => comp.id === compound.id)
 
-  const molarUnits = molarUnitsValue(settings.molarUnits)
-  const volumeUnits = volumeUnitsValue(settings.volumeUnits)
-  const massUnits = massUnitsValue(settings.massUnits)
+  const { molarUnits, massUnits, volumeUnits } = useUnits()
 
   /**
    * Validate method for Formik
    */
-  interface IErrors {
-    symbol?: string
-    concentration?: string
-    name?: string
-    molecularWeight?: string
-  }
 
-  const validate = (values: Compound): IErrors => {
-    const errors: IErrors = {}
+  const validate = (values: CompoundInput): Errors => {
+    const errors: Errors = {}
 
     /* Symbol validation */
     if (!validateNotEmpty(values.symbol))
@@ -71,8 +58,10 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
 
   const validateUnicity = (field: string, value: any): boolean => {
     for (var i = 0; i < compounds.length; i++) {
-      // @ts-ignore
-      if (i !== compoundIndex && compounds[i][field] === value) {
+      if (
+        i !== compoundIndex &&
+        compounds[i][field as keyof Compound] === value
+      ) {
         return false
       }
     }
@@ -82,8 +71,7 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
   /**
    * Formik form initialization
    */
-  const formik = useFormik({
-    // @ts-ignore
+  const formik = useFormik<CompoundInput>({
     initialValues: {
       symbol: compound.symbol,
       concentration: compound.concentration,
@@ -106,50 +94,29 @@ const CompoundEditModal: React.FC<ICompoundEditModalProps> = (props) => {
       handleClose={closeModal}
     >
       <Form onSubmit={formik.handleSubmit}>
-        <FieldInput
+        <CompoundInputField
           fieldName="symbol"
           label="Symbol:"
-          error={formik.errors.symbol}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            formik.handleChange(event)
-          }}
-          value={formik.values.symbol}
           color={compound.color}
-          big
-          transparent
+          formik={formik}
         />
 
-        <FieldInput
+        <CompoundInputField
           fieldName="concentration"
           label={`Initial concentration [${molarUnits}/${volumeUnits}]:`}
-          error={formik.errors.concentration}
-          tooltip="Concentration in the loaded mixture"
-          type="number"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            formik.handleChange(event)
-          }}
-          value={formik.values.concentration}
+          formik={formik}
         />
 
-        <FieldInput
+        <CompoundInputField
           fieldName="molecularWeight"
           label={`Molecular weight [${massUnits}/${molarUnits}]:`}
-          error={formik.errors.molecularWeight}
-          type="number"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            formik.handleChange(event)
-          }}
-          value={formik.values.molecularWeight}
+          formik={formik}
         />
 
-        <FieldInput
+        <CompoundInputField
           fieldName="name"
           label="Compound name (optional):"
-          error={formik.errors.name}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            formik.handleChange(event)
-          }}
-          value={formik.values.name}
+          formik={formik}
         />
 
         <SubmitButton color="green" type="submit">

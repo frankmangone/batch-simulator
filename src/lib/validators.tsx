@@ -24,12 +24,13 @@ export const validateNotEmpty = (value: unknown) => {
  * Otherwise, returns false.
  * */
 export const validateGreaterThan = (
-  value: unknown,
+  value: number | string,
   threshold: number,
   equal: boolean
 ) => {
-  if (typeof value !== "number") return false
-  if (value > threshold) return true
-  if (value === threshold && equal) return true
+  const numericValue = parseFloat(value as string)
+  if (isNaN(numericValue)) return false
+  if (numericValue > threshold) return true
+  if (numericValue === threshold && equal) return true
   return false
 }

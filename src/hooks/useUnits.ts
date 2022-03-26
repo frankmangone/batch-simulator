@@ -3,6 +3,7 @@ import {
   temperatureUnitsValue,
   volumeUnitsValue,
   molarUnitsValue,
+  massUnitsValue,
   energyUnitsValue,
 } from "../lib/units"
 import {
@@ -23,6 +24,7 @@ const useUnits = () => {
   const temperatureUnits = temperatureUnitsValue(settings.temperatureUnits)
   const volumeUnits = volumeUnitsValue(settings.volumeUnits)
   const molarUnits = molarUnitsValue(settings.molarUnits)
+  const massUnits = massUnitsValue(settings.massUnits)
   const energyUnits = energyUnitsValue(settings.energyUnits)
 
   /**
@@ -80,6 +82,7 @@ const useUnits = () => {
     temperatureUnits,
     volumeUnits,
     molarUnits,
+    massUnits,
     energyUnits,
 
     tokenizedMuUnits,

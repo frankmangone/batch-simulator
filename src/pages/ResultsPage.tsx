@@ -5,14 +5,14 @@ import PageTitle from "../components/PageTitle"
 import Plot from "../components/results/Plot"
 import PlotLegend from "../components/results/PlotLegend"
 import SidebarOptions from "../components/results/SidebarOptions"
-import Button from "../components/Button"
+import Button from "../components/general/Button"
 
 /* Constants */
 import { COMPOUND_COLORS } from "../constants/compoundColors"
 
 /* Hooks */
 import { useMemo, useState } from "react"
-import useCompounds from "../hooks/useCompounds"
+import useCompounds from "../hooks/entities/useCompounds"
 import useGetData from "../hooks/useGetData"
 
 const ResultsPage: React.VFC = () => {

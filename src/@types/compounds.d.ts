@@ -6,3 +6,5 @@ interface Compound {
   name?: string
   molecularWeight?: number
 }
+
+type CompoundInput = Omit<Omit<Compound, "id">, "color">

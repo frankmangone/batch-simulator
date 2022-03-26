@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import useCompounds from "../../hooks/useCompounds"
+import useCompounds from "../../hooks/entities/useCompounds"
 import useSettings from "../../hooks/useSettings"
 import Checkbox from "../forms/Checkbox"
 import Show from "../Show"
