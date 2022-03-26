@@ -1,11 +1,12 @@
 // Import original module declarations
-import 'styled-components'
+import "styled-components"
 
 // And extend it
-declare module 'styled-components' {
+declare module "styled-components" {
   export interface DefaultTheme {
     colors: Colors
-    isWeb?: boolean
+    fontSizes: FontSizes
+    lineHeights: LineHeights
     getColor: (color: ColorValue) => string
   }
 }

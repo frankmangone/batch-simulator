@@ -1,4 +1,30 @@
 /********************************************
+ * Font sizes                               *
+ ********************************************/
+const FONT_SIZES: FontSizes = {
+  h1: "48.83px",
+  h2: "39.06px",
+  h3: "31.25px",
+  h4: "25px",
+  h5: "20px",
+  p: "16px",
+  sub: "12.8px",
+}
+
+/********************************************
+ * Line heights                             *
+ ********************************************/
+const LINE_HEIGHTS: LineHeights = {
+  h1: "61.04px",
+  h2: "48.83px",
+  h3: "39.06px",
+  h4: "31.25px",
+  h5: "25px",
+  p: "20px",
+  sub: "16px",
+}
+
+/********************************************
  * Colors                                   *
  ********************************************/
 const BASE_COLORS: Colors = {
@@ -57,10 +83,14 @@ export const getTheme = (name?: ThemeName): ThemeObject => {
   switch (name) {
     case "dark":
       return {
+        fontSizes: FONT_SIZES,
+        lineHeights: LINE_HEIGHTS,
         colors: DARK_THEME_COLORS,
       }
     default:
       return {
+        fontSizes: FONT_SIZES,
+        lineHeights: LINE_HEIGHTS,
         colors: LIGHT_THEME_COLORS,
       }
   }
