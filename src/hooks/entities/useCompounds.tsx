@@ -25,7 +25,7 @@ const useCompounds = () => {
    * Creates a random compound color to be used
    */
   const randomCompoundColor = () => {
-    const hue = Math.floor(Math.random() * 255)
+    const hue = Math.floor(Math.random() * 360)
     return buildHSLString([hue, 50, 50], 100)
   }
 

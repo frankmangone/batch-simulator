@@ -8,6 +8,7 @@ import useCompounds from "../../hooks/entities/useCompounds"
 
 const Wrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `
 
 const CompoundList: React.VFC = () => {
