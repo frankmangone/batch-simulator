@@ -14,6 +14,8 @@ interface ICompoundCardProps {
 const CompoundCard: React.FC<ICompoundCardProps> = (props) => {
   const { compound, editCompound, removeCompound } = props
 
+  console.log(compound)
+
   return (
     <CompoundCardWrapper>
       <CompoundCardInner>

@@ -50,7 +50,7 @@ const CompoundEditModal: React.FC<CompoundEditModalProps> = (props) => {
     /* Molecular weight validation */
     if (!validateNotEmpty(values.molecularWeight))
       errors.molecularWeight = "Molecular weight cannot be empty"
-    else if (!validateGreaterThan(values.molecularWeight, 0, true))
+    else if (!validateGreaterThan(values.molecularWeight || 0, 0, true))
       errors.molecularWeight = "Molecular weight cannot be lower than 0"
 
     return errors
