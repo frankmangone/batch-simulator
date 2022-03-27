@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import { FiPlus } from "react-icons/fi"
-import Button from "../../components/general/Button"
+import { AddIcon, DeleteIcon } from "../../components/Icons"
+import BaseButton from "../../components/general/ButtonNew"
 import PageTitle from "../../components/PageTitle"
 import CompoundList from "./CompoundList"
 import useCompounds from "../../hooks/entities/useCompounds"
@@ -11,23 +11,39 @@ const Wrapper = styled.main`
   padding: 0px 50px;
 `
 
-const CompoundsPage: React.FC = () => {
-  const { addCompound } = useCompounds()
-  // const { addCompound, removeAllCompounds } = useCompounds()
+const ActionButtons = styled.div`
+  margin-bottom: 20px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  align-self: stretch;
+`
 
-  // const handleResetCompounds = () => {
-  //   const confirmation = window.confirm(
-  //     "Are you sure you want to delete all compounds? This will also delete all reactions"
-  //   )
-  //   if (confirmation) removeAllCompounds()
-  // }
+const Button = styled(BaseButton)`
+  margin-left: 10px;
+`
+
+const CompoundsPage: React.FC = () => {
+  const { addCompound, removeAllCompounds } = useCompounds()
+
+  const handleResetCompounds = () => {
+    const confirmation = window.confirm(
+      "Are you sure you want to delete all compounds? This will also delete all reactions"
+    )
+    if (confirmation) removeAllCompounds()
+  }
 
   return (
     <Wrapper>
       <PageTitle>Compounds</PageTitle>
-      <Button color="green" onClick={addCompound}>
-        Add <FiPlus />
-      </Button>
+      <ActionButtons>
+        <Button color="success" onClick={addCompound}>
+          <AddIcon color="#000" size={30} />
+        </Button>
+        <Button color="cancel" onClick={handleResetCompounds}>
+          <DeleteIcon color="#000" size={30} />
+        </Button>
+      </ActionButtons>
       <CompoundList />
     </Wrapper>
   )
