@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Error from "./Error"
-import Input from "./Input"
+import Input from "./InputNew"
 // import InfoTooltip from "./InfoTooltip"
 
 interface FieldInputProps<T> {
@@ -17,10 +17,21 @@ interface FieldInputProps<T> {
 const Wrapper = styled.fieldset`
   display: flex;
   flex-direction: column;
+  border: none;
 `
 
 const LabelWrapper = styled.div`
   display: flex;
+
+  label {
+    color: ${(props) =>
+      props.theme.getColor({ name: "baseBlack", shade: 100 })};
+    font-family: "Mulish", sans-serif;
+    font-size: ${(props) => props.theme.fontSizes.p};
+    font-weight: 600;
+    line-height: ${(props) => props.theme.lineHeights.p};
+    margin-bottom: 8px;
+  }
 `
 
 const TextInput = <T extends unknown>(props: FieldInputProps<T>) => {

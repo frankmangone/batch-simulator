@@ -8,3 +8,4 @@ interface Compound {
 }
 
 type CompoundInput = Omit<Compound, "id">
+type ReducedCompoundInput = Omit<CompoundInput, "color" | "symbol">

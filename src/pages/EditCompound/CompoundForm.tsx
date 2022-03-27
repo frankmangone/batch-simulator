@@ -5,9 +5,7 @@ interface CompoundFormProps {
   formik: FormikProps<CompoundInput>
 }
 
-type ReducedInput = Omit<CompoundInput, "color" | "symbol">
-
-const LABELS: Record<keyof ReducedInput, string> = {
+const LABELS: Record<keyof ReducedCompoundInput, string> = {
   name: "Compound name",
   molecularWeight: "Molecular Weight",
   concentration: "Concentration",
@@ -17,13 +15,19 @@ const CompoundForm: React.VFC<CompoundFormProps> = (props) => {
   const { formik } = props
   const { values, setFieldValue } = formik
 
-  const textInputProps = (key: keyof ReducedInput) => {
+  const textInputProps = (key: keyof ReducedCompoundInput) => {
     return {
       fieldName: key,
       label: LABELS[key],
       value: values[key],
-      onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-        setFieldValue(key, event.target.value),
+      type: key === "name" ? "text" : "number",
+      onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (key === "name") {
+          setFieldValue(key, event.target.value)
+          return
+        }
+        setFieldValue(key, parseFloat(event.target.value))
+      },
     }
   }
 
