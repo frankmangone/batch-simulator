@@ -56,7 +56,6 @@ const ReactionCompoundCard: React.FC<ReactionCompoundCardProps> = (props) => {
         type="number"
         onChange={handleCoefficientChange}
         onBlur={validateAndUpdateCoefficient}
-        transparent
       />
       <CardButton onClick={removeCompound}>
         <FiTrash2 />

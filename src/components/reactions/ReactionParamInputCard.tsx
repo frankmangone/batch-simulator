@@ -68,7 +68,6 @@ const ReactionParamInputCard: React.FC<ReactionParamInputCardProps> = (
           type="text"
           onChange={handleChange}
           onBlur={validateAndUpdateConstant}
-          transparent
         />
         {units && <InfoTooltip text={units} />}
       </ParamInputInner>

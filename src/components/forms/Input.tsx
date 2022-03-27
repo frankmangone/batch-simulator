@@ -1,11 +1,10 @@
 import styled from "styled-components"
 
-interface IInputProps extends React.HTMLProps<HTMLInputElement> {
+interface InputProps extends React.HTMLProps<HTMLInputElement> {
   errors?: boolean
-  transparent?: boolean
 }
 
-const Input = styled.input<IInputProps>`
+const Input = styled.input<InputProps>`
   background-color: var(--color-grey-lightest);
   border: 1px solid var(--color-grey-normal);
   border-radius: 5px;
@@ -14,15 +13,15 @@ const Input = styled.input<IInputProps>`
   min-width: 0;
   width: 0;
   outline: none;
-  padding: 0.5rem 1rem;
-  color: var(--color-grey-dark);
+  padding: 10px;
+  color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 100 })};
 
   &:autofill {
     background-color: rgba(255, 255, 255, 0.2);
   }
 
   &:focus {
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
+    /* box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15); */
   }
 
   /**
@@ -41,24 +40,10 @@ const Input = styled.input<IInputProps>`
     -moz-appearance: textfield;
   }
 
-  /** Overrides */
-  ${(props) =>
-    props.transparent
-      ? `
-      background-color: rgba(255,255,255,0.2);
-      border-color: hsla(213, 20%, 15%, 0.5);
-      color: var(--color-grey-darker);
-
-      &:focus {
-        border-color: var(--color-grey-darker);
-        background-color: rgba(255,255,255,0.5);
-      }
-      `
-      : ""}
   ${(props) =>
     props.errors
       ? `
-        border-color: var(--color-triadic-red-darker) !important
+        border-color: ${props.theme.getColor("cancel")};
       `
       : ""}
 `

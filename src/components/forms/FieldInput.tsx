@@ -27,7 +27,6 @@ const FieldInput: React.FC<IFieldInputProps> = (props) => {
     label,
     type,
     tooltip,
-    transparent,
     value,
     onBlur,
     onChange,
@@ -49,7 +48,6 @@ const FieldInput: React.FC<IFieldInputProps> = (props) => {
         onBlur={onBlur || voidFunction}
         onChange={onChange}
         value={value}
-        transparent={transparent}
       />
       {error && <Error big={big}>{error}</Error>}
     </FieldInputWrapper>
