@@ -6,11 +6,16 @@ import Header from "../../components/layout/PageHeader"
 import useCompounds from "../../hooks/entities/useCompounds"
 import { useParams } from "react-router-dom"
 
+interface PageHeaderProps {
+  handleSubmit: () => void
+}
+
 const Button = styled(BaseButton)`
   margin-left: 10px;
 `
 
-const PageHeader: React.VFC = () => {
+const PageHeader: React.VFC<PageHeaderProps> = (props) => {
+  const { handleSubmit } = props
   const { removeCompound } = useCompounds()
   const { id } = useParams()
 
@@ -24,6 +29,9 @@ const PageHeader: React.VFC = () => {
   return (
     <Header>
       <Title>Edit Compound</Title>
+      <Button color="success" onClick={handleSubmit}>
+        <DeleteIcon color="#000" size={30} />
+      </Button>
       <Button color="cancel" onClick={handleRemove}>
         <DeleteIcon color="#000" size={30} />
       </Button>

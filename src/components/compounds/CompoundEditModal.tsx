@@ -73,6 +73,7 @@ const CompoundEditModal: React.FC<CompoundEditModalProps> = (props) => {
    */
   const formik = useFormik<CompoundInput>({
     initialValues: {
+      color: compound.color,
       symbol: compound.symbol,
       concentration: compound.concentration,
       name: compound.name,
