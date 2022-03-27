@@ -2,15 +2,9 @@ import styled from "styled-components"
 import { AddIcon, DeleteIcon } from "../../components/Icons"
 import BaseButton from "../../components/general/ButtonNew"
 import PageTitle from "../../components/PageTitle"
+import PageWrapper from "../../components/general/PageWrapper"
 import CompoundList from "./CompoundList"
 import useCompounds from "../../hooks/entities/useCompounds"
-
-const Wrapper = styled.main`
-  margin: 30px auto 0px;
-  max-width: 900px;
-  padding: 0px 50px;
-  align-items: center;
-`
 
 const Header = styled.div`
   margin-bottom: 40px;
@@ -25,7 +19,7 @@ const Button = styled(BaseButton)`
   margin-left: 10px;
 `
 
-const CompoundsPage: React.FC = () => {
+const CompoundsPage: React.VFC = () => {
   const { addCompound, removeAllCompounds } = useCompounds()
 
   const handleResetCompounds = () => {
@@ -36,7 +30,7 @@ const CompoundsPage: React.FC = () => {
   }
 
   return (
-    <Wrapper>
+    <PageWrapper>
       <Header>
         <PageTitle>Compounds</PageTitle>
         <Button color="success" onClick={addCompound}>
@@ -47,7 +41,7 @@ const CompoundsPage: React.FC = () => {
         </Button>
       </Header>
       <CompoundList />
-    </Wrapper>
+    </PageWrapper>
   )
 }
 
