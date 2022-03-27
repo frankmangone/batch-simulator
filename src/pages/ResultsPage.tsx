@@ -12,6 +12,8 @@ import { useMemo, useState } from "react"
 import useCompounds from "../hooks/entities/useCompounds"
 import useGetData from "../hooks/useGetData"
 
+import MainLayout from "../layouts/MainLayout"
+
 const ResultsPage: React.VFC = () => {
   const { variableData } = useGetData()
   const { compounds } = useCompounds()
@@ -46,7 +48,7 @@ const ResultsPage: React.VFC = () => {
   }, [selectedVariables, temperatureSelected])
 
   return (
-    <>
+    <MainLayout>
       <PageTitle>Results</PageTitle>
       <OptionsButton onClick={toggleOptionsVisible} color="green">
         Options
@@ -68,7 +70,7 @@ const ResultsPage: React.VFC = () => {
           setTemperatureSelected,
         }}
       />
-    </>
+    </MainLayout>
   )
 }
 

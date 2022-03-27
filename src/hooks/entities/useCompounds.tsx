@@ -25,8 +25,8 @@ const useCompounds = () => {
    * Creates a random compound color to be used
    */
   const randomCompoundColor = () => {
-    const hue = Math.floor(Math.random() * 255)
-    return buildHSLString([hue, 50, 50], 100)
+    const hue = Math.floor(Math.random() * 360)
+    return buildHSLString([hue, 40, 60], 100)
   }
 
   /**
@@ -56,6 +56,20 @@ const useCompounds = () => {
    */
   const findCompound = (id?: string): Compound | undefined => {
     return compounds.find((c) => c.id === id)
+  }
+
+  /**
+   * rerollCompoundColor
+   *
+   * Rerolls the color for component with `id`
+   *
+   * @param {string} id
+   */
+  const rerollCompoundColor = (id: string): void => {
+    const compound = compounds.find((c) => c.id === id) as Compound
+    const updatedCompound = { ...compound }
+    updatedCompound.color = randomCompoundColor()
+    dispatch(update({ id, compound: updatedCompound }))
   }
 
   /**
@@ -96,6 +110,7 @@ const useCompounds = () => {
     compounds,
     addCompound,
     findCompound,
+    rerollCompoundColor,
     updateCompound,
     removeCompound,
     removeAllCompounds,

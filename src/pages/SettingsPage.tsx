@@ -5,6 +5,7 @@ import PageTitle from "../components/PageTitle"
 import OperatingTimesSection from "../components/settings/OperatingTimesSection"
 import UnitsSection from "../components/settings/UnitsSection"
 import HeatExchangeSection from "../components/settings/HeatExchangeSection"
+import MainLayout from "../layouts/MainLayout"
 
 /* Helpers */
 import {
@@ -98,7 +99,7 @@ const SettingsPage: React.VFC = () => {
   }
 
   return (
-    <>
+    <MainLayout>
       <PageTitle>Operation</PageTitle>
 
       <Form>
@@ -106,7 +107,7 @@ const SettingsPage: React.VFC = () => {
         <UnitsSection {...sectionProps} />
         <HeatExchangeSection {...sectionProps} />
       </Form>
-    </>
+    </MainLayout>
   )
 }
 

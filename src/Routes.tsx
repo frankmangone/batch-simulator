@@ -6,6 +6,7 @@ import useVersionControl from "./hooks/useVersionControl"
 
 /* Pages */
 import CompoundsPage from "./pages/CompoundsPage"
+import CompoundsPageNew from "./pages/CompoundsPageNew/index"
 import SettingsPage from "./pages/SettingsPage"
 import ReactionsPage from "./pages/ReactionsPage"
 import ResultsPage from "./pages/ResultsPage"
@@ -19,6 +20,7 @@ const Routes = () => {
     <Switch>
       <Route path="/" exact component={CompoundsPage} />
       <Route path="/compounds" component={CompoundsPage} />
+      <Route path="/compounds-new" component={CompoundsPageNew} />
       <Route path="/reactions" component={ReactionsPage} />
       <Route path="/settings" component={SettingsPage} />
 

@@ -5,6 +5,7 @@ import CompoundList from "../components/compounds/CompoundList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
 import useCompounds from "../hooks/entities/useCompounds"
 import { mobileBreakpoint } from "../lib/breakpoints"
+import MainLayout from "../layouts/MainLayout"
 
 const DeleteButton = styled(Button)`
   position: absolute;
@@ -28,7 +29,7 @@ const CompoundsPage: React.FC = () => {
   }
 
   return (
-    <>
+    <MainLayout>
       <PageTitle>Compounds</PageTitle>
       <Button color="green" onClick={addCompound}>
         Add <FiPlus />
@@ -37,7 +38,7 @@ const CompoundsPage: React.FC = () => {
         <FiTrash2 size={20} />
       </DeleteButton>
       <CompoundList />
-    </>
+    </MainLayout>
   )
 }
 
