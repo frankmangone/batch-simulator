@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom"
 
 /* Components */
 import PageTitle from "../components/PageTitle"
@@ -11,10 +12,16 @@ import Button from "../components/general/Button"
 import { useMemo, useState } from "react"
 import useCompounds from "../hooks/entities/useCompounds"
 import useGetData from "../hooks/useGetData"
+import useSimulationResults from "../hooks/useSimulationResults"
 
 import MainLayout from "../layouts/MainLayout"
 
 const ResultsPage: React.VFC = () => {
+  const navigate = useNavigate()
+  const { simulationResults } = useSimulationResults()
+
+  if (!simulationResults?.length) navigate("/", { replace: true })
+
   const { variableData } = useGetData()
   const { compounds } = useCompounds()
   const [selectedVariables, setSelectedVariables] = useState<number[]>([0])

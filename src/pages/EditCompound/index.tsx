@@ -2,12 +2,8 @@
 import PageWrapper from "../../components/general/PageWrapper"
 import { useParams } from "react-router-dom"
 
-interface EditCompoundParams {
-  id: string
-}
-
 const EditCompoundPage: React.VFC = () => {
-  const { id } = useParams<EditCompoundParams>()
+  const { id } = useParams()
 
   return <PageWrapper>{id}</PageWrapper>
 }
