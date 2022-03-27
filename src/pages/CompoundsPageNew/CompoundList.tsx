@@ -2,7 +2,6 @@ import { useState } from "react"
 import styled from "styled-components"
 import Show from "../../components/Show"
 import CompoundCard from "./CompoundCard"
-// import CompoundEditModal from "../../components/compounds/CompoundEditModal"
 import NoResource from "../../components/NoResource"
 import useCompounds from "../../hooks/entities/useCompounds"
 
@@ -20,14 +19,6 @@ const CompoundList: React.VFC = () => {
     undefined
   )
 
-  // const editedCompound = useMemo(
-  //   () =>
-  //     editedCompoundId
-  //       ? compounds.find((c) => c.id === editedCompoundId)
-  //       : undefined,
-  //   [compounds, editedCompoundId]
-  // )
-
   return (
     <Wrapper>
       <Show when={!compounds.length}>
@@ -37,14 +28,6 @@ const CompoundList: React.VFC = () => {
       {compounds.map((compound, index) => (
         <CompoundCard key={index} {...{ compound, setEditedCompoundId }} />
       ))}
-
-      {/* Edit modal
-      <Show when={editedCompoundId}>
-        <CompoundEditModal
-          compound={editedCompound as Compound}
-          closeModal={() => editCompound()}
-        />
-      </Show> */}
     </Wrapper>
   )
 }

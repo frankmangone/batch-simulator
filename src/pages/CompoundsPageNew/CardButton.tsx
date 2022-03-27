@@ -12,6 +12,8 @@ const Button = styled.div`
   border: none;
   border-radius: 3px;
   display: flex;
+  flex: 1;
+  justify-content: center;
   height: 35px;
   transition: background 0.15s linear;
 

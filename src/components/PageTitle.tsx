@@ -5,7 +5,8 @@ const PageTitle = styled.h2`
   font-size: ${(props) => props.theme.fontSizes.h3};
   line-height: ${(props) => props.theme.lineHeights.h3};
   font-family: "Mulish", sans-serif;
-  margin-top: 0;
+  margin: 0;
+  flex: 1;
   display: inline-block;
 `
 

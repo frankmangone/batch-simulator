@@ -12,11 +12,6 @@ const Wrapper = styled.main`
   align-items: center;
 `
 
-const Title = styled(PageTitle)`
-  flex: 1;
-  margin-bottom: 0;
-`
-
 const Header = styled.div`
   margin-bottom: 40px;
   margin-top: 30px;
@@ -43,7 +38,7 @@ const CompoundsPage: React.FC = () => {
   return (
     <Wrapper>
       <Header>
-        <Title>Compounds</Title>
+        <PageTitle>Compounds</PageTitle>
         <Button color="success" onClick={addCompound}>
           <AddIcon color="#000" size={30} />
         </Button>
