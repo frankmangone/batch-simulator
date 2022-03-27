@@ -1,3 +1,4 @@
+import styled from "styled-components"
 import TextInput from "../../components/forms/TextInput"
 import type { FormikProps } from "formik"
 
@@ -10,6 +11,10 @@ const LABELS: Record<keyof ReducedCompoundInput, string> = {
   molecularWeight: "Molecular Weight",
   concentration: "Concentration",
 }
+
+const Wrapper = styled.div`
+  display: flex;
+`
 
 const CompoundForm: React.VFC<CompoundFormProps> = (props) => {
   const { formik } = props
@@ -32,11 +37,11 @@ const CompoundForm: React.VFC<CompoundFormProps> = (props) => {
   }
 
   return (
-    <>
+    <Wrapper>
       <TextInput {...textInputProps("name")} />
       <TextInput {...textInputProps("molecularWeight")} />
       <TextInput {...textInputProps("concentration")} />
-    </>
+    </Wrapper>
   )
 }
 

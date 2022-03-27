@@ -17,6 +17,7 @@ interface FieldInputProps<T> {
 const Wrapper = styled.fieldset`
   display: flex;
   flex-direction: column;
+  flex-basis: 33%;
   border: none;
 `
 
