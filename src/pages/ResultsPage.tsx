@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 
 /* Components */
-import PageTitle from "../components/PageTitle"
+import PageTitle from "../components/layout/PageTitle"
 import Plot from "../components/results/Plot"
 import PlotLegend from "../components/results/PlotLegend"
 import SidebarOptions from "../components/results/SidebarOptions"

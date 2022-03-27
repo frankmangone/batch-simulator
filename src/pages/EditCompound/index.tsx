@@ -1,11 +1,12 @@
-// import styled from "styled-components"
-import PageWrapper from "../../components/general/PageWrapper"
-import { useParams } from "react-router-dom"
+import PageHeader from "./PageHeader"
+import Wrapper from "../../components/layout/PageWrapper"
 
 const EditCompoundPage: React.VFC = () => {
-  const { id } = useParams()
-
-  return <PageWrapper>{id}</PageWrapper>
+  return (
+    <Wrapper>
+      <PageHeader />
+    </Wrapper>
+  )
 }
 
 export default EditCompoundPage

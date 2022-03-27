@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 /* Components */
-import PageTitle from "../components/PageTitle"
+import PageTitle from "../components/layout/PageTitle"
 import OperatingTimesSection from "../components/settings/OperatingTimesSection"
 import UnitsSection from "../components/settings/UnitsSection"
 import HeatExchangeSection from "../components/settings/HeatExchangeSection"
