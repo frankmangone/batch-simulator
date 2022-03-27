@@ -20,21 +20,25 @@ const Button = styled.button<ButtonProps>`
     const { color, theme } = props
     const { getColor } = theme
     let background,
+      shadow,
       hoverBackground,
       text = getColor({ name: "baseBlack", shade: 700 })
 
     switch (color) {
       case "cancel":
         background = getColor("cancel")
+        shadow = getColor({ name: "cancel", opacity: 80 })
         hoverBackground = getColor({ name: "cancel", shade: 800 })
         break
       case "success":
         background = getColor("success")
+        shadow = getColor({ name: "success", opacity: 80 })
         hoverBackground = getColor({ name: "success", shade: 800 })
         break
       default:
         background = getColor({ name: "baseBlack", shade: 700 })
         hoverBackground = getColor({ name: "baseBlack", shade: 800 })
+        shadow = getColor({ name: "baseBlack", shade: 800, opacity: 80 })
         text = getColor({ name: "baseBlack", shade: 100 })
     }
 
@@ -48,6 +52,7 @@ const Button = styled.button<ButtonProps>`
 
       &:hover {
         background-color: ${hoverBackground};
+        box-shadow: 0 0 8px ${shadow};
       }
     `
   }}
