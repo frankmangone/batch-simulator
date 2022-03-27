@@ -35,7 +35,7 @@ const Buttons = styled.div`
 const Wrapper = styled.div`
   align-items: center;
   background-color: ${(props) =>
-    props.theme.getColor({ name: "baseBlack", shade: 800 })};
+    props.theme.getColor({ name: "baseBlack", shade: 700 })};
   border-radius: 5px;
   box-shadow: 0 0 6px
     ${(props) => props.theme.getColor({ name: "baseBlack", shade: 800 })};
@@ -53,7 +53,7 @@ const Wrapper = styled.div`
 
   &:hover {
     background-color: ${(props) =>
-      props.theme.getColor({ name: "baseBlack", shade: 700 })};
+      props.theme.getColor({ name: "baseBlack", shade: 800 })};
     height: 110px;
     margin-bottom: -50px;
 
