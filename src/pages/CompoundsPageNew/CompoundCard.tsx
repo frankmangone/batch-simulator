@@ -3,11 +3,10 @@ import { EditIcon, DeleteIcon, RerollIcon } from "../../components/Icons"
 import CardButton from "./CardButton"
 import useCompounds from "../../hooks/entities/useCompounds"
 import { useState } from "react"
-import type { Dispatch, SetStateAction } from "react"
+import { useNavigate } from "react-router-dom"
 
 interface CompoundCardProps {
   compound: Compound
-  setEditedCompoundId: Dispatch<SetStateAction<string | undefined>>
 }
 
 interface SymbolProps {
@@ -25,12 +24,13 @@ const Symbol = styled.p<SymbolProps>`
 `
 
 const Buttons = styled.div`
-  align-self: stretch;
   display: flex;
   height: 30px;
+  width: 148px;
   justify-content: space-between;
   margin: 0px 16px;
   opacity: 0;
+  transition: all 0.15s ease-in-out;
 `
 
 const Wrapper = styled.div`
@@ -48,7 +48,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   height: 100px;
   margin: 0px 5px 10px;
-  overflow: hidden;
   padding: 0px;
   transition: all 0.15s ease-in-out;
 
@@ -58,24 +57,24 @@ const Wrapper = styled.div`
 
     & > div${Buttons} {
       opacity: 1;
+      margin-top: -25px;
     }
 
     & > p${Symbol} {
-      margin-top: 16px;
-      font-size: ${(props) => props.theme.fontSizes.h3};
-      line-height: ${(props) => props.theme.lineHeights.h3};
+      transform: scale(0.7) translateY(-25px);
     }
   }
 `
 
 const CompoundCard: React.FC<CompoundCardProps> = (props) => {
-  const { compound, setEditedCompoundId } = props
+  const { compound } = props
+  const navigate = useNavigate()
   const { id, symbol, color } = compound
   const { removeCompound, rerollCompoundColor } = useCompounds()
   const [zIndex, setZIndex] = useState<number>(1)
 
   const handleReroll = () => rerollCompoundColor(id)
-  const handleEdit = () => setEditedCompoundId(id)
+  const handleEdit = () => navigate(`/compounds/${id}`)
   const handleRemove = () => removeCompound(id)
 
   const handleMouseEnter = () => setZIndex(2)

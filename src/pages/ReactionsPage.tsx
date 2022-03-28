@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Button from "../components/general/Button"
-import PageTitle from "../components/PageTitle"
+import PageTitle from "../components/layout/PageTitle"
 import ReactionList from "../components/reactions/ReactionList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
 import useReactions from "../hooks/entities/useReactions"

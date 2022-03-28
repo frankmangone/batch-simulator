@@ -110,6 +110,7 @@ const useCompounds = () => {
     compounds,
     addCompound,
     findCompound,
+    randomCompoundColor,
     rerollCompoundColor,
     updateCompound,
     removeCompound,

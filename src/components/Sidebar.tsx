@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { mobileBreakpoint } from "../lib/breakpoints"
 import Button from "./general/Button"
 import { FiMenu, FiSliders, FiPlay } from "react-icons/fi"
@@ -18,13 +18,13 @@ interface ISidebarLinkProps {
 const Sidebar: React.FC = () => {
   const { simulate } = useSimulate()
   const { simulationResults } = useSimulationResults()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [expanded, setExpanded] = useState<boolean>(false)
 
   const onSimulate = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
     simulate()
-    history.push("/results")
+    navigate("/results")
   }
 
   const expandMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
   }
 
   const navigateTo = (route: string) => {
-    history.push(route)
+    navigate(route)
     setExpanded(false)
   }
 

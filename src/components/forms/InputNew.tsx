@@ -5,20 +5,19 @@ interface InputProps extends React.HTMLProps<HTMLInputElement> {
 }
 
 const Input = styled.input<InputProps>`
-  background-color: var(--color-grey-lightest);
-  border: 1px solid var(--color-grey-normal);
+  background-color: ${(props) =>
+    props.theme.getColor({ name: "baseBlack", shade: 700 })};
+  border: 1px solid
+    ${(props) => props.theme.getColor({ name: "baseBlack", shade: 700 })};
   border-radius: 5px;
+  color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 200 })};
   flex-grow: 1;
   font-family: "Mulish", sans-serif;
-  min-width: 0;
-  width: 0;
+  font-size: ${(props) => props.theme.fontSizes.p};
+  font-weight: 600;
+  line-height: ${(props) => props.theme.lineHeights.p};
   outline: none;
   padding: 10px;
-  color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 100 })};
-
-  &:autofill {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
 
   &:focus {
     /* box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15); */
