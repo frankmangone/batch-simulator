@@ -11,10 +11,8 @@ interface ReactionCardProps {
 const Buttons = styled.div`
   display: flex;
   height: 30px;
-  width: 148px;
-  justify-content: space-between;
+  width: 120px;
   margin: 0px 16px;
-  opacity: 0;
   transition: all 0.15s ease-in-out;
 `
 
@@ -28,6 +26,7 @@ const Wrapper = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
   height: 100px;
   margin: 0px 5px 10px;
   padding: 0px;
@@ -36,11 +35,6 @@ const Wrapper = styled.div`
   &:hover {
     background-color: ${(props) =>
       props.theme.getColor({ name: "baseBlack", shade: 800 })};
-
-    & > div${Buttons} {
-      opacity: 1;
-      margin-top: -25px;
-    }
   }
 `
 
