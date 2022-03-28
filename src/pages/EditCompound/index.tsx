@@ -1,6 +1,7 @@
 import PageHeader from "./PageHeader"
 import CompoundForm from "./CompoundForm"
 import Wrapper from "../../components/layout/PageWrapper"
+import Sidebar from "../../components/layout/Sidebar"
 import useCompounds from "../../hooks/entities/useCompounds"
 import { useEffect } from "react"
 import { useFormik } from "formik"
@@ -55,10 +56,13 @@ const EditCompoundPage: React.VFC = () => {
   })
 
   return (
-    <Wrapper>
-      <PageHeader handleSubmit={formik.handleSubmit} />
-      <CompoundForm formik={formik} />
-    </Wrapper>
+    <>
+      <Sidebar />
+      <Wrapper>
+        <PageHeader handleSubmit={formik.handleSubmit} />
+        <CompoundForm formik={formik} />
+      </Wrapper>
+    </>
   )
 }
 
