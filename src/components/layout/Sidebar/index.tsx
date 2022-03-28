@@ -1,4 +1,13 @@
 import styled from "styled-components"
+import {
+  CompoundIcon,
+  ReactionIcon,
+  PhaseIcon,
+  SettingsIcon,
+  RunIcon,
+} from "../../Icons"
+import SidebarButton from "./SidebarButton"
+import { useTheme } from "../../../contexts/Theme"
 // import { useNavigate } from "react-router-dom"
 // import useSimulate from "../../../hooks/useSimulate"
 // import useSimulationResults from "../../../hooks/useSimulationResults"
@@ -10,11 +19,15 @@ const Wrapper = styled.nav`
   bottom: 0;
   left: 0;
   width: 80px;
+  padding-top: 20px;
   background-color: ${(props) =>
     props.theme.getColor({ name: "baseBlack", shade: 700 })};
 `
 
 const Sidebar: React.FC = () => {
+  const { getColor } = useTheme()
+  const color = getColor({ name: "baseBlack", shade: 200 })
+
   // const { simulate } = useSimulate()
   // const { simulationResults } = useSimulationResults()
   // const navigate = useNavigate()
@@ -36,7 +49,25 @@ const Sidebar: React.FC = () => {
   //   setExpanded(false)
   // }
 
-  return <Wrapper></Wrapper>
+  return (
+    <Wrapper>
+      <SidebarButton>
+        <CompoundIcon color={color} />
+      </SidebarButton>
+      <SidebarButton>
+        <ReactionIcon color={color} />
+      </SidebarButton>
+      <SidebarButton>
+        <PhaseIcon color={color} />
+      </SidebarButton>
+      <SidebarButton>
+        <SettingsIcon color={color} />
+      </SidebarButton>
+      <SidebarButton>
+        <RunIcon color={color} />
+      </SidebarButton>
+    </Wrapper>
+  )
 }
 
 export default Sidebar
