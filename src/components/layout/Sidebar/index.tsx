@@ -17,6 +17,9 @@ const Wrapper = styled.nav`
   top: 0;
   bottom: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   width: 80px;
   padding-top: 20px;
   background-color: ${(props) =>
@@ -43,19 +46,22 @@ const Sidebar: React.FC = () => {
 
   return (
     <Wrapper>
-      <SidebarButton onClick={() => navigateTo("/compounds-new")}>
+      <SidebarButton
+        onClick={() => navigateTo("/compounds-new")}
+        text="Compounds"
+      >
         <CompoundIcon color={color} />
       </SidebarButton>
-      <SidebarButton onClick={() => navigateTo("/reactions")}>
+      <SidebarButton onClick={() => navigateTo("/reactions")} text="Reactions">
         <ReactionIcon color={color} />
       </SidebarButton>
-      <SidebarButton onClick={() => null}>
+      <SidebarButton onClick={() => null} text="Phases">
         <PhaseIcon color={color} />
       </SidebarButton>
-      <SidebarButton onClick={() => navigateTo("/settings")}>
+      <SidebarButton onClick={() => navigateTo("/settings")} text="Settings">
         <SettingsIcon color={color} />
       </SidebarButton>
-      <SidebarButton>
+      <SidebarButton onClick={() => null} text="Simulate">
         <RunIcon color={color} />
       </SidebarButton>
     </Wrapper>
