@@ -1,4 +1,3 @@
-import { useState } from "react"
 import styled from "styled-components"
 
 interface SidebarButtonProps {
@@ -25,31 +24,33 @@ const Wrapper = styled.div`
     font-size: ${(props) => props.theme.fontSizes.p};
     font-weight: 600;
     line-height: ${(props) => props.theme.lineHeights.p};
-    margin-bottom: 0;
+    margin: 0;
     margin-top: 4px;
-    margin-left: 15px;
+    max-width: 0;
+    opacity: 0;
+    transition: all 0.15s ease-in-out;
+    pointer-events: none;
   }
 
   &:hover {
     background-color: ${(props) =>
       props.theme.getColor({ name: "baseBlack", shade: 800 })};
+
+    & > p {
+      max-width: 100px;
+      margin-left: 15px;
+      opacity: 1;
+      pointer-events: all;
+    }
   }
 `
 const SidebarButton: React.FC<SidebarButtonProps> = (props) => {
   const { children, text, onClick } = props
-  const [showText, setShowText] = useState<boolean>()
-
-  const handleMouseEnter = () => setShowText(true)
-  const handleMouseLeave = () => setShowText(false)
 
   return (
-    <Wrapper
-      onClick={onClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <Wrapper onClick={onClick}>
       {children}
-      {showText && <p>{text}</p>}
+      <p>{text}</p>
     </Wrapper>
   )
 }
