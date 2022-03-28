@@ -2,7 +2,7 @@ import styled from "styled-components"
 import CardButton from "./CardButton"
 import { EditIcon, DeleteIcon } from "../../components/Icons"
 import useReactions from "../../hooks/entities/useReactions"
-// import ReactionPreview from "./ReactionPreview"
+import ReactionPreview from "../../components/reactions/ReactionPreview/index"
 
 interface ReactionCardProps {
   reaction: Reaction
@@ -47,7 +47,7 @@ const ReactionCard: React.FC<ReactionCardProps> = (props) => {
 
   return (
     <Wrapper>
-      {/* <ReactionPreview /> */}
+      <ReactionPreview reaction={reaction} />
       <Buttons>
         <CardButton Icon={EditIcon} onClick={() => null} />
         <CardButton Icon={DeleteIcon} onClick={handleRemove} />
