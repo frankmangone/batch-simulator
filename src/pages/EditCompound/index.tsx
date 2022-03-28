@@ -6,6 +6,8 @@ import { useEffect } from "react"
 import { useFormik } from "formik"
 import { useParams, useNavigate } from "react-router-dom"
 import compoundSchema from "../../lib/schema/compound"
+import buildValidationError from "../../lib/schema/buildValidationError"
+import type { ValidationError } from "yup"
 
 const EditCompoundPage: React.VFC = () => {
   const { findCompound, updateCompound } = useCompounds()
@@ -25,16 +27,18 @@ const EditCompoundPage: React.VFC = () => {
 
   const formik = useFormik<CompoundInput>({
     initialValues: { symbol, name, color, molecularWeight, concentration },
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setErrors }) => {
       // TODO: Validate values
       try {
-        const validatedValues = await compoundSchema.validate(values)
+        const validatedValues = await compoundSchema.validate(values, {
+          abortEarly: false,
+        })
         const updatedCompound = { id, ...validatedValues }
 
         updateCompound(id as string, updatedCompound as Compound)
         navigate("/compounds-new")
       } catch (error) {
-        console.log(error)
+        setErrors(buildValidationError(error as ValidationError))
       }
     },
   })
