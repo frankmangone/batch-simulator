@@ -46,10 +46,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <Wrapper>
-      <SidebarButton
-        onClick={() => navigateTo("/compounds-new")}
-        text="Compounds"
-      >
+      <SidebarButton onClick={() => navigateTo("/compounds")} text="Compounds">
         <CompoundIcon color={color} />
       </SidebarButton>
       <SidebarButton onClick={() => navigateTo("/reactions")} text="Reactions">
