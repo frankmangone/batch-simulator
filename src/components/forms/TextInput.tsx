@@ -17,8 +17,19 @@ interface FieldInputProps<T> {
 const Wrapper = styled.fieldset`
   display: flex;
   flex-direction: column;
-  flex-basis: 33%;
+  flex-basis: 33.3%;
   border: none;
+  padding: 0;
+  margin: 0;
+`
+
+const InnerWrapper = styled.div`
+  margin-left: 10px;
+  margin-right: 10px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 `
 
 const LabelWrapper = styled.div`
@@ -31,7 +42,7 @@ const LabelWrapper = styled.div`
     font-size: ${(props) => props.theme.fontSizes.p};
     font-weight: 600;
     line-height: ${(props) => props.theme.lineHeights.p};
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 `
 
@@ -48,19 +59,21 @@ const TextInput = <T extends unknown>(props: FieldInputProps<T>) => {
 
   return (
     <Wrapper>
-      <LabelWrapper>
-        <label htmlFor={fieldName}>{label}</label>
-        {/* {tooltip && <InfoTooltip text={tooltip} />} */}
-      </LabelWrapper>
-      <Input
-        errors={!!error}
-        name={fieldName}
-        type={type || "text"}
-        autoComplete="off"
-        onChange={onChange}
-        value={String(value)}
-      />
-      {error && <Error>{error}</Error>}
+      <InnerWrapper>
+        <LabelWrapper>
+          <label htmlFor={fieldName}>{label}</label>
+          {/* {tooltip && <InfoTooltip text={tooltip} />} */}
+        </LabelWrapper>
+        <Input
+          errors={!!error}
+          name={fieldName}
+          type={type || "text"}
+          autoComplete="off"
+          onChange={onChange}
+          value={String(value)}
+        />
+        {error && <Error>{error}</Error>}
+      </InnerWrapper>
     </Wrapper>
   )
 }
