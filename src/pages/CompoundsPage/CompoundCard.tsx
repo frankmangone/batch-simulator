@@ -2,7 +2,6 @@ import styled from "styled-components"
 import { EditIcon, DeleteIcon, RerollIcon } from "../../components/Icons"
 import CardButton from "./CardButton"
 import useCompounds from "../../hooks/entities/useCompounds"
-import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 interface CompoundCardProps {
@@ -71,21 +70,13 @@ const CompoundCard: React.FC<CompoundCardProps> = (props) => {
   const navigate = useNavigate()
   const { id, symbol, color } = compound
   const { removeCompound, rerollCompoundColor } = useCompounds()
-  const [zIndex, setZIndex] = useState<number>(1)
 
   const handleReroll = () => rerollCompoundColor(id)
   const handleEdit = () => navigate(`/compounds/${id}`)
   const handleRemove = () => removeCompound(id)
 
-  const handleMouseEnter = () => setZIndex(2)
-  const handleMouseLeave = () => setZIndex(1)
-
   return (
-    <Wrapper
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      style={{ zIndex }}
-    >
+    <Wrapper>
       <Symbol color={color}>{symbol}</Symbol>
       <Buttons>
         <CardButton Icon={RerollIcon} onClick={handleReroll} />
