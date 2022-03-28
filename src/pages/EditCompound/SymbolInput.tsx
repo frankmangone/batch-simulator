@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { RerollIcon } from "../../components/Icons"
-import Error from "../../components/forms/Error"
+import Error from "../../components/forms/ErrorNew"
 import { useTheme } from "../../contexts/Theme"
 
 interface SymbolInputProps {
@@ -13,7 +13,10 @@ interface SymbolInputProps {
 
 interface InputBoxProps {
   color: string
+  error: boolean
 }
+
+type RerollProps = Pick<InputBoxProps, "color">
 
 const Wrapper = styled.fieldset`
   flex-basis: 100%;
@@ -42,7 +45,10 @@ const InputBox = styled.div<InputBoxProps>`
   background-color: ${(props) =>
     props.theme.getColor({ name: "baseBlack", shade: 700 })};
   border: 1px solid
-    ${(props) => props.theme.getColor({ name: "baseBlack", shade: 700 })};
+    ${(props) =>
+      props.error
+        ? props.theme.getColor("cancel")
+        : props.theme.getColor({ name: "baseBlack", shade: 700 })};
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -50,6 +56,7 @@ const InputBox = styled.div<InputBoxProps>`
   font-family: "Mulish", sans-serif;
   outline: none;
   padding: 20px 30px 10px;
+  transition: border-color 0.15 ease-in-out;
 
   input {
     background: unset;
@@ -64,7 +71,7 @@ const InputBox = styled.div<InputBoxProps>`
   }
 `
 
-const RerollButton = styled.div<InputBoxProps>`
+const RerollButton = styled.div<RerollProps>`
   background-color: ${(props) => props.color};
   border-radius: 5px;
   cursor: pointer;
@@ -87,7 +94,7 @@ const SymbolInput: React.VFC<SymbolInputProps> = (props) => {
     <Wrapper>
       <InnerWrapper>
         <label htmlFor="symbol">Compound symbol</label>
-        <InputBox color={color}>
+        <InputBox color={color} error={!!error}>
           <input name="symbol" autoComplete="off" {...{ value, onChange }} />
           <RerollButton color={color} onClick={changeColor}>
             <RerollIcon
@@ -96,7 +103,7 @@ const SymbolInput: React.VFC<SymbolInputProps> = (props) => {
             />
           </RerollButton>
         </InputBox>
-        {error && <Error>{error}</Error>}
+        <Error>{error ?? ""}</Error>
       </InnerWrapper>
     </Wrapper>
   )

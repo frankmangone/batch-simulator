@@ -6,7 +6,10 @@ const nonNegative = (value?: number) => {
 }
 
 const localeSchema = yup.object().shape({
-  symbol: yup.string().required("Symbol is required"),
+  symbol: yup
+    .string()
+    .required("Symbol is required")
+    .min(1, "Symbol cannot be empty"),
   name: yup.string(),
   concentration: yup
     .number()

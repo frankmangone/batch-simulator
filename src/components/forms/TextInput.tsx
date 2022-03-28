@@ -64,7 +64,7 @@ const TextInput = <T extends unknown>(props: FieldInputProps<T>) => {
           {/* {tooltip && <InfoTooltip text={tooltip} />} */}
         </LabelWrapper>
         <Input
-          errors={!!error}
+          error={!!error}
           name={fieldName}
           type={type || "text"}
           autoComplete="off"

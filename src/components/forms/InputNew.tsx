@@ -1,14 +1,17 @@
 import styled from "styled-components"
 
 interface InputProps extends React.HTMLProps<HTMLInputElement> {
-  errors?: boolean
+  error?: boolean
 }
 
 const Input = styled.input<InputProps>`
   background-color: ${(props) =>
     props.theme.getColor({ name: "baseBlack", shade: 700 })};
   border: 1px solid
-    ${(props) => props.theme.getColor({ name: "baseBlack", shade: 700 })};
+    ${(props) =>
+      props.error
+        ? props.theme.getColor("cancel")
+        : props.theme.getColor({ name: "baseBlack", shade: 700 })};
   border-radius: 5px;
   color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 200 })};
   flex-grow: 1;
@@ -38,13 +41,6 @@ const Input = styled.input<InputProps>`
   &[type="number"] {
     -moz-appearance: textfield;
   }
-
-  ${(props) =>
-    props.errors
-      ? `
-        border-color: ${props.theme.getColor("cancel")};
-      `
-      : ""}
 `
 
 export default Input
