@@ -2,20 +2,33 @@ import PageHeader from "./PageHeader"
 import CompoundForm from "./CompoundForm"
 import Wrapper from "../../components/layout/PageWrapper"
 import useCompounds from "../../hooks/entities/useCompounds"
+import { useEffect } from "react"
 import { useFormik } from "formik"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 
 const EditCompoundPage: React.VFC = () => {
-  const { findCompound } = useCompounds()
+  const { findCompound, updateCompound } = useCompounds()
+  const navigate = useNavigate()
   const { id } = useParams()
   const compound = findCompound(id)
   const { symbol, name, color, molecularWeight, concentration } =
-    compound as Compound
+    (compound as Compound) ?? {}
+
+  // Redirect if id is not valid
+  useEffect(() => {
+    if (!compound) {
+      navigate("/", { replace: true })
+      // TODO: Flash message with 'compound not found'?
+    }
+  }, []) // eslint-disable-line
 
   const formik = useFormik<CompoundInput>({
     initialValues: { symbol, name, color, molecularWeight, concentration },
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2))
+      // TODO: Validate values
+      const updatedCompound = { id: id as string, ...values }
+      updateCompound(id as string, updatedCompound)
+      navigate("/compounds-new")
     },
   })
 

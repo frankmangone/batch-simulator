@@ -24,12 +24,13 @@ const Symbol = styled.p<SymbolProps>`
 `
 
 const Buttons = styled.div`
-  align-self: stretch;
   display: flex;
   height: 30px;
+  width: 148px;
   justify-content: space-between;
   margin: 0px 16px;
   opacity: 0;
+  transition: all 0.15s ease-in-out;
 `
 
 const Wrapper = styled.div`
@@ -47,7 +48,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   height: 100px;
   margin: 0px 5px 10px;
-  overflow: hidden;
   padding: 0px;
   transition: all 0.15s ease-in-out;
 
@@ -57,12 +57,11 @@ const Wrapper = styled.div`
 
     & > div${Buttons} {
       opacity: 1;
+      margin-top: -25px;
     }
 
     & > p${Symbol} {
-      margin-top: 16px;
-      font-size: ${(props) => props.theme.fontSizes.h3};
-      line-height: ${(props) => props.theme.lineHeights.h3};
+      transform: scale(0.7) translateY(-25px);
     }
   }
 `

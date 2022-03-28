@@ -5,6 +5,7 @@ import addIcon from "../lib/icons/add"
 import deleteIcon from "../lib/icons/delete"
 import editIcon from "../lib/icons/edit"
 import rerollIcon from "../lib/icons/reroll"
+import saveIcon from "../lib/icons/save"
 
 interface IconProps {
   color?: string
@@ -25,4 +26,8 @@ export const EditIcon: React.VFC<IconProps> = (props): JSX.Element => (
 
 export const RerollIcon: React.VFC<IconProps> = (props): JSX.Element => (
   <BaseIcon icon={rerollIcon} {...props} />
+)
+
+export const SaveIcon: React.VFC<IconProps> = (props): JSX.Element => (
+  <BaseIcon icon={saveIcon} {...props} />
 )
