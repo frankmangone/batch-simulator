@@ -11,7 +11,6 @@ import { useTheme } from "../../../contexts/Theme"
 import { useNavigate } from "react-router-dom"
 // import useSimulate from "../../../hooks/useSimulate"
 // import useSimulationResults from "../../../hooks/useSimulationResults"
-// import { useState } from "react"
 
 const Wrapper = styled.nav`
   position: absolute;
@@ -31,17 +30,11 @@ const Sidebar: React.FC = () => {
   // const { simulate } = useSimulate()
   // const { simulationResults } = useSimulationResults()
   const navigate = useNavigate()
-  // const [expanded, setExpanded] = useState<boolean>(false)
 
   // const onSimulate = (event: React.MouseEvent<HTMLAnchorElement>) => {
   //   event.preventDefault()
   //   simulate()
   //   navigate("/results")
-  // }
-
-  // const expandMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   event.preventDefault()
-  //   setExpanded(!expanded)
   // }
 
   const navigateTo = (route: string) => {
