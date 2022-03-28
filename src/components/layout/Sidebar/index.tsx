@@ -8,7 +8,7 @@ import {
 } from "../../Icons"
 import SidebarButton from "./SidebarButton"
 import { useTheme } from "../../../contexts/Theme"
-// import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 // import useSimulate from "../../../hooks/useSimulate"
 // import useSimulationResults from "../../../hooks/useSimulationResults"
 // import { useState } from "react"
@@ -30,7 +30,7 @@ const Sidebar: React.FC = () => {
 
   // const { simulate } = useSimulate()
   // const { simulationResults } = useSimulationResults()
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   // const [expanded, setExpanded] = useState<boolean>(false)
 
   // const onSimulate = (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -44,23 +44,22 @@ const Sidebar: React.FC = () => {
   //   setExpanded(!expanded)
   // }
 
-  // const navigateTo = (route: string) => {
-  //   navigate(route)
-  //   setExpanded(false)
-  // }
+  const navigateTo = (route: string) => {
+    navigate(route)
+  }
 
   return (
     <Wrapper>
-      <SidebarButton>
+      <SidebarButton onClick={() => navigateTo("/compounds-new")}>
         <CompoundIcon color={color} />
       </SidebarButton>
-      <SidebarButton>
+      <SidebarButton onClick={() => navigateTo("/reactions")}>
         <ReactionIcon color={color} />
       </SidebarButton>
-      <SidebarButton>
+      <SidebarButton onClick={() => null}>
         <PhaseIcon color={color} />
       </SidebarButton>
-      <SidebarButton>
+      <SidebarButton onClick={() => navigateTo("/settings")}>
         <SettingsIcon color={color} />
       </SidebarButton>
       <SidebarButton>
