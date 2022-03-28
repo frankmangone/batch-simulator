@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import Error from "./Error"
+import Error from "./ErrorNew"
 import Input from "./InputNew"
 // import InfoTooltip from "./InfoTooltip"
 
@@ -10,7 +10,6 @@ interface FieldInputProps<T> {
   tooltip?: string
   type?: string
   value: T
-  // onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -72,7 +71,7 @@ const TextInput = <T extends unknown>(props: FieldInputProps<T>) => {
           onChange={onChange}
           value={String(value)}
         />
-        {error && <Error>{error}</Error>}
+        <Error>{error ?? ""}</Error>
       </InnerWrapper>
     </Wrapper>
   )
