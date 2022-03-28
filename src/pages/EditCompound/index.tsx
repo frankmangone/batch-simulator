@@ -5,6 +5,7 @@ import useCompounds from "../../hooks/entities/useCompounds"
 import { useEffect } from "react"
 import { useFormik } from "formik"
 import { useParams, useNavigate } from "react-router-dom"
+import compoundSchema from "../../lib/schema/compound"
 
 const EditCompoundPage: React.VFC = () => {
   const { findCompound, updateCompound } = useCompounds()
@@ -24,11 +25,17 @@ const EditCompoundPage: React.VFC = () => {
 
   const formik = useFormik<CompoundInput>({
     initialValues: { symbol, name, color, molecularWeight, concentration },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       // TODO: Validate values
-      const updatedCompound = { id: id as string, ...values }
-      updateCompound(id as string, updatedCompound)
-      navigate("/compounds-new")
+      try {
+        const validatedValues = await compoundSchema.validate(values)
+        const updatedCompound = { id, ...validatedValues }
+
+        updateCompound(id as string, updatedCompound as Compound)
+        navigate("/compounds-new")
+      } catch (error) {
+        console.log(error)
+      }
     },
   })
 
