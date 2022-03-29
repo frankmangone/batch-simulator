@@ -2,7 +2,8 @@ import styled from "styled-components"
 import Show from "../..//Show"
 import Notice from "../../Notice"
 import Compound from "./Compound"
-import { FiArrowRight } from "react-icons/fi"
+import { ArrowRightIcon } from "../../Icons"
+import { useTheme } from "../../../contexts/Theme"
 
 interface ReactionPreviewProps {
   reaction: Reaction
@@ -11,6 +12,7 @@ interface ReactionPreviewProps {
 const ReactionPreview: React.FC<ReactionPreviewProps> = (props) => {
   const { reaction } = props
   const { reactants, products } = reaction
+  const { getColor } = useTheme()
 
   return (
     <Wrapper>
@@ -23,9 +25,13 @@ const ReactionPreview: React.FC<ReactionPreviewProps> = (props) => {
         return <Compound key={compoundId} {...{ index, reactionCompound }} />
       })}
 
-      {reaction.reactants.length > 0 && reaction.products.length > 0 && (
-        <FiArrowRight size={25} />
-      )}
+      <Show when={reactants.length > 0 && products.length > 0}>
+        <ArrowRightIcon
+          style={{ marginRight: 10, marginLeft: 10 }}
+          color={getColor({ name: "baseBlack", shade: 100 })}
+          size={30}
+        />
+      </Show>
 
       {products.map((reactionCompound, index) => {
         const { compoundId } = reactionCompound
