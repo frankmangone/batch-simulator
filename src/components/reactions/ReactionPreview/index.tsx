@@ -8,6 +8,12 @@ import { useTheme } from "../../../contexts/Theme"
 interface ReactionPreviewProps {
   reaction: Reaction
 }
+const Wrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  margin-top: 15px;
+`
 
 const ReactionPreview: React.FC<ReactionPreviewProps> = (props) => {
   const { reaction } = props
@@ -42,10 +48,3 @@ const ReactionPreview: React.FC<ReactionPreviewProps> = (props) => {
 }
 
 export default ReactionPreview
-
-const Wrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex-grow: 1;
-  min-height: 3rem;
-`

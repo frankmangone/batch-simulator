@@ -8,6 +8,14 @@ interface ReactionCardProps {
   reaction: Reaction
 }
 
+const Name = styled.p`
+  color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 500 })};
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  margin: 0;
+`
+
 const Buttons = styled.div`
   display: flex;
   align-items: center;
@@ -17,6 +25,7 @@ const Buttons = styled.div`
 `
 
 const Wrapper = styled.div`
+  position: relative;
   align-items: center;
   background-color: ${(props) =>
     props.theme.getColor({ name: "baseBlack", shade: 700 })};
@@ -41,13 +50,14 @@ const Wrapper = styled.div`
 
 const ReactionCard: React.FC<ReactionCardProps> = (props) => {
   const { reaction } = props
-  const { id } = reaction
+  const { id, name } = reaction
   const { removeReaction } = useReactions()
 
   const handleRemove = () => removeReaction(id)
 
   return (
     <Wrapper>
+      <Name>{name}</Name>
       <ReactionPreview reaction={reaction} />
       <Buttons>
         <CardButton Icon={EditIcon} onClick={() => null} />
