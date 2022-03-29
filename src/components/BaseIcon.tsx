@@ -1,12 +1,4 @@
 import React from "react"
-import type { CSSProperties } from "styled-components"
-
-export type BaseIconProps = {
-  color?: string
-  size?: number
-  style?: CSSProperties
-  icon: (color: string, size: number) => string
-}
 
 /**
  * BaseIcon
@@ -21,18 +13,10 @@ const BaseIcon: React.FC<BaseIconProps> = (props) => {
    * It will be multiplied by the 'aspectRatio', which is ( width / height )
    *  */
 
-  const { color = "#000", size = 30, style, icon } = props
+  const { color = "#000", size = 30, style = {}, Icon } = props
+  const modifiedStyle = { ...style, width: size, height: size }
 
-  return (
-    <div style={{ width: size, height: size, ...style }}>
-      <img
-        src={`data:image/svg+xml;utf8,${encodeURIComponent(icon(color, size))}`}
-        width={`${size}px`}
-        height={`${size}px`}
-        alt="icon"
-      />
-    </div>
-  )
+  return <Icon {...{ color, style: modifiedStyle }} />
 }
 
 export default BaseIcon

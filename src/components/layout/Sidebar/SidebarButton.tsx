@@ -32,6 +32,11 @@ const Wrapper = styled.div`
     pointer-events: none;
   }
 
+  path {
+    fill: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 400 })};
+    transition: fill 0.15s ease-in-out;
+  }
+
   &:hover {
     background-color: ${(props) =>
       props.theme.getColor({ name: "baseBlack", shade: 800 })};
@@ -41,6 +46,11 @@ const Wrapper = styled.div`
       margin-left: 15px;
       opacity: 1;
       pointer-events: all;
+    }
+
+    path {
+      fill: ${(props) =>
+        props.theme.getColor({ name: "baseBlack", shade: 100 })};
     }
   }
 `
