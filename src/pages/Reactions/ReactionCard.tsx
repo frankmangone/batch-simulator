@@ -1,8 +1,9 @@
 import styled from "styled-components"
 import CardButton from "./CardButton"
 import { EditIcon, DeleteIcon } from "../../components/Icons"
-import useReactions from "../../hooks/entities/useReactions"
 import ReactionPreview from "../../components/reactions/ReactionPreview/index"
+import useReactions from "../../hooks/entities/useReactions"
+import { useNavigate } from "react-router-dom"
 
 interface ReactionCardProps {
   reaction: Reaction
@@ -51,8 +52,10 @@ const Wrapper = styled.div`
 const ReactionCard: React.FC<ReactionCardProps> = (props) => {
   const { reaction } = props
   const { id, name } = reaction
+  const navigate = useNavigate()
   const { removeReaction } = useReactions()
 
+  const handleEdit = () => navigate(`/reactions/${id}`)
   const handleRemove = () => removeReaction(id)
 
   return (
@@ -60,7 +63,7 @@ const ReactionCard: React.FC<ReactionCardProps> = (props) => {
       <Name>{name}</Name>
       <ReactionPreview reaction={reaction} />
       <Buttons>
-        <CardButton Icon={EditIcon} onClick={() => null} />
+        <CardButton Icon={EditIcon} onClick={handleEdit} />
         <CardButton Icon={DeleteIcon} onClick={handleRemove} />
       </Buttons>
     </Wrapper>
