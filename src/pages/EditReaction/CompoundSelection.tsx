@@ -1,5 +1,10 @@
 import styled from "styled-components"
 import CompoundCard from "./CompoundCard"
+import type { FormikProps } from "formik"
+
+interface ReactionFormProps {
+  formik: FormikProps<ReactionInput>
+}
 
 const Wrapper = styled.div`
   flex-basis: 50%;
@@ -14,17 +19,24 @@ const Label = styled.p`
   margin-bottom: 12px;
 `
 
-const CompoundSelection: React.VFC = () => {
+const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
+  const { values } = props.formik
+  const { reactants, products } = values
+
   return (
     <>
       <Wrapper>
         <Label>Reactants</Label>
-        <CompoundCard />
+        {reactants.map((reactant, index) => (
+          <CompoundCard key={index} />
+        ))}
       </Wrapper>
 
       <Wrapper>
         <Label>Products</Label>
-        <CompoundCard />
+        {products.map((product, index) => (
+          <CompoundCard key={index} />
+        ))}
       </Wrapper>
     </>
   )

@@ -1,8 +1,6 @@
 interface Reaction {
   id: string
-
   name?: string
-
   reactants: ReactionCompound[]
   products: ReactionCompound[]
 
@@ -37,5 +35,6 @@ interface KineticConstants {
 }
 
 type KineticEquation = Token[]
-
 type KineticModel = 0 | 1 | 2
+
+type ReactionInput = Pick<Reaction, "reactants" | "products">

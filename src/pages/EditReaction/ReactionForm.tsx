@@ -3,6 +3,11 @@ import CompoundSelection from "./CompoundSelection"
 import ReactionPreview from "../../components/reactions/ReactionPreview/index"
 import useReactions from "../../hooks/entities/useReactions"
 import { useParams } from "react-router-dom"
+import type { FormikProps } from "formik"
+
+interface ReactionFormProps {
+  formik: FormikProps<ReactionInput>
+}
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,7 +16,8 @@ const Wrapper = styled.div`
   margin-bottom: 30px;
 `
 
-const ReactionForm: React.VFC = () => {
+const ReactionForm: React.VFC<ReactionFormProps> = (props) => {
+  const { formik } = props
   const { findReaction } = useReactions()
   const { id } = useParams()
   const reaction = findReaction(id)
@@ -22,7 +28,7 @@ const ReactionForm: React.VFC = () => {
         reaction={reaction as Reaction}
         style={{ justifyContent: "center", flexBasis: "100%" }}
       />
-      <CompoundSelection />
+      <CompoundSelection formik={formik} />
     </Wrapper>
   )
 }

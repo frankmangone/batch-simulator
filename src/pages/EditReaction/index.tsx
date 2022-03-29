@@ -4,7 +4,7 @@ import Wrapper from "../../components/layout/PageWrapper"
 import Sidebar from "../../components/layout/Sidebar"
 import useReactions from "../../hooks/entities/useReactions"
 import { useEffect } from "react"
-// import { useFormik } from "formik"
+import { useFormik } from "formik"
 import { useParams, useNavigate } from "react-router-dom"
 // import compoundSchema from "../../lib/schema/compound"
 // import buildValidationError from "../../lib/schema/buildValidationError"
@@ -15,6 +15,7 @@ const EditReactionPage: React.VFC = () => {
   const navigate = useNavigate()
   const { id } = useParams()
   const reaction = findReaction(id)
+  const { reactants, products } = (reaction as Reaction) ?? {}
 
   /**
    * Redirect if id is not valid
@@ -26,32 +27,20 @@ const EditReactionPage: React.VFC = () => {
     }
   }, []) // eslint-disable-line
 
-  // const formik = useFormik<CompoundInput>({
-  //   initialValues: { symbol, name, color, molecularWeight, concentration },
-  //   onSubmit: async (values, { setErrors }) => {
-  //     // TODO: Validate values
-  //     try {
-  //       const validatedValues = await compoundSchema(
-  //         takenCompoundNames
-  //       ).validate(values, {
-  //         abortEarly: false,
-  //       })
-  //       const updatedCompound = { id, ...validatedValues }
-
-  //       updateCompound(id as string, updatedCompound as Compound)
-  //       navigate("/compounds")
-  //     } catch (error) {
-  //       setErrors(buildValidationError(error as ValidationError))
-  //     }
-  //   },
-  // })
+  const formik = useFormik<ReactionInput>({
+    initialValues: {
+      reactants,
+      products,
+    },
+    onSubmit: async (values, { setErrors }) => {},
+  })
 
   return (
     <>
       <Sidebar />
       <Wrapper>
         <PageHeader />
-        <ReactionForm />
+        <ReactionForm formik={formik} />
       </Wrapper>
     </>
   )
