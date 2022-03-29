@@ -80,6 +80,18 @@ const useReactions = () => {
   }
 
   /**
+   * findReaction
+   *
+   * Finds a reaction by its id and returns it - or undefined if the search yields no results
+   *
+   * @param {string} id
+   * @returns Reaction | undefined
+   */
+  const findReaction = (id?: string): Reaction | undefined => {
+    return reactions.find((r) => r.id === id)
+  }
+
+  /**
    * updateReaction
    *
    * Updates target reaction with `id`, with the new values specified in `updatedReaction`
@@ -117,6 +129,7 @@ const useReactions = () => {
     reactions,
     resetReactions,
     addReaction,
+    findReaction,
     updateReaction,
     removeCompoundFromReactions,
     removeReaction,
