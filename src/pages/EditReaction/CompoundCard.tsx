@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import CardButton from "./CardButton"
 import { DeleteIcon } from "../../components/Icons"
+import TextInput from "../../components/forms/TextInput"
 import { useMemo } from "react"
 import useCompounds from "../../hooks/entities/useCompounds"
 
@@ -13,7 +14,6 @@ interface SymbolProps {
 }
 
 const Symbol = styled.p<SymbolProps>`
-  align-self: flex-start;
   color: ${(props) => props.color};
   font-family: "Comfortaa", sans-serif;
   font-size: ${(props) => props.theme.fontSizes.h3};
@@ -25,7 +25,7 @@ const Symbol = styled.p<SymbolProps>`
 
 const Wrapper = styled.div`
   position: relative;
-  align-items: center;
+  align-items: flex-start;
   background-color: ${(props) =>
     props.theme.getColor({ name: "baseBlack", shade: 700 })};
   border-radius: 5px;
@@ -33,12 +33,9 @@ const Wrapper = styled.div`
     ${(props) => props.theme.getColor({ name: "baseBlack", shade: 800 })};
   cursor: pointer;
   display: flex;
-  flex-basis: 180px;
-  flex-shrink: 0;
   flex-direction: column;
-  height: 100px;
   margin: 0px 5px 10px;
-  padding: 0px;
+  padding: 0 10px 10px;
   transition: all 0.15s ease-in-out;
 
   &:hover {
@@ -59,7 +56,13 @@ const CompoundCard: React.VFC<CompoundCardProps> = (props) => {
     <Wrapper>
       <CardButton Icon={DeleteIcon} onClick={() => null} />
       <Symbol color={color}>{symbol}</Symbol>
-      {stoichiometricCoefficient}
+      <TextInput
+        value={stoichiometricCoefficient}
+        onChange={() => null}
+        fieldName="stoichiometricCoefficient"
+        nested
+        label="Coefficient"
+      />
     </Wrapper>
   )
 }
