@@ -1,5 +1,7 @@
 import styled from "styled-components"
-// import type { FormikProps } from "formik"
+import ReactionPreview from "../../components/reactions/ReactionPreview/index"
+import useReactions from "../../hooks/entities/useReactions"
+import { useParams } from "react-router-dom"
 
 const Wrapper = styled.div`
   display: flex;
@@ -9,7 +11,18 @@ const Wrapper = styled.div`
 `
 
 const ReactionForm: React.VFC = () => {
-  return <Wrapper></Wrapper>
+  const { findReaction } = useReactions()
+  const { id } = useParams()
+  const reaction = findReaction(id)
+
+  return (
+    <Wrapper>
+      <ReactionPreview
+        reaction={reaction as Reaction}
+        style={{ justifyContent: "center" }}
+      />
+    </Wrapper>
+  )
 }
 
 export default ReactionForm
