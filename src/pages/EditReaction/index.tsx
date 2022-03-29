@@ -15,7 +15,6 @@ const EditReactionPage: React.VFC = () => {
   const navigate = useNavigate()
   const { id } = useParams()
   const reaction = findReaction(id)
-  const { reactants, products } = (reaction as Reaction) ?? {}
 
   /**
    * Redirect if id is not valid
@@ -27,10 +26,25 @@ const EditReactionPage: React.VFC = () => {
     }
   }, []) // eslint-disable-line
 
+  const {
+    reactants,
+    products,
+    name = "",
+    kineticModel,
+    kineticConstants,
+    kineticEquation,
+    keyCompound,
+  } = (reaction as Reaction) ?? {}
+
   const formik = useFormik<ReactionInput>({
     initialValues: {
-      reactants,
-      products,
+      reactants: [...reactants],
+      products: [...products],
+      name,
+      kineticModel,
+      kineticConstants,
+      kineticEquation,
+      keyCompound,
     },
     onSubmit: async (values, { setErrors }) => {},
   })

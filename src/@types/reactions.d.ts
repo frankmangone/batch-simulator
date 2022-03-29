@@ -37,4 +37,4 @@ interface KineticConstants {
 type KineticEquation = Token[]
 type KineticModel = 0 | 1 | 2
 
-type ReactionInput = Pick<Reaction, "reactants" | "products">
+type ReactionInput = Omit<Reaction, "id"> & Required<Pick<Reaction, "name">>

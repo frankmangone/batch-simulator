@@ -1,8 +1,6 @@
 import styled from "styled-components"
 import CompoundSelection from "./CompoundSelection"
 import ReactionPreview from "../../components/reactions/ReactionPreview/index"
-import useReactions from "../../hooks/entities/useReactions"
-import { useParams } from "react-router-dom"
 import type { FormikProps } from "formik"
 
 interface ReactionFormProps {
@@ -18,15 +16,13 @@ const Wrapper = styled.div`
 
 const ReactionForm: React.VFC<ReactionFormProps> = (props) => {
   const { formik } = props
-  const { findReaction } = useReactions()
-  const { id } = useParams()
-  const reaction = findReaction(id)
+  const { reactants, products } = formik.values
 
   return (
     <Wrapper>
       <ReactionPreview
-        reaction={reaction as Reaction}
         style={{ justifyContent: "center", flexBasis: "100%" }}
+        {...{ reactants, products }}
       />
       <CompoundSelection formik={formik} />
     </Wrapper>

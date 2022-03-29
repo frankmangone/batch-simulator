@@ -7,7 +7,8 @@ import { useTheme } from "../../../contexts/Theme"
 import type { CSSProperties } from "styled-components"
 
 interface ReactionPreviewProps {
-  reaction: Reaction
+  reactants: ReactionCompound[]
+  products: ReactionCompound[]
   style?: CSSProperties
 }
 
@@ -19,8 +20,7 @@ const Wrapper = styled.div`
 `
 
 const ReactionPreview: React.FC<ReactionPreviewProps> = (props) => {
-  const { reaction, style } = props
-  const { reactants, products } = reaction
+  const { reactants, products, style } = props
   const { getColor } = useTheme()
 
   return (

@@ -51,6 +51,7 @@ const Wrapper = styled.div`
 
 const ReactionCard: React.FC<ReactionCardProps> = (props) => {
   const { reaction } = props
+  const { reactants, products } = reaction
   const { id, name } = reaction
   const navigate = useNavigate()
   const { removeReaction } = useReactions()
@@ -61,7 +62,7 @@ const ReactionCard: React.FC<ReactionCardProps> = (props) => {
   return (
     <Wrapper>
       <Name>{name}</Name>
-      <ReactionPreview reaction={reaction} />
+      <ReactionPreview {...{ reactants, products }} />
       <Buttons>
         <CardButton Icon={EditIcon} onClick={handleEdit} />
         <CardButton Icon={DeleteIcon} onClick={handleRemove} />
