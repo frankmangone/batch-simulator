@@ -7,6 +7,9 @@ import useCompounds from "../../hooks/entities/useCompounds"
 
 interface CompoundCardProps {
   compound: ReactionCompound
+  handleFieldChange: (
+    fieldName: string
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 interface SymbolProps {
@@ -45,7 +48,7 @@ const Wrapper = styled.div`
 `
 
 const CompoundCard: React.VFC<CompoundCardProps> = (props) => {
-  const { compound: reactionCompound } = props
+  const { compound: reactionCompound, handleFieldChange } = props
   const { compoundId, stoichiometricCoefficient } = reactionCompound
 
   const { findCompound } = useCompounds()
@@ -58,7 +61,7 @@ const CompoundCard: React.VFC<CompoundCardProps> = (props) => {
       <Symbol color={color}>{symbol}</Symbol>
       <TextInput
         value={stoichiometricCoefficient}
-        onChange={() => null}
+        onChange={handleFieldChange("stoichiometricCoefficient")}
         fieldName="stoichiometricCoefficient"
         nested
         label="Coefficient"

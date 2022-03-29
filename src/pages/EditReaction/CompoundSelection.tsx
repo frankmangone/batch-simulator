@@ -20,22 +20,45 @@ const Label = styled.p`
 `
 
 const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
-  const { values } = props.formik
+  const { formik } = props
+  const { values } = formik
   const { reactants, products } = values
+
+  const handleFieldChange =
+    (compoundGroup: "reactants" | "products", index: number) =>
+    (fieldName: string) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      formik.setFieldValue(compoundGroup, [
+        ...values[compoundGroup].slice(0, index),
+        {
+          ...values[compoundGroup][index],
+          [fieldName]: event.target.value,
+        },
+        ...values[compoundGroup].slice(index + 1, values[compoundGroup].length),
+      ])
+    }
 
   return (
     <>
       <Wrapper>
         <Label>Reactants</Label>
         {reactants.map((reactant, index) => (
-          <CompoundCard key={index} compound={reactant} />
+          <CompoundCard
+            key={index}
+            compound={reactant}
+            handleFieldChange={handleFieldChange("reactants", index)}
+          />
         ))}
       </Wrapper>
 
       <Wrapper>
         <Label>Products</Label>
         {products.map((product, index) => (
-          <CompoundCard key={index} compound={product} />
+          <CompoundCard
+            key={index}
+            compound={product}
+            handleFieldChange={handleFieldChange("products", index)}
+          />
         ))}
       </Wrapper>
     </>
