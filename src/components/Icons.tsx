@@ -1,65 +1,58 @@
 import React from "react"
 import BaseIcon from "./BaseIcon"
 
-import addIcon from "../lib/icons/add"
-import arrowRightIcon from "../lib/icons/arrowRight"
-import compoundIcon from "../lib/icons/compound"
-import deleteIcon from "../lib/icons/delete"
-import editIcon from "../lib/icons/edit"
-import phaseIcon from "../lib/icons/phase"
-import reactionIcon from "../lib/icons/reaction"
-import rerollIcon from "../lib/icons/reroll"
-import runIcon from "../lib/icons/run"
-import saveIcon from "../lib/icons/save"
-import settingsIcon from "../lib/icons/settings"
-import type { CSSProperties } from "styled-components"
+import Add from "./icons/Add"
+import ArrowRight from "./icons/ArrowRight"
+import Compound from "./icons/Compound"
+import Delete from "./icons/Delete"
+import Edit from "./icons/Edit"
+import Phase from "./icons/Phase"
+import Reaction from "./icons/Reaction"
+import Reroll from "./icons/Reroll"
+import Run from "./icons/Run"
+import Save from "./icons/Save"
+import Settings from "./icons/Settings"
 
-interface IconProps {
-  color?: string
-  size?: number
-  style?: CSSProperties
-}
-
-export const AddIcon: React.VFC<IconProps> = (props): JSX.Element => (
-  <BaseIcon icon={addIcon} {...props} />
+export const AddIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Add} {...props} />
 )
 
-export const ArrowRightIcon: React.VFC<IconProps> = (props): JSX.Element => (
-  <BaseIcon icon={arrowRightIcon} {...props} />
+export const ArrowRightIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={ArrowRight} {...props} />
 )
 
-export const CompoundIcon: React.VFC<IconProps> = (props): JSX.Element => (
-  <BaseIcon icon={compoundIcon} {...props} />
+export const CompoundIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Compound} {...props} />
 )
 
-export const DeleteIcon: React.VFC<IconProps> = (props): JSX.Element => (
-  <BaseIcon icon={deleteIcon} {...props} />
+export const DeleteIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Delete} {...props} />
 )
 
-export const EditIcon: React.VFC<IconProps> = (props): JSX.Element => (
-  <BaseIcon icon={editIcon} {...props} />
+export const EditIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Edit} {...props} />
 )
 
-export const PhaseIcon: React.VFC<IconProps> = (props): JSX.Element => (
-  <BaseIcon icon={phaseIcon} {...props} />
+export const PhaseIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Phase} {...props} />
 )
 
-export const ReactionIcon: React.VFC<IconProps> = (props): JSX.Element => (
-  <BaseIcon icon={reactionIcon} {...props} />
+export const ReactionIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Reaction} {...props} />
 )
 
-export const RerollIcon: React.VFC<IconProps> = (props): JSX.Element => (
-  <BaseIcon icon={rerollIcon} {...props} />
+export const RerollIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Reroll} {...props} />
 )
 
-export const RunIcon: React.VFC<IconProps> = (props): JSX.Element => (
-  <BaseIcon icon={runIcon} {...props} />
+export const RunIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Run} {...props} />
 )
 
-export const SaveIcon: React.VFC<IconProps> = (props): JSX.Element => (
-  <BaseIcon icon={saveIcon} {...props} />
+export const SaveIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Save} {...props} />
 )
 
-export const SettingsIcon: React.VFC<IconProps> = (props): JSX.Element => (
-  <BaseIcon icon={settingsIcon} {...props} />
+export const SettingsIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Settings} {...props} />
 )
