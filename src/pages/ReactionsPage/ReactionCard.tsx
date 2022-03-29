@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   height: 100px;
   margin: 0px 5px 10px;
   padding: 0px;
+  padding-left: 20px;
   transition: all 0.15s ease-in-out;
 
   &:hover {

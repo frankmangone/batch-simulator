@@ -18,39 +18,41 @@ const Compound: React.VFC<CompoundProps> = (props) => {
   return (
     <>
       {index !== 0 && <AddIcon color="#FFF" size={25} />}
-      <CompoundWrapper>
-        <p>{stoichiometricCoefficient}</p>
-        <CompoundTile color={color}>{symbol}</CompoundTile>
-      </CompoundWrapper>
+      <Wrapper>
+        <Coefficient>{stoichiometricCoefficient}</Coefficient>
+        <Symbol color={color}>{symbol}</Symbol>
+      </Wrapper>
     </>
   )
 }
 
 export default Compound
 
-const CompoundWrapper = styled.div`
+const Wrapper = styled.div`
   align-items: flex-end;
   display: flex;
   margin: 0 0.5rem;
-
-  p {
-    color: var(--color-grey-dark);
-    font-size: 1.6rem;
-    margin: 0 0 0.2rem 0;
-  }
 `
 
-interface CompoundColorBulletProps {
+interface SymbolProps {
   color: string
 }
 
-const CompoundTile = styled.div<CompoundColorBulletProps>`
-  background-color: ${(props) => props.color};
-  border-radius: 5px;
-  border: 1px solid var(--color-grey-normal);
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
-  color: var(--color-grey-dark);
-  font-size: 1.6rem;
-  margin: 0 0.5rem;
-  padding: 0.5rem 0.9rem;
+const Symbol = styled.p<SymbolProps>`
+  color: ${(props) => props.color};
+  font-family: "Comfortaa", sans-serif;
+  font-size: ${(props) => props.theme.fontSizes.h2};
+  font-weight: 600;
+  line-height: ${(props) => props.theme.lineHeights.h2};
+  margin: 0;
+`
+
+const Coefficient = styled.p`
+  color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 100 })};
+  font-family: "Comfortaa", sans-serif;
+  font-size: ${(props) => props.theme.fontSizes.h3};
+  font-weight: 600;
+  line-height: ${(props) => props.theme.lineHeights.h3};
+  margin: 0;
+  margin-right: 10px;
 `
