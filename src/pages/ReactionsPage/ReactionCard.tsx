@@ -10,7 +10,7 @@ interface ReactionCardProps {
 
 const Buttons = styled.div`
   display: flex;
-  height: 30px;
+  align-items: center;
   width: 120px;
   margin: 0px 16px;
   transition: all 0.15s ease-in-out;
@@ -29,8 +29,8 @@ const Wrapper = styled.div`
   justify-content: flex-end;
   height: 100px;
   margin: 0px 5px 10px;
-  padding: 0px;
   padding-left: 20px;
+  padding-right: 10px;
   transition: all 0.15s ease-in-out;
 
   &:hover {

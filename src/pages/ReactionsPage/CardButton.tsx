@@ -12,9 +12,12 @@ const Button = styled.div`
   border: none;
   border-radius: 3px;
   display: flex;
-  flex: 1;
   justify-content: center;
-  height: 35px;
+  align-items: center;
+  height: 60px;
+  flex-basis: 60px;
+  flex-shrink: 0;
+  margin-left: 5px;
   transition: background 0.15s linear;
 
   &:hover {
