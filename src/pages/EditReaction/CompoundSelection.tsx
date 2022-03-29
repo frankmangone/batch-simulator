@@ -28,14 +28,14 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
       <Wrapper>
         <Label>Reactants</Label>
         {reactants.map((reactant, index) => (
-          <CompoundCard key={index} />
+          <CompoundCard key={index} compound={reactant} />
         ))}
       </Wrapper>
 
       <Wrapper>
         <Label>Products</Label>
         {products.map((product, index) => (
-          <CompoundCard key={index} />
+          <CompoundCard key={index} compound={product} />
         ))}
       </Wrapper>
     </>
