@@ -4,11 +4,12 @@ import { Routes, Route } from "react-router-dom"
 import useVersionControl from "./hooks/useVersionControl"
 
 /* Pages */
-import CompoundsPage from "./pages/CompoundsPage"
-import CompoundsPageNew from "./pages/CompoundsPageNew/index"
+import CompoundsPageOld from "./pages/CompoundsPageOld"
+import CompoundsPage from "./pages/CompoundsPage/index"
 import EditCompoundPage from "./pages/EditCompound/index"
 import SettingsPage from "./pages/SettingsPage"
-import ReactionsPage from "./pages/ReactionsPage"
+import ReactionsPage from "./pages/ReactionsPage/index"
+import ReactionsPageOld from "./pages/ReactionsPageOld"
 import ResultsPage from "./pages/ResultsPage"
 
 const Router = () => {
@@ -17,10 +18,11 @@ const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<CompoundsPage />} />
+      <Route path="/compounds-old" element={<CompoundsPageOld />} />
       <Route path="/compounds" element={<CompoundsPage />} />
-      <Route path="/compounds-new" element={<CompoundsPageNew />} />
       <Route path="/compounds/:id" element={<EditCompoundPage />} />
       <Route path="/reactions" element={<ReactionsPage />} />
+      <Route path="/reactions-old" element={<ReactionsPageOld />} />
       <Route path="/settings" element={<SettingsPage />} />
 
       {/* Redirect /results to / if no data is available */}

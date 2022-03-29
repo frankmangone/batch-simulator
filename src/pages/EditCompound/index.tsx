@@ -48,7 +48,7 @@ const EditCompoundPage: React.VFC = () => {
         const updatedCompound = { id, ...validatedValues }
 
         updateCompound(id as string, updatedCompound as Compound)
-        navigate("/compounds-new")
+        navigate("/compounds")
       } catch (error) {
         setErrors(buildValidationError(error as ValidationError))
       }

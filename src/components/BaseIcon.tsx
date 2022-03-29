@@ -1,9 +1,10 @@
 import React from "react"
+import type { CSSProperties } from "styled-components"
 
 export type BaseIconProps = {
   color?: string
   size?: number
-  style?: any
+  style?: CSSProperties
   icon: (color: string, size: number) => string
 }
 

@@ -2,6 +2,7 @@ import React from "react"
 import BaseIcon from "./BaseIcon"
 
 import addIcon from "../lib/icons/add"
+import arrowRightIcon from "../lib/icons/arrowRight"
 import compoundIcon from "../lib/icons/compound"
 import deleteIcon from "../lib/icons/delete"
 import editIcon from "../lib/icons/edit"
@@ -11,14 +12,20 @@ import rerollIcon from "../lib/icons/reroll"
 import runIcon from "../lib/icons/run"
 import saveIcon from "../lib/icons/save"
 import settingsIcon from "../lib/icons/settings"
+import type { CSSProperties } from "styled-components"
 
 interface IconProps {
   color?: string
   size?: number
+  style?: CSSProperties
 }
 
 export const AddIcon: React.VFC<IconProps> = (props): JSX.Element => (
   <BaseIcon icon={addIcon} {...props} />
+)
+
+export const ArrowRightIcon: React.VFC<IconProps> = (props): JSX.Element => (
+  <BaseIcon icon={arrowRightIcon} {...props} />
 )
 
 export const CompoundIcon: React.VFC<IconProps> = (props): JSX.Element => (

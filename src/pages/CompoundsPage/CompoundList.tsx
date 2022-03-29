@@ -1,4 +1,3 @@
-import { useState } from "react"
 import styled from "styled-components"
 import Show from "../../components/Show"
 import CompoundCard from "./CompoundCard"
@@ -14,11 +13,6 @@ const Wrapper = styled.div`
 const CompoundList: React.VFC = () => {
   const { compounds } = useCompounds()
 
-  // eslint-disable-next-line
-  const [editedCompoundId, setEditedCompoundId] = useState<string | undefined>(
-    undefined
-  )
-
   return (
     <Wrapper>
       <Show when={!compounds.length}>
@@ -26,7 +20,7 @@ const CompoundList: React.VFC = () => {
       </Show>
 
       {compounds.map((compound, index) => (
-        <CompoundCard key={index} {...{ compound, setEditedCompoundId }} />
+        <CompoundCard key={index} {...{ compound }} />
       ))}
     </Wrapper>
   )
