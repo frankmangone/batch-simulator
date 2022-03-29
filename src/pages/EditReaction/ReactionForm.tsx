@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import CompoundSelection from "./CompoundSelection"
 import ReactionPreview from "../../components/reactions/ReactionPreview/index"
 import useReactions from "../../hooks/entities/useReactions"
 import { useParams } from "react-router-dom"
@@ -19,8 +20,9 @@ const ReactionForm: React.VFC = () => {
     <Wrapper>
       <ReactionPreview
         reaction={reaction as Reaction}
-        style={{ justifyContent: "center" }}
+        style={{ justifyContent: "center", flexBasis: "100%" }}
       />
+      <CompoundSelection />
     </Wrapper>
   )
 }
