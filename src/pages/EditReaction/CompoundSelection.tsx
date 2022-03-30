@@ -1,7 +1,6 @@
 import { useState } from "react"
 import styled from "styled-components"
 import Button from "../../components/general/ButtonNew"
-import Show from "../../components/Show"
 import { AddIcon } from "../../components/Icons"
 import CompoundCard from "./CompoundCard"
 import AddCompoundModal from "./AddCompoundModal"
@@ -102,12 +101,11 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
           </AddButton>
           <Label>Reactants</Label>
         </Header>
-        <Show when={activeAddCompoundModal === "reactants"}>
-          <AddCompoundModal
-            takenCompounds={reactants}
-            handleAdd={handleAdd("reactants")}
-          />
-        </Show>
+        <AddCompoundModal
+          visible={activeAddCompoundModal === "reactants"}
+          takenCompounds={reactants}
+          handleAdd={handleAdd("reactants")}
+        />
         {reactants.map((reactant, index) => (
           <CompoundCard
             key={reactant.compoundId}
@@ -128,12 +126,11 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
           </AddButton>
           <Label>Products</Label>
         </Header>
-        <Show when={activeAddCompoundModal === "products"}>
-          <AddCompoundModal
-            takenCompounds={products}
-            handleAdd={handleAdd("products")}
-          />
-        </Show>
+        <AddCompoundModal
+          visible={activeAddCompoundModal === "products"}
+          takenCompounds={products}
+          handleAdd={handleAdd("products")}
+        />
         {products.map((product, index) => (
           <CompoundCard
             key={product.compoundId}

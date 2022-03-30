@@ -4,7 +4,12 @@ import { AddIcon } from "../../components/Icons"
 
 interface AddCompoundModalProps {
   takenCompounds: ReactionCompound[]
+  visible: boolean
   handleAdd: (compoundId: string) => void
+}
+
+interface WrapperProps {
+  visible: boolean
 }
 
 interface CompoundPillProps {
@@ -42,7 +47,7 @@ const CompoundPill = styled.div<CompoundPillProps>`
   }
 `
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<WrapperProps>`
   background-color: ${(props) =>
     props.theme.getColor({ name: "baseBlack", shade: 700, opacity: 50 })};
   border-radius: 5px;
@@ -51,13 +56,15 @@ const Wrapper = styled.div`
   cursor: pointer;
   display: flex;
   flex-wrap: wrap;
-  margin: 0px 5px 10px;
-  padding: 10px;
-  transition: all 0.15s ease-in-out;
+  overflow: hidden;
+  padding: ${(props) => (props.visible ? "10" : "0")}px 10px;
+  margin: ${(props) => (props.visible ? "10" : "0")}px 5px;
+  max-height: ${(props) => (props.visible ? "200" : "0")}px;
+  transition: all 0.15s linear;
 `
 
 const AddCompoundModal: React.VFC<AddCompoundModalProps> = (props) => {
-  const { takenCompounds, handleAdd } = props
+  const { takenCompounds, visible, handleAdd } = props
   const takenCompoundIds = takenCompounds.map((rc) => rc.compoundId)
   const { compounds } = useCompounds()
 
@@ -66,7 +73,7 @@ const AddCompoundModal: React.VFC<AddCompoundModalProps> = (props) => {
   )
 
   return (
-    <Wrapper>
+    <Wrapper visible={visible}>
       {availableCompounds.map((compound) => {
         const { id, symbol, color } = compound
 
