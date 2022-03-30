@@ -1,5 +1,8 @@
 import styled from "styled-components"
+import Button from "../../components/general/ButtonNew"
+import { AddIcon } from "../../components/Icons"
 import CompoundCard from "./CompoundCard"
+import { useTheme } from "../../contexts/Theme"
 import type { FormikProps } from "formik"
 
 interface ReactionFormProps {
@@ -8,21 +11,35 @@ interface ReactionFormProps {
 
 const Wrapper = styled.div`
   flex-basis: 50%;
+  margin-top: 40px;
+`
+
+const Header = styled.div`
+  display: flex;
+  align-self: stretch;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 5px 20px;
+`
+
+const AddButton = styled(Button)`
+  margin-right: 10px;
 `
 
 const Label = styled.p`
   color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 100 })};
   font-family: "Mulish", sans-serif;
-  font-size: ${(props) => props.theme.fontSizes.p};
+  font-size: ${(props) => props.theme.fontSizes.h5};
   font-weight: 600;
-  line-height: ${(props) => props.theme.lineHeights.p};
-  margin-bottom: 12px;
+  line-height: ${(props) => props.theme.lineHeights.h5};
+  margin: 0;
 `
 
 const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
   const { formik } = props
   const { values } = formik
   const { reactants, products } = values
+  const { getColor } = useTheme()
 
   const handleFieldChange =
     (compoundGroup: "reactants" | "products", index: number) =>
@@ -41,7 +58,15 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
   return (
     <>
       <Wrapper>
-        <Label>Reactants</Label>
+        <Header>
+          <AddButton onClick={() => null} color="white">
+            <AddIcon
+              color={getColor({ name: "baseBlack", shade: 700 })}
+              size={20}
+            />
+          </AddButton>
+          <Label>Reactants</Label>
+        </Header>
         {reactants.map((reactant, index) => (
           <CompoundCard
             key={index}
@@ -52,7 +77,15 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
       </Wrapper>
 
       <Wrapper>
-        <Label>Products</Label>
+        <Header>
+          <AddButton onClick={() => null} color="white">
+            <AddIcon
+              color={getColor({ name: "baseBlack", shade: 700 })}
+              size={20}
+            />
+          </AddButton>
+          <Label>Products</Label>
+        </Header>
         {products.map((product, index) => (
           <CompoundCard
             key={index}
