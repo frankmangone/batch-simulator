@@ -7,11 +7,16 @@ import useReactions from "../../hooks/entities/useReactions"
 import { useTheme } from "../../contexts/Theme"
 import { useParams } from "react-router-dom"
 
+interface PageHeaderProps {
+  handleSubmit: () => void
+}
+
 const Button = styled(BaseButton)`
   margin-left: 10px;
 `
 
-const PageHeader: React.VFC = (props) => {
+const PageHeader: React.VFC<PageHeaderProps> = (props) => {
+  const { handleSubmit } = props
   const { removeReaction } = useReactions()
   const { id } = useParams()
   const { getColor } = useTheme()
@@ -29,7 +34,7 @@ const PageHeader: React.VFC = (props) => {
   return (
     <Header>
       <Title>Edit Reaction</Title>
-      <Button color="success" onClick={() => null}>
+      <Button color="success" onClick={handleSubmit}>
         <SaveIcon color={black} size={30} />
       </Button>
       <Button color="cancel" onClick={handleRemove}>

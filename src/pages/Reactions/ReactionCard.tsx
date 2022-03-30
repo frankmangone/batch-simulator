@@ -37,10 +37,12 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  height: 100px;
+  min-height: 80px;
   margin: 0px 5px 10px;
   padding-left: 20px;
   padding-right: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   transition: all 0.15s ease-in-out;
 
   &:hover {

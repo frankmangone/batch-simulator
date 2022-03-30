@@ -38,7 +38,6 @@ const EditCompoundPage: React.VFC = () => {
   const formik = useFormik<CompoundInput>({
     initialValues: { symbol, name, color, molecularWeight, concentration },
     onSubmit: async (values, { setErrors }) => {
-      // TODO: Validate values
       try {
         const validatedValues = await compoundSchema(
           takenCompoundNames

@@ -11,7 +11,7 @@ import { useParams, useNavigate } from "react-router-dom"
 // import type { ValidationError } from "yup"
 
 const EditReactionPage: React.VFC = () => {
-  const { findReaction } = useReactions()
+  const { findReaction, updateReaction } = useReactions()
   const navigate = useNavigate()
   const { id } = useParams()
   const reaction = findReaction(id)
@@ -46,14 +46,23 @@ const EditReactionPage: React.VFC = () => {
       kineticEquation,
       keyCompound,
     },
-    onSubmit: async (values, { setErrors }) => {},
+    onSubmit: async (values, { setErrors }) => {
+      try {
+        const updatedReaction = { id, ...values }
+        updateReaction(id as string, updatedReaction as Reaction)
+        navigate("/reactions")
+      } catch (error) {
+        // TODO: Validate
+        // setErrors(buildValidationError(error as ValidationError))
+      }
+    },
   })
 
   return (
     <>
       <Sidebar />
       <Wrapper>
-        <PageHeader />
+        <PageHeader handleSubmit={formik.handleSubmit} />
         <ReactionForm formik={formik} />
       </Wrapper>
     </>
