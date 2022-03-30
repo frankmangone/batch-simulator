@@ -3,6 +3,8 @@ import Button from "../../components/general/ButtonNew"
 import { AddIcon } from "../../components/Icons"
 import CompoundCard from "./CompoundCard"
 import { useTheme } from "../../contexts/Theme"
+import replaceAtIndex from "../../lib/array/replaceAtIndex"
+import deleteAtIndex from "../../lib/array/deleteAtIndex"
 import type { FormikProps } from "formik"
 
 interface ReactionFormProps {
@@ -45,22 +47,26 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
     (compoundGroup: "reactants" | "products", index: number) =>
     (fieldName: string) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      formik.setFieldValue(compoundGroup, [
-        ...values[compoundGroup].slice(0, index),
-        {
+      const updatedCompounds = replaceAtIndex({
+        array: values[compoundGroup],
+        index,
+        newElement: {
           ...values[compoundGroup][index],
           [fieldName]: event.target.value,
         },
-        ...values[compoundGroup].slice(index + 1, values[compoundGroup].length),
-      ])
+      })
+
+      formik.setFieldValue(compoundGroup, updatedCompounds)
     }
 
   const handleDelete =
     (compoundGroup: "reactants" | "products", index: number) => () => {
-      formik.setFieldValue(compoundGroup, [
-        ...values[compoundGroup].slice(0, index),
-        ...values[compoundGroup].slice(index + 1, values[compoundGroup].length),
-      ])
+      const updatedCompounds = deleteAtIndex({
+        array: values[compoundGroup],
+        index,
+      })
+
+      formik.setFieldValue(compoundGroup, updatedCompounds)
     }
 
   return (
