@@ -60,6 +60,14 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
       formik.setFieldValue(compoundGroup, updatedCompounds)
     }
 
+  const handleAdd =
+    (compoundGroup: "reactants" | "products") => (compoundId: string) => {
+      formik.setFieldValue(compoundGroup, [
+        ...values[compoundGroup],
+        { compoundId, stoichiometricCoefficient: 1 },
+      ])
+    }
+
   const handleDelete =
     (compoundGroup: "reactants" | "products", index: number) => () => {
       const updatedCompounds = deleteAtIndex({
@@ -82,7 +90,10 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
           </AddButton>
           <Label>Reactants</Label>
         </Header>
-        <AddCompoundModal takenCompounds={reactants} />
+        <AddCompoundModal
+          takenCompounds={reactants}
+          handleAdd={handleAdd("reactants")}
+        />
         {reactants.map((reactant, index) => (
           <CompoundCard
             key={reactant.compoundId}
@@ -103,7 +114,10 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
           </AddButton>
           <Label>Products</Label>
         </Header>
-        <AddCompoundModal takenCompounds={products} />
+        <AddCompoundModal
+          takenCompounds={products}
+          handleAdd={handleAdd("products")}
+        />
         {products.map((product, index) => (
           <CompoundCard
             key={product.compoundId}

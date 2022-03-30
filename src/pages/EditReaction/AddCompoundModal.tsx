@@ -3,6 +3,7 @@ import useCompounds from "../../hooks/entities/useCompounds"
 
 interface AddCompoundModalProps {
   takenCompounds: ReactionCompound[]
+  handleAdd: (compoundId: string) => void
 }
 
 interface CompoundPillProps {
@@ -44,7 +45,7 @@ const CompoundPill = styled.div<CompoundPillProps>`
 `
 
 const AddCompoundModal: React.VFC<AddCompoundModalProps> = (props) => {
-  const { takenCompounds } = props
+  const { takenCompounds, handleAdd } = props
   const takenCompoundIds = takenCompounds.map((rc) => rc.compoundId)
   const { compounds } = useCompounds()
 
@@ -58,7 +59,7 @@ const AddCompoundModal: React.VFC<AddCompoundModalProps> = (props) => {
         const { id, symbol, color } = compound
 
         return (
-          <CompoundPill key={id} color={color}>
+          <CompoundPill key={id} color={color} onClick={() => handleAdd(id)}>
             <p>{symbol}</p>
           </CompoundPill>
         )
