@@ -55,6 +55,14 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
       ])
     }
 
+  const handleDelete =
+    (compoundGroup: "reactants" | "products", index: number) => () => {
+      formik.setFieldValue(compoundGroup, [
+        ...values[compoundGroup].slice(0, index),
+        ...values[compoundGroup].slice(index + 1, values[compoundGroup].length),
+      ])
+    }
+
   return (
     <>
       <Wrapper>
@@ -69,9 +77,10 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
         </Header>
         {reactants.map((reactant, index) => (
           <CompoundCard
-            key={index}
+            key={reactant.compoundId}
             compound={reactant}
             handleFieldChange={handleFieldChange("reactants", index)}
+            handleDelete={handleDelete("reactants", index)}
           />
         ))}
       </Wrapper>
@@ -88,9 +97,10 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
         </Header>
         {products.map((product, index) => (
           <CompoundCard
-            key={index}
+            key={product.compoundId}
             compound={product}
             handleFieldChange={handleFieldChange("products", index)}
+            handleDelete={handleDelete("products", index)}
           />
         ))}
       </Wrapper>

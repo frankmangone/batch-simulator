@@ -10,6 +10,7 @@ interface CompoundCardProps {
   handleFieldChange: (
     fieldName: string
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleDelete: () => void
 }
 
 interface SymbolProps {
@@ -48,7 +49,7 @@ const Wrapper = styled.div`
 `
 
 const CompoundCard: React.VFC<CompoundCardProps> = (props) => {
-  const { compound: reactionCompound, handleFieldChange } = props
+  const { compound: reactionCompound, handleFieldChange, handleDelete } = props
   const { compoundId, stoichiometricCoefficient } = reactionCompound
 
   const { findCompound } = useCompounds()
@@ -57,7 +58,7 @@ const CompoundCard: React.VFC<CompoundCardProps> = (props) => {
 
   return (
     <Wrapper>
-      <CardButton Icon={DeleteIcon} onClick={() => null} />
+      <CardButton Icon={DeleteIcon} onClick={handleDelete} />
       <Symbol color={color}>{symbol}</Symbol>
       <TextInput
         value={stoichiometricCoefficient}
