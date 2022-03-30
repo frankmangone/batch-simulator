@@ -8,11 +8,19 @@ import { useTheme } from "../../contexts/Theme"
 import replaceAtIndex from "../../lib/array/replaceAtIndex"
 import deleteAtIndex from "../../lib/array/deleteAtIndex"
 import type { FormikProps } from "formik"
+import type { Dispatch, SetStateAction } from "react"
 
 type CompoundGroup = "reactants" | "products"
 
-interface ReactionFormProps {
+interface CompoundSelectionProps {
   formik: FormikProps<ReactionInput>
+}
+
+interface CompoundSelectionColumnProps {
+  formik: FormikProps<ReactionInput>
+  compoundGroup: CompoundGroup
+  activeModal: CompoundGroup | null
+  setActiveModal: Dispatch<SetStateAction<CompoundGroup | null>>
 }
 
 const Wrapper = styled.div`
@@ -41,24 +49,24 @@ const Label = styled.p`
   margin: 0;
 `
 
-const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
-  const { formik } = props
+const CompoundSelectionColumn: React.VFC<CompoundSelectionColumnProps> = (
+  props
+) => {
+  const { compoundGroup, formik, activeModal, setActiveModal } = props
   const { values } = formik
-  const { reactants, products } = values
+  const reactionCompounds = values[compoundGroup]
   const { getColor } = useTheme()
-  const [activeAddCompoundModal, setActiveAddCompoundModal] =
-    useState<CompoundGroup | null>(null)
 
-  const handleAddButtonPress = (compoundGroup: CompoundGroup) => () => {
-    if (activeAddCompoundModal === compoundGroup) {
-      setActiveAddCompoundModal(null)
+  const handleAddButtonPress = () => {
+    if (activeModal === compoundGroup) {
+      setActiveModal(null)
       return
     }
-    setActiveAddCompoundModal(compoundGroup)
+    setActiveModal(compoundGroup)
   }
 
   const handleFieldChange =
-    (compoundGroup: CompoundGroup, index: number) =>
+    (index: number) =>
     (fieldName: string) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const updatedCompounds = replaceAtIndex({
@@ -73,14 +81,14 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
       formik.setFieldValue(compoundGroup, updatedCompounds)
     }
 
-  const handleAdd = (compoundGroup: CompoundGroup) => (compoundId: string) => {
+  const handleAdd = (compoundId: string) => {
     formik.setFieldValue(compoundGroup, [
       ...values[compoundGroup],
       { compoundId, stoichiometricCoefficient: 1 },
     ])
   }
 
-  const handleDelete = (compoundGroup: CompoundGroup, index: number) => () => {
+  const handleDelete = (index: number) => () => {
     const updatedCompounds = deleteAtIndex({
       array: values[compoundGroup],
       index,
@@ -90,56 +98,49 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
   }
 
   return (
-    <>
-      <Wrapper>
-        <Header>
-          <AddButton onClick={handleAddButtonPress("reactants")} color="white">
-            <AddIcon
-              color={getColor({ name: "baseBlack", shade: 700 })}
-              size={20}
-            />
-          </AddButton>
-          <Label>Reactants</Label>
-        </Header>
-        <AddCompoundModal
-          visible={activeAddCompoundModal === "reactants"}
-          takenCompounds={reactants}
-          handleAdd={handleAdd("reactants")}
-        />
-        {reactants.map((reactant, index) => (
-          <CompoundCard
-            key={reactant.compoundId}
-            compound={reactant}
-            handleFieldChange={handleFieldChange("reactants", index)}
-            handleDelete={handleDelete("reactants", index)}
+    <Wrapper>
+      <Header>
+        <AddButton onClick={handleAddButtonPress} color="white">
+          <AddIcon
+            color={getColor({ name: "baseBlack", shade: 700 })}
+            size={20}
           />
-        ))}
-      </Wrapper>
+        </AddButton>
+        <Label>
+          {compoundGroup === "reactants" ? "Reactants" : "Products"}
+        </Label>
+      </Header>
+      <AddCompoundModal
+        visible={activeModal === compoundGroup}
+        takenCompounds={reactionCompounds}
+        handleAdd={handleAdd}
+      />
+      {reactionCompounds.map((compound, index) => (
+        <CompoundCard
+          key={compound.compoundId}
+          compound={compound}
+          handleFieldChange={handleFieldChange(index)}
+          handleDelete={handleDelete(index)}
+        />
+      ))}
+    </Wrapper>
+  )
+}
 
-      <Wrapper>
-        <Header>
-          <AddButton onClick={handleAddButtonPress("products")} color="white">
-            <AddIcon
-              color={getColor({ name: "baseBlack", shade: 700 })}
-              size={20}
-            />
-          </AddButton>
-          <Label>Products</Label>
-        </Header>
-        <AddCompoundModal
-          visible={activeAddCompoundModal === "products"}
-          takenCompounds={products}
-          handleAdd={handleAdd("products")}
-        />
-        {products.map((product, index) => (
-          <CompoundCard
-            key={product.compoundId}
-            compound={product}
-            handleFieldChange={handleFieldChange("products", index)}
-            handleDelete={handleDelete("products", index)}
-          />
-        ))}
-      </Wrapper>
+const CompoundSelection: React.VFC<CompoundSelectionProps> = (props) => {
+  const { formik } = props
+  const [activeModal, setActiveModal] = useState<CompoundGroup | null>(null)
+
+  return (
+    <>
+      <CompoundSelectionColumn
+        compoundGroup="reactants"
+        {...{ formik, activeModal, setActiveModal }}
+      />
+      <CompoundSelectionColumn
+        compoundGroup="products"
+        {...{ formik, activeModal, setActiveModal }}
+      />
     </>
   )
 }
