@@ -35,6 +35,12 @@ const Button = styled.button<ButtonProps>`
         shadow = getColor({ name: "success", opacity: 80 })
         hoverBackground = getColor({ name: "success", shade: 800 })
         break
+      case "white":
+        background = getColor({ name: "baseBlack", shade: 200 })
+        hoverBackground = getColor({ name: "baseBlack", shade: 100 })
+        shadow = getColor({ name: "baseBlack", shade: 100, opacity: 60 })
+        text = getColor({ name: "baseBlack", shade: 700 })
+        break
       default:
         background = getColor({ name: "baseBlack", shade: 700 })
         hoverBackground = getColor({ name: "baseBlack", shade: 800 })

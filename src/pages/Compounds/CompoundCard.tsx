@@ -41,7 +41,6 @@ const Wrapper = styled.div`
     ${(props) => props.theme.getColor({ name: "baseBlack", shade: 800 })};
   cursor: pointer;
   display: flex;
-  flex-direction: row-reverse;
   flex-basis: 180px;
   flex-shrink: 0;
   flex-direction: column;

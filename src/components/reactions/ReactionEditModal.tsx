@@ -40,6 +40,7 @@ interface ReactionEditModalProps {
 
 const ReactionEditModal: React.FC<ReactionEditModalProps> = (props) => {
   const { compounds, reaction, closeModal } = props
+  const { reactants, products } = reaction
   const { findCompound } = useCompounds()
   const { reactions, updateReaction } = useReactions()
   const [closing, setClosing] = useState<boolean>(false)
@@ -232,7 +233,7 @@ const ReactionEditModal: React.FC<ReactionEditModalProps> = (props) => {
       setClosing={setClosing}
       handleClose={closeModal}
     >
-      <ReactionPreview reaction={modalReaction} />
+      <ReactionPreview {...{ reactants, products }} />
       <br />
       <SelectField>
         <FieldInput

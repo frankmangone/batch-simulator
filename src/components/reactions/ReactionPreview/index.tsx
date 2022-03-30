@@ -4,10 +4,14 @@ import Notice from "../../Notice"
 import Compound from "./Compound"
 import { ArrowRightIcon } from "../../Icons"
 import { useTheme } from "../../../contexts/Theme"
+import type { CSSProperties } from "styled-components"
 
 interface ReactionPreviewProps {
-  reaction: Reaction
+  reactants: ReactionCompound[]
+  products: ReactionCompound[]
+  style?: CSSProperties
 }
+
 const Wrapper = styled.div`
   align-items: center;
   display: flex;
@@ -16,12 +20,11 @@ const Wrapper = styled.div`
 `
 
 const ReactionPreview: React.FC<ReactionPreviewProps> = (props) => {
-  const { reaction } = props
-  const { reactants, products } = reaction
+  const { reactants, products, style } = props
   const { getColor } = useTheme()
 
   return (
-    <Wrapper>
+    <Wrapper style={style}>
       <Show when={reactants.length === 0 && products.length === 0}>
         <Notice>No reaction data</Notice>
       </Show>

@@ -5,10 +5,11 @@ import useVersionControl from "./hooks/useVersionControl"
 
 /* Pages */
 import CompoundsPageOld from "./pages/CompoundsPageOld"
-import CompoundsPage from "./pages/CompoundsPage/index"
+import CompoundsPage from "./pages/Compounds/index"
 import EditCompoundPage from "./pages/EditCompound/index"
 import SettingsPage from "./pages/SettingsPage"
-import ReactionsPage from "./pages/ReactionsPage/index"
+import ReactionsPage from "./pages/Reactions/index"
+import EditReactionPage from "./pages/EditReaction/index"
 import ReactionsPageOld from "./pages/ReactionsPageOld"
 import ResultsPage from "./pages/ResultsPage"
 
@@ -22,6 +23,7 @@ const Router = () => {
       <Route path="/compounds" element={<CompoundsPage />} />
       <Route path="/compounds/:id" element={<EditCompoundPage />} />
       <Route path="/reactions" element={<ReactionsPage />} />
+      <Route path="/reactions/:id" element={<EditReactionPage />} />
       <Route path="/reactions-old" element={<ReactionsPageOld />} />
       <Route path="/settings" element={<SettingsPage />} />
 

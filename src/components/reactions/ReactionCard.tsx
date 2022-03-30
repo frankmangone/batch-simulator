@@ -14,6 +14,7 @@ interface IReactionCardProps {
 
 const ReactionCard: React.FC<IReactionCardProps> = (props) => {
   const { reaction, reactionIndex, editReaction, removeReaction } = props
+  const { reactants, products } = reaction
 
   return (
     <ReactionCardWrapper>
@@ -21,7 +22,7 @@ const ReactionCard: React.FC<IReactionCardProps> = (props) => {
         <ReactionName>
           {`#${reactionIndex + 1}`} {reaction.name ? ` - ${reaction.name}` : ""}
         </ReactionName>
-        <ReactionPreview reaction={reaction} />
+        <ReactionPreview {...{ reactants, products }} />
       </ReactionInfo>
       <CardButton onClick={editReaction}>
         <FiEdit />
