@@ -2,6 +2,7 @@ import styled from "styled-components"
 import Button from "../../components/general/ButtonNew"
 import { AddIcon } from "../../components/Icons"
 import CompoundCard from "./CompoundCard"
+import AddCompoundModal from "./AddCompoundModal"
 import { useTheme } from "../../contexts/Theme"
 import replaceAtIndex from "../../lib/array/replaceAtIndex"
 import deleteAtIndex from "../../lib/array/deleteAtIndex"
@@ -81,6 +82,7 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
           </AddButton>
           <Label>Reactants</Label>
         </Header>
+        <AddCompoundModal takenCompounds={reactants} />
         {reactants.map((reactant, index) => (
           <CompoundCard
             key={reactant.compoundId}
@@ -101,6 +103,7 @@ const CompoundSelection: React.VFC<ReactionFormProps> = (props) => {
           </AddButton>
           <Label>Products</Label>
         </Header>
+        <AddCompoundModal takenCompounds={products} />
         {products.map((product, index) => (
           <CompoundCard
             key={product.compoundId}
