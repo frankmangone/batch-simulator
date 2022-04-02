@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import mapChildren from "./mapChildren"
 
 interface UseSelectParams {
@@ -10,6 +10,10 @@ interface UseSelectParams {
 const useSelect = (params: UseSelectParams) => {
   const { children, value, onChange } = params
   const options = mapChildren(children)
+
+  // Keep a couple of references to correctly handle events
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const selectRef = useRef<HTMLDivElement | null>(null)
 
   // Keep track of the index of the current selected value
   const currentOption = options[value]
@@ -26,7 +30,15 @@ const useSelect = (params: UseSelectParams) => {
     onChange(index)
   }
 
-  return { options, toggled, toggleSelect, currentValue, handleSelectValue }
+  return {
+    containerRef,
+    selectRef,
+    options,
+    toggled,
+    currentValue,
+    toggleSelect,
+    handleSelectValue,
+  }
 }
 
 export default useSelect

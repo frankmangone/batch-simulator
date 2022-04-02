@@ -67,15 +67,22 @@ const SelectInput: React.VFC<FieldInputProps> = (props) => {
     children,
   } = props
 
-  const { options, toggled, toggleSelect, currentValue, handleSelectValue } =
-    useSelect({
-      children,
-      value,
-      onChange,
-    })
+  const {
+    containerRef,
+    selectRef,
+    options,
+    toggled,
+    toggleSelect,
+    currentValue,
+    handleSelectValue,
+  } = useSelect({
+    children,
+    value,
+    onChange,
+  })
 
   return (
-    <Wrapper nested={nested}>
+    <Wrapper nested={nested} ref={containerRef}>
       <InnerWrapper nested={nested}>
         <LabelWrapper nested={nested}>
           <label htmlFor={fieldName}>{label}</label>
@@ -83,7 +90,7 @@ const SelectInput: React.VFC<FieldInputProps> = (props) => {
         </LabelWrapper>
         <SelectToggle onClick={toggleSelect}>{currentValue}</SelectToggle>
         <Show when={toggled}>
-          <SelectBody>
+          <SelectBody ref={selectRef}>
             {options.map((option, index) => (
               <button key={index} onClick={handleSelectValue(index)}>
                 {option.displayText}
