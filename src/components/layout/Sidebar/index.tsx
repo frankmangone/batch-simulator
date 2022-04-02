@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom"
 // import useSimulationResults from "../../../hooks/useSimulationResults"
 
 const Wrapper = styled.nav`
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;

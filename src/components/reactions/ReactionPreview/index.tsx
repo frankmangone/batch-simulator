@@ -15,6 +15,7 @@ interface ReactionPreviewProps {
 const Wrapper = styled.div`
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   flex-grow: 1;
   margin-top: 15px;
 `

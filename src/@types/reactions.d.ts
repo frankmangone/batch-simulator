@@ -38,3 +38,7 @@ type KineticEquation = Token[]
 type KineticModel = 0 | 1 | 2
 
 type ReactionInput = Omit<Reaction, "id"> & Required<Pick<Reaction, "name">>
+
+interface ReducedReactionInput {
+  name: string
+}
