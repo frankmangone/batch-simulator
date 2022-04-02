@@ -1,8 +1,22 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import PageSubTitle from "../../components/layout/PageSubTitle"
 import SelectInput from "../../components/forms/SelectInputNew/index"
 import SelectOption from "../../components/forms/SelectInputNew/SelectOption"
+import useCompounds from "../../hooks/entities/useCompounds"
+import type { FormikProps } from "formik"
+
+interface KineticModelProps {
+  formik: FormikProps<ReactionInput>
+  reactants: ReactionCompound[]
+}
+
+const KINETIC_MODELS = ["Simple", "Hiperbolic", "Autocatalytic"]
+
+const LABELS: Record<keyof ReducedReactionKineticInput, string> = {
+  keyCompound: "Key compound",
+  kineticModel: "Kinetic model",
+}
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,44 +31,60 @@ const SubTitle = styled(PageSubTitle)`
   margin-bottom: 20px;
 `
 
-const KineticModelForm: React.VFC = () => {
-  const [select1, setSelect1] = useState<number>(0)
-  const [select2, setSelect2] = useState<number>(0)
-  const [select3, setSelect3] = useState<number>(0)
+const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
+  const { formik, reactants } = props
+  const { values, setFieldValue } = formik
+  const { findCompound } = useCompounds()
+
+  const mappedReactants: Compound[] = reactants.map(
+    (reactant) => findCompound(reactant.compoundId) as Compound
+  )
+
+  const formValues: Record<keyof ReducedReactionKineticInput, number> = {
+    kineticModel: values.kineticModel,
+    keyCompound: reactants.findIndex(
+      (reactant) => reactant.compoundId === values.keyCompound
+    ),
+  }
+
+  const handleChange: Record<
+    keyof ReducedReactionKineticInput,
+    (index: number) => void
+  > = {
+    kineticModel: (index: number) => {
+      setFieldValue("kineticModel", index)
+    },
+    keyCompound: (index: number) => {
+      setFieldValue("keyCompound", reactants[index].compoundId)
+    },
+  }
+
+  const selectProps = (key: keyof ReducedReactionKineticInput) => {
+    return {
+      label: LABELS[key],
+      fieldName: key,
+      value: formValues[key],
+      onChange: handleChange[key],
+    }
+  }
 
   return (
     <Wrapper>
-      <SubTitle>Kinetic Model</SubTitle>
-      <SelectInput
-        label="Test"
-        fieldName="ahsjgdja"
-        value={select1}
-        onChange={(index) => setSelect1(index)}
-      >
-        <SelectOption value="1" displayText="option 1" />
-        <SelectOption value="2" displayText="option 2" />
-        <SelectOption value="3" displayText="option 3" />
+      <SubTitle>Kinetics</SubTitle>
+      <SelectInput {...selectProps("kineticModel")}>
+        {KINETIC_MODELS.map((model, index) => (
+          <SelectOption key={index} value={index} displayText={model} />
+        ))}
       </SelectInput>
 
-      <SelectInput
-        label="Test"
-        fieldName="ahsjgdja"
-        value={select2}
-        onChange={(index) => setSelect2(index)}
-      >
-        <SelectOption value="4" displayText="option 4" />
-        <SelectOption value="5" displayText="option 5" />
-        <SelectOption value="6" displayText="option 6" />
-      </SelectInput>
-
-      <SelectInput
-        label="Test"
-        fieldName="ahsjgdja"
-        value={select3}
-        onChange={(index) => setSelect3(index)}
-      >
-        <SelectOption value="1" displayText="option 1" />
-        <SelectOption value="2" displayText="option 2" />
+      <SelectInput {...selectProps("keyCompound")}>
+        {mappedReactants.map((compound, index) => (
+          <SelectOption
+            key={compound.id}
+            value={index}
+            displayText={compound.symbol}
+          />
+        ))}
       </SelectInput>
     </Wrapper>
   )

@@ -46,7 +46,7 @@ const ReactionForm: React.VFC<ReactionFormProps> = (props) => {
         {...{ reactants, products }}
       />
       <CompoundSelection formik={formik} />
-      <KineticModelForm />
+      <KineticModelForm {...{ formik, reactants }} />
     </Wrapper>
   )
 }
