@@ -1,11 +1,23 @@
 import styled from "styled-components"
+import { SelectPosition } from "./useSelect"
 
-const SelectBody = styled.div`
+interface SelectBodyProps {
+  position: SelectPosition
+}
+
+const SelectBody = styled.div<SelectBodyProps>`
   position: absolute;
-  bottom: 0;
-  left: 0;
-  transform: translateY(100%);
-  width: calc(100% - 22px);
+  left: 10px;
+  ${(props) =>
+    props.position === SelectPosition.top
+      ? `
+        bottom: 55px;
+      `
+      : `
+        bottom: 0;
+        transform: translateY(100%);
+    `}
+  width: calc(100% - 32px);
   margin-top: -5px;
   margin-bottom: -5px;
 
@@ -14,11 +26,14 @@ const SelectBody = styled.div`
   border: 1px solid
     ${(props) => props.theme.getColor({ name: "baseBlack", shade: 700 })};
   border-radius: 5px;
+  box-shadow: 0 0 6px
+    ${(props) => props.theme.getColor({ name: "baseBlack", shade: 900 })};
   color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 200 })};
   display: flex;
   flex-direction: column;
   outline: none;
   padding: 10px;
+  z-index: 5;
 
   button {
     background-color: transparent;
