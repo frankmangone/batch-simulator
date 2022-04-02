@@ -20,6 +20,7 @@ const Wrapper = styled.div<NestedProp>`
 `
 
 const InnerWrapper = styled.div<NestedProp>`
+  position: relative;
   margin-left: 10px;
   margin-right: 10px;
   flex-grow: 1;
@@ -59,10 +60,20 @@ const SelectInput = <T extends unknown>(props: FieldInputProps<T>) => {
     children,
   } = props
 
+  const options = mapChildren(children)
+
+  // Keep track of the index of the current selected value
+  const [selectedIndex, setSelectedIndex] = useState<number>(0) // eslint-disable-line
+  const currentOption = options[selectedIndex]
+  const currentValue =
+    currentOption.collapsedDisplayText ?? currentOption.displayText
+
+  // Keep track of toggled state (expanded / collapsed)
   const [toggled, setToggled] = useState<boolean>(false)
   const toggleSelect = (): void => setToggled(!toggled)
 
-  const options = mapChildren(children)
+  // Create a setter for the selected index
+  const handleSelectValue = (index: number) => () => setSelectedIndex(index)
 
   return (
     <Wrapper nested={nested}>
@@ -71,13 +82,13 @@ const SelectInput = <T extends unknown>(props: FieldInputProps<T>) => {
           <label htmlFor={fieldName}>{label}</label>
           {/* {tooltip && <InfoTooltip text={tooltip} />} */}
         </LabelWrapper>
-        <SelectToggle onClick={toggleSelect}>
-          Test text {String(toggled)}
-        </SelectToggle>
+        <SelectToggle onClick={toggleSelect}>{currentValue}</SelectToggle>
         <Show when={toggled}>
           <SelectBody>
             {options.map((option, index) => (
-              <p key={index}>{option.displayText}</p>
+              <button key={index} onClick={handleSelectValue(index)}>
+                {option.displayText}
+              </button>
             ))}
           </SelectBody>
         </Show>
