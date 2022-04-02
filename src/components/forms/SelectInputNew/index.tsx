@@ -1,5 +1,6 @@
+import { useState } from "react"
 import styled from "styled-components"
-import Input from "../InputNew"
+import SelectToggle from "./SelectToggle"
 // import InfoTooltip from "./InfoTooltip"
 
 interface FieldInputProps<T> {
@@ -10,6 +11,7 @@ interface FieldInputProps<T> {
   type?: string
   nested?: boolean // For text inputs inside cards
   value: T
+  children: JSX.Element | JSX.Element[]
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -17,7 +19,7 @@ interface NestedProp {
   nested: boolean
 }
 
-const Wrapper = styled.fieldset<NestedProp>`
+const Wrapper = styled.div<NestedProp>`
   display: flex;
   flex-direction: column;
   ${(props) => (props.nested ? "align-self: stretch;" : "flex-basis: 33.3%;")};
@@ -53,17 +55,24 @@ const LabelWrapper = styled.div<NestedProp>`
   }
 `
 
-const TextInput = <T extends unknown>(props: FieldInputProps<T>) => {
+const SelectInput = <T extends unknown>(props: FieldInputProps<T>) => {
   const {
-    error,
+    // error,
     label,
     fieldName,
     // tooltip,
-    type,
+    // type,
     nested = false,
-    value,
-    onChange,
+    // value,
+    // onChange,
+    children,
   } = props
+
+  const [toggled, setToggled] = useState<boolean>(false)
+  const toggleSelect = (): void => setToggled(!toggled)
+
+  // TODO: Map `SelectOption` children
+  console.log(children)
 
   return (
     <Wrapper nested={nested}>
@@ -72,18 +81,13 @@ const TextInput = <T extends unknown>(props: FieldInputProps<T>) => {
           <label htmlFor={fieldName}>{label}</label>
           {/* {tooltip && <InfoTooltip text={tooltip} />} */}
         </LabelWrapper>
-        <Input
-          error={!!error}
-          name={fieldName}
-          type={type || "text"}
-          autoComplete="off"
-          onChange={onChange}
-          value={String(value)}
-        />
+        <SelectToggle onClick={toggleSelect}>
+          Test text {String(toggled)}
+        </SelectToggle>
         {/* <Error>{error ?? ""}</Error> */}
       </InnerWrapper>
     </Wrapper>
   )
 }
 
-export default TextInput
+export default SelectInput
