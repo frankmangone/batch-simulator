@@ -1,9 +1,8 @@
 import styled from "styled-components"
-import Error from "./ErrorNew"
-import Input from "./InputNew"
+import Input from "../InputNew"
 // import InfoTooltip from "./InfoTooltip"
 
-interface TextInputProps<T> {
+interface FieldInputProps<T> {
   label: string
   fieldName: string
   error?: string
@@ -54,7 +53,7 @@ const LabelWrapper = styled.div<NestedProp>`
   }
 `
 
-const TextInput = <T extends unknown>(props: TextInputProps<T>) => {
+const TextInput = <T extends unknown>(props: FieldInputProps<T>) => {
   const {
     error,
     label,
@@ -81,7 +80,7 @@ const TextInput = <T extends unknown>(props: TextInputProps<T>) => {
           onChange={onChange}
           value={String(value)}
         />
-        <Error>{error ?? ""}</Error>
+        {/* <Error>{error ?? ""}</Error> */}
       </InnerWrapper>
     </Wrapper>
   )
