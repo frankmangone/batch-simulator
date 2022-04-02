@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import Show from "../../Show"
+import { CollapseIcon, ExpandIcon } from "../../Icons"
 import SelectToggle from "./SelectToggle"
 import SelectBody from "./SelectBody"
 import useSelect from "./useSelect"
@@ -90,7 +91,10 @@ const SelectInput: React.VFC<FieldInputProps> = (props) => {
           {/* {tooltip && <InfoTooltip text={tooltip} />} */}
         </LabelWrapper>
         <SelectToggle onClick={toggleSelect} ref={selectRef}>
-          {currentValue}
+          <p>{currentValue}</p>
+          <Show when={toggled} fallback={<ExpandIcon size={20} />}>
+            <CollapseIcon size={20} />
+          </Show>
         </SelectToggle>
         <Show when={toggled}>
           <SelectBody position={position}>
