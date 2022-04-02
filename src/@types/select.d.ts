@@ -1,17 +1,17 @@
-interface FieldInputProps<T> {
+interface FieldInputProps {
   label: string
   fieldName: string
   error?: string
   tooltip?: string
   type?: string
   nested?: boolean // For text inputs inside cards
-  value: T
+  value: number
   children: JSX.Element | JSX.Element[]
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChange: (index: number) => void
 }
 
-interface SelectOptionProps<T> {
-  value: T
+interface SelectOptionProps {
+  value: index
   displayText: string
   collapsedDisplayText?: string
 }

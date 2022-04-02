@@ -47,7 +47,15 @@ const LabelWrapper = styled.div<NestedProp>`
   }
 `
 
-const SelectInput = <T extends unknown>(props: FieldInputProps<T>) => {
+/**
+ * Select input
+ *
+ * An alternative to the OS-handled <select> tag.
+ * `value` corresponds to the index of the currently selected option.
+ *
+ * @param {FieldInputProps} props
+ */
+const SelectInput: React.VFC<FieldInputProps> = (props) => {
   const {
     // error,
     label,
@@ -55,18 +63,17 @@ const SelectInput = <T extends unknown>(props: FieldInputProps<T>) => {
     // tooltip,
     // type,
     nested = false,
-    // value,
-    // onChange,
+    value,
+    onChange,
     children,
   } = props
 
   const options = mapChildren(children)
 
   // Keep track of the index of the current selected value
-  const [selectedIndex, setSelectedIndex] = useState<number>(0) // eslint-disable-line
-  const currentOption = options[selectedIndex]
+  const currentOption = options[value]
   const currentValue =
-    currentOption.collapsedDisplayText ?? currentOption.displayText
+    currentOption?.collapsedDisplayText ?? currentOption?.displayText
 
   // Keep track of toggled state (expanded / collapsed)
   const [toggled, setToggled] = useState<boolean>(false)
@@ -75,7 +82,7 @@ const SelectInput = <T extends unknown>(props: FieldInputProps<T>) => {
   // Create a setter for the selected index
   const handleSelectValue = (index: number) => (): void => {
     toggleSelect()
-    setSelectedIndex(index)
+    onChange(index)
   }
 
   return (

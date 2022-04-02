@@ -1,5 +1,3 @@
-const SelectOption = <T extends unknown>(_props: SelectOptionProps<T>) => {
-  return null
-}
+const SelectOption: React.VFC<SelectOptionProps> = () => null
 
 export default SelectOption

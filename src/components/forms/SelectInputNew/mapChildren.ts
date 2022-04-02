@@ -1,9 +1,9 @@
 /**
  * Maps `SelectOption` children for the `Select` component
  */
-const mapChildren = <T extends unknown>(
+const mapChildren = (
   children: JSX.Element | JSX.Element[]
-): SelectOptionProps<T>[] => {
+): SelectOptionProps[] => {
   if (Array.isArray(children)) {
     return children.map((child) => {
       const { type, props } = child
