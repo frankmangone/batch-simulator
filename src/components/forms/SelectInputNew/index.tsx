@@ -73,7 +73,10 @@ const SelectInput = <T extends unknown>(props: FieldInputProps<T>) => {
   const toggleSelect = (): void => setToggled(!toggled)
 
   // Create a setter for the selected index
-  const handleSelectValue = (index: number) => () => setSelectedIndex(index)
+  const handleSelectValue = (index: number) => (): void => {
+    toggleSelect()
+    setSelectedIndex(index)
+  }
 
   return (
     <Wrapper nested={nested}>
@@ -92,7 +95,6 @@ const SelectInput = <T extends unknown>(props: FieldInputProps<T>) => {
             ))}
           </SelectBody>
         </Show>
-        {/* <Error>{error ?? ""}</Error> */}
       </InnerWrapper>
     </Wrapper>
   )
