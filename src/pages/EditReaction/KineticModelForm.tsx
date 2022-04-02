@@ -1,12 +1,27 @@
 import React from "react"
-// import SelectInput from "../../components/forms/SelectInput"
-import SelectInputNew from "../../components/forms/SelectInputNew/index"
+import styled from "styled-components"
+import PageSubTitle from "../../components/layout/PageSubTitle"
+import SelectInput from "../../components/forms/SelectInputNew/index"
 import SelectOption from "../../components/forms/SelectInputNew/SelectOption"
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+`
+
+const SubTitle = styled(PageSubTitle)`
+  flex-basis: 100%;
+  margin-bottom: 20px;
+`
 
 const KineticModelForm: React.VFC = () => {
   return (
-    <>
-      <SelectInputNew
+    <Wrapper>
+      <SubTitle>Kinetic Model</SubTitle>
+      <SelectInput
         label="Test"
         fieldName="ahsjgdja"
         value="asdsd"
@@ -15,7 +30,29 @@ const KineticModelForm: React.VFC = () => {
         <SelectOption />
         <SelectOption />
         <SelectOption />
-      </SelectInputNew>
+      </SelectInput>
+
+      <SelectInput
+        label="Test"
+        fieldName="ahsjgdja"
+        value="asdsd"
+        onChange={() => null}
+      >
+        <SelectOption />
+        <SelectOption />
+        <SelectOption />
+      </SelectInput>
+
+      <SelectInput
+        label="Test"
+        fieldName="ahsjgdja"
+        value="asdsd"
+        onChange={() => null}
+      >
+        <SelectOption />
+        <SelectOption />
+        <SelectOption />
+      </SelectInput>
       {/* <SelectInput
         selectedOption={undefined}
         fieldName="timeUnits"
@@ -23,7 +60,7 @@ const KineticModelForm: React.VFC = () => {
         selectOptions={timeUnitsOptions}
         onSelectionChange={(_value) => {}}
       /> */}
-    </>
+    </Wrapper>
   )
 }
 
