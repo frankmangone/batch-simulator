@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import mapChildren from "./mapChildren"
 
 interface UseSelectParams {
@@ -24,11 +24,29 @@ const useSelect = (params: UseSelectParams) => {
   const [toggled, setToggled] = useState<boolean>(false)
   const toggleSelect = (): void => setToggled(!toggled)
 
+  const clickOutsideHandler = useCallback(
+    (event: MouseEvent): void => {
+      // Uses tips from:
+      // https://stackoverflow.com/questions/152975/how-do-i-detect-a-click-outside-an-element/3028037#3028037
+      if (!selectRef.current?.contains(event.target as Node)) setToggled(false)
+    },
+    [setToggled]
+  )
+
   // Create a setter for the selected index
   const handleSelectValue = (index: number) => (): void => {
     toggleSelect()
     onChange(index)
   }
+
+  // Adds / removes event listeners as a side effect of the `toggled` state
+  useEffect(() => {
+    if (toggled) {
+      window.addEventListener("click", clickOutsideHandler, true)
+      return
+    }
+    window.removeEventListener("click", clickOutsideHandler, true)
+  }, [toggled, clickOutsideHandler])
 
   return {
     containerRef,
