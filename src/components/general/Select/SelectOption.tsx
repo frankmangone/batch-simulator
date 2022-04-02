@@ -1,4 +1,4 @@
-const SelectOption = <T,>(props: SelectOptionProps<T>) => {
+const SelectOption = <T extends unknown>(_props: SelectOptionProps<T>) => {
   return null
 }
 

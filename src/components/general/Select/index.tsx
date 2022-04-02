@@ -7,24 +7,17 @@ import { FiChevronDown } from "react-icons/fi"
 // Hooks
 import { useEffect, useState, useRef, useCallback } from "react"
 
-interface ISelectProps<T> {
+interface SelectProps<T> {
   alignment?: string
   defaultDisplayValue?: string
   hoverIcon?: JSX.Element
-  initialValue?: ISelectOption<T>
-  selectOptions: ISelectOption<T>[]
+  initialValue?: SelectOptionProps<T>
+  selectOptions: SelectOptionProps<T>[]
   onSelectionChange: (value?: T) => void
 }
 
-export interface ISelectOption<T> {
-  value?: T
-  displayText?: string
-  collapsedDisplayText?: string
-  hoverBackgroundColor?: string
-}
-
 /* Reusable custom select component */
-const Select = <T extends string | number>(props: ISelectProps<T>) => {
+const Select = <T extends unknown>(props: SelectProps<T>) => {
   const {
     alignment,
     defaultDisplayValue,
@@ -116,9 +109,8 @@ const Select = <T extends string | number>(props: ISelectProps<T>) => {
   /*
    * Current selected value data
    */
-  const currentValueOption: ISelectOption<T> | undefined = selectOptions.find(
-    (option) => option.value === currentValue
-  )
+  const currentValueOption: SelectOptionProps<T> | undefined =
+    selectOptions.find((option) => option.value === currentValue)
 
   return (
     <SelectWrapper id={id.current}>
@@ -129,21 +121,20 @@ const Select = <T extends string | number>(props: ISelectProps<T>) => {
       {selecting && (
         <SelectOptions alignment={alignment || "left"}>
           {defaultDisplayValue && (
-            <SelectOption onClick={() => selectValue(undefined)}>
+            <Option onClick={() => selectValue(undefined)}>
               <p>{defaultDisplayValue}</p>
-            </SelectOption>
+            </Option>
           )}
-          {selectOptions.map(({ value, displayText, hoverBackgroundColor }) => (
-            <SelectOption
-              key={value}
+          {selectOptions.map(({ value, displayText }, index) => (
+            <Option
+              key={index}
               onClick={() => {
                 selectValue(value)
               }}
-              hoverBackgroundColor={hoverBackgroundColor}
             >
               <p>{displayText}</p>
               <span>{hoverIcon}</span>
-            </SelectOption>
+            </Option>
           ))}
         </SelectOptions>
       )}
@@ -217,11 +208,7 @@ const SelectOptions = styled.div<ISelectOptions>`
   z-index: 20;
 `
 
-interface ISelectOptionProps {
-  hoverBackgroundColor?: string
-}
-
-const SelectOption = styled.button<ISelectOptionProps>`
+const Option = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -232,8 +219,7 @@ const SelectOption = styled.button<ISelectOptionProps>`
   padding-bottom: 0.5rem;
 
   &:hover {
-    background-color: ${(props) =>
-      props.hoverBackgroundColor || "var(--color-grey-lighter)"};
+    background-color: var(--color-grey-lighter);
 
     & > span {
       opacity: 1;
