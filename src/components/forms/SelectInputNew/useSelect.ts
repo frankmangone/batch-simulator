@@ -80,12 +80,12 @@ const useSelect = (params: UseSelectParams) => {
   // Adds / removes click event listeners as a side effect of the `toggled` state
   useEffect(() => {
     if (toggled) {
-      window.addEventListener("click", clickOutsideHandler, true)
+      window.addEventListener("click", clickOutsideHandler)
     } else {
-      window.removeEventListener("click", clickOutsideHandler, true)
+      window.removeEventListener("click", clickOutsideHandler)
     }
 
-    return () => window.removeEventListener("click", clickOutsideHandler, true)
+    return () => window.removeEventListener("click", clickOutsideHandler)
   }, [toggled, clickOutsideHandler])
 
   return {
