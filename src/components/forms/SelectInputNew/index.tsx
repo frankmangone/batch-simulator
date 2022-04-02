@@ -1,6 +1,7 @@
 import { useState } from "react"
 import styled from "styled-components"
 import SelectToggle from "./SelectToggle"
+import mapChildren from "./mapChildren"
 // import InfoTooltip from "./InfoTooltip"
 
 interface FieldInputProps<T> {
@@ -72,7 +73,8 @@ const SelectInput = <T extends unknown>(props: FieldInputProps<T>) => {
   const toggleSelect = (): void => setToggled(!toggled)
 
   // TODO: Map `SelectOption` children
-  console.log(children)
+  const options = mapChildren(children)
+  console.log(options)
 
   return (
     <Wrapper nested={nested}>
