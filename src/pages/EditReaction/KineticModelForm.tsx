@@ -27,9 +27,9 @@ const KineticModelForm: React.VFC = () => {
         value="asdsd"
         onChange={() => null}
       >
-        <SelectOption />
-        <SelectOption />
-        <SelectOption />
+        <SelectOption value="1" displayText="option 1" />
+        <SelectOption value="2" displayText="option 2" />
+        <SelectOption value="3" displayText="option 3" />
       </SelectInput>
 
       <SelectInput
@@ -38,9 +38,9 @@ const KineticModelForm: React.VFC = () => {
         value="asdsd"
         onChange={() => null}
       >
-        <SelectOption />
-        <SelectOption />
-        <SelectOption />
+        <SelectOption value="4" displayText="option 4" />
+        <SelectOption value="5" displayText="option 5" />
+        <SelectOption value="6" displayText="option 6" />
       </SelectInput>
 
       <SelectInput
@@ -49,17 +49,9 @@ const KineticModelForm: React.VFC = () => {
         value="asdsd"
         onChange={() => null}
       >
-        <SelectOption />
-        <SelectOption />
-        <SelectOption />
+        <SelectOption value="1" displayText="option 1" />
+        <SelectOption value="2" displayText="option 2" />
       </SelectInput>
-      {/* <SelectInput
-        selectedOption={undefined}
-        fieldName="timeUnits"
-        label="Time units:"
-        selectOptions={timeUnitsOptions}
-        onSelectionChange={(_value) => {}}
-      /> */}
     </Wrapper>
   )
 }

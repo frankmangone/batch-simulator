@@ -1,20 +1,10 @@
 import { useState } from "react"
 import styled from "styled-components"
+import Show from "../../Show"
 import SelectToggle from "./SelectToggle"
+import SelectBody from "./SelectBody"
 import mapChildren from "./mapChildren"
 // import InfoTooltip from "./InfoTooltip"
-
-interface FieldInputProps<T> {
-  label: string
-  fieldName: string
-  error?: string
-  tooltip?: string
-  type?: string
-  nested?: boolean // For text inputs inside cards
-  value: T
-  children: JSX.Element | JSX.Element[]
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-}
 
 interface NestedProp {
   nested: boolean
@@ -72,9 +62,7 @@ const SelectInput = <T extends unknown>(props: FieldInputProps<T>) => {
   const [toggled, setToggled] = useState<boolean>(false)
   const toggleSelect = (): void => setToggled(!toggled)
 
-  // TODO: Map `SelectOption` children
   const options = mapChildren(children)
-  console.log(options)
 
   return (
     <Wrapper nested={nested}>
@@ -86,6 +74,13 @@ const SelectInput = <T extends unknown>(props: FieldInputProps<T>) => {
         <SelectToggle onClick={toggleSelect}>
           Test text {String(toggled)}
         </SelectToggle>
+        <Show when={toggled}>
+          <SelectBody>
+            {options.map((option, index) => (
+              <p key={index}>{option.displayText}</p>
+            ))}
+          </SelectBody>
+        </Show>
         {/* <Error>{error ?? ""}</Error> */}
       </InnerWrapper>
     </Wrapper>
