@@ -71,6 +71,12 @@ const useSelect = (params: UseSelectParams) => {
     onChange(index)
   }
 
+  // Decides initial position of dropdown
+  useEffect(() => {
+    if (!selectRef.current) return
+    setPosition(checkPosition(selectRef?.current))
+  }, [selectRef])
+
   // Adds a throttled scroll handler for position checking
   useEffect(() => {
     window.addEventListener("scroll", positionCheckHandler)
