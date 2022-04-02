@@ -1,9 +1,8 @@
-import { useState } from "react"
 import styled from "styled-components"
 import Show from "../../Show"
 import SelectToggle from "./SelectToggle"
 import SelectBody from "./SelectBody"
-import mapChildren from "./mapChildren"
+import useSelect from "./useSelect"
 // import InfoTooltip from "./InfoTooltip"
 
 interface NestedProp {
@@ -68,22 +67,12 @@ const SelectInput: React.VFC<FieldInputProps> = (props) => {
     children,
   } = props
 
-  const options = mapChildren(children)
-
-  // Keep track of the index of the current selected value
-  const currentOption = options[value]
-  const currentValue =
-    currentOption?.collapsedDisplayText ?? currentOption?.displayText
-
-  // Keep track of toggled state (expanded / collapsed)
-  const [toggled, setToggled] = useState<boolean>(false)
-  const toggleSelect = (): void => setToggled(!toggled)
-
-  // Create a setter for the selected index
-  const handleSelectValue = (index: number) => (): void => {
-    toggleSelect()
-    onChange(index)
-  }
+  const { options, toggled, toggleSelect, currentValue, handleSelectValue } =
+    useSelect({
+      children,
+      value,
+      onChange,
+    })
 
   return (
     <Wrapper nested={nested}>
