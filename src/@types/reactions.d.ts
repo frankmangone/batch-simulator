@@ -42,3 +42,8 @@ type ReactionInput = Omit<Reaction, "id"> & Required<Pick<Reaction, "name">>
 interface ReducedReactionInput {
   name: string
 }
+
+interface ReducedReactionKineticInput {
+  kineticModel: string
+  keyCompound?: string
+}

@@ -1,24 +1,16 @@
 import styled from "styled-components"
-import Error from "./ErrorNew"
-import Input from "./InputNew"
+import Show from "../../Show"
+import { CollapseIcon, ExpandIcon } from "../../Icons"
+import SelectToggle from "./SelectToggle"
+import SelectBody from "./SelectBody"
+import useSelect from "./useSelect"
 // import InfoTooltip from "./InfoTooltip"
-
-interface TextInputProps<T> {
-  label: string
-  fieldName: string
-  error?: string
-  tooltip?: string
-  type?: string
-  nested?: boolean // For text inputs inside cards
-  value: T
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-}
 
 interface NestedProp {
   nested: boolean
 }
 
-const Wrapper = styled.fieldset<NestedProp>`
+const Wrapper = styled.div<NestedProp>`
   display: flex;
   flex-direction: column;
   ${(props) => (props.nested ? "align-self: stretch;" : "flex-basis: 33.3%;")};
@@ -28,6 +20,7 @@ const Wrapper = styled.fieldset<NestedProp>`
 `
 
 const InnerWrapper = styled.div<NestedProp>`
+  position: relative;
   margin-left: 10px;
   margin-right: 10px;
   flex-grow: 1;
@@ -54,37 +47,67 @@ const LabelWrapper = styled.div<NestedProp>`
   }
 `
 
-const TextInput = <T extends unknown>(props: TextInputProps<T>) => {
+/**
+ * Select input
+ *
+ * An alternative to the OS-handled <select> tag.
+ * `value` corresponds to the index of the currently selected option.
+ *
+ * @param {FieldInputProps} props
+ */
+const SelectInput: React.VFC<FieldInputProps> = (props) => {
   const {
-    error,
+    // error,
     label,
     fieldName,
     // tooltip,
-    type,
+    // type,
     nested = false,
     value,
     onChange,
+    children,
   } = props
 
+  const {
+    containerRef,
+    selectRef,
+    options,
+    position,
+    toggled,
+    toggleSelect,
+    currentValue,
+    handleSelectValue,
+  } = useSelect({
+    children,
+    value,
+    onChange,
+  })
+
   return (
-    <Wrapper nested={nested}>
+    <Wrapper nested={nested} ref={containerRef}>
       <InnerWrapper nested={nested}>
         <LabelWrapper nested={nested}>
           <label htmlFor={fieldName}>{label}</label>
           {/* {tooltip && <InfoTooltip text={tooltip} />} */}
         </LabelWrapper>
-        <Input
-          error={!!error}
-          name={fieldName}
-          type={type || "text"}
-          autoComplete="off"
-          onChange={onChange}
-          value={String(value)}
-        />
-        <Error>{error ?? ""}</Error>
+        <SelectToggle onClick={toggleSelect} ref={selectRef}>
+          <p>{currentValue}</p>
+          <Show when={toggled} fallback={<ExpandIcon size={20} />}>
+            <CollapseIcon size={20} />
+          </Show>
+        </SelectToggle>
+        <Show when={toggled}>
+          <SelectBody position={position}>
+            {options.map((option, index) => (
+              <button key={index} onClick={handleSelectValue(index)}>
+                {option.displayText}
+              </button>
+            ))}
+          </SelectBody>
+        </Show>
       </InnerWrapper>
     </Wrapper>
   )
 }
 
-export default TextInput
+export default SelectInput

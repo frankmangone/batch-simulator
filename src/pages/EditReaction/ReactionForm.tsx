@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import CompoundSelection from "./CompoundSelection"
+import KineticModelForm from "./KineticModelForm"
 import TextInput from "../../components/forms/TextInput"
 import ReactionPreview from "../../components/reactions/ReactionPreview/index"
 import type { FormikProps } from "formik"
@@ -45,6 +46,7 @@ const ReactionForm: React.VFC<ReactionFormProps> = (props) => {
         {...{ reactants, products }}
       />
       <CompoundSelection formik={formik} />
+      <KineticModelForm {...{ formik, reactants }} />
     </Wrapper>
   )
 }

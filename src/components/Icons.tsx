@@ -3,9 +3,11 @@ import BaseIcon from "./BaseIcon"
 
 import Add from "./icons/Add"
 import ArrowRight from "./icons/ArrowRight"
+import Collapse from "./icons/Collapse"
 import Compound from "./icons/Compound"
 import Delete from "./icons/Delete"
 import Edit from "./icons/Edit"
+import Expand from "./icons/Expand"
 import Phase from "./icons/Phase"
 import Reaction from "./icons/Reaction"
 import Reroll from "./icons/Reroll"
@@ -21,6 +23,10 @@ export const ArrowRightIcon: React.VFC<IconProps> = (props) => (
   <BaseIcon Icon={ArrowRight} {...props} />
 )
 
+export const CollapseIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Collapse} {...props} />
+)
+
 export const CompoundIcon: React.VFC<IconProps> = (props) => (
   <BaseIcon Icon={Compound} {...props} />
 )
@@ -31,6 +37,10 @@ export const DeleteIcon: React.VFC<IconProps> = (props) => (
 
 export const EditIcon: React.VFC<IconProps> = (props) => (
   <BaseIcon Icon={Edit} {...props} />
+)
+
+export const ExpandIcon: React.VFC<IconProps> = (props) => (
+  <BaseIcon Icon={Expand} {...props} />
 )
 
 export const PhaseIcon: React.VFC<IconProps> = (props) => (
