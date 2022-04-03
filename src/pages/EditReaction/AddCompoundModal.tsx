@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import useCompounds from "../../hooks/entities/useCompounds"
-import { AddIcon } from "../../components/Icons"
+import useCompounds from "@hooks/entities/useCompounds"
+import { AddIcon } from "@components/Icons"
 
 interface AddCompoundModalProps {
   takenCompounds: ReactionCompound[]

@@ -1,9 +1,9 @@
 import styled from "styled-components"
-import { AddIcon, DeleteIcon } from "../../components/Icons"
-import BaseButton from "../../components/general/ButtonNew"
-import Title from "../../components/layout/PageTitle"
-import Header from "../../components/layout/PageHeader"
-import useReactions from "../../hooks/entities/useReactions"
+import { AddIcon, DeleteIcon } from "@components/Icons"
+import BaseButton from "@components/general/ButtonNew"
+import Title from "@components/layout/PageTitle"
+import Header from "@components/layout/PageHeader"
+import useReactions from "@hooks/entities/useReactions"
 
 const Button = styled(BaseButton)`
   margin-left: 10px;

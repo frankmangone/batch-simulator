@@ -1,21 +1,21 @@
 import styled from "styled-components"
 
 /* Components */
-import PageTitle from "../components/layout/PageTitle"
-import OperatingTimesSection from "../components/settings/OperatingTimesSection"
-import UnitsSection from "../components/settings/UnitsSection"
-import HeatExchangeSection from "../components/settings/HeatExchangeSection"
-import MainLayout from "../layouts/MainLayout"
+import PageTitle from "@components/layout/PageTitle"
+import OperatingTimesSection from "@components/settings/OperatingTimesSection"
+import UnitsSection from "@components/settings/UnitsSection"
+import HeatExchangeSection from "@components/settings/HeatExchangeSection"
+import MainLayout from "@layouts/MainLayout"
 
 /* Helpers */
 import {
   validateEqual,
   validateNotEmpty,
   validateGreaterThan,
-} from "../lib/validators"
+} from "@lib/validators"
 
 /* Hooks */
-import useSettings from "../hooks/useSettings"
+import useSettings from "@hooks/useSettings"
 import { useFormik } from "formik"
 
 /* Types */

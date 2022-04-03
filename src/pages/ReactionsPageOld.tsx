@@ -1,11 +1,11 @@
 import styled from "styled-components"
-import Button from "../components/general/Button"
-import PageTitle from "../components/layout/PageTitle"
-import ReactionList from "../components/reactions/ReactionList"
+import Button from "@components/general/Button"
+import PageTitle from "@components/layout/PageTitle"
+import ReactionList from "@components/reactions/ReactionList"
 import { FiPlus, FiTrash2 } from "react-icons/fi"
-import useReactions from "../hooks/entities/useReactions"
-import { mobileBreakpoint } from "../lib/breakpoints"
-import MainLayout from "../layouts/MainLayout"
+import useReactions from "@hooks/entities/useReactions"
+import { mobileBreakpoint } from "@lib/breakpoints"
+import MainLayout from "@layouts/MainLayout"
 
 const DeleteButton = styled(Button)`
   position: absolute;

@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import TextInput from "../../components/forms/TextInput"
+import TextInput from "@components/forms/TextInput"
+import useCompounds from "@hooks/entities/useCompounds"
 import SymbolInput from "./SymbolInput"
-import useCompounds from "../../hooks/entities/useCompounds"
 import type { FormikProps } from "formik"
 
 interface CompoundFormProps {

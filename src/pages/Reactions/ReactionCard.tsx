@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import CardButton from "./CardButton"
-import { EditIcon, DeleteIcon } from "../../components/Icons"
-import ReactionPreview from "../../components/reactions/ReactionPreview/index"
-import useReactions from "../../hooks/entities/useReactions"
+import { EditIcon, DeleteIcon } from "@components/Icons"
+import ReactionPreview from "@components/reactions/ReactionPreview/index"
+import useReactions from "@hooks/entities/useReactions"
 import { useNavigate } from "react-router-dom"
 
 interface ReactionCardProps {

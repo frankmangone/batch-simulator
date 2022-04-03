@@ -5,9 +5,9 @@ import {
   PhaseIcon,
   SettingsIcon,
   RunIcon,
-} from "../../Icons"
+} from "@components/Icons"
 import SidebarButton from "./SidebarButton"
-import { useTheme } from "../../../contexts/Theme"
+import { useTheme } from "@contexts/Theme"
 import { useNavigate } from "react-router-dom"
 // import useSimulate from "../../../hooks/useSimulate"
 // import useSimulationResults from "../../../hooks/useSimulationResults"

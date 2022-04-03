@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { FiX } from "react-icons/fi"
 import { useEffect } from "react"
-import { mobileBreakpoint } from "../lib/breakpoints"
+import { mobileBreakpoint } from "@lib/breakpoints"
 
 export interface IClosing {
   closing?: boolean

@@ -1,9 +1,9 @@
+import { useMemo } from "react"
 import styled from "styled-components"
 import CardButton from "./CardButton"
-import { DeleteIcon } from "../../components/Icons"
-import TextInput from "../../components/forms/TextInput"
-import { useMemo } from "react"
-import useCompounds from "../../hooks/entities/useCompounds"
+import { DeleteIcon } from "@components/Icons"
+import TextInput from "@components/forms/TextInput"
+import useCompounds from "@hooks/entities/useCompounds"
 
 interface CompoundCardProps {
   compound: ReactionCompound

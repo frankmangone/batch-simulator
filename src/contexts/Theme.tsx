@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react"
 import { ThemeProvider as SCThemeProvider } from "styled-components"
-import { getTheme } from "../lib/themes"
-import buildHSLString from "../lib/color/buildHSLString"
+import { getTheme } from "@lib/themes"
+import buildHSLString from "@lib/color/buildHSLString"
 
 interface ContextValues {
   setLightTheme: () => void

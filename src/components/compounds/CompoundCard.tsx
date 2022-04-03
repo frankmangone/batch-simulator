@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import CardButton from "../CardButton"
+import CardButton from "@components/CardButton"
 import { FiEdit, FiTrash2 } from "react-icons/fi"
-import { mobileBreakpoint } from "../../lib/breakpoints"
+import { mobileBreakpoint } from "@lib/breakpoints"
 
 interface ICompoundCardProps {
   compound: Compound

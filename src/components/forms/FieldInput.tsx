@@ -2,7 +2,7 @@ import styled from "styled-components"
 import Error from "./Error"
 import Input from "./Input"
 import InfoTooltip from "./InfoTooltip"
-import { mobileBreakpoint } from "../../lib/breakpoints"
+import { mobileBreakpoint } from "@lib/breakpoints"
 
 interface IFieldInputProps {
   big?: boolean

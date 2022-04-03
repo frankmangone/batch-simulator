@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import ReactionCard from "./ReactionCard"
-import Show from "../../components/Show"
-import NoResource from "../../components/NoResource"
-import useReactions from "../../hooks/entities/useReactions"
+import Show from "@components/Show"
+import NoResource from "@components/NoResource"
+import useReactions from "@hooks/entities/useReactions"
 
 const Wrapper = styled.div`
   display: flex;

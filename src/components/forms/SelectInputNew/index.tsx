@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import Show from "../../Show"
-import { CollapseIcon, ExpandIcon } from "../../Icons"
+import Show from "@components/Show"
+import { CollapseIcon, ExpandIcon } from "@components/Icons"
 import SelectToggle from "./SelectToggle"
 import SelectBody from "./SelectBody"
 import useSelect from "./useSelect"

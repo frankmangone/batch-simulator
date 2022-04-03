@@ -1,4 +1,4 @@
-import useSimulationResults from "../hooks/useSimulationResults"
+import useSimulationResults from "@hooks/useSimulationResults"
 
 const useGetData = () => {
   const { simulationResults } = useSimulationResults()
