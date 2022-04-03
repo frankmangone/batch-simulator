@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import KineticEquation from "./KineticEquation"
+import KineticParameters from "./KineticParameters"
 import PageSubTitle from "@components/layout/PageSubTitle"
 import SelectInput from "@components/forms/SelectInputNew"
 import SelectOption from "@components/forms/SelectInputNew/SelectOption"
@@ -101,6 +102,8 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
         tokens={values.kineticEquation}
         keyCompound={values.keyCompound}
       />
+
+      <KineticParameters formik={formik} />
     </Wrapper>
   )
 }
