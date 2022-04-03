@@ -5,6 +5,7 @@
   "homepage": "https://frankmangone.github.io/batch-simulator",
   "dependencies": {
     "@assemblyscript/loader": "^0.19.9",
+    "@craco/craco": "^6.4.3",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
