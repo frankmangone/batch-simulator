@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import PageSubTitle from "@components/layout/PageSubTitle"
-import SelectInput from "@components/forms/SelectInputNew/index"
+import SelectInput from "@components/forms/SelectInputNew"
 import SelectOption from "@components/forms/SelectInputNew/SelectOption"
 import useCompounds from "@hooks/entities/useCompounds"
 import type { FormikProps } from "formik"

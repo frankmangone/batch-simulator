@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import CardButton from "./CardButton"
 import { EditIcon, DeleteIcon } from "@components/Icons"
-import ReactionPreview from "@components/reactions/ReactionPreview/index"
+import ReactionPreview from "@components/reactions/ReactionPreview"
 import useReactions from "@hooks/entities/useReactions"
 import { useNavigate } from "react-router-dom"
 
