@@ -37,10 +37,9 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "yarn asbuild && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "deploy": "yarn build && gh-pages -b gh-pages -d build",
     "asbuild:untouched": "asc assembly/ode/index.ts --config assembly/ode/asconfig.json --target debug",
     "asbuild:optimized": "asc assembly/ode/index.ts --config assembly/ode/asconfig.json --target release",
