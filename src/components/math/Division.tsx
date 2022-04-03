@@ -19,7 +19,8 @@ const DivisionWrapper = styled.div`
   & > div:nth-child(2) {
     width: 100%;
     height: 2px;
-    background-color: var(--color-grey-dark);
+    background-color: ${(props) =>
+      props.theme.getColor({ name: "baseBlack", shade: 200 })};
   }
 `
 
