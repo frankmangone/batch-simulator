@@ -1,13 +1,13 @@
 import randomstring from "randomstring"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../useStore"
-import { add, update, remove, reset } from "../../features/compoundsSlice"
+import { add, update, remove, reset } from "@features/compoundsSlice"
 import useReactions from "./useReactions"
-import { saveToKey } from "../../lib/localStorage"
-import buildHSLString from "../../lib/color/buildHSLString"
+import { saveToKey } from "@lib/localStorage"
+import buildHSLString from "@lib/color/buildHSLString"
 
 /* Constants */
-import { STORAGE_KEY } from "../../features/compoundsSlice"
+import { STORAGE_KEY } from "@features/compoundsSlice"
 
 const useCompounds = () => {
   const dispatch = useAppDispatch()

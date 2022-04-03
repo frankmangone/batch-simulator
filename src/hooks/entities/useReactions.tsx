@@ -7,9 +7,9 @@ import {
   update,
   remove,
   removeCompound,
-} from "../../features/reactionsSlice"
-import { STORAGE_KEY } from "../../features/reactionsSlice"
-import { saveToKey } from "../../lib/localStorage"
+} from "@features/reactionsSlice"
+import { STORAGE_KEY } from "@features/reactionsSlice"
+import { saveToKey } from "@lib/localStorage"
 import {
   divisionToken,
   exponentiationToken,
@@ -19,8 +19,8 @@ import {
   variableToken,
   leftParenthesisToken,
   rightParenthesisToken,
-} from "../../lib/tokens/tokenTypes"
-import { KineticModels } from "../../lib/reactionTypes"
+} from "@lib/tokens/tokenTypes"
+import { KineticModels } from "@lib/reactionTypes"
 
 const useReactions = () => {
   const dispatch = useAppDispatch()

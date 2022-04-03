@@ -5,13 +5,13 @@ import {
   molarUnitsValue,
   massUnitsValue,
   energyUnitsValue,
-} from "../lib/units"
+} from "@lib/units"
 import {
   multiplicationToken,
   exponentiationToken,
   parameterToken,
   minusOneToken,
-} from "../lib/tokens/tokenTypes"
+} from "@lib/tokens/tokenTypes"
 import useSettings from "./useSettings"
 
 const useUnits = () => {

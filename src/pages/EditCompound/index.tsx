@@ -1,13 +1,13 @@
 import PageHeader from "./PageHeader"
 import CompoundForm from "./CompoundForm"
-import Wrapper from "../../components/layout/PageWrapper"
-import Sidebar from "../../components/layout/Sidebar"
-import useCompounds from "../../hooks/entities/useCompounds"
+import Wrapper from "@components/layout/PageWrapper"
+import Sidebar from "@components/layout/Sidebar"
+import useCompounds from "@hooks/entities/useCompounds"
 import { useEffect } from "react"
 import { useFormik } from "formik"
 import { useParams, useNavigate } from "react-router-dom"
-import compoundSchema from "../../lib/schema/compound"
-import buildValidationError from "../../lib/schema/buildValidationError"
+import compoundSchema from "@lib/schema/compound"
+import buildValidationError from "@lib/schema/buildValidationError"
 import type { ValidationError } from "yup"
 
 const EditCompoundPage: React.VFC = () => {

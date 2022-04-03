@@ -1,5 +1,5 @@
-import Wrapper from "../../components/layout/PageWrapper"
-import Sidebar from "../../components/layout/Sidebar"
+import Wrapper from "@components/layout/PageWrapper"
+import Sidebar from "@components/layout/Sidebar"
 import PageHeader from "./PageHeader"
 import ReactionList from "./ReactionList"
 

@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "./useStore"
-import { save } from "../features/simulationResultsSlice"
+import { save } from "@features/simulationResultsSlice"
 
 const useSimulationResults = () => {
   const dispatch = useAppDispatch()

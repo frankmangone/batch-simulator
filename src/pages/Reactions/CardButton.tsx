@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { useTheme } from "../../contexts/Theme"
+import { useTheme } from "@contexts/Theme"
 
 interface CardButtonProps {
   Icon: React.VFC<any>

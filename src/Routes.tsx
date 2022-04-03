@@ -5,11 +5,11 @@ import useVersionControl from "./hooks/useVersionControl"
 
 /* Pages */
 import CompoundsPageOld from "./pages/CompoundsPageOld"
-import CompoundsPage from "./pages/Compounds/index"
-import EditCompoundPage from "./pages/EditCompound/index"
+import CompoundsPage from "./pages/Compounds"
+import EditCompoundPage from "./pages/EditCompound"
 import SettingsPage from "./pages/SettingsPage"
-import ReactionsPage from "./pages/Reactions/index"
-import EditReactionPage from "./pages/EditReaction/index"
+import ReactionsPage from "./pages/Reactions"
+import EditReactionPage from "./pages/EditReaction"
 import ReactionsPageOld from "./pages/ReactionsPageOld"
 import ResultsPage from "./pages/ResultsPage"
 

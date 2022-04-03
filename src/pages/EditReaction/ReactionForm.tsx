@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import CompoundSelection from "./CompoundSelection"
 import KineticModelForm from "./KineticModelForm"
-import TextInput from "../../components/forms/TextInput"
-import ReactionPreview from "../../components/reactions/ReactionPreview/index"
+import TextInput from "@components/forms/TextInput"
+import ReactionPreview from "@components/reactions/ReactionPreview"
 import type { FormikProps } from "formik"
 
 interface ReactionFormProps {

@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import { EditIcon, DeleteIcon, RerollIcon } from "../../components/Icons"
+import { EditIcon, DeleteIcon, RerollIcon } from "@components/Icons"
 import CardButton from "./CardButton"
-import useCompounds from "../../hooks/entities/useCompounds"
+import useCompounds from "@hooks/entities/useCompounds"
 import { useNavigate } from "react-router-dom"
 
 interface CompoundCardProps {

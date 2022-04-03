@@ -1,12 +1,12 @@
-import useSettings from "../hooks/useSettings"
-import useCompounds from "../hooks/entities/useCompounds"
-import useReactions from "../hooks/entities/useReactions"
-import useSimulationResults from "../hooks/useSimulationResults"
-import useMathConstants from "../hooks/useMathConstants"
+import useSettings from "@hooks/useSettings"
+import useCompounds from "@hooks/entities/useCompounds"
+import useReactions from "@hooks/entities/useReactions"
+import useSimulationResults from "@hooks/useSimulationResults"
+import useMathConstants from "@hooks/useMathConstants"
 
-import { parseEquation } from "../lib/tokenParser"
-import { getCoefficientForComponent } from "../lib/reactions"
-import { TokenTypes } from "../lib/tokens/tokenTypes"
+import { parseEquation } from "@lib/tokenParser"
+import { getCoefficientForComponent } from "@lib/reactions"
+import { TokenTypes } from "@lib/tokens/tokenTypes"
 
 const useSimulate = () => {
   const getConstant = useMathConstants()

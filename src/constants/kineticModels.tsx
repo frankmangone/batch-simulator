@@ -10,7 +10,7 @@
  * the MVP1
  */
 
-import { KineticModels } from "../lib/reactionTypes"
+import { KineticModels } from "@lib/reactionTypes"
 
 export const KINETIC_MODELS = ["Simple", "Hiperbolic", "Autocatalytic"]
 

@@ -2,19 +2,19 @@ import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 
 /* Components */
-import PageTitle from "../components/layout/PageTitle"
-import Plot from "../components/results/Plot"
-import PlotLegend from "../components/results/PlotLegend"
-import SidebarOptions from "../components/results/SidebarOptions"
-import Button from "../components/general/Button"
+import PageTitle from "@components/layout/PageTitle"
+import Plot from "@components/results/Plot"
+import PlotLegend from "@components/results/PlotLegend"
+import SidebarOptions from "@components/results/SidebarOptions"
+import Button from "@components/general/Button"
 
 /* Hooks */
 import { useMemo, useState } from "react"
-import useCompounds from "../hooks/entities/useCompounds"
-import useGetData from "../hooks/useGetData"
-import useSimulationResults from "../hooks/useSimulationResults"
+import useCompounds from "@hooks/entities/useCompounds"
+import useGetData from "@hooks/useGetData"
+import useSimulationResults from "@hooks/useSimulationResults"
 
-import MainLayout from "../layouts/MainLayout"
+import MainLayout from "@layouts/MainLayout"
 
 const ResultsPage: React.VFC = () => {
   const navigate = useNavigate()

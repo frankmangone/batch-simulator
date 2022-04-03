@@ -1,8 +1,8 @@
 import styled from "styled-components"
-import Show from "../../components/Show"
+import Show from "@components/Show"
 import CompoundCard from "./CompoundCard"
-import NoResource from "../../components/NoResource"
-import useCompounds from "../../hooks/entities/useCompounds"
+import NoResource from "@components/NoResource"
+import useCompounds from "@hooks/entities/useCompounds"
 
 const Wrapper = styled.div`
   display: flex;

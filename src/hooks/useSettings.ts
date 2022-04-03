@@ -1,10 +1,10 @@
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "./useStore"
-import { reset, save, saveField } from "../features/settingsSlice"
-import { saveToKey } from "../lib/localStorage"
+import { reset, save, saveField } from "@features/settingsSlice"
+import { saveToKey } from "@lib/localStorage"
 
 /* Constants */
-import { STORAGE_KEY } from "../features/settingsSlice"
+import { STORAGE_KEY } from "@features/settingsSlice"
 
 const useSettings = () => {
   const dispatch = useAppDispatch()

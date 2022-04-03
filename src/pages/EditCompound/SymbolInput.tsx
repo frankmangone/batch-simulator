@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import { RerollIcon } from "../../components/Icons"
-import Error from "../../components/forms/ErrorNew"
-import { useTheme } from "../../contexts/Theme"
+import { RerollIcon } from "@components/Icons"
+import Error from "@components/forms/ErrorNew"
+import { useTheme } from "@contexts/Theme"
 
 interface SymbolInputProps {
   value: string

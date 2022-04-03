@@ -1,10 +1,10 @@
 import styled from "styled-components"
-import { DeleteIcon, SaveIcon } from "../../components/Icons"
-import BaseButton from "../../components/general/ButtonNew"
-import Title from "../../components/layout/PageTitle"
-import Header from "../../components/layout/PageHeader"
-import useCompounds from "../../hooks/entities/useCompounds"
-import { useTheme } from "../../contexts/Theme"
+import { DeleteIcon, SaveIcon } from "@components/Icons"
+import BaseButton from "@components/general/ButtonNew"
+import Title from "@components/layout/PageTitle"
+import Header from "@components/layout/PageHeader"
+import useCompounds from "@hooks/entities/useCompounds"
+import { useTheme } from "@contexts/Theme"
 import { useParams } from "react-router-dom"
 
 interface PageHeaderProps {
