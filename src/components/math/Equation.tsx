@@ -1,15 +1,9 @@
-import styled from "styled-components"
 import { Fragment } from "react"
 import { TokenTypes } from "@lib/tokens/tokenTypes"
-import {
-  GreekAlpha,
-  GreekBeta,
-  GreekMu,
-  GreekDeltaCapital,
-} from "./GreekLetters"
-import { InfinityChar } from "./MathChars"
-import Subindex from "./Subindex"
+import Division from "./Division"
 import Power from "./Power"
+import Parenthesis from "./Parenthesis"
+import SymbolComponent from "./Symbol"
 
 type Term = string | JSX.Element
 
@@ -23,7 +17,7 @@ interface Operation {
   level: number
 }
 
-export const Equation: React.FC<EquationProps> = (props) => {
+const Equation: React.FC<EquationProps> = (props) => {
   const { tokenizedEquation } = props
   const components: JSX.Element[] = []
 
@@ -193,135 +187,4 @@ export const Equation: React.FC<EquationProps> = (props) => {
   )
 }
 
-// ----------------------------------------------------------------
-/**
- * Symbol Component
- * For alphanumeric expressions such as variables or parameters
- */
-interface ISymbolComponent {
-  symbol: string
-}
-
-const replaceBySymbol = (symbol: string | JSX.Element) => {
-  // Replace symbols represented as strings for components
-  switch (symbol) {
-    case "\\alpha":
-      return <GreekAlpha />
-    case "\\beta":
-      return <GreekBeta />
-    case "\\mu":
-      return <GreekMu />
-    case "\\Delta":
-      return <GreekDeltaCapital />
-    case "\\inf":
-      return <InfinityChar />
-    default:
-      return symbol
-  }
-}
-
-export const SymbolComponent: React.FC<ISymbolComponent> = (props) => {
-  const { symbol } = props
-
-  /**
-   * Expressions may have subindices
-   * For now, they may not have superindices (TODO: maybe?)
-   * TODO: Support commas for subindex separation?
-   */
-  const separatedTerms: Term[] = symbol.split("_")
-  const termsThatGoTogether: Term[][] = separatedTerms.map((term) =>
-    (term as string).split("+")
-  )
-
-  termsThatGoTogether.forEach((termGroup: Term[], index) => {
-    // Replace symbols represented as strings for components
-    termGroup.forEach(
-      (term: Term, index) => (termGroup[index] = replaceBySymbol(term))
-    )
-
-    // Join terms that go together into a single term
-    separatedTerms[index] = (
-      <>
-        {termGroup.map((term, index) => (
-          <Fragment key={index}>{term}</Fragment>
-        ))}
-      </>
-    )
-  })
-
-  separatedTerms.forEach(
-    (term, index) => (separatedTerms[index] = replaceBySymbol(term))
-  )
-
-  for (let i = separatedTerms.length - 1; i > 0; i--) {
-    // Last term will be the subindex
-    const subindex = separatedTerms.pop() as string | JSX.Element
-    separatedTerms[i - 1] = (
-      <Subindex base={separatedTerms[i - 1]} subindex={subindex} />
-    )
-  }
-
-  // Final result is at separatedTerms[0]
-  return separatedTerms[0] as JSX.Element
-}
-
-// ----------------------------------------------------------------
-/**
- * Parenthesis
- */
-
-interface IParenthesisProps {
-  elements: (string | JSX.Element)[]
-}
-
-export const Parenthesis: React.FC<IParenthesisProps> = (props) => {
-  const { elements } = props
-
-  return (
-    <>
-      {elements.map((elem, index) => (
-        <Fragment key={index}>{elem}</Fragment>
-      ))}
-    </>
-  )
-}
-
-// ----------------------------------------------------------------
-/**
- * Division
- */
-
-interface IDivisionProps {
-  numerator: string | JSX.Element
-  denominator: string | JSX.Element
-}
-
-export const Division: React.FC<IDivisionProps> = (props) => {
-  const { numerator, denominator } = props
-
-  return (
-    <DivisionWrapper>
-      <div>{numerator}</div>
-      <div></div>
-      <div>{denominator}</div>
-    </DivisionWrapper>
-  )
-}
-
-const DivisionWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-
-  & > div:not(:nth-child(2)) {
-    display: flex;
-    padding: 0.5rem;
-    position: relative;
-  }
-
-  & > div:nth-child(2) {
-    width: 100%;
-    height: 2px;
-    background-color: var(--color-grey-dark);
-  }
-`
+export default Equation

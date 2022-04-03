@@ -36,7 +36,7 @@ const replaceBySymbol = (symbol: string | JSX.Element) => {
   }
 }
 
-export const SymbolComponent: React.FC<SymbolProps> = (props) => {
+const SymbolComponent: React.FC<SymbolProps> = (props) => {
   const { symbol } = props
 
   /**
@@ -80,3 +80,5 @@ export const SymbolComponent: React.FC<SymbolProps> = (props) => {
   // Final result is at separatedTerms[0]
   return separatedTerms[0] as JSX.Element
 }
+
+export default SymbolComponent
