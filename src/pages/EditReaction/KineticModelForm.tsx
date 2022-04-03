@@ -1,9 +1,11 @@
 import React from "react"
 import styled from "styled-components"
+import KineticEquation from "./KineticEquation"
 import PageSubTitle from "@components/layout/PageSubTitle"
 import SelectInput from "@components/forms/SelectInputNew"
 import SelectOption from "@components/forms/SelectInputNew/SelectOption"
 import useCompounds from "@hooks/entities/useCompounds"
+import serializeKineticEquation from "@lib/serializeKineticEquation"
 import type { FormikProps } from "formik"
 
 interface KineticModelProps {
@@ -24,6 +26,7 @@ const Wrapper = styled.div`
   flex-basis: 100%;
   margin-top: 40px;
   margin-bottom: 40px;
+  width: 100%;
 `
 
 const SubTitle = styled(PageSubTitle)`
@@ -34,7 +37,7 @@ const SubTitle = styled(PageSubTitle)`
 const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
   const { formik, reactants } = props
   const { values, setFieldValue } = formik
-  const { findCompound } = useCompounds()
+  const { compounds, findCompound } = useCompounds()
 
   const mappedReactants: Compound[] = reactants.map(
     (reactant) => findCompound(reactant.compoundId) as Compound
@@ -53,6 +56,13 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
   > = {
     kineticModel: (index: number) => {
       setFieldValue("kineticModel", index)
+      setFieldValue(
+        "kineticEquation",
+        serializeKineticEquation(
+          { ...formik.values, kineticModel: index as KineticModel },
+          compounds
+        )
+      )
     },
     keyCompound: (index: number) => {
       setFieldValue("keyCompound", reactants[index].compoundId)
@@ -86,6 +96,11 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
           />
         ))}
       </SelectInput>
+
+      <KineticEquation
+        tokens={values.kineticEquation}
+        keyCompound={values.keyCompound}
+      />
     </Wrapper>
   )
 }
