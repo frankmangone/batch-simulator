@@ -1,5 +1,4 @@
-import styled from "styled-components"
-import ReactionParamInputCard from "@components/reactions/ReactionParamInputCard"
+import KineticParameterInput from "./KineticParameterInput"
 import Equation from "@components/math/Equation"
 import SymbolComponent from "@components/math/Symbol"
 import { KineticModels } from "@lib/reactionTypes"
@@ -13,21 +12,6 @@ import type { FormikProps } from "formik"
 interface KineticParametersProps {
   formik: FormikProps<ReactionInput>
 }
-
-const KineticParamsWrapper = styled.div`
-  align-self: stretch;
-  background-color: var(--color-grey-lightest);
-  border-radius: 5px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-
-  input {
-    margin-left: 0;
-  }
-`
 
 const ReactionKineticParameters: React.FC<KineticParametersProps> = (props) => {
   const { formik } = props
@@ -59,7 +43,7 @@ const ReactionKineticParameters: React.FC<KineticParametersProps> = (props) => {
   }
 
   return (
-    <KineticParamsWrapper>
+    <>
       {Object.entries(kineticConstants).map(([param, value]) => {
         let units
 
@@ -86,7 +70,7 @@ const ReactionKineticParameters: React.FC<KineticParametersProps> = (props) => {
         }
 
         return (
-          <ReactionParamInputCard
+          <KineticParameterInput
             key={param}
             paramSymbol={<SymbolComponent symbol={param} />}
             value={value}
@@ -96,7 +80,7 @@ const ReactionKineticParameters: React.FC<KineticParametersProps> = (props) => {
           />
         )
       })}
-    </KineticParamsWrapper>
+    </>
   )
 }
 
