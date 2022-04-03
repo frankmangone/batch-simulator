@@ -11,10 +11,19 @@ const PowerWrapper = styled.div`
   align-items: center;
 
   & > .exponent {
-    transform: translateY(-30%) scale(0.7);
+    transform: translateY(-40%) scale(0.7);
+    margin-left: -10px;
+    margin-right: -20px;
   }
 `
 
+/**
+ * Power
+ *
+ * A simple math expression for a power operation
+ *
+ * @param {PowerProps} props
+ */
 const Power: React.FC<PowerProps> = (props) => {
   const { base, power } = props
   return (

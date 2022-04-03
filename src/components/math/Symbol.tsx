@@ -1,11 +1,5 @@
 import { Fragment } from "react"
-import {
-  GreekAlpha,
-  GreekBeta,
-  GreekMu,
-  GreekDeltaCapital,
-} from "./GreekLetters"
-import { InfinityChar } from "./MathChars"
+import MathChar from "./MathChar"
 import Subindex from "./Subindex"
 
 type Term = string | JSX.Element
@@ -22,15 +16,15 @@ const replaceBySymbol = (symbol: string | JSX.Element) => {
   // Replace symbols represented as strings for components
   switch (symbol) {
     case "\\alpha":
-      return <GreekAlpha />
+      return <MathChar symbol="&alpha;" />
     case "\\beta":
-      return <GreekBeta />
+      return <MathChar symbol="&beta;" />
     case "\\mu":
-      return <GreekMu />
+      return <MathChar symbol="&mu;" />
     case "\\Delta":
-      return <GreekDeltaCapital />
+      return <MathChar symbol="&Delta;" />
     case "\\inf":
-      return <InfinityChar />
+      return <MathChar symbol="&infin;" />
     default:
       return symbol
   }

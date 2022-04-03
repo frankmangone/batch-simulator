@@ -5,6 +5,22 @@ interface SubindexProps {
   subindex: string | JSX.Element
 }
 
+const SubindexWrapper = styled.div`
+  position: relative;
+  display: flex;
+
+  & > .subindex {
+    transform: translateY(30%) scale(0.75);
+  }
+`
+
+/**
+ * Subindex
+ *
+ * A simple math expression for a subindex
+ *
+ * @param {SubindexProps} props
+ */
 const Subindex: React.FC<SubindexProps> = (props) => {
   const { base, subindex } = props
   return (
@@ -14,14 +30,5 @@ const Subindex: React.FC<SubindexProps> = (props) => {
     </SubindexWrapper>
   )
 }
-
-const SubindexWrapper = styled.div`
-  position: relative;
-  display: flex;
-
-  & > .subindex {
-    transform: translateY(30%) scale(0.75);
-  }
-`
 
 export default Subindex
