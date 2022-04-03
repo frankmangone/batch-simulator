@@ -88,7 +88,10 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
         ))}
       </SelectInput>
 
-      <KineticEquation tokens={values.kineticEquation} />
+      <KineticEquation
+        tokens={values.kineticEquation}
+        keyCompound={values.keyCompound}
+      />
     </Wrapper>
   )
 }
