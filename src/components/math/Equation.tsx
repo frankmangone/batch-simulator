@@ -1,11 +1,11 @@
-import { Fragment } from "react"
 import { TokenTypes } from "@lib/tokens/tokenTypes"
+import Term from "./Term"
 import Division from "./Division"
 import Power from "./Power"
 import Parenthesis from "./Parenthesis"
 import SymbolComponent from "./Symbol"
 
-type Term = string | JSX.Element
+type TermValue = string | JSX.Element
 
 interface EquationProps {
   tokenizedEquation: Token[]
@@ -13,7 +13,7 @@ interface EquationProps {
 
 // It is necessary to specify the 'parenthesis level' at which the operation is done
 interface Operation {
-  code: Term
+  code: TermValue
   level: number
 }
 
@@ -21,7 +21,7 @@ const Equation: React.FC<EquationProps> = (props) => {
   const { tokenizedEquation } = props
   const components: JSX.Element[] = []
 
-  const parenthesisStack: Term[][] = []
+  const parenthesisStack: TermValue[][] = []
   const operationStack: Operation[] = []
 
   tokenizedEquation.forEach((token) => {
@@ -181,7 +181,7 @@ const Equation: React.FC<EquationProps> = (props) => {
   return (
     <>
       {components.map((component, index) => (
-        <Fragment key={index}>{component}</Fragment>
+        <Term key={index} element={component} />
       ))}
     </>
   )

@@ -1,8 +1,9 @@
 import { Fragment } from "react"
+import Term from "./Term"
 import MathChar from "./MathChar"
 import Subindex from "./Subindex"
 
-type Term = string | JSX.Element
+type TermValue = string | JSX.Element
 
 /**
  * Symbol Component
@@ -38,22 +39,22 @@ const SymbolComponent: React.FC<SymbolProps> = (props) => {
    * For now, they may not have superindices (TODO: maybe?)
    * TODO: Support commas for subindex separation?
    */
-  const separatedTerms: Term[] = symbol.split("_")
-  const termsThatGoTogether: Term[][] = separatedTerms.map((term) =>
+  const separatedTerms: TermValue[] = symbol.split("_")
+  const termsThatGoTogether: TermValue[][] = separatedTerms.map((term) =>
     (term as string).split("+")
   )
 
-  termsThatGoTogether.forEach((termGroup: Term[], index) => {
+  termsThatGoTogether.forEach((termGroup: TermValue[], index) => {
     // Replace symbols represented as strings for components
     termGroup.forEach(
-      (term: Term, index) => (termGroup[index] = replaceBySymbol(term))
+      (term: TermValue, index) => (termGroup[index] = replaceBySymbol(term))
     )
 
     // Join terms that go together into a single term
     separatedTerms[index] = (
       <>
         {termGroup.map((term, index) => (
-          <Fragment key={index}>{term}</Fragment>
+          <Term key={index} element={term} />
         ))}
       </>
     )

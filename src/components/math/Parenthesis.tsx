@@ -1,4 +1,4 @@
-import { Fragment } from "react"
+import Term from "./Term"
 
 interface ParenthesisProps {
   elements: (string | JSX.Element)[]
@@ -10,7 +10,7 @@ const Parenthesis: React.FC<ParenthesisProps> = (props) => {
   return (
     <>
       {elements.map((elem, index) => (
-        <Fragment key={index}>{elem}</Fragment>
+        <Term element={elem} key={index} />
       ))}
     </>
   )
