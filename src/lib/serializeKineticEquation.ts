@@ -12,7 +12,7 @@ import {
 import { KineticModels } from "./reactionTypes"
 
 const serializeKineticEquation = (
-  reaction: Reaction,
+  reaction: Omit<Reaction, "id">,
   compounds: Compound[]
 ): Token[] => {
   const findCompound = (id: string): Compound | undefined => {
