@@ -6,7 +6,7 @@ import PageSubTitle from "@components/layout/PageSubTitle"
 import SelectInput from "@components/forms/SelectInputNew"
 import SelectOption from "@components/forms/SelectInputNew/SelectOption"
 import useCompounds from "@hooks/entities/useCompounds"
-import serializeKineticEquation from "@lib/serializeKineticEquation"
+import useSerializeEquation from "@hooks/useSerializeEquation"
 import {
   KINETIC_MODELS,
   generateKineticConstants,
@@ -41,6 +41,7 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
   const { formik, reactants } = props
   const { values, setFieldValue } = formik
   const { compounds, findCompound } = useCompounds()
+  const serializeKineticEquation = useSerializeEquation()
 
   const mappedReactants: Compound[] = reactants.map(
     (reactant) => findCompound(reactant.compoundId) as Compound
@@ -65,7 +66,7 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
       setFieldValue("kineticModel", index)
       setFieldValue(
         "kineticEquation",
-        serializeKineticEquation(updatedReaction, compounds)
+        serializeKineticEquation(updatedReaction)
       )
       setFieldValue(
         "kineticConstants",
