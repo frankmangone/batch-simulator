@@ -7,14 +7,16 @@ import SelectInput from "@components/forms/SelectInputNew"
 import SelectOption from "@components/forms/SelectInputNew/SelectOption"
 import useCompounds from "@hooks/entities/useCompounds"
 import serializeKineticEquation from "@lib/serializeKineticEquation"
+import {
+  KINETIC_MODELS,
+  generateKineticConstants,
+} from "../../constants/kineticModels"
 import type { FormikProps } from "formik"
 
 interface KineticModelProps {
   formik: FormikProps<ReactionInput>
   reactants: ReactionCompound[]
 }
-
-const KINETIC_MODELS = ["Simple", "Hiperbolic", "Autocatalytic"]
 
 const LABELS: Record<keyof ReducedReactionKineticInput, string> = {
   keyCompound: "Key compound",
@@ -56,13 +58,18 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
     (index: number) => void
   > = {
     kineticModel: (index: number) => {
+      const updatedReaction = {
+        ...formik.values,
+        kineticModel: index as KineticModel,
+      }
       setFieldValue("kineticModel", index)
       setFieldValue(
         "kineticEquation",
-        serializeKineticEquation(
-          { ...formik.values, kineticModel: index as KineticModel },
-          compounds
-        )
+        serializeKineticEquation(updatedReaction, compounds)
+      )
+      setFieldValue(
+        "kineticConstants",
+        generateKineticConstants(updatedReaction, compounds)
       )
     },
     keyCompound: (index: number) => {
