@@ -15,10 +15,10 @@ import { KineticModels } from "@lib/reactionTypes"
 export const KINETIC_MODELS = ["Simple", "Hiperbolic", "Autocatalytic"]
 
 export const generateKineticConstants = (
-  model: KineticModel,
-  reaction: Reaction,
+  reaction: Omit<Reaction, "id">,
   compounds: Compound[]
 ): KineticConstants => {
+  const model = reaction.kineticModel
   switch (model) {
     case KineticModels.hyperbolic:
       return generateHiperbolicModelConstants(reaction, compounds)
@@ -31,7 +31,7 @@ export const generateKineticConstants = (
 }
 
 const generateSimpleModelConstants = (
-  reaction: Reaction,
+  reaction: Omit<Reaction, "id">,
   compounds: Compound[]
 ) => {
   const updatedExponents: KineticConstants = {
@@ -58,7 +58,7 @@ const generateSimpleModelConstants = (
 }
 
 const generateHiperbolicModelConstants = (
-  reaction: Reaction,
+  reaction: Omit<Reaction, "id">,
   compounds: Compound[]
 ) => {
   const updatedExponents: KineticConstants = {
@@ -85,7 +85,7 @@ const generateHiperbolicModelConstants = (
 }
 
 const generateAutocatalyticModelConstants = (
-  reaction: Reaction,
+  reaction: Omit<Reaction, "id">,
   compounds: Compound[]
 ) => {
   const updatedExponents: KineticConstants = {

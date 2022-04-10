@@ -49,18 +49,18 @@ interface SymbolProps {
 const Symbol = styled.p<SymbolProps>`
   color: ${(props) => props.color};
   font-family: "Comfortaa", sans-serif;
-  font-size: ${(props) => props.theme.fontSizes.h2};
+  font-size: ${(props) => props.theme.fontSizes.h3};
   font-weight: 600;
-  line-height: ${(props) => props.theme.lineHeights.h2};
+  line-height: ${(props) => props.theme.lineHeights.h3};
   margin: 0;
 `
 
 const Coefficient = styled.p`
   color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 100 })};
   font-family: "Comfortaa", sans-serif;
-  font-size: ${(props) => props.theme.fontSizes.h3};
+  font-size: ${(props) => props.theme.fontSizes.h4};
   font-weight: 600;
-  line-height: ${(props) => props.theme.lineHeights.h3};
+  line-height: ${(props) => props.theme.lineHeights.h4};
   margin: 0;
   margin-right: 10px;
 `

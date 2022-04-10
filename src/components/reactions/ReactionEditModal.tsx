@@ -135,7 +135,6 @@ const ReactionEditModal: React.FC<ReactionEditModalProps> = (props) => {
 
     /* Recalculate kinetic constants */
     const kineticConstants = generateKineticConstants(
-      updatedReaction.kineticModel,
       updatedReaction,
       compounds
     )
@@ -187,7 +186,6 @@ const ReactionEditModal: React.FC<ReactionEditModalProps> = (props) => {
 
     /* Recalculate kinetic constants and equation */
     const kineticConstants = generateKineticConstants(
-      updatedReaction.kineticModel as KineticModel,
       updatedReaction,
       compounds
     )
@@ -334,7 +332,6 @@ const ReactionEditModal: React.FC<ReactionEditModalProps> = (props) => {
               const updatedReaction = JSON.parse(JSON.stringify(modalReaction))
 
               updatedReaction.kineticConstants = generateKineticConstants(
-                value as KineticModel,
                 modalReaction,
                 compounds
               )

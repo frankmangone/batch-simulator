@@ -20,8 +20,8 @@ const Name = styled.p`
 const Buttons = styled.div`
   display: flex;
   align-items: center;
-  width: 120px;
-  margin: 0px 16px;
+  flex-basis: 175px;
+  margin-left: 16px;
   transition: all 0.15s ease-in-out;
 `
 

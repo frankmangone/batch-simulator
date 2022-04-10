@@ -4,7 +4,7 @@ import Input from "./InputNew"
 // import InfoTooltip from "./InfoTooltip"
 
 interface TextInputProps<T> {
-  label: string
+  label: string | JSX.Element | JSX.Element[]
   fieldName: string
   error?: string
   tooltip?: string
