@@ -39,7 +39,7 @@ const SubTitle = styled(PageSubTitle)`
 
 const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
   const { formik, reactants } = props
-  const { values, setFieldValue } = formik
+  const { values, errors, setFieldValue } = formik
   const { compounds, findCompound } = useCompounds()
   const serializeKineticEquation = useSerializeEquation()
 
@@ -88,6 +88,7 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
       label: LABELS[key],
       fieldName: key,
       value: formValues[key],
+      error: errors[key],
       onChange: handleChange[key],
     }
   }

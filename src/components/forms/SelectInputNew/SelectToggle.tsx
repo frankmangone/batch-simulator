@@ -1,11 +1,18 @@
 import styled from "styled-components"
 
-const SelectToggle = styled.div`
+interface SelectToggleProps {
+  error: boolean
+}
+
+const SelectToggle = styled.div<SelectToggleProps>`
   align-items: center;
   background-color: ${(props) =>
     props.theme.getColor({ name: "baseBlack", shade: 700 })};
   border: 1px solid
-    ${(props) => props.theme.getColor({ name: "baseBlack", shade: 700 })};
+    ${(props) =>
+      props.error
+        ? props.theme.getColor("cancel")
+        : props.theme.getColor({ name: "baseBlack", shade: 700 })};
   border-radius: 5px;
   color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 200 })};
   cursor: pointer;
