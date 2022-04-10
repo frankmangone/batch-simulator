@@ -62,6 +62,7 @@ const SelectInput: React.VFC<FieldInputProps> = (props) => {
     fieldName,
     // tooltip,
     // type,
+    placeholder,
     nested = false,
     value,
     onChange,
@@ -91,13 +92,18 @@ const SelectInput: React.VFC<FieldInputProps> = (props) => {
           {/* {tooltip && <InfoTooltip text={tooltip} />} */}
         </LabelWrapper>
         <SelectToggle onClick={toggleSelect} ref={selectRef}>
-          <p>{currentValue}</p>
+          <p>{currentValue === undefined ? placeholder : currentValue}</p>
           <Show when={toggled} fallback={<ExpandIcon size={20} />}>
             <CollapseIcon size={20} />
           </Show>
         </SelectToggle>
         <Show when={toggled}>
           <SelectBody position={position}>
+            <Show when={placeholder}>
+              <button onClick={handleSelectValue(undefined)}>
+                {placeholder}
+              </button>
+            </Show>
             {options.map((option, index) => (
               <button key={index} onClick={handleSelectValue(index)}>
                 {option.displayText}

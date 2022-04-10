@@ -94,6 +94,11 @@ const CompoundSelectionColumn: React.VFC<CompoundSelectionColumnProps> = (
       index,
     })
 
+    // Reset key compound if needed
+    if (values[compoundGroup][index].compoundId === values.keyCompound) {
+      formik.setFieldValue("keyCompound", undefined)
+    }
+
     formik.setFieldValue(compoundGroup, updatedCompounds)
   }
 
