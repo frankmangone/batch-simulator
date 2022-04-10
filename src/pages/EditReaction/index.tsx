@@ -6,9 +6,9 @@ import useReactions from "@hooks/entities/useReactions"
 import { useEffect } from "react"
 import { useFormik } from "formik"
 import { useParams, useNavigate } from "react-router-dom"
-// import compoundSchema from "../../lib/schema/compound"
-// import buildValidationError from "../../lib/schema/buildValidationError"
-// import type { ValidationError } from "yup"
+import reactionSchema from "@lib/schema/reaction"
+import buildValidationError from "@lib/schema/buildValidationError"
+import type { ValidationError } from "yup"
 
 const EditReactionPage: React.VFC = () => {
   const { findReaction, updateReaction } = useReactions()
@@ -48,12 +48,18 @@ const EditReactionPage: React.VFC = () => {
     },
     onSubmit: async (values, { setErrors }) => {
       try {
-        const updatedReaction = { id, ...values }
-        updateReaction(id as string, updatedReaction as Reaction)
+        const validatedValues = await reactionSchema().validate(values, {
+          abortEarly: false,
+        })
+        const updatedReaction = { id, ...validatedValues }
+
+        console.log(updatedReaction)
+
+        const updatedReactionTrue = { id, ...values }
+        updateReaction(id as string, updatedReactionTrue as Reaction)
         navigate("/reactions")
       } catch (error) {
-        // TODO: Validate
-        // setErrors(buildValidationError(error as ValidationError))
+        setErrors(buildValidationError(error as ValidationError))
       }
     },
   })
