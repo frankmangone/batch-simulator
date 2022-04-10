@@ -52,11 +52,7 @@ const EditReactionPage: React.VFC = () => {
           abortEarly: false,
         })
         const updatedReaction = { id, ...validatedValues }
-
-        console.log(updatedReaction)
-
-        const updatedReactionTrue = { id, ...values }
-        updateReaction(id as string, updatedReactionTrue as Reaction)
+        updateReaction(id as string, updatedReaction as Reaction)
         navigate("/reactions")
       } catch (error) {
         setErrors(buildValidationError(error as ValidationError))
