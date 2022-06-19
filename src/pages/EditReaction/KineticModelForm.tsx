@@ -96,6 +96,10 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
   return (
     <Wrapper>
       <SubTitle>Kinetics</SubTitle>
+      <KineticEquation
+        tokens={values.kineticEquation}
+        keyCompound={values.keyCompound}
+      />
       <SelectInput {...selectProps("kineticModel")}>
         {KINETIC_MODELS.map((model, index) => (
           <SelectOption key={index} value={index} displayText={model} />
@@ -114,12 +118,6 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
           />
         ))}
       </SelectInput>
-
-      <KineticEquation
-        tokens={values.kineticEquation}
-        keyCompound={values.keyCompound}
-      />
-
       <KineticParameters formik={formik} />
     </Wrapper>
   )

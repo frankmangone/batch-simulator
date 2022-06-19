@@ -3,6 +3,7 @@ import styled from "styled-components"
 import Show from "@components/Show"
 import CompoundCard from "./CompoundCard"
 import AddCompoundModal from "./AddCompoundModal"
+import PageSubTitle from "@components/layout/PageSubTitle"
 import replaceAtIndex from "@lib/array/replaceAtIndex"
 import deleteAtIndex from "@lib/array/deleteAtIndex"
 import type { FormikProps } from "formik"
@@ -26,19 +27,15 @@ const Wrapper = styled.div`
   margin-top: 40px;
 `
 
-const Label = styled.p`
-  color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 100 })};
-  font-family: "Mulish", sans-serif;
-  font-size: ${(props) => props.theme.fontSizes.h5};
-  font-weight: 600;
-  line-height: ${(props) => props.theme.lineHeights.h5};
-  margin: 0;
-`
-
 const CompoundList = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 15px;
+`
+
+const SubTitle = styled(PageSubTitle)`
+  flex-basis: 100%;
+  margin-bottom: 20px;
 `
 
 const CompoundSelectionGroup: React.VFC<CompoundSelectionGroupProps> = (
@@ -87,7 +84,9 @@ const CompoundSelectionGroup: React.VFC<CompoundSelectionGroupProps> = (
 
   return (
     <Wrapper>
-      <Label>{compoundGroup === "reactants" ? "Reactants" : "Products"}</Label>
+      <SubTitle>
+        {compoundGroup === "reactants" ? "Reactants" : "Products"}
+      </SubTitle>
       <AddCompoundModal
         takenCompounds={reactionCompounds}
         handleAdd={handleAdd}
