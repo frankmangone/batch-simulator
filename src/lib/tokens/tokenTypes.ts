@@ -13,7 +13,11 @@ const { Operator, Parameter, Variable, LeftParenthesis, RightParenthesis } =
 export const additionToken = { type: Operator, value: "+" }
 export const divisionToken = { type: Operator, value: "/" }
 export const exponentiationToken = { type: Operator, value: "^" }
-export const multiplicationToken = { type: Operator, value: "*" }
+export const multiplicationToken = {
+  type: Operator,
+  value: "*",
+  latexSymbol: ".",
+}
 export const subtractionToken = { type: Operator, value: "-" }
 export const operationToken = (value: string) => ({ type: Operator, value })
 

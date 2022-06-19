@@ -79,10 +79,6 @@ const KineticEquation: React.VFC<KineticEquationProps> = (props) => {
   const compound = findCompound(keyCompound)
   const keyCompoundSymbol: string | undefined = compound?.symbol ?? undefined
 
-  // const tex = `f(x) = \\int_{-\\infty}^\\infty
-  //   \\hat f(\\xi)\\,e^{2 \\pi i \\xi x}
-  //   \\,d\\xi`
-
   const tex = toTexNotation(tokens)
 
   return (
