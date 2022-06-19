@@ -65,6 +65,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-mathjax": "^1.0.1",
     "assemblyscript": "^0.19.9"
   }
 }

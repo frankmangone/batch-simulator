@@ -3,6 +3,7 @@ import Show from "@components/Show"
 import Subindex from "@components/math/Subindex"
 import Equation from "@components/math/Equation"
 import useCompounds from "@hooks/entities/useCompounds"
+import MathJax from "react-mathjax"
 
 interface KineticEquationProps {
   tokens: Token[]
@@ -77,18 +78,25 @@ const KineticEquation: React.VFC<KineticEquationProps> = (props) => {
   const compound = findCompound(keyCompound)
   const keyCompoundSymbol: string | undefined = compound?.symbol ?? undefined
 
+  const tex = `f(x) = \\int_{-\\infty}^\\infty
+    \\hat f(\\xi)\\,e^{2 \\pi i \\xi x}
+    \\,d\\xi`
+
   return (
-    <EquationWrapper>
-      <InnerWrapper>
-        <Show when={keyCompoundSymbol}>
-          <>
-            <Subindex base="r" subindex={keyCompoundSymbol as string} />
-            &nbsp;=&nbsp;
-          </>
-        </Show>
-        <Equation tokenizedEquation={tokens} />
-      </InnerWrapper>
-    </EquationWrapper>
+    <MathJax.Provider>
+      <EquationWrapper>
+        <InnerWrapper>
+          <MathJax.Node formula={tex} />
+          {/* <Show when={keyCompoundSymbol}>
+            <>
+              <Subindex base="r" subindex={keyCompoundSymbol as string} />
+              &nbsp;=&nbsp;
+            </>
+          </Show>
+          <Equation tokenizedEquation={tokens} /> */}
+        </InnerWrapper>
+      </EquationWrapper>
+    </MathJax.Provider>
   )
 }
 

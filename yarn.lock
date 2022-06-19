@@ -1906,6 +1906,13 @@
   dependencies:
     react-icons "*"
 
+"@types/react-mathjax@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/react-mathjax/-/react-mathjax-1.0.1.tgz#aa942bb5e0be09a39b2f5d629afc275aa090ce0d"
+  integrity sha512-XhOdKuHti4yLTAd+/UBXvzvAisgHU6J9CV3isLks2HDbmZCXw9CEJFHCOW19EwqaZe+oVOgOSg5IPzUd4mQGCA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-redux@^7.1.19", "@types/react-redux@^7.1.20":
   version "7.1.23"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.23.tgz#3c2bb1bcc698ae69d70735f33c5a8e95f41ac528"
