@@ -39,7 +39,7 @@ const SubTitle = styled(PageSubTitle)`
 
 const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
   const { formik, reactants } = props
-  const { values, setFieldValue } = formik
+  const { values, errors, setFieldValue } = formik
   const { compounds, findCompound } = useCompounds()
   const serializeKineticEquation = useSerializeEquation()
 
@@ -56,9 +56,9 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
 
   const handleChange: Record<
     keyof ReducedReactionKineticInput,
-    (index: number) => void
+    (index?: number) => void
   > = {
-    kineticModel: (index: number) => {
+    kineticModel: (index?: number) => {
       const updatedReaction = {
         ...formik.values,
         kineticModel: index as KineticModel,
@@ -73,8 +73,13 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
         generateKineticConstants(updatedReaction, compounds)
       )
     },
-    keyCompound: (index: number) => {
-      setFieldValue("keyCompound", reactants[index].compoundId)
+    keyCompound: (index?: number) => {
+      if (index !== undefined) {
+        setFieldValue("keyCompound", reactants[index].compoundId)
+        return
+      }
+
+      setFieldValue("keyCompound", undefined)
     },
   }
 
@@ -83,6 +88,7 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
       label: LABELS[key],
       fieldName: key,
       value: formValues[key],
+      error: errors[key],
       onChange: handleChange[key],
     }
   }
@@ -96,7 +102,10 @@ const KineticModelForm: React.VFC<KineticModelProps> = (props) => {
         ))}
       </SelectInput>
 
-      <SelectInput {...selectProps("keyCompound")}>
+      <SelectInput
+        placeholder="Select compound..."
+        {...selectProps("keyCompound")}
+      >
         {mappedReactants.map((compound, index) => (
           <SelectOption
             key={compound.id}

@@ -3,6 +3,7 @@ import Show from "@components/Show"
 import { CollapseIcon, ExpandIcon } from "@components/Icons"
 import SelectToggle from "./SelectToggle"
 import SelectBody from "./SelectBody"
+import Error from "@components/forms/ErrorNew"
 import useSelect from "./useSelect"
 // import InfoTooltip from "./InfoTooltip"
 
@@ -57,11 +58,12 @@ const LabelWrapper = styled.div<NestedProp>`
  */
 const SelectInput: React.VFC<FieldInputProps> = (props) => {
   const {
-    // error,
+    error,
     label,
     fieldName,
     // tooltip,
     // type,
+    placeholder,
     nested = false,
     value,
     onChange,
@@ -90,14 +92,19 @@ const SelectInput: React.VFC<FieldInputProps> = (props) => {
           <label htmlFor={fieldName}>{label}</label>
           {/* {tooltip && <InfoTooltip text={tooltip} />} */}
         </LabelWrapper>
-        <SelectToggle onClick={toggleSelect} ref={selectRef}>
-          <p>{currentValue}</p>
+        <SelectToggle onClick={toggleSelect} error={!!error} ref={selectRef}>
+          <p>{currentValue === undefined ? placeholder : currentValue}</p>
           <Show when={toggled} fallback={<ExpandIcon size={20} />}>
             <CollapseIcon size={20} />
           </Show>
         </SelectToggle>
         <Show when={toggled}>
           <SelectBody position={position}>
+            <Show when={placeholder}>
+              <button onClick={handleSelectValue(undefined)}>
+                {placeholder}
+              </button>
+            </Show>
             {options.map((option, index) => (
               <button key={index} onClick={handleSelectValue(index)}>
                 {option.displayText}
@@ -105,6 +112,7 @@ const SelectInput: React.VFC<FieldInputProps> = (props) => {
             ))}
           </SelectBody>
         </Show>
+        <Error>{error ?? ""}</Error>
       </InnerWrapper>
     </Wrapper>
   )

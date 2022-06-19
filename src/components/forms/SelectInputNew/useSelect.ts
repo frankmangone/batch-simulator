@@ -4,7 +4,7 @@ import mapChildren from "./mapChildren"
 interface UseSelectParams {
   children: JSX.Element | JSX.Element[]
   value: number
-  onChange: (index: number) => void
+  onChange: (index?: number) => void
 }
 
 export enum SelectPosition {
@@ -66,7 +66,7 @@ const useSelect = (params: UseSelectParams) => {
   }, [selectRef, position])
 
   // Create a setter for the selected index
-  const handleSelectValue = (index: number) => (): void => {
+  const handleSelectValue = (index?: number) => (): void => {
     toggleSelect()
     onChange(index)
   }

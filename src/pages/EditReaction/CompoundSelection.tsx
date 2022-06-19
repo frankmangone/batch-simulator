@@ -1,6 +1,7 @@
 import { useState } from "react"
 import styled from "styled-components"
 import Button from "@components/general/ButtonNew"
+import Show from "@components/Show"
 import { AddIcon } from "@components/Icons"
 import CompoundCard from "./CompoundCard"
 import AddCompoundModal from "./AddCompoundModal"
@@ -94,6 +95,11 @@ const CompoundSelectionColumn: React.VFC<CompoundSelectionColumnProps> = (
       index,
     })
 
+    // Reset key compound if needed
+    if (values[compoundGroup][index].compoundId === values.keyCompound) {
+      formik.setFieldValue("keyCompound", undefined)
+    }
+
     formik.setFieldValue(compoundGroup, updatedCompounds)
   }
 
@@ -115,6 +121,9 @@ const CompoundSelectionColumn: React.VFC<CompoundSelectionColumnProps> = (
         takenCompounds={reactionCompounds}
         handleAdd={handleAdd}
       />
+      <Show when={reactionCompounds.length === 0}>
+        <p>No components yet added</p>
+      </Show>
       {reactionCompounds.map((compound, index) => (
         <CompoundCard
           key={compound.compoundId}
