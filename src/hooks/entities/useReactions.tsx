@@ -21,6 +21,7 @@ import {
   rightParenthesisToken,
 } from "@lib/tokens/tokenTypes"
 import { KineticModels } from "@lib/reactionTypes"
+import { KineticParameters } from "@lib/enum/kinetic-constants.enum"
 
 const useReactions = () => {
   const dispatch = useAppDispatch()
@@ -53,12 +54,12 @@ const useReactions = () => {
       products: [],
       kineticModel: KineticModels.simple,
       kineticConstants: {
-        "k_\\inf": "1e7", // Pre exponential term for Arrhenius
-        E_A: "4.5e4", // Arrhenius activation energy
-        "\\Delta+H_r": "2", // Arrhenius activation energy
+        [KineticParameters.K_INF]: "1e7", // Pre exponential term for Arrhenius
+        [KineticParameters.E_A]: "4.5e4", // Arrhenius activation energy
+        [KineticParameters.DELTA_H]: "2", // Arrhenius activation energy
       },
       kineticEquation: [
-        parameterToken("<k_\\inf>"),
+        parameterToken("<k_\\inf>", "k_\\infty"),
         multiplicationToken,
         parameterToken("e"),
         exponentiationToken,

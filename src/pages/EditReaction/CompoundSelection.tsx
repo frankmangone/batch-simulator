@@ -1,11 +1,9 @@
 import { useState } from "react"
 import styled from "styled-components"
-import Button from "@components/general/ButtonNew"
 import Show from "@components/Show"
-import { AddIcon } from "@components/Icons"
 import CompoundCard from "./CompoundCard"
 import AddCompoundModal from "./AddCompoundModal"
-import { useTheme } from "@contexts/Theme"
+import PageSubTitle from "@components/layout/PageSubTitle"
 import replaceAtIndex from "@lib/array/replaceAtIndex"
 import deleteAtIndex from "@lib/array/deleteAtIndex"
 import type { FormikProps } from "formik"
@@ -17,7 +15,7 @@ interface CompoundSelectionProps {
   formik: FormikProps<ReactionInput>
 }
 
-interface CompoundSelectionColumnProps {
+interface CompoundSelectionGroupProps {
   formik: FormikProps<ReactionInput>
   compoundGroup: CompoundGroup
   activeModal: CompoundGroup | null
@@ -25,46 +23,27 @@ interface CompoundSelectionColumnProps {
 }
 
 const Wrapper = styled.div`
-  flex-basis: 50%;
+  flex-basis: 100%;
   margin-top: 40px;
 `
 
-const Header = styled.div`
+const CompoundList = styled.div`
   display: flex;
-  align-self: stretch;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 0 5px 20px;
+  flex-wrap: wrap;
+  margin-top: 15px;
 `
 
-const AddButton = styled(Button)`
-  margin-right: 10px;
+const SubTitle = styled(PageSubTitle)`
+  flex-basis: 100%;
+  margin-bottom: 20px;
 `
 
-const Label = styled.p`
-  color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 100 })};
-  font-family: "Mulish", sans-serif;
-  font-size: ${(props) => props.theme.fontSizes.h5};
-  font-weight: 600;
-  line-height: ${(props) => props.theme.lineHeights.h5};
-  margin: 0;
-`
-
-const CompoundSelectionColumn: React.VFC<CompoundSelectionColumnProps> = (
+const CompoundSelectionGroup: React.VFC<CompoundSelectionGroupProps> = (
   props
 ) => {
-  const { compoundGroup, formik, activeModal, setActiveModal } = props
+  const { compoundGroup, formik } = props
   const { values } = formik
   const reactionCompounds = values[compoundGroup]
-  const { getColor } = useTheme()
-
-  const handleAddButtonPress = () => {
-    if (activeModal === compoundGroup) {
-      setActiveModal(null)
-      return
-    }
-    setActiveModal(compoundGroup)
-  }
 
   const handleFieldChange =
     (index: number) =>
@@ -105,33 +84,26 @@ const CompoundSelectionColumn: React.VFC<CompoundSelectionColumnProps> = (
 
   return (
     <Wrapper>
-      <Header>
-        <AddButton onClick={handleAddButtonPress} color="white">
-          <AddIcon
-            color={getColor({ name: "baseBlack", shade: 700 })}
-            size={20}
-          />
-        </AddButton>
-        <Label>
-          {compoundGroup === "reactants" ? "Reactants" : "Products"}
-        </Label>
-      </Header>
+      <SubTitle>
+        {compoundGroup === "reactants" ? "Reactants" : "Products"}
+      </SubTitle>
       <AddCompoundModal
-        visible={activeModal === compoundGroup}
         takenCompounds={reactionCompounds}
         handleAdd={handleAdd}
       />
       <Show when={reactionCompounds.length === 0}>
         <p>No components yet added</p>
       </Show>
-      {reactionCompounds.map((compound, index) => (
-        <CompoundCard
-          key={compound.compoundId}
-          compound={compound}
-          handleFieldChange={handleFieldChange(index)}
-          handleDelete={handleDelete(index)}
-        />
-      ))}
+      <CompoundList>
+        {reactionCompounds.map((compound, index) => (
+          <CompoundCard
+            key={compound.compoundId}
+            compound={compound}
+            handleFieldChange={handleFieldChange(index)}
+            handleDelete={handleDelete(index)}
+          />
+        ))}
+      </CompoundList>
     </Wrapper>
   )
 }
@@ -142,11 +114,11 @@ const CompoundSelection: React.VFC<CompoundSelectionProps> = (props) => {
 
   return (
     <>
-      <CompoundSelectionColumn
+      <CompoundSelectionGroup
         compoundGroup="reactants"
         {...{ formik, activeModal, setActiveModal }}
       />
-      <CompoundSelectionColumn
+      <CompoundSelectionGroup
         compoundGroup="products"
         {...{ formik, activeModal, setActiveModal }}
       />
