@@ -11,6 +11,7 @@
  */
 
 import { KineticModels } from "@lib/reactionTypes"
+import { KineticParameters } from "@lib/enum/kinetic-constants.enum"
 
 export const KINETIC_MODELS = ["Simple", "Hiperbolic", "Autocatalytic"]
 
@@ -35,9 +36,11 @@ const generateSimpleModelConstants = (
   compounds: Compound[]
 ) => {
   const updatedExponents: KineticConstants = {
-    "k_\\inf": reaction.kineticConstants["k_\\inf"],
-    E_A: reaction.kineticConstants.E_A,
-    "\\Delta+H_r": reaction.kineticConstants["\\Delta+H_r"],
+    [KineticParameters.K_INF]:
+      reaction.kineticConstants[KineticParameters.K_INF],
+    [KineticParameters.E_A]: reaction.kineticConstants[KineticParameters.E_A],
+    [KineticParameters.DELTA_H]:
+      reaction.kineticConstants[KineticParameters.DELTA_H],
   }
 
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
@@ -62,9 +65,11 @@ const generateHiperbolicModelConstants = (
   compounds: Compound[]
 ) => {
   const updatedExponents: KineticConstants = {
-    "k_\\inf": reaction.kineticConstants["k_\\inf"],
-    E_A: reaction.kineticConstants.E_A,
-    "\\Delta+H_r": reaction.kineticConstants["\\Delta+H_r"],
+    [KineticParameters.K_INF]:
+      reaction.kineticConstants[KineticParameters.K_INF],
+    [KineticParameters.E_A]: reaction.kineticConstants[KineticParameters.E_A],
+    [KineticParameters.DELTA_H]:
+      reaction.kineticConstants[KineticParameters.DELTA_H],
   }
 
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
@@ -89,9 +94,11 @@ const generateAutocatalyticModelConstants = (
   compounds: Compound[]
 ) => {
   const updatedExponents: KineticConstants = {
-    "k_\\inf": reaction.kineticConstants["k_\\inf"],
-    E_A: reaction.kineticConstants.E_A,
-    "\\Delta+H_r": reaction.kineticConstants["\\Delta+H_r"],
+    [KineticParameters.K_INF]:
+      reaction.kineticConstants[KineticParameters.K_INF],
+    [KineticParameters.E_A]: reaction.kineticConstants[KineticParameters.E_A],
+    [KineticParameters.DELTA_H]:
+      reaction.kineticConstants[KineticParameters.DELTA_H],
   }
 
   reaction.reactants.forEach((reactionCompound: ReactionCompound) => {
