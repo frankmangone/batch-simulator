@@ -28,7 +28,7 @@ const serializeKineticEquation = (
    */
   switch (reaction.kineticModel) {
     case KineticModels.hyperbolic:
-      equationTokens.push(parameterToken(`<k_\\inf>`))
+      equationTokens.push(parameterToken("<k_\\inf>", "k_\\infty"))
       addArrheniusExponential(equationTokens)
 
       reaction.reactants.forEach((reactionCompound) => {

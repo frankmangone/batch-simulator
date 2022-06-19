@@ -18,7 +18,10 @@ export const subtractionToken = { type: Operator, value: "-" }
 export const operationToken = (value: string) => ({ type: Operator, value })
 
 // Parameter token
-export const parameterToken = (value: string) => ({ type: Parameter, value })
+export const parameterToken = (value: string, latexSymbol?: string) =>
+  latexSymbol
+    ? { type: Parameter, value, latexSymbol }
+    : { type: Parameter, value }
 export const minusOneToken = parameterToken("-1")
 
 // Variable token

@@ -58,7 +58,7 @@ const useReactions = () => {
         "\\Delta+H_r": "2", // Arrhenius activation energy
       },
       kineticEquation: [
-        parameterToken("<k_\\inf>"),
+        parameterToken("<k_\\inf>", "k_\\infty"),
         multiplicationToken,
         parameterToken("e"),
         exponentiationToken,

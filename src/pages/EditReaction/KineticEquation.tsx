@@ -4,6 +4,7 @@ import Subindex from "@components/math/Subindex"
 import Equation from "@components/math/Equation"
 import useCompounds from "@hooks/entities/useCompounds"
 import MathJax from "react-mathjax"
+import toTexNotation from "@lib/tokens/toTexNotation"
 
 interface KineticEquationProps {
   tokens: Token[]
@@ -78,9 +79,11 @@ const KineticEquation: React.VFC<KineticEquationProps> = (props) => {
   const compound = findCompound(keyCompound)
   const keyCompoundSymbol: string | undefined = compound?.symbol ?? undefined
 
-  const tex = `f(x) = \\int_{-\\infty}^\\infty
-    \\hat f(\\xi)\\,e^{2 \\pi i \\xi x}
-    \\,d\\xi`
+  // const tex = `f(x) = \\int_{-\\infty}^\\infty
+  //   \\hat f(\\xi)\\,e^{2 \\pi i \\xi x}
+  //   \\,d\\xi`
+
+  const tex = toTexNotation(tokens)
 
   return (
     <MathJax.Provider>

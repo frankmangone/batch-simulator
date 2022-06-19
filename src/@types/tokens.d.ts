@@ -1,6 +1,7 @@
 interface Token {
   type: TokenType
   value: string | number
+  latexSymbol?: string
 }
 
 type TokenType =
