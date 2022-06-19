@@ -17,7 +17,7 @@ interface CompoundSelectionProps {
   formik: FormikProps<ReactionInput>
 }
 
-interface CompoundSelectionColumnProps {
+interface CompoundSelectionGroupProps {
   formik: FormikProps<ReactionInput>
   compoundGroup: CompoundGroup
   activeModal: CompoundGroup | null
@@ -25,7 +25,7 @@ interface CompoundSelectionColumnProps {
 }
 
 const Wrapper = styled.div`
-  flex-basis: 50%;
+  flex-basis: 100%;
   margin-top: 40px;
 `
 
@@ -50,7 +50,7 @@ const Label = styled.p`
   margin: 0;
 `
 
-const CompoundSelectionColumn: React.VFC<CompoundSelectionColumnProps> = (
+const CompoundSelectionGroup: React.VFC<CompoundSelectionGroupProps> = (
   props
 ) => {
   const { compoundGroup, formik, activeModal, setActiveModal } = props
@@ -142,11 +142,11 @@ const CompoundSelection: React.VFC<CompoundSelectionProps> = (props) => {
 
   return (
     <>
-      <CompoundSelectionColumn
+      <CompoundSelectionGroup
         compoundGroup="reactants"
         {...{ formik, activeModal, setActiveModal }}
       />
-      <CompoundSelectionColumn
+      <CompoundSelectionGroup
         compoundGroup="products"
         {...{ formik, activeModal, setActiveModal }}
       />

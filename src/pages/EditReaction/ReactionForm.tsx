@@ -15,7 +15,7 @@ const LABELS: Record<keyof ReducedReactionInput, string> = {
 
 const Wrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   margin-bottom: 30px;
 `
