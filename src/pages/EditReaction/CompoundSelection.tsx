@@ -1,11 +1,8 @@
 import { useState } from "react"
 import styled from "styled-components"
-import Button from "@components/general/ButtonNew"
 import Show from "@components/Show"
-import { AddIcon } from "@components/Icons"
 import CompoundCard from "./CompoundCard"
 import AddCompoundModal from "./AddCompoundModal"
-import { useTheme } from "@contexts/Theme"
 import replaceAtIndex from "@lib/array/replaceAtIndex"
 import deleteAtIndex from "@lib/array/deleteAtIndex"
 import type { FormikProps } from "formik"
@@ -29,18 +26,6 @@ const Wrapper = styled.div`
   margin-top: 40px;
 `
 
-const Header = styled.div`
-  display: flex;
-  align-self: stretch;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 0 5px 20px;
-`
-
-const AddButton = styled(Button)`
-  margin-right: 10px;
-`
-
 const Label = styled.p`
   color: ${(props) => props.theme.getColor({ name: "baseBlack", shade: 100 })};
   font-family: "Mulish", sans-serif;
@@ -50,21 +35,18 @@ const Label = styled.p`
   margin: 0;
 `
 
+const CompoundList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+`
+
 const CompoundSelectionGroup: React.VFC<CompoundSelectionGroupProps> = (
   props
 ) => {
-  const { compoundGroup, formik, activeModal, setActiveModal } = props
+  const { compoundGroup, formik } = props
   const { values } = formik
   const reactionCompounds = values[compoundGroup]
-  const { getColor } = useTheme()
-
-  const handleAddButtonPress = () => {
-    if (activeModal === compoundGroup) {
-      setActiveModal(null)
-      return
-    }
-    setActiveModal(compoundGroup)
-  }
 
   const handleFieldChange =
     (index: number) =>
@@ -105,33 +87,24 @@ const CompoundSelectionGroup: React.VFC<CompoundSelectionGroupProps> = (
 
   return (
     <Wrapper>
-      <Header>
-        <AddButton onClick={handleAddButtonPress} color="white">
-          <AddIcon
-            color={getColor({ name: "baseBlack", shade: 700 })}
-            size={20}
-          />
-        </AddButton>
-        <Label>
-          {compoundGroup === "reactants" ? "Reactants" : "Products"}
-        </Label>
-      </Header>
+      <Label>{compoundGroup === "reactants" ? "Reactants" : "Products"}</Label>
       <AddCompoundModal
-        visible={activeModal === compoundGroup}
         takenCompounds={reactionCompounds}
         handleAdd={handleAdd}
       />
       <Show when={reactionCompounds.length === 0}>
         <p>No components yet added</p>
       </Show>
-      {reactionCompounds.map((compound, index) => (
-        <CompoundCard
-          key={compound.compoundId}
-          compound={compound}
-          handleFieldChange={handleFieldChange(index)}
-          handleDelete={handleDelete(index)}
-        />
-      ))}
+      <CompoundList>
+        {reactionCompounds.map((compound, index) => (
+          <CompoundCard
+            key={compound.compoundId}
+            compound={compound}
+            handleFieldChange={handleFieldChange(index)}
+            handleDelete={handleDelete(index)}
+          />
+        ))}
+      </CompoundList>
     </Wrapper>
   )
 }

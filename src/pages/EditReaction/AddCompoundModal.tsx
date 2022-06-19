@@ -1,15 +1,11 @@
 import styled from "styled-components"
 import useCompounds from "@hooks/entities/useCompounds"
 import { AddIcon } from "@components/Icons"
+import Show from "@components/Show"
 
 interface AddCompoundModalProps {
   takenCompounds: ReactionCompound[]
-  visible: boolean
   handleAdd: (compoundId: string) => void
-}
-
-interface WrapperProps {
-  visible: boolean
 }
 
 interface CompoundPillProps {
@@ -47,7 +43,7 @@ const CompoundPill = styled.div<CompoundPillProps>`
   }
 `
 
-const Wrapper = styled.div<WrapperProps>`
+const Wrapper = styled.div`
   background-color: ${(props) =>
     props.theme.getColor({ name: "baseBlack", shade: 700, opacity: 50 })};
   border-radius: 5px;
@@ -57,14 +53,14 @@ const Wrapper = styled.div<WrapperProps>`
   display: flex;
   flex-wrap: wrap;
   overflow: hidden;
-  padding: ${(props) => (props.visible ? "10" : "0")}px 10px;
-  margin: ${(props) => (props.visible ? "10" : "0")}px 5px;
-  max-height: ${(props) => (props.visible ? "200" : "0")}px;
+  padding: 6px 6px;
+  margin: 15px 5px 0px;
+  max-height: 200px;
   transition: all 0.15s linear;
 `
 
 const AddCompoundModal: React.VFC<AddCompoundModalProps> = (props) => {
-  const { takenCompounds, visible, handleAdd } = props
+  const { takenCompounds, handleAdd } = props
   const takenCompoundIds = takenCompounds.map((rc) => rc.compoundId)
   const { compounds } = useCompounds()
 
@@ -73,18 +69,20 @@ const AddCompoundModal: React.VFC<AddCompoundModalProps> = (props) => {
   )
 
   return (
-    <Wrapper visible={visible}>
-      {availableCompounds.map((compound) => {
-        const { id, symbol, color } = compound
+    <Show when={availableCompounds.length !== 0}>
+      <Wrapper>
+        {availableCompounds.map((compound) => {
+          const { id, symbol, color } = compound
 
-        return (
-          <CompoundPill key={id} color={color} onClick={() => handleAdd(id)}>
-            <span>{symbol}</span>
-            <AddIcon size={20} />
-          </CompoundPill>
-        )
-      })}
-    </Wrapper>
+          return (
+            <CompoundPill key={id} color={color} onClick={() => handleAdd(id)}>
+              <span>{symbol}</span>
+              <AddIcon size={20} />
+            </CompoundPill>
+          )
+        })}
+      </Wrapper>
+    </Show>
   )
 }
 
